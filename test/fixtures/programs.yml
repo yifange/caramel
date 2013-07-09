@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  school_id: 
+  instrument_id: 
+  course_type_id: 
+  regular_courses_per_week: MyString
+  group_courses_per_month: MyString
+
+two:
+  school_id: 
+  instrument_id: 
+  course_type_id: 
+  regular_courses_per_week: MyString
+  group_courses_per_month: MyString

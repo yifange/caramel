@@ -1,0 +1,6 @@
+= monthly_calendar_for @month_events do |c|
+  - c.draw :marking_method => :mark do |date, obj|
+    = date.day
+    -# = obj.mark
+
+  

@@ -1,0 +1,13 @@
+-# - weekly_calendar_for(@events, :date => @date, :include_24_hours => true) do |w|
+-#   - w.week(:business_hours => params[:business_hours]) do |event, trunc|
+-#     = event.starts_at.strftime("%I:%M%p")
+-#     = link_to truncate(event.name, trunc), event_path(event)
+-# = table_for(@events) do |t|
+-#   = t.head do
+-#     = t.r do
+-#       = t.h('starts_at')
+-#       = t.h('ends_at')
+-#   = t.body do |event|
+-#     = t.r do
+-#       = t.d(h(event.starts_at))
+-#       = t.d(h(event.ends_at))

@@ -1,32 +1,16 @@
 module CalendarHelper
-  # Generates a calendar (as a table) for an array of objects placing each of them on the corresponding date.
-  #
-  # **TODO: fully document this method, the current documentation is far from done.**
-  #
-  # @param [Hash] options extra options
-  #
-  #   :row_header if true, each row will have an extra cell at the beginning, as a row header. A typical usage would be
-  #   to output week numbers. When the block is called, it will get the date that would normally be passed to the
-  #   first day of the week (to give you some context) and a nil list of objects (and that's how you recognize it as
-  #   a header, because empty days get an empty array, not nil).
+  include TableHelper
   def monthly_calendar_for(objects, *args)
     raise ArgumentError, "Missing block" unless block_given?
     options = args.last.is_a?(Hash) ? args.pop : {}
-    # html_options = options[:html]
-    # builder = options[:builder] || MonthlyCalendarBuilder
-    # calendar = options[:calendar] || Calendar
     content_tag(:div, content_tag(:table) { yield MonthlyCalendarBuilder.new(objects || [], self, options) }, :class => "monthly-calendar")
-    # content_tag(:table, nil, html_options) do
-    #   yield MonthlyCalendarBuilder.new(objects || [], self, options)
-    # end
   end
   
-  class MonthlyCalendarBuilder < TableHelper::TableBuilder
+  class MonthlyCalendarBuilder
     def initialize(objects, template, options)
-      super(objects, template, options)
+      @objects, @template, @options = objects, template, options
       @calendar = Calendar.new(options)
       @today = options[:today] || Time.now
-      # @row_header = options[:row_header] || false
     end
 
     def draw(*args)
@@ -37,20 +21,11 @@ module CalendarHelper
       day_of_week = options.delete(:day_of_week) || ["M", "Tu", "W", "Th", "F", "Sa", "Su"]
       id_pattern = options.delete(:id)
       thead *day_of_week
-      # head("M", "Tu", "W", "Th", "F", "Sa", "Su")
       tbody do
         @calendar.objects_for_days(@objects, day_method, marking_method).to_a.sort{|a1, a2| a1.first <=> a2.first }.each do |o|
           key, array = o
           day, objects, marking = array
           concat(tag(:tr, options, true)) if (day.wday ==  @calendar.first_weekday)
-          # if @row_header && day.wday ==  @calendar.first_weekday
-          #   row_header_options = td_options(day, id_pattern)
-          #   row_header_options[:class] ||= ""
-          #   row_header_options[:class] << " row_header"
-          #   concat(tag(:td, row_header_options, true))
-          #   yield(day, nil)
-          #   concat("</td>")
-          # end
           concat(tag(:td, td_options(day, id_pattern, marking), true))
           yield(day, objects)
           concat('</td>')

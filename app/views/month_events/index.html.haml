@@ -1,6 +1,13 @@
-= monthly_calendar_for @month_events do |c|
-  - c.draw :marking_method => :mark do |date, obj|
-    = date.day
-    -# = obj.mark
+-# = monthly_calendar_for @month_events, :month => @month.to_i, :year => @year.to_i do |c|
+-#   = c.draw_month_title
+-#   = c.draw_calendar :marking_method => :mark do |date, obj|
+-#     = date.day
+
+= annual_calendar_for @month_events, :year => @year.to_i do |c|
+  = c.draw_annual_calendar_title
+  = c.draw_annual_calendar do
+    = c.draw_month_calendars
+
+  -# = c.draw_annual_calendar
 
   

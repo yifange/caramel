@@ -1,6 +1,8 @@
 class MonthEventsController < ApplicationController
   def index
     @month_events = MonthEvent.all
+    @month = params[:month] || Date.today.month
+    @year = params[:year] || Date.today.year
   end
   def new
     @month_event = MonthEvent.new

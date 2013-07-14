@@ -1,0 +1,12 @@
+%h1 Course Type
+%table
+  %tr
+    %td Abbreviation
+    %td Full
+  - @course_types.each do |course_type|
+    %tr
+      %td= course_type.abbrev
+      %td= course_type.full
+      %td= link_to('edit', edit_course_type_path(course_type))
+      %td= link_to('delete', course_type, :method => :delete, :data => {:confirm => "Are you sure?"})
+= link_to('Add A New Course Type', new_course_type_path)

@@ -92,8 +92,8 @@ ActiveRecord::Schema.define(version: 20130709025155) do
     t.integer  "school_id"
     t.integer  "instrument_id"
     t.integer  "course_type_id"
-    t.string   "regular_courses_per_week"
-    t.string   "group_courses_per_month"
+    t.integer  "regular_courses_per_year"
+    t.integer  "group_courses_per_year"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -102,28 +102,9 @@ ActiveRecord::Schema.define(version: 20130709025155) do
   add_index "programs", ["instrument_id"], name: "index_programs_on_instrument_id"
   add_index "programs", ["school_id"], name: "index_programs_on_school_id"
 
-  create_table "registrations", force: true do |t|
-    t.integer  "program_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "schools", force: true do |t|
     t.string   "abbrev"
     t.string   "full"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "users", force: true do |t|
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
-    t.string   "email"
-    t.string   "password_hash"
-    t.string   "password_salt"
-    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

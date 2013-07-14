@@ -1,3 +1,3 @@
 class User < ActiveRecord::Base
-  has_many :programs, :through => :registrations
+  authenticates_with_sorcery!
 end

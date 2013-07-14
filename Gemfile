@@ -32,6 +32,10 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'haml-rails'
+gem 'simple_form'
+gem 'bootstrap-sass'
+gem 'sorcery'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

@@ -1,4 +1,5 @@
 Caramel::Application.routes.draw do
+    resources :schools, :instruments, :course_types, :programs, :attendence_markings, :calendar_markings, :attendences
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

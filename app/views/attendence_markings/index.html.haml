@@ -1,0 +1,13 @@
+%h1 Attendence Marking
+%table
+  %tr 
+    %td Abbreviation
+    %td Full
+  - @attendence_markings.each do |attendence_marking|
+    %tr
+      %td= attendence_marking.abbrev
+      %td= attendence_marking.full
+      %td= link_to('edit', edit_attendence_marking_path(attendence_marking))
+      %td= link_to('delete', attendence_marking, :method => :delete, :data => {:confirm => "Are you sure?"})
+= link_to('Add A New Attendce Marking', new_attendence_marking_path)
+  

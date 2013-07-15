@@ -2,23 +2,163 @@ module CalendarHelper
   def monthly_calendar_for(objects, *args, &block)
     options = args.last.is_a?(Hash) ? args.pop : {}
     content = capture(MonthlyCalendarBuilder.new(self, objects || [], options), &block)
-    content_tag :div, content, :class => "monthly-calendar"
+    content_tag :div, content, :class => "mc-container"
 
   end
   def annual_calendar_for(objects, *args, &block)
     options = args.last.is_a?(Hash) ? args.pop : {}
     content = capture(AnnualCalendarBuilder.new(self, objects || [], options), &block)
-    content_tag :div, content, :class => "annual-calendar"
+    content_tag :div, content, :class => "ac-container"
+  end
+
+  def weekly_calendar_for(objects, *args, &block)
+    options = args.last.is_a?(Hash) ? args.pop : {}
+    content = capture(WeeklyCalendarBuilder.new(self, objects || [], options), &block)
+    content_tag :div, content, :class => "wc-container"
   end
   
   class CalendarBuilder
     attr_accessor :parent
     delegate :capture, :content_tag, :tag, :link_to, :concat, :to => :parent
     def initialize(parent, objects, options)
-      @parent = parent
-      @objects, @options = objects, options
+      @parent, @objects, @options = parent, objects, options
     end
   end
+
+  class WeeklyCalendarBuilder < CalendarBuilder
+    def initialize(parent, objects, options)
+      super(parent, objects, options)
+      
+      year = options[:year] || Date.today.year
+      month = options[:month] || Date.today.month
+      day = options[:day] || Date.today.day
+      @start_hour = options[:start_hour] || 8
+      @end_hour = options[:end_hour] || 16
+      @slots_per_hour = options[:slots_per_hour] || 4
+      @slot_height = 20
+      @date = Date.new(year, month, day)
+      @today = Date.today
+    end
+
+    def draw_events(day)
+      if @objects.has_key? day
+        events = @objects[day]
+        buf = "".html_safe
+        for event in events
+          style = ""
+          style << "height: #{event_height(event[:start_time], event[:end_time])}px;"
+
+          event_buf = content_tag :div, :class => "wc-cal-event", :style => style do
+            content_buf = "".html_safe
+            content_buf.concat(content_tag :div, event.start_time.strftime("%R") + "-" + event.end_time.strftime("%R"), :class => "wc-time ui-corner-all")
+            content_buf.concat(content_tag :div, event.title, :class => "wc-title")
+            content_buf
+          end
+          buf.concat(event_buf)
+        end
+        buf
+      end
+    end
+    
+    def event_height(start_time, end_time)
+      length = end_time - start_time
+      height = length / 3600 * @slots_per_hour * @slot_height
+      if height < @slot_height * 0.7
+        @slot_height
+      else
+        height
+      end
+    end
+    def event_top(start_time)
+      top = start_time / 3600 * @slots_per_hour * @slot_height
+    end
+    def draw_weekly_calendar_nav
+      prev_link = link_to "<", {:year => @date.prev_week.year, :month => @date.prev_week.month, :day => @date.prev_week.day}, :class => "btn"
+      today_link = link_to "today", {:year => @today.year, :month => @today.month, :day => @today.day}, :class => "btn"
+      next_link = link_to ">", {:year => @date.next_week.year, :month => @date.next_week.month, :day => @date.next_week.day}, :class => "btn"
+      prev_link.concat(today_link).concat(next_link)
+    end
+    
+    def draw_weekly_calendar_body(*args)
+      options = args.last.is_a?(Hash) ? args.pop : {}
+
+      day_of_week = options[:day_of_week] || Date::DAYNAMES
+
+      wc_header = content_tag :table, :class => "wc-header" do
+        content_tag :tbody do
+          content_tag :tr do
+            buf = "".html_safe
+            buf.concat(content_tag :td, nil, :class => "wc-time-column-header")
+            for day in @date.beginning_of_week(:sunday)..@date.end_of_week(:sunday)
+              klass = "wc-day-column-header wc-day-#{day.strftime("%w")}"
+              if day == @today
+                klass << " wc-today"
+              end
+              buf.concat(content_tag :td, day.strftime("%a %-m-%d"), :class => klass)
+            end
+            buf.concat(content_tag :td, nil, :class => "wc-scrollbar-shim")
+            buf
+          end
+        end
+      end
+
+      grid = content_tag :div, :class => "wc-scrollable-grid" do
+        content_tag :table, :class => "wc-time-slots" do
+          content_tag :tbody do
+            timeslot = content_tag :tr do
+              buf = "".html_safe
+              buf.concat(tag :td, :class => "wc-grid-timeslot-header")
+              timeslot_wrapper = content_tag :div, :class => "wc-time-slot-wrapper" do
+                  content_tag :div, :class => "wc-time-slots" do
+                    slots_html = "".html_safe
+                    for hour in @start_hour..@end_hour
+                      for slot in 1...@slots_per_hour
+                        slots_html.concat(content_tag :div, nil, {:class => "wc-time-slot wc-hour-#{hour} wc-hour-slot-#{slot}"})
+                      end
+                      slots_html.concat(content_tag :div, nil, {:class => "wc-time-slot wc-hour-end wc-hour-#{hour} wc-hour-slot-#{@slots_per_hour}"})
+                    end
+                    slots_html
+                  end
+              end
+              buf.concat(content_tag :td, timeslot_wrapper, :colspan => 7)
+            end
+            day_columns = content_tag :tr do
+              timeslot_header = content_tag :td, :class => "wc-grid-timeslot-header" do
+                buf = "".html_safe
+                for hour in @start_hour..@end_hour
+                  buf.concat(content_tag :div, (content_tag :div, "#{hour}:00", :class => "wc-time-header-cell"), :class => "wc-hour-header")
+                end
+                buf
+              end
+
+              columns = "".html_safe
+              for day in @date.beginning_of_week(:sunday)..@date.end_of_week(:sunday)
+                klass = "wc-day-column day-#{day.strftime("%w")}"
+                if day == @today
+                  klass << " wc-today"
+                end
+                column = content_tag :td, :class => klass do
+                  content_tag :div, :class => "wc-day-column-inner" do
+                    draw_events(day) 
+                  end
+                end
+                columns.concat(column)
+              end
+
+              timeslot_header.concat(columns)
+            end  
+            timeslot.concat(day_columns)
+          end
+        end 
+
+      end
+      wc_header.concat(grid)
+    end
+    # def draw_weekly_calendar(&block)
+    #   content = capture(&block)
+    # end
+  end
+
 
   class AnnualCalendarBuilder < CalendarBuilder
     def initialize(parent, objects, options)
@@ -29,17 +169,18 @@ module CalendarHelper
       @months = [*(first_month..12)].concat([*(1...first_month)])
     end
 
-    def draw_annual_calendar(&block)
-      # options = args.last.is_a?(Hash) ? args.pop : {}
-      content = capture(&block)
+    def draw_annual_calendar_body
+      content = capture do
+        concat draw_month_calendars 
+      end
       content_tag :table, content
     end
     
     def draw_annual_calendar_title(*args)
       options = args.last.is_a?(Hash) ? args.pop : {}
-      show_prev_next_links = options.delete(:show_prev_next_links) || true
-      prev_link = if show_prev_next_links then link_to "<", :year => @year - 1 else "" end
-      next_link = if show_prev_next_links then link_to ">", :year => @year + 1 else "" end
+      show_prev_next_links = options.has_key?(:show_prev_next_links) ? options[:show_prev_next_links] : true
+      prev_link = if show_prev_next_links then link_to "<", :year => @year - 1 else "".html_safe end
+      next_link = if show_prev_next_links then link_to ">", :year => @year + 1 else "".html_safe end
       title = content_tag :span, @year, :class => "calendar-year-name"
       content = prev_link.concat(title).concat(next_link)
       
@@ -81,8 +222,9 @@ module CalendarHelper
 
     def draw_month_title(*args)
       options = args.last.is_a?(Hash) ? args.pop : {}
-      month_names = options.delete(:month_names) || Date::MONTHNAMES
-      show_prev_next_links = options.delete(:show_prev_next_links) || false
+      month_names = options[:month_names] || Date::MONTHNAMES
+      
+      show_prev_next_links = options.has_key?(:show_prev_next_links) ? options[:show_prev_next_links] : true
       prev_link = if show_prev_next_links then link_to "<", :month => @calendar.date.last_month.month, :year => @calendar.date.last_month.year else "".html_safe end
       next_link = if show_prev_next_links then link_to ">", :month => @calendar.date.next_month.month, :year => @calendar.date.next_month.year else "".html_safe end
       
@@ -93,7 +235,7 @@ module CalendarHelper
       options = args.last.is_a?(Hash) ? args.pop : {}
       day_method = options.delete(:day_method) || :date
       marking_method = options.delete(:marking_method) || :calendar_marking
-      day_of_week = options.delete(:day_of_week) || ["M", "Tu", "W", "Th", "F", "Sa", "Su"]
+      day_of_week = options[:day_of_week] || ["Su", "M", "Tu", "W", "Th", "F", "Sa"]
       thead = content_tag :thead do
         content_tag :tr do
           buf = "".html_safe
@@ -195,7 +337,11 @@ private
           marking = o.send(marking_method.to_sym)
           if @objects_for_days[date]
             @objects_for_days[date][1] << o
-            @objects_for_days[date][2] = marking
+            if @objects_for_days[date][2] && @objects_for_days[date][2] != marking
+              @objects_for_days[date][2] = "mix"
+            else
+              @objects_for_days[date][2] = marking
+            end
           end
         end
       end

@@ -3,6 +3,7 @@ class MonthEventsController < ApplicationController
     @month_events = MonthEvent.all
     @month = params[:month] || Date.today.month
     @year = params[:year] || Date.today.year
+    @day = params[:day] || Date.today.day
   end
   def new
     @month_event = MonthEvent.new

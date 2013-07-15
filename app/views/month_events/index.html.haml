@@ -2,12 +2,11 @@
 -#   = c.draw_month_title
 -#   = c.draw_calendar :marking_method => :mark do |date, obj|
 -#     = date.day
+-# 
+-# = annual_calendar_for @month_events, :year => @year.to_i do |c|
+-#   = c.draw_annual_calendar_title
+-#   = c.draw_annual_calendar_body
 
-= annual_calendar_for @month_events, :year => @year.to_i do |c|
-  = c.draw_annual_calendar_title
-  = c.draw_annual_calendar do
-    = c.draw_month_calendars
-
-  -# = c.draw_annual_calendar
-
-  
+= weekly_calendar_for @month_events, :year => @year.to_i, :month => @month.to_i, :day => @day.to_i do |c|
+  = c.draw_weekly_calendar_nav
+  = c.draw_weekly_calendar_body

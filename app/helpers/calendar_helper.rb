@@ -49,11 +49,13 @@ module CalendarHelper
           style << "height: #{event_height(event[:start_time], event[:end_time])}px;"
           style << "top: #{event_top(event[:start_time])}px;"
 
-          event_buf = content_tag :div, :class => "wc-cal-event", :style => style do
-            content_buf = "".html_safe
-            content_buf.concat(content_tag :div, event.start_time.strftime("%R") + "-" + event.end_time.strftime("%R"), :class => "wc-time ui-corner-all")
-            content_buf.concat(content_tag :div, event.title, :class => "wc-title")
-            content_buf
+          event_buf = link_to "events/#{event.id}/edit" do
+            content_tag :span, :class => "wc-cal-event", :style => style do
+              content_buf = "".html_safe
+              content_buf.concat(content_tag :div, event.start_time.strftime("%R") + "-" + event.end_time.strftime("%R"), :class => "wc-time ui-corner-all")
+              content_buf.concat(content_tag :div, event.title, :class => "wc-title")
+              content_buf
+            end
           end
           buf.concat(event_buf)
         end
@@ -84,7 +86,8 @@ module CalendarHelper
       prev_link = link_to "<", {:year => @date.prev_week.year, :month => @date.prev_week.month, :day => @date.prev_week.day}, :class => "btn"
       today_link = link_to "today", {:year => @today.year, :month => @today.month, :day => @today.day}, :class => "btn"
       next_link = link_to ">", {:year => @date.next_week.year, :month => @date.next_week.month, :day => @date.next_week.day}, :class => "btn"
-      prev_link.concat(today_link).concat(next_link)
+      nav = prev_link.concat(today_link).concat(next_link)
+      content_tag :div, nav, :class => "wc-nav"
     end
     
     def draw_weekly_calendar_body(*args)
@@ -102,9 +105,9 @@ module CalendarHelper
               if day == @today
                 klass << " wc-today"
               end
-              buf.concat(content_tag :td, day.strftime("%a %-m-%d"), :class => klass)
+              buf.concat(content_tag :td, (link_to day.strftime("%a %-m-%d"), "#", :class => "wc-day-column-header"), :class => klass)
             end
-            buf.concat(content_tag :td, nil, :class => "wc-scrollbar-shim")
+            # buf.concat(content_tag :td, nil, :class => "wc-scrollbar-shim")
             buf
           end
         end

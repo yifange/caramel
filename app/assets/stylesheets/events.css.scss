@@ -4,7 +4,10 @@
 $timeslotHeight: 16px;
 $timeslotsPerHour: 3;
 $timeslotsPerDay: $timeslotsPerHour * 9;
-
+a.wc-day-column-header {
+  text-decoration: none;
+  display: display;
+}
 .wc-time-header-cell {
   height: ($timeslotHeight * $timeslotsPerHour) - 11;
   padding: 5;
@@ -12,6 +15,8 @@ $timeslotsPerDay: $timeslotsPerHour * 9;
 .wc-container {
   font-size: 13px;
   font-family: arial, helvetica;
+  width: 75%;
+  margin: 0 auto;
 }
 .wc-nav {
   padding: 1em;
@@ -74,7 +79,6 @@ $timeslotsPerDay: $timeslotsPerHour * 9;
 table.wc-time-slots {
   width: 100%;
   table-layout: fixed;
-  cursor: default;
 }
 
 .wc-day-column {
@@ -152,10 +156,9 @@ table.wc-time-slots {
 	position: absolute;	
 	text-align: center;
 	overflow: hidden;
-	cursor: pointer;
 	color: #fff;
 	width: 100%;
-	// display: none;
+	display: block;
   background-color: #68a1e5;
 }
 .wc-cal-event div {

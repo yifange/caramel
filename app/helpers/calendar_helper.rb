@@ -34,8 +34,8 @@ module CalendarHelper
       day = options[:day] || Date.today.day
       @start_hour = options[:start_hour] || 8
       @end_hour = options[:end_hour] || 16
-      @slots_per_hour = options[:slots_per_hour] || 4
-      @slot_height = 20
+      @slots_per_hour = options[:slots_per_hour] || 3
+      @slot_height = 18
       @date = Date.new(year, month, day)
       @today = Date.today
     end
@@ -47,6 +47,7 @@ module CalendarHelper
         for event in events
           style = ""
           style << "height: #{event_height(event[:start_time], event[:end_time])}px;"
+          style << "top: #{event_top(event[:start_time])}px;"
 
           event_buf = content_tag :div, :class => "wc-cal-event", :style => style do
             content_buf = "".html_safe
@@ -70,7 +71,14 @@ module CalendarHelper
       end
     end
     def event_top(start_time)
-      top = start_time / 3600 * @slots_per_hour * @slot_height
+      start_hour = Time.gm(start_time.year, start_time.month, start_time.day, @start_hour)
+      puts "start_time ", start_time, " start_hour ", start_hour
+      top = (start_time - start_hour) / 3600 * @slots_per_hour * @slot_height
+      if top > 0 then
+        top
+      else
+        0
+      end
     end
     def draw_weekly_calendar_nav
       prev_link = link_to "<", {:year => @date.prev_week.year, :month => @date.prev_week.month, :day => @date.prev_week.day}, :class => "btn"

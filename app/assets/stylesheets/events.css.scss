@@ -1,8 +1,8 @@
 // Place all the styles related to the events controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-$timeslotHeight: 20px;
-$timeslotsPerHour: 4;
+$timeslotHeight: 16px;
+$timeslotsPerHour: 3;
 $timeslotsPerDay: $timeslotsPerHour * 9;
 
 .wc-time-header-cell {
@@ -10,7 +10,7 @@ $timeslotsPerDay: $timeslotsPerHour * 9;
   padding: 5;
 }
 .wc-container {
-  font-size: 14px;
+  font-size: 13px;
   font-family: arial, helvetica;
 }
 .wc-nav {

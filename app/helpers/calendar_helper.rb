@@ -261,7 +261,7 @@ module CalendarHelper
           key, array = o
           day, objects, marking = array
           buf.concat(tag(:tr, options, true)) if (day.wday == @calendar.first_weekday)
-          block_content = capture(day, objects, &block) if block_given?
+          block_content = content_tag :span, capture(day, objects, &block) if block_given?
           buf.concat(content_tag :td, block_content, :class => td_classes(day, marking))
           buf.concat('</tr>') if (day.wday == @calendar.last_weekday)
         end

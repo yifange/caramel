@@ -29,8 +29,12 @@ class EventsController < ApplicationController
     else
       render :edit
     end
-
   end
+  def destroy
+    @event = Event.find(params[:id])
+    @event.destroy
+  end
+
   private
   def rehash_events(events, field)
     r = {}

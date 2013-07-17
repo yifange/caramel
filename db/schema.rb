@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130709025155) do
+ActiveRecord::Schema.define(version: 20130717015341) do
 
   create_table "attendence_markings", force: true do |t|
     t.string   "abbrev"
@@ -105,6 +105,28 @@ ActiveRecord::Schema.define(version: 20130709025155) do
   create_table "schools", force: true do |t|
     t.string   "abbrev"
     t.string   "full"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teachers", force: true do |t|
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "salt"
+    t.string   "crypted_password"
+    t.string   "remember_me_token"
+    t.datetime "remember_me_token_expires_at"
+  end
+
+  add_index "teachers", ["remember_me_token"], name: "index_teachers_on_remember_me_token"
+
+  create_table "users", force: true do |t|
+    t.string   "email"
+    t.string   "crypted_password"
+    t.string   "salt"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -49,14 +49,13 @@ module CalendarHelper
           style << "height: #{event_height(event[:start_time], event[:end_time])}px;"
           style << "top: #{event_top(event[:start_time])}px;"
 
-          event_buf = link_to "events/#{event.id}/edit" do
-            content_tag :span, :class => "wc-cal-event", :style => style do
+          event_buf = 
+            content_tag :div, :class => "wc-cal-event", :style => style, :data => {:eventid => event.id} do
               content_buf = "".html_safe
               content_buf.concat(content_tag :div, event.start_time.strftime("%R") + "-" + event.end_time.strftime("%R"), :class => "wc-time ui-corner-all")
               content_buf.concat(content_tag :div, event.title, :class => "wc-title")
               content_buf
             end
-          end
           buf.concat(event_buf)
         end
         buf
@@ -149,7 +148,7 @@ module CalendarHelper
                   klass << " wc-today"
                 end
                 column = content_tag :td, :class => klass do
-                  content_tag :div, :class => "wc-day-column-inner" do
+                  content_tag :div, :class => "wc-day-column-inner" ,:data => {:date => day.strftime} do
                     draw_events(day) 
                   end
                 end

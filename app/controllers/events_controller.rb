@@ -8,6 +8,7 @@ class EventsController < ApplicationController
   end
 
   def new 
+    @date = params[:date]
     @event = Event.new
   end
   def create

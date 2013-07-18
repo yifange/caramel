@@ -36,6 +36,7 @@ gem 'haml-rails'
 gem 'simple_form'
 gem 'bootstrap-sass'
 gem 'sorcery'
+gem 'cancan'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

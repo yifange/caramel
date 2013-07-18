@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: 2013-07-17
+  calendar_marking_id: 
+  start_time: 2013-07-17 20:58:39
+  end_time: 2013-07-17 20:58:39
+  school_id: 
+
+two:
+  date: 2013-07-17
+  calendar_marking_id: 
+  start_time: 2013-07-17 20:58:39
+  end_time: 2013-07-17 20:58:39
+  school_id: 

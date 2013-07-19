@@ -1,0 +1,2 @@
+class StaffsController < UsersController
+end

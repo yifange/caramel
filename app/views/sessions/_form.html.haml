@@ -1,10 +1,13 @@
-= simple_form_for :teacher, :url => '/sessions' do |f|
+= simple_form_for :user, :url => '/sessions' do |f|
   = f.input :email
   = f.input :password
-  -# = f.input :remember_me, as: :boolean
+  = label_tag "login as"
+  = f.collection_radio_buttons :role, [[:teacher, "Teacher"], [:staff, "Staff"], [:admin, "Administrator"]], :first, :last
   = f.input :remember_me do
     = check_box_tag :remember_me, 1, params[:remember_me]
     -# = label_tag :remember_me
   .actions
     = submit_tag "Login"
+ 
+
   -# = f.submit 'Login'

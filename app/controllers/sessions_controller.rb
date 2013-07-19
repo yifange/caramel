@@ -3,14 +3,18 @@ class SessionsController < ApplicationController
   end
 
   def create
-    teacher = login(params[:teacher][:email], params[:teacher][:password], params[:remember_me_token])
+    user = login(params[:user][:email], params[:user][:password], params[:remember_me_token])
     
-    if teacher
-      redirect_back_or_to root_url, :notice => "Logged in!"
-    else
-      flash.now.alert = "Email or password was invalid"
-      render :new
+    if params[:user][:role] == "admin"
+      redirect_back_or_to root_url, :notice => "Hahahah"
     end
+
+    # if user
+    #   redirect_back_or_to root_url, :notice => "Logged in!"
+    # else
+    #   flash.now.alert = "Email or password was invalid"
+    #   render :new
+    # end
   end
 
   def destroy

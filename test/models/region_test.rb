@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TeacherControllerTest < ActionController::TestCase
+class RegionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

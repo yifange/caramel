@@ -1,9 +1,9 @@
 %h1 Sign Up!
 
--if @admin.errors.any?
+-if @user.errors.any?
   .error_messages
     %h2 Form is invalid
     %ul
-      -for message in @admin.errors.full_messages
+      -for message in @user.errors.full_messages
         %li= message
 = render 'admins/form'

@@ -9,6 +9,10 @@
   #container
     .user_nav
       -if current_user
+        %header.navbar.navbar-fixed-top
+          %nav.navbar-inner
+            .container
+        = render 'layouts/navigation'
         Logged in as 
         = current_user.email
         = link_to("Log out", logout_path)
@@ -16,10 +20,10 @@
         = link_to('Sign up', signup_path)
         or
         = link_to('log in', login_path)
-  %header.navbar.navbar-fixed-top
-    %nav.navbar-inner
-      .container
-        = render 'layouts/navigation'
+  -# %header.navbar.navbar-fixed-top
+  -#   %nav.navbar-inner
+  -#     .container
+  -#       = render 'layouts/navigation'
   #main{:role => "main"}
     .container
       .content

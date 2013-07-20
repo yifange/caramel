@@ -9,6 +9,7 @@ class SorceryCore < ActiveRecord::Migration
       t.string :middle_name,      :default => nil
       t.string :last_name,        :default => nil
       t.string :phone,            :default => nil
+      t.string :type,             :default => nil
 
       t.timestamps
     end

@@ -69,7 +69,6 @@ $(document).ready attachColumnHandler
 $(document).ready attachEventHandler
 $(document).ready attachSubmitHandler
 $(document).ready attachDeleteHandler
-
 $(document).on "page:load", attachColumnHandler
 $(document).on "page:load", attachEventHandler
 $(document).on "page:load", attachSubmitHandler

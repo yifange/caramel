@@ -1,0 +1,8 @@
+#calendar-form-body
+  = simple_form_for @calendar do |f|
+    = f.input :start_time
+    = f.input :end_time
+    = f.input :date, :default => @date ? Date.strptime(@date) : Date.today
+
+    = f.association :calendar_marking, :label_method => "full", :include_blank => false
+    = f.button :submit

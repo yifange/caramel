@@ -1,13 +1,22 @@
 class CalendarsController < ApplicationController
   def index
-    @calendar = rehash_objs(Calendar.all)
+    @calendars = rehash_objs(Calendar.all)
     @month = params[:month] || Date.today.month
     @year = params[:year] || Date.today.year
     @day = params[:day] || Date.today.day
   end
 
+  def index_week
+    @calendars = rehash_objs(Calendar.all)
+    @month = params[:month] || Date.today.month
+    @year = params[:year] || Date.today.year
+    @day = params[:day] || Date.today.day
+    puts "haha", @year, @month, @day
+  end
+
   def new
     @calendar = Calendar.new
+    @date = params[:date]
   end
 
   def create
@@ -18,7 +27,9 @@ class CalendarsController < ApplicationController
       render :new
     end
   end
-
+  def show
+    
+  end
   private
   def rehash_objs(objs)
     r = {}
@@ -31,6 +42,6 @@ class CalendarsController < ApplicationController
     r
   end
   def calendar_params
-    params.require(:calendar).permit(:date, :calendar_marking_id)
+    params.require(:calendar).permit(:date, :calendar_marking_id, :start_time, :end_time)
   end
 end

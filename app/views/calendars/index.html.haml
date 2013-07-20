@@ -1,2 +1,47 @@
-= monthly_calendar_for @calendars, :month => @month.to_i, :year => @year.to_i do |c|
-  = c.draw_calendar
+-# .nav-container.well
+-#   %table
+-#     %tr
+-#       %td
+-#         #cal-date-nav.btn-group.pull-left
+-#           %button.btn#cal-nav-prev
+-#             %i.icon-arrow-left
+-#           %button.btn#cal-nav-today
+-#             today
+-#           %button.btn#cal-nav-next
+-#             %i.icon-arrow-right
+-#       %td.text
+-#         %span#cal-current-date
+-#       %td.pull-right
+-#         #cal-view-switch.btn-group.pull-right
+-#           %a.btn#cal-switch-year.active{:href => "/calendars"}
+-#             year
+-#           %a.btn#cal-switch-week{:href => "/calendars/week"}
+-#             week
+.subnav
+  %ul.nav.nav-pills.unselectable
+    %li
+      %a#subnav-today{:href => "#"}
+        today
+    %li
+      %a#subnav-prev{:href => "#"}
+        <
+    %li
+      %a#subnav-next{:href => "#"}
+        >
+    %li
+      %p.navbar-text#subnav-text
+    %li.pull-right
+      %a#subnav-week.pull-right{:href => "/calendars/week"}
+        week
+    %li.pull-right.active
+      %a#subnav-year.pull-right{:href => "/calendars"}
+        year
+      
+
+
+= annual_calendar_for @calendars, :year => @year.to_i do |c|
+  = c.draw_annual_calendar_body
+
+.wc-container{:style => "display: none"}
+
+= modal_for "calendar"

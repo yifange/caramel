@@ -11,7 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130715105657) do
+ActiveRecord::Schema.define(version: 20130723014410) do
+
+  create_table "calendar_markings", force: true do |t|
+    t.string   "abbrev"
+    t.string   "full"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "calendars", force: true do |t|
+    t.date     "date"
+    t.integer  "calendar_marking_id"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.integer  "school_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "calendars", ["calendar_marking_id"], name: "index_calendars_on_calendar_marking_id"
+  add_index "calendars", ["school_id"], name: "index_calendars_on_school_id"
 
   create_table "events", force: true do |t|
     t.time     "start_time"
@@ -25,6 +45,14 @@ ActiveRecord::Schema.define(version: 20130715105657) do
   create_table "month_events", force: true do |t|
     t.datetime "date"
     t.string   "mark"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.boolean  "published"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

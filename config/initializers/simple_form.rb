@@ -53,10 +53,10 @@ SimpleForm.setup do |config|
   # config.label_text = lambda { |label, required| "#{required} #{label}" }
 
   # You can define the class to use on all labels. Default is nil.
-  # config.label_class = nil
+  config.label_class = 'control-label'
 
   # You can define the class to use on all forms. Default is simple_form.
-  # config.form_class = :simple_form
+  # config.form_class = 'simple_form form-horizontal'
 
   # Whether attributes are required by default (or not). Default is true.
   # config.required_by_default = true

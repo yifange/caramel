@@ -1,0 +1,41 @@
+%ul.nav.nav-tabs
+  %li
+    %a{:href => "#home", "data-toggle" => "tab"}
+      Home
+  %li
+    %a{:href => "#profile", "data-toggle" => "tab"}
+      Profile
+.tab-content
+  .tab-pane.active#home
+    %p
+      %a#username{:href => "#", "data-type" => "text", "data-pk" => "1"}
+        awesome
+  .tab-pane#profile
+    %p
+      This is profile
+
+
+%table.table.table-striped
+  %tr
+    %td
+      Aha
+    %td
+      oooh
+    %td.accordion-toggle{:style => "width: 30px", "data-toggle" => "collapse", "data-target" => "#secret", :href => "#secret"}
+      detail
+  %tr
+    %td
+      %span#secret.collapse.accordion-body.in{:colspan => 3}
+        This is secret
+
+  %tr
+    %td
+      Aha
+    %td
+      oooh
+    %td.accordion-toggle{:style => "width: 30px", "data-toggle" => "collapse", "data-target" => "#secret2", :href => "#secret2"}
+      detail
+  %tr
+    %td
+      #secret2.collapse.accordion-body.in{:colspan => 3}
+        This is also secret

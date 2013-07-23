@@ -7,17 +7,6 @@ attachDayGridHandler = ->
     month = $(this).data("month")
     day = $(this).data("day")
     window.location.href = "/calendars/week?year=" + year + "&month=" + month + "&day=" + day
-    # $.get("/calendars/week?year=" + year + "&month=" + month + "&day=" + day, (data, status) ->
-    #   $("#cal-switch-year").toggleClass("active")
-    #   $("#cal-switch-week").toggleClass("active")
-
-    #   $("div.wc-container").html($(data).find("div.wc-container").html())
-    #   $("div.ac-container").hide("fade",  -> $("div.wc-container").show("fade"))
-
-    #   attachColumnHandler()
-    #   attachEventHandler()
-    #   return false
-    # )
 
 attachColumnHandler = ->
   $("div.wc-day-column-inner").css("cursor", "pointer").on "click", ->
@@ -25,34 +14,37 @@ attachColumnHandler = ->
     # window.location.href = "/events/new?date=" + date
     $.get("/calendars/new?date=" + date, (data, status) ->
       $("#calendar-modal-body").html($(data).find("#calendar-form-body").html())
-      $("#calendar-new-submit").hide()
+      $("#calendar-form-submit").hide()
       $("#calendar-modal-delete").hide()
       $("#calendar-modal-title").html("Create Event")
       $("#calendar-modal").modal({
         keyboard: true
       })
+      # initTimepicker()
+      # initDatepicker()
     )
     return false
 
 attachEventHandler = ->
-  $("div.wc-cal-calendar").on "click", ->
+  $("div.wc-cal-event").on "click", ->
     eventId = $(this).data("eventid")
     $.data($("#calendar-modal-delete")[0], "eventid", eventId)
     $.get("/calendars/" + eventId + "/edit", (data, status) ->
       $("#calendar-modal-body").html($(data).find("#calendar-form-body").html())
-      $("#calendar-new-submit").hide()
+      $("#calendar-form-submit").hide()
       $("#calendar-modal-delete").show()
       $("#calendar-modal-title").html("Update Event")
       $("#calendar-modal").modal({
         keyboard: true
       })
+      # initTimepicker()
+      # initDatepicker()
     )
     return false
 
 attachSubmitHandler = ->
   $("#calendar-modal-confirm").on "click", ->
     $form = $("form.calendar")
-    # alert($form.attr("method"))
     $.ajax({
       type: $form.attr("method"),
       url: $form.attr("action"),
@@ -60,10 +52,12 @@ attachSubmitHandler = ->
       success: (data, status) ->
         $("#calendar-modal").modal("toggle")
         $.get(document.URL, (data, status) ->
-          $(".wc-container").html($(data).filter(".wc-container").html())
+          $(".wc-container").html($(data).find(".wc-container").html())
           attachColumnHandler()
           attachEventHandler()
         )
+      error: (data, status) ->
+        $("#calendar-modal-body").html($(data.responseText).find("#calendar-form-body").html())
     })
 attachDeleteHandler = ->
   $("#calendar-modal-delete").on "click", ->
@@ -75,7 +69,7 @@ attachDeleteHandler = ->
       complete: (data, status) ->
         $("#calendar-modal").modal("toggle")
         $.get(document.URL, (data, status) ->
-          $(".wc-container").html($(data).filter(".wc-container").html())
+          $(".wc-container").html($(data).find(".wc-container").html())
           attachColumnHandler()
           attachEventHandler()
         )
@@ -99,20 +93,39 @@ attachSubnavHandler = ->
 
 
 
+attachRadioHandler = ->
+  $("div.btn-group[data-toggle-name=*]").each ->
+    group = $(this)
+    form = group.parents('form').eq(0)
+    name = group.attr('data-toggle-name')
+    hidden = $('input[name="' + name + '"]', form)
+    $('button', group).each ->
+      button = $(this)
+      button.on "click", ->
+        hidden.val($(this).val())
+      if button.val() == hidden.val()
+        button.addClass('active')
 
+
+
+
+# initTimepicker = ->
+#   $("#calendar_start_time").timepicker({
+#   })
+#   $("#calendar_end_time").timepicker({
+#   })
+# initDatepicker = ->
+#   $("#calendar_date").datepicker()
+# initSelectpicker = ->
+#   $(".selectpicker").selectpicker()
 
 $(document).ready attachColumnHandler
 $(document).ready attachEventHandler
 $(document).ready attachSubmitHandler
 $(document).ready attachDeleteHandler
-$(document).ready attachDayGridHandler
 $(document).ready attachSubnavHandler
 $(document).on "page:load", attachColumnHandler
 $(document).on "page:load", attachEventHandler
 $(document).on "page:load", attachSubmitHandler
 $(document).on "page:load", attachDeleteHandler
-$(document).on "page:load", attachDayGridHandler
 $(document).on "page:load", attachSubnavHandler
-
-
-

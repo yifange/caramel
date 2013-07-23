@@ -1,7 +1,6 @@
 (function ($) {
  
 	$(function(){
- 
 		// fix sub nav on scroll
 		var $win = $(window),
 				$body = $('body'),
@@ -11,7 +10,7 @@
 				subnavTop = $('.subnav').length && $('.subnav').offset().top - navHeight,
 				marginTop = parseInt($body.css('margin-top'), 10);
 				isFixed = 0;
- 
+   
 		// processScroll();
  
 		// $win.on('scroll', processScroll);
@@ -33,3 +32,5 @@
 	});
  
 })(window.jQuery);
+$(".bootstrap-timepicker-component").timepicker()
+$(".dateselect-time").timepicker()

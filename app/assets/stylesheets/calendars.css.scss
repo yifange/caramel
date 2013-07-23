@@ -1,6 +1,14 @@
 // Place all the styles related to the calendars controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.dropdown-menu {
+  z-index: 1060;
+}
+#calendar-modal {
+  // width: 400px;
+  // margin-left: -200px;
+}
+
 .unselectable {
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -42,12 +50,18 @@ td.mix {
   background-color: #DDDD00;
   border-radius: 4px;
 }
+a.day-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
 .mc-container {
   table.mc-table {
     // margin: auto;
     // margin-top: 5px;
     box-shadow: 0 0 3px #888888;
-    border-radius: 5px
+    border-radius: 5px;
   }
   td {
     padding: 0.35em 0.55em;

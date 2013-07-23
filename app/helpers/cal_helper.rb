@@ -17,11 +17,25 @@ module CalHelper
     content_tag :div, content, :class => "wc-container"
   end
   
+  def flat_monthly_calendar_for(objects, *args, &block)
+    options = args.last.is_a(Hash) ? args.pop : {}
+    content = capture(FlatMonthlyCalendarBuilder.new(self, objects || [], options), &block)
+    content_tag :div, content, :class => "fmc-container"
+  end
+
   class CalendarBuilder
     attr_accessor :parent
     delegate :capture, :content_tag, :tag, :link_to, :concat, :to => :parent
     def initialize(parent, objects, options)
       @parent, @objects, @options = parent, objects, options
+    end
+  end
+
+  class FlatMonthlyCalendarBuilder
+    def initialize(parent, objects, options)
+      super(parent, objects, options)
+      year = options[:year] || Date.today.year
+      month = options[:month] || Date.today.month
     end
   end
 
@@ -265,7 +279,7 @@ module CalHelper
           week += 1
         end
 
-        text = content_tag :span, day.day
+        text = link_to day.day, {:controller => :calendars, :action => :index_week, :year => day.year, :month => day.month, :day => day.day}, :class => "day-link"
         cal_days.concat(klass.empty? ? (content_tag :td, text, :data => {:year => day.year, :month => day.month, :day => day.day}) : (content_tag :td, text, :class => klass, :data => {:year => day.year, :month => day.month, :day => day.day}))
         cal_days.concat("</tr>".html_safe) if day.saturday?
       end

@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-modal
+//= require bootstrap-collapse
 //= require turbolinks
 //= require_tree .

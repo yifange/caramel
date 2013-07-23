@@ -1,5 +1,5 @@
 = simple_form_for @school do |f|
   = f.input :abbrev
   = f.input :full
-  = f.association :region, :label_method => :name, :value_method => :id, :include_blank => false
+  = f.association :region, :label_method => :name, :value_method => :id, :include_blank => false, collection: Region.order('name ASC')
   = f.button :wrapped, :cancel => schools_path

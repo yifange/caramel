@@ -1,9 +1,9 @@
 %h1 Sign Up!
 
--if @user.errors.any?
+-if @teacher.errors.any?
   .error_messages
     %h2 Form is invalid
     %ul
-      -for message in @user.errors.full_messages
+      -for message in @teacher.errors.full_messages
         %li= message
-= render 'users/form'
+= render 'teachers/form'

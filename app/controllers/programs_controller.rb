@@ -1,5 +1,12 @@
 class ProgramsController < ApplicationController
   def index
+    if current_user && current_user.type != "Admin"
+      @schools = School.find(:all, :conditions => {:region_id => current_user.region_id})
+      @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
+      # @students = Student.find(:all, :conditions => {:region_id => current_user.region_id})
+    else
+      @schools = School.all
+    end
     @programs = Program.all
   end
 

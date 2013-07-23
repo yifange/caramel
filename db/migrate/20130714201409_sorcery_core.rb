@@ -10,6 +10,7 @@ class SorceryCore < ActiveRecord::Migration
       t.string :last_name,        :default => nil
       t.string :phone,            :default => nil
       t.string :type,             :default => nil
+      t.references :region,           :default => nil
 
       t.timestamps
     end

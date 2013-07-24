@@ -11,7 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130723014410) do
+ActiveRecord::Schema.define(version: 20130723234851) do
+
+  create_table "attendance_markings", force: true do |t|
+    t.string   "abbrev"
+    t.string   "full"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "attendances", force: true do |t|
+    t.integer  "enrollment_id"
+    t.date     "date"
+    t.integer  "attendance_marking_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attendances", ["attendance_marking_id"], name: "index_attendances_on_attendance_marking_id"
+  add_index "attendances", ["enrollment_id"], name: "index_attendances_on_enrollment_id"
 
   create_table "calendar_markings", force: true do |t|
     t.string   "abbrev"
@@ -33,6 +51,18 @@ ActiveRecord::Schema.define(version: 20130723014410) do
   add_index "calendars", ["calendar_marking_id"], name: "index_calendars_on_calendar_marking_id"
   add_index "calendars", ["school_id"], name: "index_calendars_on_school_id"
 
+  create_table "enrollments", force: true do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "course_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "enrollments", ["course_id"], name: "index_enrollments_on_course_id"
+  add_index "enrollments", ["student_id"], name: "index_enrollments_on_student_id"
+
   create_table "events", force: true do |t|
     t.time     "start_time"
     t.time     "end_time"
@@ -53,6 +83,14 @@ ActiveRecord::Schema.define(version: 20130723014410) do
     t.string   "title"
     t.text     "body"
     t.boolean  "published"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "students", force: true do |t|
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

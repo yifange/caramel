@@ -1,2 +1,12 @@
--content_for :title do
+- content_for :title do
 	people
+
+- content_for :sidemenu do
+	%ul.nav.nav-list
+		%li.active
+			%a{:href => '#'}STUFF
+		%li
+			%a{:href => '#'}TEACHER
+		%li
+			%a{:href => '#'}STUDENT
+

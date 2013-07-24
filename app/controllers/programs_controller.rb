@@ -1,11 +1,20 @@
 class ProgramsController < ApplicationController
+  def testfunc
+    Instrument.all
+  end
+
+
   def index
     if current_user && current_user.type != "Admin"
-      @schools = School.find(:all, :conditions => {:region_id => current_user.region_id})
-      @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
+      @schools = School.where(:region_id => current_user.region_id)
+      # @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
+      @teachers = Teacher.where(:region_id => current_user.region_id)
+      @instruments = Instrument.all
       # @students = Student.find(:all, :conditions => {:region_id => current_user.region_id})
     else
       @schools = School.all
+      @teachers = Teacher.all
+      @instruments = Instrument.all
     end
     @programs = Program.all
   end

@@ -20,8 +20,6 @@
             %td Group Courses Per Year
         %tbody
           -@programs.each do |program|
-            -# %tr{"data-toggle" => "collapse", "data-parent" => "#accordion2",  :href => "#collapseOne"}
-
             %tr
               %td= program.instrument.name
               %td= program.course_type.full
@@ -32,10 +30,10 @@
               %td.detailInfo{:colspan => "6"}
                 %div.accodian-body.collapse{:id => "collapse-#{program.id}"}
                   Teachers:
-                  %a#hahaha{:href => "#", "data-type" => "select2", "data-value" => "s2", "data-pk" => "1"}
-                  %select#all-teachers{:multiple => true}
+                  %a#hahaha{:href => "#", "data-type" => "select2", "data-pk" => "1"}
+                  %select.all-teachers{:multiple => true}
                     -@teachers.each do |teacher|
-                      %option{:value => "----#{teacher.first_name} #{teacher.last_name}"}
+                      %option{:value => "#{teacher.first_name}"}
                         = teacher.first_name.to_s + " " + teacher.middle_name.to_s + " " + teacher.last_name.to_s
 
 

@@ -17,7 +17,21 @@
 #     }
 #   })
 
+$ ->
+  $.fn.editable.defaults.mode = 'inline'
+  $('.all-teachers').each((ind, val) ->
+    $(val).select2({width: "1000px"}))
 
+  # $('#regular-total').editable({
+  #   url: '/post',
+  #   title: 'Enter User Name'
+  # })
 
- $ ->
-   $('#all-teachers').select2({width: "1000px"})
+  # $('#group-total').editable({
+  #   url: '/post',
+  #   title: 'Enter User Name'
+  # })
+
+  # $('.all-instruments').each((ind, val) ->
+  #   $(val).editable(prepend: true, children: [{ind, val}]))
+

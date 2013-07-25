@@ -1,0 +1,31 @@
+!!!
+%html
+	%head
+		%meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maxi    mum-scale=1"}
+		%title Sign in
+		= stylesheet_link_tag :login, :media => "all"
+	%body
+		.navbar.navbar-inverse
+			.navbar-inner
+				%a.brand{:href => '#'} Musikids Class Attendance
+		.content#login-content
+			%form
+				%fieldset
+					%legend
+						%strong
+							Sign in
+					%label
+						%strong
+							Username
+					%input.my-input{:type => 'text', :placeholder => 'Username'}
+					%label
+						%strong
+							Password
+					%input.my-input{:type => 'text', :placeholder => 'Password'}
+					.form-inline
+						%label.checkbox
+							%input{:type => 'checkbox'}
+								remember me
+						#login-sign-in
+							%button.btn{:type => 'submit'}
+								Sign in

@@ -1,29 +1,27 @@
 !!!
 %html
-%head
-	%meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1"}
-	%title= content_for?(:title) ? yield(:title) : "App_Name"
-	= stylesheet_link_tag :application, :media => "all"
-	= javascript_include_tag :application
-	= csrf_meta_tags
-	= yield(:head)
-%body
-	.navbar.navbar-inverse
-		.navbar-inner
-			%a.brand{:href => '#'} Musikids Class Attendance
-			%ul.nav
-				%li#nav-people
-					%a{:href => '/people'} People
-				%li#nav-program
-					%a{:href => '/program'} Program
-				%li#nav-calendar
-					%a{:href => '/calendar'} Calendar
-			%a.brand#nav-right{:href => '#'} 
-				%i.icon-user.icon-white
-				Jinqiu Deng
-	.container-fluid
-		.row-fluid
-			.span2.content
-				= yield(:sidemenu)
-			.span10.content
-				The main part for the page
+	%head
+		%meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1"}
+		%title= content_for?(:title) ? yield(:title) : "App_Name"
+		= stylesheet_link_tag :application, :media => "all"
+		= javascript_include_tag :application
+	%body
+		.navbar.navbar-inverse
+			.navbar-inner
+				%a.brand{:href => '#'} Musikids Class Attendance
+				%ul.nav
+					%li#nav-people
+						%a{:href => '/people'} People
+					%li#nav-program
+						%a{:href => '/program'} Program
+					%li#nav-calendar
+						%a{:href => '/calendar'} Calendar
+				%a.brand#nav-right{:href => '#'} 
+					%i.icon-user.icon-white
+					Jinqiu Deng
+		.container-fluid
+			.row-fluid
+				.span2.content
+					= yield(:sidemenu)
+				.span10.content
+					The main part for the page

@@ -6,7 +6,7 @@ Caramel::Application.routes.draw do
 	get 'people' => 'people#index'
 	get 'program' => 'program#index'
 	get 'calendar' => 'calendar#index'
-	root 'login#index'
+	root 'signin#index'
 
  # root :to => "schools#index"
   # The priority is based upon order of creation: first created -> highest priority.

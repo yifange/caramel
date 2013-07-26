@@ -2,6 +2,10 @@ Caramel::Application.routes.draw do
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
   get "signup" => "admins#new", :as => "signup"
+
+  get "programs/get_teachers" => "programs#get_teachers"
+  post "programs/save_teachers" => "programs#save_teachers"
+
   resources :schools, :instruments, :course_types, :programs, :attendence_markings, :calendar_markings, :attendences, :teachers, :sessions, :users, :admins, :staffs, :regions
   root :to => "schools#index"
   # The priority is based upon order of creation: first created -> highest priority.

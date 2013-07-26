@@ -1,8 +1,16 @@
 class ProgramsController < ApplicationController
-  def testfunc
-    Instrument.all
+  respond_to  :html, :json
+
+  def get_teachers
+    @teachers = Teacher.all
+    @results = @teachers.map { |teacher| {:id => teacher.id, :text => teacher.first_name + " " + teacher.last_name}}
+    render :json => @results
   end
 
+  def save_teachers
+    @v = params[:value]
+    @t = @v[:text]
+  end
 
   def index
     if current_user && current_user.type != "Admin"
@@ -24,6 +32,7 @@ class ProgramsController < ApplicationController
   end
 
   def create
+    # render :json => params
     @program = Program.new(program_params)
     if @program.save
       redirect_to programs_path

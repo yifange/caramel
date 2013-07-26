@@ -30,11 +30,11 @@
               %td.detailInfo{:colspan => "6"}
                 %div.accodian-body.collapse{:id => "collapse-#{program.id}"}
                   Teachers:
-                  %a#hahaha{:href => "#", "data-type" => "select2", "data-pk" => "1"}
-                  %select.all-teachers{:multiple => true}
-                    -@teachers.each do |teacher|
-                      %option{:value => "#{teacher.first_name}"}
-                        = teacher.first_name.to_s + " " + teacher.middle_name.to_s + " " + teacher.last_name.to_s
+                  %a#all-teachers{:viewsseperator => ",", :href => "#", "data-type" => "select2", "data-pk" => "1", "data-source" => "/programs/get_teachers.json", "data-url" => "/programs", "data-value" => "1"}
+                  -# %select.all-teachers{:multiple => true}
+                    -# -@teachers.each do |teacher|
+                    -#   %option{:value => "#{teacher.first_name}"}
+                    -#     = teacher.first_name.to_s + " " + teacher.middle_name.to_s + " " + teacher.last_name.to_s
 
 
 

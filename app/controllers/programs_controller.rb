@@ -8,8 +8,7 @@ class ProgramsController < ApplicationController
   end
 
   def save_teachers
-    @v = params[:value]
-    @t = @v[:text]
+    @values = params[:value].map { |v| v[:text]}
   end
 
   def index

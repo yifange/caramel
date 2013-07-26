@@ -1,11 +1,10 @@
 Caramel::Application.routes.draw do
-  get "logout" => "sessions#destroy", :as => "logout"
-  get "login" => "sessions#new", :as => "login"
-  get "signup" => "admins#new", :as => "signup"
- 
 	get 'people' => 'people#index'
 	get 'program' => 'program#index'
 	get 'calendar' => 'calendar#index'
+
+	get ':controller/:action/'
+
 	root 'signin#index'
 
  # root :to => "schools#index"

@@ -1,7 +1,7 @@
 !!!
 %html
 	%head
-		%meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maxi    mum-scale=1"}
+		%meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1"}
 		%title Sign in
 		= stylesheet_link_tag :login, :media => "all"
 	%body
@@ -9,23 +9,22 @@
 			.navbar-inner
 				%a.brand{:href => '#'} Musikids Class Attendance
 		.content#login-content
-			%form
+			= form_tag '/signin/verify', method: 'get' do
 				%fieldset
 					%legend
 						%strong
 							Sign in
 					%label
 						%strong
-							Username
-					%input.my-input{:type => 'text', :placeholder => 'Username'}
+							Email
+					= text_field_tag :email, nil, :placeholder => 'Email', :class => 'my-input'
 					%label
 						%strong
 							Password
-					%input.my-input{:type => 'text', :placeholder => 'Password'}
+					= password_field_tag :password, nil, :placeholder => 'Password', :class => 'my-input' 
 					.form-inline
 						%label.checkbox
-							%input{:type => 'checkbox'}
-								remember me
+							= check_box_tag :remember_me
+							remember me
 						#login-sign-in
-							%button.btn{:type => 'submit'}
-								Sign in
+							= submit_tag "Sign in", :class => 'btn'

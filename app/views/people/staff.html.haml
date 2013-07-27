@@ -11,4 +11,5 @@
 			%a{:href => '#'} STUDENTS
 
 = content_for :main do
-	test
+	%a#username{:href => '#',':data-type' => 'text', ':data-pk' => '1'} ddd
+	%a#status{:href => '#', ':data-type' => 'select', ':data-pk' => '1', ':data-url' => '/post', ':data-original-title' => 'Select status'} ddd

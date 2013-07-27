@@ -8,15 +8,17 @@
 	%body
 		.navbar.navbar-inverse
 			.navbar-inner
-				%a.brand{:href => '#'} Musikids Class Attendance
+				%a.brand Musikids Class Attendance
 				%ul.nav
 					%li#nav-people
-						%a{:href => '/people'} People
+						%a{:href => '/people'} PEOPLE
 					%li#nav-program
-						%a{:href => '/program'} Program
+						%a{:href => '/programs'} PROGRAMS
 					%li#nav-calendar
-						%a{:href => '/calendar'} Calendar
-				%a.brand#nav-right{:href => '#'} 
+						%a{:href => '/classes'} CLASSES
+					%li#nav-calendar
+						%a{:href => ''} INSTRUMENTS
+				%a.brand#nav-right
 					%i.icon-user.icon-white
 					Jinqiu Deng
 		.container-fluid
@@ -24,5 +26,4 @@
 				.span2.content
 					= yield(:sidemenu)
 				.span10.content
-					main part
-					.main-part
+					= yield(:main)

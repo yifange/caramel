@@ -1,4 +1,13 @@
 class PeopleController < ApplicationController
-  def index
+  def staff
+		
+  end
+
+  def teachers
+		
+  end
+
+  def students
+		
   end
 end

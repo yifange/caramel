@@ -4,12 +4,12 @@ class SigninController < ApplicationController
   end
 
 	def verify
-		#render :layout => false
-		#user = login(params[:email], params[:password], params[:remember_me])
-    #if user
-      redirect_to "/people"
-    #else
-    #  flash.now.alert = "Email or password was invalid."
-    #end
+		user = login(params[:email], params[:password], params[:remember_me])
+    if user
+			puts user.email
+      redirect_to '/people'
+    else
+			redirect_to root_url
+    end
 	end
 end

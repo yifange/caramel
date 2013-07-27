@@ -1,0 +1,9 @@
+%h1 Sign Up!
+
+-if @staff.errors.any?
+  .error_messages
+    %h2 Form is invalid
+    %ul
+      -for message in @staff.errors.full_messages
+        %li= message
+= render 'staffs/form'

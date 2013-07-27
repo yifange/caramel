@@ -7,10 +7,12 @@ class SessionsController < ApplicationController
     
     if user
       user1 = User.find_by email: params[:user][:email]
-      puts "hahah lala 2433198230919-9-"
-      puts user1
       if user1[:type] == "Admin"
         redirect_back_or_to root_url, :notice => "Logged in as a administrator!"
+      elsif user1[:type] == "Staff"
+        redirect_back_or_to root_url, :notice => "Logged in as a staff!"
+      elsif user1[:type] == "Teacher"
+        redirect_back_or_to root_url, :notice => "Logged in as a teacher!"
       # if params[:user][:role] == "admin"
       #   redirect_back_or_to root_url, :notice => "Logged in as a administrator!"
       # end

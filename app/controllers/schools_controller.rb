@@ -1,6 +1,10 @@
 class SchoolsController < ApplicationController
   def index
-    @schools = School.all
+    if current_user && current_user.type != "Admin"
+      @schools = School.find(:all, :conditions => {:region_id => current_user.region_id})
+    else
+      @schools = School.all
+    end
   end
 
   def new
@@ -41,6 +45,6 @@ class SchoolsController < ApplicationController
 
 private
   def school_params
-    params.require(:school).permit(:abbrev, :full)
+    params.require(:school).permit(:abbrev, :full, :region_id)
   end
 end

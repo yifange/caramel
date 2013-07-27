@@ -1,8 +1,8 @@
 = simple_form_for :user, :url => '/sessions' do |f|
   = f.input :email
   = f.input :password
-  = label_tag "login as"
-  = f.collection_radio_buttons :role, [[:teacher, "Teacher"], [:staff, "Staff"], [:admin, "Administrator"]], :first, :last
+  -# = label_tag "login as"
+  -# = f.collection_radio_buttons :role, [[:teacher, "Teacher"], [:staff, "Staff"], [:admin, "Administrator"]], :first, :last
   = f.input :remember_me do
     = check_box_tag :remember_me, 1, params[:remember_me]
     -# = label_tag :remember_me

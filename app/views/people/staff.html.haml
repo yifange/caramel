@@ -2,14 +2,9 @@
 	people
 
 = content_for :sidemenu do
-	%ul.nav.nav-list
-		%li.active
-			%a{:href => '#'} STAFF
-		%li
-			%a{:href => '#'} TEACHERS
-		%li
-			%a{:href => '#'} STUDENTS
+	= render 'people/sidebar'
 
 = content_for :main do
-	%a#username{:href => '#',':data-type' => 'text', ':data-pk' => '1'} ddd
-	%a#status{:href => '#', ':data-type' => 'select', ':data-pk' => '1', ':data-url' => '/post', ':data-original-title' => 'Select status'} ddd
+	staff<br>
+	%a#username{:href => '#','data-type' => 'text', 'data-pk' => '1'} ddd
+	%a#status{:href => '#', 'data-type' => 'select', 'data-pk' => '1', 'data-url' => '/post', 'data-original-title' => 'Select status'} ddd

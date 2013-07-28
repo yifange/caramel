@@ -1,13 +1,8 @@
--content_for :title do
+= content_for :title do
 	programs
 
-- content_for :sidemenu do
-	%ul.nav.nav-list
-		%li.active
-			%a{:href => '#'}REGIONS
-		%li
-			%a{:href => '#'}INSTRUCMENT TYPES
-		%li
-			%a{:href => '#'}PROGRAM TYPES
-		%li
-			%a{:href => '#'}SCHOOLS
+= content_for :sidemenu do
+	= render 'programs/sidebar'
+
+= content_for :main do
+	program types

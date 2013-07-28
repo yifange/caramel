@@ -2,15 +2,7 @@
 	programs
 
 = content_for :sidemenu do
-	%ul.nav.nav-list
-		%li.active
-			%a{:href => '#'}REGIONS
-		%li
-			%a{:href => '#'}INSTRUCMENT TYPES
-		%li
-			%a{:href => '#'}PROGRAM TYPES
-		%li
-			%a{:href => '#'}SCHOOLS
+	= render 'programs/sidebar'
 
 = content_for :main do
 	.tabbable

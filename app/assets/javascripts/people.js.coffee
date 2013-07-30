@@ -1,17 +1,13 @@
 $ ->
 	$.fn.editable.defaults.mode = 'inline'
-	$('#username').editable({
+	$('.email-input').editable({
 		url: '',
-		title: 'Enter username'
+		type: 'text'
+		placeholder: 'please input email'
 	})
 
 $ ->
 	$.fn.editable.defaults.mode = 'inline'
-	$('#status').editable({
-		value: 2,
-		source: [
-			{value: 1, text: 'Active'},
-			{value: 2, text: 'Blocked'},
-			{value: 3, text: 'Deleted'}
-		]
-	})
+	$('.region-input').select2({
+		data:[{id:0,text:'enhancement'},{id:1,text:'bug'},{id:2,text:'duplicate'},{id:3,text:'invalid'},{id:4,text:'wontfix'}]
+	});

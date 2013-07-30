@@ -5,6 +5,25 @@
 	= render 'people/sidebar'
 
 = content_for :main do
-	staff<br>
-	%a#username{:href => '#','data-type' => 'text', 'data-pk' => '1'} ddd
-	%a#status{:href => '#', 'data-type' => 'select', 'data-pk' => '1', 'data-url' => '/post', 'data-original-title' => 'Select status'} ddd
+	%table.table.table-bordered.table-striped{:style => 'clear: both'}
+		%tr
+			%th{:width => '30%'}
+				Name
+			%th{:width => '30%'}
+				Email
+			%th
+				Region
+		%tr
+			%td
+			%td
+				%a.email-input{:href => '#'}
+					email
+			%td
+				%a.region-input{:href => '#'}
+		%tr
+			%td
+			%td
+				%a.text{:href => '#'}
+					email
+			%td
+				%a.region-input{:href => '#'}

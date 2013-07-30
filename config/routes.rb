@@ -8,5 +8,5 @@ Caramel::Application.routes.draw do
 
 	get ':controller/:action/'
 
-	root 'signin#index'
+	root 'session#signin'
 end

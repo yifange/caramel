@@ -2,7 +2,7 @@ class ProgramsController < ApplicationController
   respond_to  :html, :json
 
 	def regions
-
+		verify_user
 	end
 
   def get_teachers
@@ -17,6 +17,7 @@ class ProgramsController < ApplicationController
   end
 
   def schools
+		verify_user
     if current_user && current_user.type != "Admin"
       @schools = School.where(:region_id => current_user.region_id)
       # @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
@@ -32,7 +33,7 @@ class ProgramsController < ApplicationController
   end
 
 	def instrument_types
-
+		verify_user
 	end
 
   def create
@@ -46,6 +47,6 @@ class ProgramsController < ApplicationController
   end
 
 	def program_types
-
+		verify_user
 	end
 end

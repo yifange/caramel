@@ -11,4 +11,18 @@
  *= require_self
  *= require_tree .
  *= require select2
+ *= require bootstrap-editable
  */
+
+.navbar .brand {
+	color: #ffffff;
+	cursor: default;
+	font-weight: bold;
+}
+ 
+#nav-right {
+	font-size: 100%;
+	font-weight: normal;
+	float: right;
+}
+

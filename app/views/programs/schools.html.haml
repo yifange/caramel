@@ -35,7 +35,7 @@
             -@programs.each do |program|
               %tr
                 %td
-                  %a.instrument-options{:href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-url" => "/programs/save_instruments.json", "data-source" => "/programs/get_instruments", "data-value" => "1"}
+                  %a.instrument-options{:href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-url" => "/programs/save_instruments", "data-source" => "/programs/get_instruments", "data-value" => "1"}
                 %td= program.course_type.full
                 %td= program.regular_courses_per_year
                 %td= program.group_courses_per_year
@@ -45,7 +45,8 @@
                   %div.accodian-body.collapse{:id => "collapse-#{program.id}"}
                     Teachers:
                     -# .teacher.options{select_tag "teacher-options", options_from_collection_for_select(@teachers, "id", "name")}
-                    %a.teacher-options{:viewsseperator => ",", :href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-source" => "/programs/get_teachers.json", "data-value" => "1", "data-url" => "/programs/save_teachers"} 
+                    %input.teacher-options{:type => "hidden", :value => "#{@assigned_teachers}", "data-pk" => "#{program.id}"}
+                      -# {:viewsseperator => ",", :href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-source" => "/programs/get_teachers.json", "data-value" => "1", "data-url" => "/programs/save_teachers"} 
 
 
                       -# -Assignment.where(:program_id => program.id).each do |ass|

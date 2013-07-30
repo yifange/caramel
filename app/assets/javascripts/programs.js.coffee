@@ -7,23 +7,40 @@ $ ->
   $('.instrument-options').editable({
   })
 
-  $('.teacher-options').editable({
-    select2: {
-    # }
-    # ajax: {
-    #   dataType: 'jsonp',
-    #   url: "/programs/get_teachers"
-    #   data: test = (data, page) =>
-    #     return {results: $.map(data, (teacher, i) =>
-    #       return {id: teacher.id, text: teacher.first_name + " " + teacher.last_name}
-    #     )}
-    # }
-    width: "100%",
+  $(".teacher-options").on("select2-blur", ->
+    $.ajax(
+      type: "POST",
+      url: "/programs/save_teachers",
+      data: {value: $(this).val(), pk: $(this).data("pk")},
+      dataType: "json",
+      results: (data, page) ->
+        return {results: data}
+    )
+  )
+
+  $(".teacher-options").select2({
+    ajax: {
+      type: "GET",
+      url: "/programs/get_teachers",
+      dataType: "json",
+      results: (data, page) ->
+        return {results: data}
+    },
+    initSelection: (element, callback) ->
+      data = []
+      $(element.val()).split(",").each( ->
+        item = this.split(";")
+        data.push({
+          id: item[0],
+          text: item[1]
+        })
+      )
+      element.val('')
+      callback(data)
+    width: '100%',
     multiple: true
-    # formatResult: test,
-    # formatSelection: test
-    }
   })
+
 
 
 

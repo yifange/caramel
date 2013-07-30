@@ -1,4 +1,6 @@
 Caramel::Application.routes.draw do
+  get 'subways' => 'subways#index'
+  post 'subways/sub' => 'subways#sub'
 	get 'people' => 'people#staff'
 	get 'programs' => 'programs#regions'
 	get 'classes' => 'classes#calendar'

@@ -15,31 +15,50 @@ class ProgramsController < ApplicationController
     render :json => @results
   end
 
+  def save_instruments
+    @program = Program.find(params[:pk])
+    @program.update_attributes(:instrument_id => params[:value])
+    render :json => params
+  end
+
   def get_teachers
     @teachers = Teacher.all
-    @results = @teachers.map { |teacher| {:id => teacher.id, :text => teacher.first_name + " " + teacher.last_name}}
+    @results = @teachers.map do |teacher|  
+      {:id => teacher.id, :text => teacher.first_name + " " + teacher.last_name}
+    end
     render :json => @results
   end
 
-  def save_teachers
-    render :json => params
-    # @values = params[:value]
-    # @assignments = Assignment.where(:program_id => params[:pk])
-    # @assignments.each do |ass|
-    #   @values.each do |v|
-    #     if ass.teacher_id == v # assignment already exists
-    #       @values.delete(v)
-    #       @assignments.delete(ass)
-    #     end
-    #   end
-    # end
+  def get_assigned_teachers
+    @assignments = Assignment.where(:program_id => params[:pk])
+    @assigned_teachers = ""
+    @assignments.each do |ass|
+      @teacher = Teacher.find(ass.teacher_id)
+      @assigned_teachers += ass.teacher_id + ":"  + @teacher.first_name + " " + @teacher.last_name + ","
+    end
+  end
 
-    # @assignments.each do |ass| # assignment not found, deleted
-    #   Assignment.delete(ass)
-    # end
-    # @values.each do |v| # assignment created
-    #   Assignment.create(:program_id => params[:pk], :teacher_id => v)
-    # end
+  def save_teachers
+    @values = params[:value].split(',')
+    @assignments = Assignment.where(:program_id => params[:pk])
+    @assignments.each do |assignment|
+      @values.each do |val|
+        v = val.to_i
+        if ass.teacher_id == v # assignment already exists
+          @values.delete(val)
+          @assignments.delete(assignment)
+        end
+      end
+    end
+
+    @assignments.each do |assignment| # assignment not found, deleted
+      Assignment.delete(assignment)
+    end
+    @values.each do |val| # assignment created
+      Assignment.create(:program_id => params[:pk], :teacher_id => val.to_i)
+    end
+
+    render :text => 'hahahh'
   end
 
   def schools
@@ -47,6 +66,7 @@ class ProgramsController < ApplicationController
       @schools = School.where(:region_id => current_user.region_id)
       @teachers = Teacher.where(:region_id => current_user.region_id)
       @instruments = Instrument.all
+      @assigned_teachers = get_assigned_teachers
       # @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
       # @students = Student.find(:all, :conditions => {:region_id => current_user.region_id})
     else

@@ -1,5 +1,19 @@
 class ProgramsController < ApplicationController
+  def index
+    @program = Program.all.first
+  end
+
   respond_to  :html, :json
+
+	def regions
+
+	end
+
+  def get_instruments
+    @instruments = Instrument.all
+    @results = @instruments.map { |instrument| {:id => instrument.id, :text => instrument.name}}
+    render :json => @results
+  end
 
   def get_teachers
     @teachers = Teacher.all
@@ -8,15 +22,32 @@ class ProgramsController < ApplicationController
   end
 
   def save_teachers
-    @values = params[:value].map { |v| v[:text]}
+    @values = params[:value]
+    @assignments = Assignment.where(:program_id => params[:pk])
+    @assignments.each do |ass|
+      @values.each do |v|
+        if ass.teacher_id == v # assignment already exists
+          @values.delete(v)
+          @assignments.delete(ass)
+        end
+      end
+    end
+
+    @assignments.each do |ass| # assignment not found, deleted
+      Assignment.delete(ass)
+    end
+    @values.each do |v| # assignment created
+      Assignment.create(:program_id => params[:pk], :teacher_id => v)
+    end
+    render :json => params
   end
 
-  def index
+  def schools
     if current_user && current_user.type != "Admin"
       @schools = School.where(:region_id => current_user.region_id)
-      # @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
       @teachers = Teacher.where(:region_id => current_user.region_id)
       @instruments = Instrument.all
+      # @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
       # @students = Student.find(:all, :conditions => {:region_id => current_user.region_id})
     else
       @schools = School.all
@@ -26,12 +57,21 @@ class ProgramsController < ApplicationController
     @programs = Program.all
   end
 
+	def instrument_types
+
+	end
+  
   def new
     @program = Program.new
   end
-
   def create
     # render :json => params
+    # @program = Program.new(program_params)
+    # if @program.save
+    #   redirect_to programs_path
+    # else
+    #   render :new
+    # end
     @program = Program.new(program_params)
     if @program.save
       redirect_to programs_path
@@ -40,28 +80,9 @@ class ProgramsController < ApplicationController
     end
   end
 
-  def show
-    @program = Program.find(params[:id])
-  end
+	def program_types
 
-  def edit
-    @program = Program.find(params[:id])
-  end
-
-  def update
-    @program = Program.find(params[:id])
-    if @program.update_attributes(program_params)
-      redirect_to programs_path
-    else
-      render :edit
-    end
-  end
-
-  def destroy
-    @program = Program.find(params[:id])
-    @program.destroy
-    redirect_to programs_path
-  end
+	end
 
 private
   def program_params

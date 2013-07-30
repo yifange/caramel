@@ -4,26 +4,36 @@
 
 $ ->
   $.fn.editable.defaults.mode = 'inline'
-  $('#all-teachers').editable({
-    select2: {
-      width: "100%",
-      multiple: true
-    }
+  $('.instrument-options').editable({
+    source: [
+      {value: 1, text: '+'}
+    ]
+
   })
+
+  $('.teacher-options').select2({
+    # select2: {
+    # }
+    # ajax: {
+    #   dataType: 'jsonp',
+    #   url: "/programs/get_teachers"
+    #   data: test = (data, page) =>
+    #     return {results: $.map(data, (teacher, i) =>
+    #       return {id: teacher.id, text: teacher.first_name + " " + teacher.last_name}
+    #     )}
+    # }
+    width: "100%"
+    # multiple: true,
+    # formatResult: test,
+    # formatSelection: test
+  })
+
+
+
+
 # $ ->
 #   $.fn.editable.defaults.mode = 'inline'
-#   $('#hahaha').editable({
-#     # name: 'instrument'
-#     url: '/post',
-#     title: 'Enter username'
-#     source: {
-#       {id: 's2', text: 'Great'}
 #
-#     }
-#     select2: {
-#       multiple: true
-#     }
-#   })
       # width: "1050px",
       # url: '/program/get_teachers'
       # source: ->

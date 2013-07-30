@@ -1,6 +1,6 @@
-class CreateTakings < ActiveRecord::Migration
+class CreateEnrollments < ActiveRecord::Migration
   def change
-    create_table :takings do |t|
+    create_table :enrollments do |t|
       t.references :program, index: true
       t.references :student, index: true
 

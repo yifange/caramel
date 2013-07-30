@@ -1,0 +1,7 @@
+= simple_form_for @program do |f|
+  = f.association :school, :label_method => :full, :value_method => :id, :include_blank => "Add new", collection: School.order('full ASC')
+  = f.association :instrument, :label_method => :name, :value_method => :id, :include_blank => false, collection: Instrument.order('name ASC')
+  = f.association :course_type, :label_method => :full, :value_method => :id, :include_blank => false, collection: CourseType.order('full ASC')
+  = f.input :regular_courses_per_year
+  = f.input :group_courses_per_year
+  = f.button :wrapped, :cancel => programs_path

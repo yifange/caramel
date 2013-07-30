@@ -37,6 +37,7 @@ gem 'bootstrap-sass'
 gem 'sorcery'
 gem 'select2-rails'
 gem 'bootstrap-editable-rails'
+gem 'simple_form'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

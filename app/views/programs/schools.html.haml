@@ -19,14 +19,15 @@
 					%thead
 						%tr
 							%td Instrument
-							%td Course Type
-							%td Regular Courses Per Year
-							%td Group Courses Per Year
+							%td Class Type
+							%td Regular Classes Per Year
+							%td Group Classes Per Year
 							%td Detail
 					%tbody
 						-@programs.each do |program|
 							%tr
-								%td= program.instrument.name
+								%td
+									%a.instrument-options{:href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-url" => "/programs/save_instruments.json", "data-source" => "/programs/get_instruments", "data-value" => "1"}
 								%td= program.course_type.full
 								%td= program.regular_courses_per_year
 								%td= program.group_courses_per_year
@@ -35,50 +36,35 @@
 								%td.detailInfo{:colspan => "6"}
 									%div.accodian-body.collapse{:id => "collapse-#{program.id}"}
 										Teachers:
-										%a#all-teachers{:viewsseperator => ",", :href => "#", "data-type" => "select2", "data-pk" => "1", "data-source" => "/programs/get_teachers.json", "data-url" => "/programs", "data-value" => "1"}
--# %select.all-teachers{:multiple => true}
--# -@teachers.each do |teacher|
--#   %option{:value => "#{teacher.first_name}"}
--#     = teacher.first_name.to_s + " " + teacher.middle_name.to_s + " " + teacher.last_name.to_s
+										-# .teacher.options{select_tag "teacher-options", options_from_collection_for_select(@teachers, "id", "name")}
+										%a.teacher-options{:viewsseperator => ",", :href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-source" => "/programs/get_teachers.json", "data-value" => "1", "data-url" => "/programs/save_teachers"} 
 
 
+											-# -Assignment.where(:program_id => program.id).each do |ass|
+											-#	 -ass.teacher.first_name + ass.teacher.last_name
+										-# %select.teacher-options{:multiple => true}
+										-# -@teachers.each do |teacher|
+										-#	 %option{:value => "#{teacher.first_name}"}
+										-#		 = teacher.first_name.to_s + " " + teacher.middle_name.to_s + " " + teacher.last_name.to_s
 
-
-
-
-
-
-
--# = program.instrument.name
--# hahahha
-
--# %td 
-
-
--# {:colspan => "6", :class => "hiddenRow"}
-
--#have a test
 
 -# %td
--#   .accordion#accordion2
--#     -# .accordion-group
--#       -# .accordion-heading
--#     .accordion-toggle{"data-toggle" => "collapse", "data-parent" => "#accordion2",  :href => "#collapseOne"}
--#       Show Detail
+-#	 .accordion#accordion2
+-#		 -# .accordion-group
+-#			 -# .accordion-heading
+-#		 .accordion-toggle{"data-toggle" => "collapse", "data-parent" => "#accordion2",	:href => "#collapseOne"}
+-#			 Show Detail
 -# %tr
--#   .accordion#accordion2
--#     .accordion-group
--#       .accordion-body.collapse.in#collapseOne 
--#         .accordion-inner
--#           Anim pariatur cliche...
+-#	 .accordion#accordion2
+-#		 .accordion-group
+-#			 .accordion-body.collapse.in#collapseOne 
+-#				 .accordion-inner
+-#					 Anim pariatur cliche...
 
 
 
 -# %td= link_to('edit', edit_program_path(program))
 -# %td= link_to('delet', program, :method => :delete, :data => {:confirm => "Are you sure?"})
-
-
-
 -# = link_to('Add A New Program', new_program_path)
 
 		.tab-pane#tab2
@@ -87,9 +73,5 @@
 
 
 -# %li.active
--#   %a{:href => "#tab1", "data-toggle" => "tab"}
--#     School1
-
-
-
-
+-#	 %a{:href => "#tab1", "data-toggle" => "tab"}
+-#		 School1

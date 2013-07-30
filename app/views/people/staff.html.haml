@@ -7,23 +7,22 @@
 = content_for :main do
 	%table.table.table-bordered.table-striped{:style => 'clear: both'}
 		%tr
-			%th{:width => '30%'}
-				Name
+			%th{:width => '25%'}
+				FirstName
+			%th{:width => '25%'}
+				LastName 
 			%th{:width => '30%'}
 				Email
 			%th
 				Region
-		%tr
-			%td
-			%td
-				%a.email-input{:href => '#'}
-					email
-			%td
-				%a.region-input{:href => '#'}
-		%tr
-			%td
-			%td
-				%a.text{:href => '#'}
-					email
-			%td
-				%a.region-input{:href => '#'}
+		-@staffs.each do |staff|
+			%tr
+				%td
+					%a.fname-input{:href => '#'}
+					= staff.first_name
+				%td
+					%a.lname-input{:href => '#'}
+					= staff.last_name
+				%td
+					= staff.email
+				%td

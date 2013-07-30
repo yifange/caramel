@@ -60,6 +60,7 @@ class ProgramsController < ApplicationController
 
 	def instrument_types
 		verify_user
+		@instruments = Instrument.all
 	end
   
   def new

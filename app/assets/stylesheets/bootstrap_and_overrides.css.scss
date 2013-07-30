@@ -1,6 +1,14 @@
 @import "bootstrap";
 @import "bootstrap-responsive";
 
+// make the brand white
+.navbar-inverse .brand {
+	color: #ffffff;
+	cursor: default;
+	font-weight: bold;
+}
+
+// the style of sidebar
 .nav-list {
 	background-color: #f9f9f9;
 	border: 1px solid #dddddd;
@@ -10,7 +18,18 @@
 	padding-bottom: 4px;
 }
 
+// the height of table
 .table th, .table td {
 	height: 30px;
 	vertical-align: middle;
+}
+
+// the width of input field
+.input-medium {
+	width: 100px;
+}
+
+// the min width of select2
+.select2-container {
+	min-width: 200px;
 }

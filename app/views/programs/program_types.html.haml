@@ -5,4 +5,10 @@
 	= render 'programs/sidebar'
 
 = content_for :main do
-	program types
+	%table.table.table-bordered.table-striped{:style => 'clear: both'}
+		%tr
+			%th{:width => '100%'}
+				Program
+		%tr
+			%td
+				%a.program-input{:href => '#'}

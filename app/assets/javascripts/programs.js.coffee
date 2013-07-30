@@ -2,14 +2,28 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$ ->
-  $.fn.editable.defaults.mode = 'inline'
-  $('.instrument-options').editable({
-  })
+attachHandler = ->
+	$.fn.editable.defaults.mode = 'inline'
+	$('.instrument-input').editable({
+		url: 'programs/instrument',
+		type: 'text',
+		placeholder: 'instrument'
+	})
 
-  $('.teacher-options').editable({
-    select2: {
-    # }
+	$.fn.editable.defaults.mode = 'inline'
+	$('.program-input').editable({
+		url: '',
+		type: 'text',
+		placeholder: 'program'
+	})
+
+  #$.fn.editable.defaults.mode = 'inline'
+	#	$('.instrument-options').editable({
+  #})
+
+#  $('.teacher-options').editable({
+#    select2: {
+#    }
     # ajax: {
     #   dataType: 'jsonp',
     #   url: "/programs/get_teachers"
@@ -18,12 +32,12 @@ $ ->
     #       return {id: teacher.id, text: teacher.first_name + " " + teacher.last_name}
     #     )}
     # }
-    width: "100%",
-    multiple: true
+#    width: "100%",
+#    multiple: true
     # formatResult: test,
     # formatSelection: test
-    }
-  })
+#    }
+#  })
 
 
 
@@ -69,4 +83,5 @@ $ ->
 
   # $('.all-instruments').each((ind, val) ->
   #   $(val).editable(prepend: true, children: [{ind, val}]))
-
+$(document).ready attachHandler
+$(document).on "page:load", attachHandler

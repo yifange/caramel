@@ -5,14 +5,10 @@
 $ ->
   $.fn.editable.defaults.mode = 'inline'
   $('.instrument-options').editable({
-    source: [
-      {value: 1, text: '+'}
-    ]
-
   })
 
-  $('.teacher-options').select2({
-    # select2: {
+  $('.teacher-options').editable({
+    select2: {
     # }
     # ajax: {
     #   dataType: 'jsonp',
@@ -22,10 +18,11 @@ $ ->
     #       return {id: teacher.id, text: teacher.first_name + " " + teacher.last_name}
     #     )}
     # }
-    width: "100%"
-    # multiple: true,
+    width: "100%",
+    multiple: true
     # formatResult: test,
     # formatSelection: test
+    }
   })
 
 

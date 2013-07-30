@@ -22,24 +22,24 @@ class ProgramsController < ApplicationController
   end
 
   def save_teachers
-    @values = params[:value]
-    @assignments = Assignment.where(:program_id => params[:pk])
-    @assignments.each do |ass|
-      @values.each do |v|
-        if ass.teacher_id == v # assignment already exists
-          @values.delete(v)
-          @assignments.delete(ass)
-        end
-      end
-    end
-
-    @assignments.each do |ass| # assignment not found, deleted
-      Assignment.delete(ass)
-    end
-    @values.each do |v| # assignment created
-      Assignment.create(:program_id => params[:pk], :teacher_id => v)
-    end
     render :json => params
+    # @values = params[:value]
+    # @assignments = Assignment.where(:program_id => params[:pk])
+    # @assignments.each do |ass|
+    #   @values.each do |v|
+    #     if ass.teacher_id == v # assignment already exists
+    #       @values.delete(v)
+    #       @assignments.delete(ass)
+    #     end
+    #   end
+    # end
+
+    # @assignments.each do |ass| # assignment not found, deleted
+    #   Assignment.delete(ass)
+    # end
+    # @values.each do |v| # assignment created
+    #   Assignment.create(:program_id => params[:pk], :teacher_id => v)
+    # end
   end
 
   def schools

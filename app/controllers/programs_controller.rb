@@ -7,6 +7,7 @@ class ProgramsController < ApplicationController
 
 	def regions
 		verify_user
+    @regions = Region.all
 	end
 
   def get_instruments

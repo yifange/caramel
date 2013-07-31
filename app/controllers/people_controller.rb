@@ -15,7 +15,7 @@ class PeopleController < ApplicationController
   end
 
   def get_firstname(last_name)
-         Staff.where(:last_name).first_name
+    Staff.where(:last_name).first_name
   end
 
 end

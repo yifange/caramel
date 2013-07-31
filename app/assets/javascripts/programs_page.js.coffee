@@ -5,7 +5,8 @@
 attachHandler = ->
   $.fn.editable.defaults.mode = 'inline'
   $('.instrument-input').editable({
-    url: 'programs/instrument',
+    pk: 1,
+    url: '/instruments',
     type: 'text',
     placeholder: 'instrument'
   })

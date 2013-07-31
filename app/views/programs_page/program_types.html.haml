@@ -1,14 +1,16 @@
 = content_for :title do
-	programs
+  programs
 
 = content_for :sidemenu do
-	= render 'programs_page/sidebar'
+  = render 'programs_page/sidebar'
 
 = content_for :main do
-	%table.table.table-bordered.table-striped{:style => 'clear: both'}
-		%tr
-			%th{:width => '100%'}
-				Program
-		%tr
-			%td
-				%a.program-input{:href => '#'}
+  %table.table.table-bordered.table-striped{:style => 'clear: both'}
+    %tr
+      %th{:width => '100%'}
+        Program
+    %tr
+      %td
+        %a.program-input{:href => '#'}
+  %button.btn.btn-primary{'type' => 'button'}
+    New Program Type

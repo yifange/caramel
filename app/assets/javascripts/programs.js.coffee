@@ -3,18 +3,30 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 attachHandler = ->
-	$.fn.editable.defaults.mode = 'inline'
-	$('.instrument-input').editable({
-		url: 'programs/instrument',
-		type: 'text',
-		placeholder: 'instrument'
-	})
+  $.fn.editable.defaults.mode = 'inline'
+  $('.instrument-input').editable({
+    url: 'programs/instrument',
+    type: 'text',
+    placeholder: 'instrument'
+  })
 
-	$('.program-input').editable({
-		url: '',
-		type: 'text',
-		placeholder: 'program'
-	})
+  $('.program-input').editable({
+    url: '',
+    type: 'text',
+    placeholder: 'program'
+  })
+
+  $.fn.editable.defaults.mode = 'inline'
+  $('.region-name-input').editable({
+    url: '',
+    type: 'text',
+    placeholder: 'region name'
+  })
+
+  $.fn.editable.defaults.mode = 'inline'
+  $('.school-input').select2({
+    data:[{id:0,text:'GWU'},{id:1,text:'JHU'},{id:2,text:'SJU'}]
+  });
 
   #$.fn.editable.defaults.mode = 'inline'
 	#	$('.instrument-options').editable({

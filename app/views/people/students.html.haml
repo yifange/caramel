@@ -14,13 +14,17 @@
 			%th{:width => '25%'}
 				Email
 			%th{:width => '25%'}
-		%tr
-			%td
-				%a.first-name-input{:href => '#'}
-			%td
-				%a.last-name-input{:href => '#'}
-			%td
-				%a.email-input{:href => '#'}
-			%td
-				%button.btn.btn-primary{'type' => 'button', 'data-toggle' => 'button'}
-					Show Detail
+		-@students.each do |student|
+			%tr
+				%td
+					%a.first-name-input{:href => '#'}
+						= student.first_name
+				%td
+					%a.last-name-input{:href => '#'}
+						= student.last_name
+				%td
+					%a.email-input{:href => '#'}
+						= student.email
+				%td
+					%button.btn.btn-primary{'type' => 'button', 'data-toggle' => 'button'}
+						Show Detail

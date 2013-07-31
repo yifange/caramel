@@ -5,4 +5,16 @@
 	= render 'programs/sidebar'
 
 = content_for :main do
-	regions
+	%table.table.table-bordered.table-striped{:style => 'clear: both'}
+		%tr
+			%th{:width => '40%'}
+				Region Name
+			%th{:width => '60%'}
+		-@regions.each do |region|
+			%tr
+				%td
+					%a.region-name-input{:href => '#'}
+						= region.name
+				%td
+					%a.school-input{:href => '#'}
+

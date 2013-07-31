@@ -5,4 +5,22 @@
 	= render 'people/sidebar'
 
 = content_for :main do
-	students
+	%table.table.table-bordered.table-striped{:style => 'clear: both'}
+		%tr
+			%th{:width => '25%'}
+				First Name
+			%th{:width => '25%'}
+				Last Name
+			%th{:width => '25%'}
+				Email
+			%th{:width => '25%'}
+		%tr
+			%td
+				%a.first-name-input{:href => '#'}
+			%td
+				%a.last-name-input{:href => '#'}
+			%td
+				%a.email-input{:href => '#'}
+			%td
+				%button.btn.btn-primary{'type' => 'button', 'data-toggle' => 'button'}
+					Show Detail

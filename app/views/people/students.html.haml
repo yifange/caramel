@@ -1,7 +1,7 @@
-= content_for :title do
+- content_for :title do
 	people
 
-= content_for :sidemenu do
+- content_for :sidemenu do
 	= render 'people/sidebar'
 
 = content_for :main do
@@ -14,7 +14,6 @@
 			%th{:width => '25%'}
 				Email
 			%th{:width => '25%'}
-				Region
 		%tr
 			%td
 				%a.first-name-input{:href => '#'}
@@ -23,4 +22,5 @@
 			%td
 				%a.email-input{:href => '#'}
 			%td
-				%a.region-input{:href => '#'}
+				%button.btn.btn-primary{'type' => 'button', 'data-toggle' => 'button'}
+					Show Detail

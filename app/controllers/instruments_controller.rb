@@ -1,5 +1,5 @@
 class InstrumentsController < ApplicationController
-  def index
-
-  end
+	def index
+		verify_user
+	end
 end

@@ -6,7 +6,7 @@ class ProgramsController < ApplicationController
   respond_to  :html, :json
 
 	def regions
-
+		verify_user
 	end
 
   def get_instruments
@@ -17,13 +17,7 @@ class ProgramsController < ApplicationController
 
   def save_instruments
     @program = Program.find(params[:pk])
-    # puts '1111111111111111111111111111111111111111111111111111111111111111111111111'
-    # puts @program.to_s
-    # puts @program.regular_courses_per_year
     @program.update_attributes(:instrument_id => params[:value])
-    #   puts '0000000000000000000000000000000000000000000000000000000000000000000000000000000'
-    #   puts params.to_s
-    # end
     render :text => 'hahahah'
   end
 
@@ -36,21 +30,34 @@ class ProgramsController < ApplicationController
   end
 
   def get_assigned_teachers
-    @assignments = Assignment.where(:program_id => params[:pk])
-    @assigned_teachers = ""
-    @assignments.each do |ass|
-      @teacher = Teacher.find(ass.teacher_id)
-      @assigned_teachers += ass.teacher_id + ":"  + @teacher.first_name + " " + @teacher.last_name + ","
+    programs = Program.all
+    assigned_teachers = {}
+    programs.each do |program|
+      assignments_for_program = Assignment.where(:program_id => program.id)
+      assignments_str = assignments_for_program.map do |assignment| 
+        teacher = Teacher.find(assignment.teacher_id)
+        teacher.id.to_s + ":" + teacher.first_name + teacher.last_name
+      end.join(",")
+      assigned_teachers[program.id] = assignments_str
     end
+    # render :json => @assigned_teachers
+    # @assignments = Assignment.all
+    # @assigned_teachers = ""
+    # @assignments.each do |assignment|
+    #   @teacher = Teacher.find(assignment.teacher_id)
+    #   @assigned_teachers += assignment.teacher_id + ":"  + @teacher.first_name + " " + @teacher.last_name + ","
+    # end
+    return assigned_teachers
   end
 
+  
   def save_teachers
     @values = params[:value].split(',')
     @assignments = Assignment.where(:program_id => params[:pk])
     @assignments.each do |assignment|
       @values.each do |val|
         v = val.to_i
-        if ass.teacher_id == v # assignment already exists
+        if assignment.teacher_id == v # assignment already exists
           @values.delete(val)
           @assignments.delete(assignment)
         end
@@ -67,7 +74,9 @@ class ProgramsController < ApplicationController
     render :text => 'hahahh'
   end
 
+
   def schools
+# <<<<<<< HEAD
     # if current_user && current_user.type != "Admin"
     #   @schools = School.where(:region_id => current_user.region_id)
     #   @teachers = Teacher.where(:region_id => current_user.region_id)
@@ -79,12 +88,30 @@ class ProgramsController < ApplicationController
     @schools = School.all
     @teachers = Teacher.all
     @instruments = Instrument.all
+    @assigned_teachers = get_assigned_teachers
+    # puts '****************************************************************' + get_assigned_teachers.to_s
+
     # end
+# =======
+# 		verify_user
+#     if current_user && current_user.type != "Admin"
+#       @schools = School.where(:region_id => current_user.region_id)
+#       @teachers = Teacher.where(:region_id => current_user.region_id)
+#       @instruments = Instrument.all
+#       # @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
+#       # @students = Student.find(:all, :conditions => {:region_id => current_user.region_id})
+#     else
+#       @schools = School.all
+#       @teachers = Teacher.all
+#       @instruments = Instrument.all
+#     end
+# >>>>>>> origin/Jinqiu
     @programs = Program.all
   end
 
 	def instrument_types
-
+		verify_user
+		@instruments = Instrument.all
 	end
   
   def new
@@ -107,7 +134,7 @@ class ProgramsController < ApplicationController
   end
 
 	def program_types
-
+		verify_user
 	end
 
 private

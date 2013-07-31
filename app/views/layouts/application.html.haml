@@ -9,7 +9,7 @@
   %body
     .navbar.navbar-inverse
       .navbar-inner
-        %a.brand Musikids Class Attendance
+        .brand Musikids Class Attendance
         %ul.nav
           %li#nav-people
             %a{:href => '/people'} PEOPLE
@@ -19,9 +19,22 @@
             %a{:href => '/classes'} CLASSES
           %li#nav-calendar
             %a{:href => ''} INSTRUMENTS
-        %a.brand#nav-right
-          %i.icon-user.icon-white
-          Jinqiu Deng
+          %li.dropdown
+            %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => ''}
+              SEMESTER
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                %a{:href => ''} Semester One
+              %li
+                %a{:href => ''} Semester Two
+        .pull-right
+          %a.brand#nav-right
+            %i.icon-user.icon-white
+            = current_user.name
+          %ul.nav
+            %li
+              %a{:href => '/session/signout'} Sign out
     .container-fluid
       .row-fluid
         .span2.content

@@ -33,12 +33,11 @@ group :doc do
 end
 
 gem 'haml-rails'
-gem 'simple_form'
 gem 'bootstrap-sass'
 gem 'sorcery'
-gem 'cancan'
 gem 'select2-rails'
 gem 'bootstrap-x-editable-rails'
+gem 'simple_form'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

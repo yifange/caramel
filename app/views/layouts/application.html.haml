@@ -1,42 +1,43 @@
 !!!
 %html
-	%head
-		%meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1"}
-		%title= content_for?(:title) ? yield(:title) : "App_Name"
-		= stylesheet_link_tag :application, :media => "all"
-		= javascript_include_tag :application
-	%body
-		.navbar.navbar-inverse
-			.navbar-inner
-				.brand Musikids Class Attendance
-				%ul.nav
-					%li#nav-people
-						%a{:href => '/people'} PEOPLE
-					%li#nav-program
-						%a{:href => '/programs'} PROGRAMS
-					%li#nav-calendar
-						%a{:href => '/classes'} CLASSES
-					%li#nav-calendar
-						%a{:href => ''} INSTRUMENTS
-					%li.dropdown
-						%a.dropdown-toggle{'data-toggle' => 'dropdown', :href => ''}
-							SEMESTER
-							%span.caret
-						%ul.dropdown-menu
-							%li
-								%a{:href => ''} Semester One
-							%li
-								%a{:href => ''} Semester Two
-				.pull-right
-					%a.brand#nav-right
-						%i.icon-user.icon-white
-						= current_user.name
-					%ul.nav
-						%li
-							%a{:href => '/session/signout'} Sign out
-		.container-fluid
-			.row-fluid
-				.span2.content
-					= yield(:sidemenu)
-				.span10.content
-					= yield(:main)
+  %head
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1"}
+    %title= content_for?(:title) ? yield(:title) : "App_Name"
+    = stylesheet_link_tag :application, :media => "all"
+    = javascript_include_tag :application
+    = csrf_meta_tags
+  %body
+    .navbar.navbar-inverse
+      .navbar-inner
+        .brand Musikids Class Attendance
+        %ul.nav
+          %li#nav-people
+            %a{:href => '/people'} PEOPLE
+          %li#nav-program
+            %a{:href => '/programs'} PROGRAMS
+          %li#nav-calendar
+            %a{:href => '/classes'} CLASSES
+          %li#nav-calendar
+            %a{:href => ''} INSTRUMENTS
+          %li.dropdown
+            %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => ''}
+              SEMESTER
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                %a{:href => ''} Semester One
+              %li
+                %a{:href => ''} Semester Two
+        .pull-right
+          %a.brand#nav-right
+            %i.icon-user.icon-white
+            = current_user.name
+          %ul.nav
+            %li
+              %a{:href => '/session/signout'} Sign out
+    .container-fluid
+      .row-fluid
+        .span2.content
+          = yield(:sidemenu)
+        .span10.content
+          = yield(:main)

@@ -1,4 +1,4 @@
-class ClassesController < ApplicationController
+class ClassesPageController < ApplicationController
   def calendar
 		verify_user
   end

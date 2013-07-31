@@ -1,4 +1,4 @@
-class ProgramsController < ApplicationController
+class ProgramsPageController < ApplicationController
   def index
     @program = Program.all.first
   end

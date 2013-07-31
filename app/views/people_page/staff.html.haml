@@ -1,8 +1,8 @@
-- content_for :title do
+= content_for :title do
 	people
 
-- content_for :sidemenu do
-	= render 'people/sidebar'
+= content_for :sidemenu do
+	= render 'people_page/sidebar'
 
 = content_for :main do
 	%table.table.table-bordered.table-striped{:style => 'clear: both'}
@@ -14,17 +14,17 @@
 			%th{:width => '25%'}
 				Email
 			%th{:width => '25%'}
-		-@students.each do |student|
+				Region
+		-@staffs.each do |staff|
 			%tr
 				%td
 					%a.first-name-input{:href => '#'}
-						= student.first_name
+						= staff.first_name
 				%td
 					%a.last-name-input{:href => '#'}
-						= student.last_name
+						= staff.last_name
 				%td
 					%a.email-input{:href => '#'}
-						= student.email
+						= staff.email
 				%td
-					%button.btn.btn-primary{'type' => 'button', 'data-toggle' => 'button'}
-						Show Detail
+					%a.region-input{:href => '#'}

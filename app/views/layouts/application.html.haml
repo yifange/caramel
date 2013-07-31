@@ -12,11 +12,11 @@
         .brand Musikids Class Attendance
         %ul.nav
           %li#nav-people
-            %a{:href => '/people'} PEOPLE
+            %a{:href => '/people_page'} PEOPLE
           %li#nav-program
-            %a{:href => '/programs'} PROGRAMS
+            %a{:href => '/programs_page'} PROGRAMS
           %li#nav-calendar
-            %a{:href => '/classes'} CLASSES
+            %a{:href => '/classes_page'} CLASSES
           %li#nav-calendar
             %a{:href => ''} INSTRUMENTS
           %li.dropdown
@@ -34,7 +34,7 @@
             = current_user.name
           %ul.nav
             %li
-              %a{:href => '/session/signout'} Sign out
+              %a{:href => '/session_page/signout'} Sign out
     .container-fluid
       .row-fluid
         .span2.content

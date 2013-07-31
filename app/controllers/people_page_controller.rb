@@ -1,5 +1,4 @@
-# People page
-class PeopleController < ApplicationController
+class PeoplePageController < ApplicationController
   def staff
 		verify_user
     @staffs = Staff.all

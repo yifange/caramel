@@ -17,8 +17,14 @@ class ProgramsController < ApplicationController
 
   def save_instruments
     @program = Program.find(params[:pk])
+    # puts '1111111111111111111111111111111111111111111111111111111111111111111111111'
+    # puts @program.to_s
+    # puts @program.regular_courses_per_year
     @program.update_attributes(:instrument_id => params[:value])
-    render :json => params
+    #   puts '0000000000000000000000000000000000000000000000000000000000000000000000000000000'
+    #   puts params.to_s
+    # end
+    render :text => 'hahahah'
   end
 
   def get_teachers
@@ -62,18 +68,18 @@ class ProgramsController < ApplicationController
   end
 
   def schools
-    if current_user && current_user.type != "Admin"
-      @schools = School.where(:region_id => current_user.region_id)
-      @teachers = Teacher.where(:region_id => current_user.region_id)
-      @instruments = Instrument.all
-      @assigned_teachers = get_assigned_teachers
-      # @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
-      # @students = Student.find(:all, :conditions => {:region_id => current_user.region_id})
-    else
-      @schools = School.all
-      @teachers = Teacher.all
-      @instruments = Instrument.all
-    end
+    # if current_user && current_user.type != "Admin"
+    #   @schools = School.where(:region_id => current_user.region_id)
+    #   @teachers = Teacher.where(:region_id => current_user.region_id)
+    #   @instruments = Instrument.all
+    #   @assigned_teachers = get_assigned_teachers
+    #   # @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
+    #   # @students = Student.find(:all, :conditions => {:region_id => current_user.region_id})
+    # else
+    @schools = School.all
+    @teachers = Teacher.all
+    @instruments = Instrument.all
+    # end
     @programs = Program.all
   end
 

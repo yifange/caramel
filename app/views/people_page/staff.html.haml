@@ -1,10 +1,3 @@
-- content_for :head do
-  :javascript
-    $(document).ready(function() {
-      // $('#nav-people').toggleClass("active");
-      //$('#sidebar-staff').toggleClass("active");
-    });
-
 = content_for :title do
   people
 
@@ -14,18 +7,19 @@
 = content_for :main do
   %table.table.table-bordered.table-striped{:style => 'clear: both'}
     %tr
-      %th{:width => '25%'}
+      %th{:width => '14%'}
         Name
-      %th{:width => '25%'}
+      %th{:width => '14%'}
         Email
       %th{:width => '25%'}
         Region
     -@staffs.each do |staff|
       %tr
         %td
-          %a#staff-name{:href => "#", 'data-type' => 'user_name'}
+          %a.x-editable-staff-name{:href => "#", 'data-type' => 'user_name'}
+            = staff.name
         %td
-          %a.email-input{:href => '#'}
+          %a.x-editable-email{:href => '#'}
             = staff.email
         %td
           %a.region-input{:href => '#'}

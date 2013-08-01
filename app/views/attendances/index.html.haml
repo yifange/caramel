@@ -1,0 +1,22 @@
+.subnav
+  %ul.nav.nav-pills.unselectable
+    %li
+      %a#subnav-today{:href => "#"}
+        now
+    %li
+      %a#subnav-prev{:href => "#"}
+        <
+    %li
+      %a#subnav-next{:href => "#"}
+        >
+    %li
+      %p.navbar-text#subnav-text
+    -# %li.pull-right
+    -#   %a#subnav-week.pull-right{:href => "/calendars/week"}
+    -#     week
+    -# %li.pull-right.active
+    -#   %a#subnav-year.pull-right{:href => "/calendars"}
+    -#     year
+= flat_monthly_calendar_for @enrollment_hash, :year => @year.to_i, :month => @month.to_i do |f|
+  = f.draw_calendar
+= content_tag :span, "Teacher: " + @teacher.first_name + @teacher.last_name

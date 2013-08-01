@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130723234851) do
+ActiveRecord::Schema.define(version: 20130729225346) do
+
+  create_table "assignments", force: true do |t|
+    t.integer  "teacher_id"
+    t.integer  "program_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "assignments", ["program_id"], name: "index_assignments_on_program_id"
+  add_index "assignments", ["teacher_id"], name: "index_assignments_on_teacher_id"
 
   create_table "attendance_markings", force: true do |t|
     t.string   "abbrev"
@@ -21,7 +31,7 @@ ActiveRecord::Schema.define(version: 20130723234851) do
   end
 
   create_table "attendances", force: true do |t|
-    t.integer  "enrollment_id"
+    t.integer  "roster_id"
     t.date     "date"
     t.integer  "attendance_marking_id"
     t.datetime "created_at"
@@ -29,7 +39,7 @@ ActiveRecord::Schema.define(version: 20130723234851) do
   end
 
   add_index "attendances", ["attendance_marking_id"], name: "index_attendances_on_attendance_marking_id"
-  add_index "attendances", ["enrollment_id"], name: "index_attendances_on_enrollment_id"
+  add_index "attendances", ["roster_id"], name: "index_attendances_on_roster_id"
 
   create_table "calendar_markings", force: true do |t|
     t.string   "abbrev"
@@ -40,37 +50,38 @@ ActiveRecord::Schema.define(version: 20130723234851) do
 
   create_table "calendars", force: true do |t|
     t.date     "date"
-    t.integer  "calendar_marking_id"
     t.time     "start_time"
     t.time     "end_time"
     t.integer  "school_id"
+    t.boolean  "available"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "calendars", ["calendar_marking_id"], name: "index_calendars_on_calendar_marking_id"
   add_index "calendars", ["school_id"], name: "index_calendars_on_school_id"
 
-  create_table "enrollments", force: true do |t|
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "course_id"
-    t.integer  "student_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "enrollments", ["course_id"], name: "index_enrollments_on_course_id"
-  add_index "enrollments", ["student_id"], name: "index_enrollments_on_student_id"
-
-  create_table "events", force: true do |t|
+  create_table "courses", force: true do |t|
+    t.integer  "program_id"
     t.time     "start_time"
     t.time     "end_time"
+    t.integer  "day_of_week"
     t.date     "date"
-    t.string   "title"
+    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "courses", ["program_id"], name: "index_courses_on_program_id"
+
+  create_table "enrollments", force: true do |t|
+    t.integer  "student_id"
+    t.integer  "program_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "enrollments", ["program_id"], name: "index_enrollments_on_program_id"
+  add_index "enrollments", ["student_id"], name: "index_enrollments_on_student_id"
 
   create_table "month_events", force: true do |t|
     t.datetime "date"
@@ -79,10 +90,37 @@ ActiveRecord::Schema.define(version: 20130723234851) do
     t.datetime "updated_at"
   end
 
-  create_table "posts", force: true do |t|
-    t.string   "title"
-    t.text     "body"
-    t.boolean  "published"
+  create_table "programs", force: true do |t|
+    t.integer  "school_id"
+    t.integer  "instrument_id"
+    t.integer  "program_type_id"
+    t.integer  "regular_course_total"
+    t.integer  "group_course_total"
+    t.integer  "term_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "programs", ["instrument_id"], name: "index_programs_on_instrument_id"
+  add_index "programs", ["program_type_id"], name: "index_programs_on_program_type_id"
+  add_index "programs", ["school_id"], name: "index_programs_on_school_id"
+  add_index "programs", ["term_id"], name: "index_programs_on_term_id"
+
+  create_table "rosters", force: true do |t|
+    t.integer  "student_id"
+    t.integer  "course_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rosters", ["course_id"], name: "index_rosters_on_course_id"
+  add_index "rosters", ["student_id"], name: "index_rosters_on_student_id"
+
+  create_table "schools", force: true do |t|
+    t.string   "abbrev"
+    t.string   "full"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -91,6 +129,22 @@ ActiveRecord::Schema.define(version: 20130723234851) do
     t.string   "first_name"
     t.string   "middle_name"
     t.string   "last_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "terms", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "crypted_password"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

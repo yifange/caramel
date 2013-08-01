@@ -57,6 +57,6 @@ class CalendarsController < ApplicationController
     r
   end
   def calendar_params
-    params.require(:calendar).permit(:date, :calendar_marking_id, :start_time, :end_time)
+    params.require(:calendar).permit(:date, :available, :start_time, :end_time)
   end
 end

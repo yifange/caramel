@@ -39,3 +39,7 @@
     %td
       #secret2.collapse.accordion-body.in{:colspan => 3}
         This is also secret
+
+%a#country{"data-pk" => "1", "data-type" => "select2", "data-source" => "/lunchpads/api.json", "data-url" => "/lunchpads/lunch", :href => "#", "data-title" => "Select country", "data-value" => "1"}
+
+%input#bfast{:type => "hidden", :value => "gb:Great Britain,us:United States,", :data => {:options => "gb:Great Britain,us:United States,cn:China"}}

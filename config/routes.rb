@@ -1,6 +1,8 @@
 Cal::Application.routes.draw do
   get 'calendars/week' => 'calendars#index_week'
-  resources :events, :month_events, :calendars, :navs, :lunchpads
+  get 'lunchpads/api' => 'lunchpads#api'
+  post 'lunchpads/lunch' => 'lunchpads#lunch'
+  resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

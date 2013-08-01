@@ -1,6 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
 attachDayGridHandler = ->
   $("td.day-text").on "click", ->
     year = $(this).data("year")
@@ -9,7 +6,7 @@ attachDayGridHandler = ->
     window.location.href = "/calendars/week?year=" + year + "&month=" + month + "&day=" + day
 
 attachColumnHandler = ->
-  $("div.wc-day-column-inner").css("cursor", "pointer").on "click", ->
+  $("div.wc-day-column-inner.calendar-cal").css("cursor", "pointer").on "click", ->
     date = $(this).data("date")
     # window.location.href = "/events/new?date=" + date
     $.get("/calendars/new?date=" + date, (data, status) ->
@@ -20,13 +17,11 @@ attachColumnHandler = ->
       $("#calendar-modal").modal({
         keyboard: true
       })
-      # initTimepicker()
-      # initDatepicker()
     )
     return false
 
 attachEventHandler = ->
-  $("div.wc-cal-event").on "click", ->
+  $("div.wc-cal-event.calendar-cal").on "click", ->
     eventId = $(this).data("eventid")
     $.data($("#calendar-modal-delete")[0], "eventid", eventId)
     $.get("/calendars/" + eventId + "/edit", (data, status) ->

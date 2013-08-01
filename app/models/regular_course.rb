@@ -1,0 +1,2 @@
+class RegularCourse < Course
+end

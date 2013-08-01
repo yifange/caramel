@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  school_id: 
+  instrument_id: 
+  program_type_id: 
+  regular_course_total: 1
+  group_course_total: 1
+  term_id: 
+
+two:
+  school_id: 
+  instrument_id: 
+  program_type_id: 
+  regular_course_total: 1
+  group_course_total: 1
+  term_id: 

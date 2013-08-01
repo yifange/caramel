@@ -1,9 +1,9 @@
 #calendar-form-body
   = simple_form_for @calendar do |f|
     -# = f.error_notification
-    = f.input :start_time
-    = f.input :end_time
+    = f.input :start_time, :start_hour => 8, :end_hour => 16
+    = f.input :end_time, :start_hour => 8, :end_hour => 16
     = f.input :date, :default => @date ? Date.strptime(@date) : Date.today
-    = f.association :calendar_marking, :label_method => "full", :include_blank => false
+    = f.input :available
 
-    = f.button :submit, :id => "calendar-form-submit"
+    -# = f.button :submit, :id => "calendar-form-submit"

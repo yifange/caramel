@@ -16,7 +16,7 @@
 //= require turbolinks
 //= require bootstrap-timepicker
 //= require bootstrap-datepicker
-//= require bootstrap-select
+//= require select2
 //= require bootstrap-editable
 //= require_tree .
 //

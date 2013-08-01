@@ -18,31 +18,89 @@ module CalHelper
   end
   
   def flat_monthly_calendar_for(objects, *args, &block)
-    options = args.last.is_a(Hash) ? args.pop : {}
+    options = args.last.is_a?(Hash) ? args.pop : {}
     content = capture(FlatMonthlyCalendarBuilder.new(self, objects || [], options), &block)
     content_tag :div, content, :class => "fmc-container"
   end
-
+  
   class CalendarBuilder
     attr_accessor :parent
     delegate :capture, :content_tag, :tag, :link_to, :concat, :to => :parent
     def initialize(parent, objects, options)
       @parent, @objects, @options = parent, objects, options
     end
+    def boolean_flag(obj, method, true_flag, false_flag)
+      if obj.send(method)
+        true_flag
+      else
+        false_flag
+      end
+    end
   end
 
-  class FlatMonthlyCalendarBuilder
+  class FlatMonthlyCalendarBuilder < CalendarBuilder
     def initialize(parent, objects, options)
       super(parent, objects, options)
-      year = options[:year] || Date.today.year
-      month = options[:month] || Date.today.month
+      @year = options[:year] || Date.today.year
+      @month = options[:month] || Date.today.month
+      @date = Date.new(@year, @month)
+      @today = Date.today
+      @day_of_week = ["Su", "M", "Tu", "W", "Th", "F", "Sa"]
+    end
+    def draw_calendar
+      content = "".html_safe
+      content.concat(draw_calendar_nav)
+      content.concat(draw_calendar_header)
+      @objects.each do |enrollment, date_hash|
+        content.concat(draw_calendar_row_for_enrollment(enrollment, date_hash))
+      end
+      content_tag :table, content
+    end
+    def draw_calendar_nav
+      prev_link = link_to nil, {:year => @date.prev_month.year, :month => @date.prev_month.month}, :id => "cal-nav-prev"
+      today_link = link_to nil, {:year => @today.year, :month => @today.month}, :id => "cal-nav-today"
+      next_link = link_to nil, {:year => @date.next_month.year, :month => @date.next_month.month}, :id => "cal-nav-next"
+      current_text = content_tag :span, @date.strftime("%Y %B"), :id => "cal-nav-title"
+      nav = prev_link.concat(today_link).concat(next_link).concat(current_text)
+      content_tag :div, nav, :id => "cal-nav", :style => "display: none"
+    end
+    def draw_calendar_header
+      wdays = "".html_safe
+      wdays.concat(content_tag :td, nil, :class => "fmc-cal-header-blank")
+      for day in @date.beginning_of_month .. @date.end_of_month
+        wdays.concat(content_tag :td, @day_of_week[day.wday], :class => "fmc-cal-header-wday")
+      end
+      
+      days = "".html_safe
+      days.concat(content_tag :td, "name")
+      for day in @date.beginning_of_month .. @date.end_of_month
+        days.concat(content_tag :td, day.day, :class => "fmc-cal-header-day")
+      end
+      (content_tag :tr, wdays).concat(content_tag :tr, days)
+    end
+    def draw_calendar_row_for_enrollment(enrollment, date_hash)
+      buf = "".html_safe
+      student = enrollment.student
+      program = enrollment.program
+      #XXX the summary text for the enrollment
+      text = student.first_name
+      buf.concat(content_tag :td, text, :class => "fmc-cal-enrollment-text")
+      for day in @date.beginning_of_month .. @date.end_of_month
+        klass = ""
+        grid_text = ""
+        if date_hash.has_key? day
+          klass = date_hash[day].attendance_marking.full
+          grid_text = date_hash[day].attendance_marking.abbrev
+        end
+        buf.concat(content_tag :td, grid_text, :class => klass)
+      end
+      content_tag :tr, buf
     end
   end
 
   class WeeklyCalendarBuilder < CalendarBuilder
     def initialize(parent, objects, options)
       super(parent, objects, options)
-      
       year = options[:year] || Date.today.year
       month = options[:month] || Date.today.month
       day = options[:day] || Date.today.day
@@ -52,6 +110,8 @@ module CalHelper
       @slot_height = 18
       @date = Date.new(year, month, day)
       @today = Date.today
+      @category_method = options[:category_method] || :available
+      @calendar_name = options[:calendar_name] || "calendar"
     end
 
     def draw_events(day)
@@ -63,8 +123,8 @@ module CalHelper
           style << "height: #{event_height(event[:start_time], event[:end_time])}px;"
           style << "top: #{event_top(event[:start_time])}px;"
 
-          klass = "wc-cal-event "
-          klass << event.calendar_marking.full
+          klass = "wc-cal-event #{@calendar_name}-cal "
+          klass << boolean_flag(event, @category_method, "available", "unavailable")
           event_buf = 
             content_tag :div, :class => klass, :style => style, :data => {:eventid => event.id} do
               content_buf = "".html_safe
@@ -117,11 +177,11 @@ module CalHelper
             buf = "".html_safe
             buf.concat(content_tag :td, nil, :class => "wc-time-column-header")
             for day in @date.beginning_of_week(:sunday)..@date.end_of_week(:sunday)
-              klass = "wc-day-column-header wc-day-#{day.strftime("%w")}"
+              klass = "wc-day-column-header wc-day-#{day.strftime("%w")} #{@calendar_name}-cal"
               if day == @today
                 klass << " wc-today"
               end
-          buf.concat(content_tag :td, (link_to day.strftime("%a %-m-%d"), "#", :class => "wc-day-column-header"), :class => klass)
+          buf.concat(content_tag :td, (link_to day.strftime("%a %-m-%d"), "#", :class => "wc-day-column-header #{@calendar_name}-cal"), :class => klass)
             end
             # buf.concat(content_tag :td, nil, :class => "wc-scrollbar-shim")
             buf
@@ -129,20 +189,20 @@ module CalHelper
         end
       end
 
-      grid = content_tag :div, :class => "wc-scrollable-grid" do
-        content_tag :table, :class => "wc-time-slots" do
+      grid = content_tag :div, :class => "wc-scrollable-grid #{@calendar_name}-cal" do
+        content_tag :table, :class => "wc-time-slots #{@calendar_name}-cal" do
           content_tag :tbody do
             timeslot = content_tag :tr do
               buf = "".html_safe
-              buf.concat(tag :td, :class => "wc-grid-timeslot-header")
-              timeslot_wrapper = content_tag :div, :class => "wc-time-slot-wrapper" do
-                  content_tag :div, :class => "wc-time-slots" do
+              buf.concat(tag :td, :class => "wc-grid-timeslot-header #{@calendar_name}-cal")
+              timeslot_wrapper = content_tag :div, :class => "wc-time-slot-wrapper #{@calendar_name}-cal" do
+                  content_tag :div, :class => "wc-time-slots #{@calendar_name}-cal" do
                     slots_html = "".html_safe
                     for hour in @start_hour..@end_hour
                       for slot in 1...@slots_per_hour
-                        slots_html.concat(content_tag :div, nil, {:class => "wc-time-slot wc-hour-#{hour} wc-hour-slot-#{slot}"})
+                        slots_html.concat(content_tag :div, nil, {:class => "wc-time-slot wc-hour-#{hour} wc-hour-slot-#{slot} #{@calendar_name}-cal"})
                       end
-                      slots_html.concat(content_tag :div, nil, {:class => "wc-time-slot wc-hour-end wc-hour-#{hour} wc-hour-slot-#{@slots_per_hour}"})
+                      slots_html.concat(content_tag :div, nil, {:class => "wc-time-slot wc-hour-end wc-hour-#{hour} wc-hour-slot-#{@slots_per_hour} #{@calendar_name}-cal"})
                     end
                     slots_html
                   end
@@ -150,22 +210,22 @@ module CalHelper
               buf.concat(content_tag :td, timeslot_wrapper, :colspan => 7)
             end
             day_columns = content_tag :tr do
-              timeslot_header = content_tag :td, :class => "wc-grid-timeslot-header" do
+              timeslot_header = content_tag :td, :class => "wc-grid-timeslot-header #{@calendar_name}-cal" do
                 buf = "".html_safe
                 for hour in @start_hour..@end_hour
-                  buf.concat(content_tag :div, (content_tag :div, "#{hour}:00", :class => "wc-time-header-cell"), :class => "wc-hour-header")
+                  buf.concat(content_tag :div, (content_tag :div, "#{hour}:00", :class => "wc-time-header-cell #{@calendar_name}-cal"), :class => "wc-hour-header #{@calendar_name}-cal")
                 end
                 buf
               end
 
               columns = "".html_safe
               for day in @date.beginning_of_week(:sunday)..@date.end_of_week(:sunday)
-                klass = "wc-day-column day-#{day.strftime("%w")}"
+                klass = "wc-day-column day-#{day.strftime("%w")} #{@calendar_name}-cal"
                 if day == @today
                   klass << " wc-today"
                 end
                 column = content_tag :td, :class => klass do
-                  content_tag :div, :class => "wc-day-column-inner" ,:data => {:date => day.strftime} do
+                  content_tag :div, :class => "wc-day-column-inner #{@calendar_name}-cal" ,:data => {:date => day.strftime} do
                     draw_events(day) 
                   end
                 end
@@ -272,7 +332,7 @@ module CalHelper
         klass << "today " if day == @today
         klass << "not-current-month" if day.month != @month
         if @objects.has_key? day
-          klass << day_marking(@objects[day], marking_method)
+          klass << day_marking(@objects[day])
         end
         if day.sunday?
           cal_days.concat(tag :tr, nil, true)
@@ -294,12 +354,12 @@ module CalHelper
             
     end
 private
-    def day_marking(objs, marking_method)
+    def day_marking(objs)
       marking = ""
       for obj in objs
-        m = obj.send(marking_method).full
+        m = obj.available
         if marking.empty?
-          marking = m
+          marking = m ? "available" : "unavailable"
         else
           marking = "mix" if m != marking
         end

@@ -166,6 +166,14 @@ table.wc-time-slots {
   font-size: $timeslotHeight * 0.7;
 }
 
+.wc-cal-event.unavailable {
+  background-color: #F1454C;
+}
+.wc-cal-event.unavailable .wc-time {
+  background-color: #EC1829;
+  border-color: #F71919;
+}
+
 .wc-cal-event .wc-time {
 	background-color: #2b72d0;
 	border: 1px solid #1b62c0;

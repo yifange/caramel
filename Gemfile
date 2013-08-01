@@ -33,7 +33,8 @@ gem 'bootstrap-sass'
 gem 'jquery-ui-rails'
 gem 'bootstrap-timepicker-rails', :require => 'bootstrap-timepicker-rails', :git => 'git://github.com/tispratik/bootstrap-timepicker-rails.git'
 gem 'bootstrap-datepicker-rails'
-gem 'bootstrap-select-rails'
+# gem 'bootstrap-select-rails'
+gem 'select2-rails'
 gem 'bootstrap-x-editable-rails'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

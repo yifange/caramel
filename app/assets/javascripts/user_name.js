@@ -1,5 +1,5 @@
 /**
-Address editable input.
+userName editable input.
 Internally value stored as {city: "Moscow", street: "Lenina", building: "15"}
 
 @class address
@@ -24,14 +24,14 @@ $(function(){
 (function ($) {
     "use strict";
     
-    var Address = function (options) {
-        this.init('address', options, Address.defaults);
+    var userName = function (options) {
+        this.init('user_name', options, userName.defaults);
     };
 
     //inherit from Abstract input
-    $.fn.editableutils.inherit(Address, $.fn.editabletypes.abstractinput);
+    $.fn.editableutils.inherit(userName, $.fn.editabletypes.abstractinput);
 
-    $.extend(Address.prototype, {
+    $.extend(userName.prototype, {
         /**
         Renders input from tpl
 
@@ -51,7 +51,7 @@ $(function(){
                 $(element).empty();
                 return; 
             }
-            var html = $('<div>').text(value.city).html() + ', ' + $('<div>').text(value.street).html();
+            var html = $('<div>').text(value.first_name).html() + ', ' + $('<div>').text(value.last_name).html();
             $(element).html(html); 
         },
         
@@ -116,9 +116,8 @@ $(function(){
            if(!value) {
              return;
            }
-           this.$input.filter('[name="city"]').val(value.city);
-           this.$input.filter('[name="street"]').val(value.street);
-           this.$input.filter('[name="building"]').val(value.building);
+           this.$input.filter('[name="first_name"]').val(value.first_name);
+           this.$input.filter('[name="last_name"]').val(value.last_name);
        },       
        
        /**
@@ -128,9 +127,8 @@ $(function(){
        **/          
        input2value: function() { 
            return {
-              city: this.$input.filter('[name="city"]').val(), 
-              street: this.$input.filter('[name="street"]').val(), 
-              building: this.$input.filter('[name="building"]').val()
+              first_name: this.$input.filter('[name="first_name"]').val(), 
+              last_name: this.$input.filter('[name="last_name"]').val(), 
            };
        },        
        
@@ -140,7 +138,7 @@ $(function(){
         @method activate() 
        **/        
        activate: function() {
-            this.$input.filter('[name="city"]').focus();
+            this.$input.filter('[name="first_name"]').focus();
        },  
        
        /**
@@ -157,12 +155,12 @@ $(function(){
        }       
     });
 
-    Address.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
-        tpl: '<div class="editable-address"><label><span>First Name: </span><input type="text" name="city" class="input-small"></label></div>'+
-             '<div class="editable-address"><label><span>Last Name: </span><input type="text" name="street" class="input-small"></label></div>',
+    userName.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
+        tpl: '<div class="editable-user-name"><label><span>First Name: </span><input type="text" name="first_name" class="input-small"></label></div>'+
+             '<div class="editable-user-name"><label><span>Last Name: </span><input type="text" name="last_name" class="input-small"></label></div>',
         inputclass: ''
     });
 
-    $.fn.editabletypes.address = Address;
+    $.fn.editabletypes.user_name = userName;
 
 }(window.jQuery));

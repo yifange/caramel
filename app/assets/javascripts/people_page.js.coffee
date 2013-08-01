@@ -25,12 +25,12 @@ attachHandler = ->
     data:[{id:0,text:'Washington'},{id:1,text:'Baltimore'},{id:2,text:'Chicago'}]
   })
 
-  $('#address').editable({
+  $('#staff-name').editable({
     url: '/post',
     title: 'Enter city, street and building #',
     value: {
-      city: "Moscow",
-      street: "Lenina",
+      first_name: "Moscow",
+      last_name: "Lenina",
     }
   })
 

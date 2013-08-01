@@ -23,7 +23,7 @@
     -@staffs.each do |staff|
       %tr
         %td
-          %a#address{:href => "#", 'data-type' => 'address'}
+          %a#staff-name{:href => "#", 'data-type' => 'user_name'}
         %td
           %a.email-input{:href => '#'}
             = staff.email

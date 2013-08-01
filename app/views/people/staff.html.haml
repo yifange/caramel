@@ -28,3 +28,6 @@
 						= staff.email
 				%td
 					%a.region-input{:href => '#'}
+	%div.container	
+		%div{:class => 'row' , :style => 'padding-top: 240px;'}
+			%a{:href =>"#",:class =>"btn btn-large btn-primary",:rel =>"popover", :data => {'content' => "#{render 'people/popform'}",'placement' =>"top", 'original-title' =>"Fill in form"}} CREATE

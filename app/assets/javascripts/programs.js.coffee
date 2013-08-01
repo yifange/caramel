@@ -25,7 +25,7 @@ attachHandler = ->
 
   $.fn.editable.defaults.mode = 'inline'
   $('.school-input').select2({
-    data:[{id:0,text:'GWU'},{id:1,text:'JHU'},{id:2,text:'SJU'}]
+    tags:["GWU","JHU","SJU"]
   });
 
   #$.fn.editable.defaults.mode = 'inline'

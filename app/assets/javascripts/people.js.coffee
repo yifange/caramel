@@ -1,7 +1,7 @@
 attachHandler = ->
 	$.fn.editable.defaults.mode = 'inline'
 	$('.first-name-input').editable({
-		url: '',
+		url: 'people#save_changes',
 		type: 'text',
 		placeholder: 'first name'
 	})

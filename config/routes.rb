@@ -1,8 +1,4 @@
 Caramel::Application.routes.draw do
-	get 'people_page' => 'people_page#staff'
-	get 'programs_page' => 'programs_page#regions'
-	get 'classes_page' => 'classes_page#calendar'
-
   get "programs/get_teachers" => "programs#get_teachers"
   post "programs/save_teachers" => "programs#save_teachers"
 

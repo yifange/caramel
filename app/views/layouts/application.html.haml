@@ -6,19 +6,16 @@
     = stylesheet_link_tag :application, :media => "all"
     = javascript_include_tag :application
     = csrf_meta_tags
+    = yield(:head)
   %body
     .navbar.navbar-inverse
       .navbar-inner
         .brand Musikids Class Attendance
         %ul.nav
-          %li#nav-people
-            %a{:href => '/people_page'} PEOPLE
-          %li#nav-program
-            %a{:href => '/programs_page'} PROGRAMS
-          %li#nav-calendar
-            %a{:href => '/classes_page'} CLASSES
-          %li#nav-calendar
-            %a{:href => ''} INSTRUMENTS
+          = active_link_partialpath 'PEOPLE', '/people_page/staff'
+          = active_link_partialpath 'PROGRAMS', '/programs_page/regions'
+          = active_link_partialpath 'CLASSES', '/classes_page/calendar'
+          = active_link_partialpath 'INSTRUMENTS','/instruments_page/index'
           %li.dropdown
             %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => ''}
               SEMESTER

@@ -1,7 +1,4 @@
 %ul.nav.nav-list
-  %li.active
-    %a{:href => '/people_page/staff'} STAFF
-  %li
-    %a{:href => '/people_page/teachers'} TEACHERS
-  %li
-    %a{:href => '/people_page/students'} STUDENTS
+  = active_link_fullpath 'STAFF', '/people_page/staff'
+  = active_link_fullpath 'TEACHERS', '/people_page/teachers'
+  = active_link_fullpath 'STUDENTS', '/people_page/students'

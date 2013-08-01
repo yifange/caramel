@@ -1,8 +1,4 @@
 %ul.nav.nav-list
-  %li.active
-    %a{:href => '#'} CALENDAR
-  %li
-    %a{:href => '#'} SCHEDULE
-  %li
-    %a{:href => '#'} ATTENDANCE
-
+  = active_link_fullpath 'CALENDAR', '/classes_page/calendar'
+  = active_link_fullpath 'SCHEDULE', '/classes_page/schedule'
+  = active_link_fullpath 'ATTENDANCE', '/classes_page/attendance'

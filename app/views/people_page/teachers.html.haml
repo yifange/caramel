@@ -20,7 +20,8 @@
         Last Name
       %th{:width => '25%'}
         Email
-      %th{:width => '25%'}
+      %th{:width => '12%'}
+      %th{:width => '13%'}
     -@teachers.each do |teacher|
       %tr
         %td
@@ -33,8 +34,11 @@
           %a.email-input{:href => '#'}
             = teacher.email
         %td
-          %button.btn.btn-primary{'type' => 'button', 'data-toggle' => 'button'}
+          %button.btn.btn-primary{'type' => 'button'}
             Show Detail
+        %td
+          %button.btn.btn-primary{'type' => 'button'}
+            Reset Password
   %button.btn.btn-primary{'type' => 'button'}
     New Teacher
 

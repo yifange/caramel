@@ -15,9 +15,7 @@
   %table.table.table-bordered.table-striped{:style => 'clear: both'}
     %tr
       %th{:width => '25%'}
-        First Name
-      %th{:width => '25%'}
-        Last Name
+        Name
       %th{:width => '25%'}
         Email
       %th{:width => '25%'}
@@ -25,11 +23,7 @@
     -@staffs.each do |staff|
       %tr
         %td
-          %a.first-name-input{:href => '#'}
-            = staff.first_name
-        %td
-          %a.last-name-input{:href => '#'}
-            = staff.last_name
+          %a#address{:href => "#", 'data-type' => 'address'}
         %td
           %a.email-input{:href => '#'}
             = staff.email

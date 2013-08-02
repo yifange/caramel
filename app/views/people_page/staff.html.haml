@@ -7,14 +7,16 @@
 = content_for :main do
   %table.table.table-bordered.table-striped{:style => 'clear: both'}
     %tr
-      %th{:width => '14%'}
-        Name
-      %th{:width => '14%'}
-        Email
-      %th{:width => '25%'}
-        Region
+      %th{:width => '13px'}
+      %th{:width => '290px'} Name
+      %th{:width => '280px'} Email
+      %th Region
+      %th
     -@staffs.each do |staff|
       %tr
+        %td
+          %a
+            %i.icon-remove
         %td
           %a.x-editable-staff-name{:href => "#", 'data-type' => 'user_name'}
             = staff.name
@@ -22,6 +24,9 @@
           %a.x-editable-email{:href => '#'}
             = staff.email
         %td
-          %a.region-input{:href => '#'}
+          %a.select2-region{:href => '#'}
+        %td
+          %button.btn.btn-primary{'type' => 'button'}
+            Reset Password
   %button.btn.btn-primary{'type' => 'button'}
     New Staff

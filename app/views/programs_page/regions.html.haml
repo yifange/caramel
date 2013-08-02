@@ -7,16 +7,15 @@
 = content_for :main do
   %table.table.table-bordered.table-striped{:style => 'clear: both'}
     %tr
-      %th{:width => '40%'}
-        Region
-      %th{:width => '60%'}
+      %th{:width => '280px'} Region
+      %th
     -@regions.each do |region|
       %tr
         %td
-          %a.region-name-input{:href => '#'}
+          %a.x-editable-region-name{:href => '#'}
             = region.name
         %td
-          %a.school-input{:href => '#'}
+          %a.select2-mul-school{:href => '#'}
   %button.btn.btn-primary{'type' => 'button'}
     New Region
 

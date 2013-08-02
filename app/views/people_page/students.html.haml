@@ -1,10 +1,3 @@
-- content_for :head do
-  :javascript
-    $(document).ready(function() {
-      $('#nav-people').toggleClass("active");
-      $('#sidebar-students').toggleClass("active");
-    });
-
 - content_for :title do
   people
 
@@ -14,23 +7,20 @@
 = content_for :main do
   %table.table.table-bordered.table-striped{:style => 'clear: both'}
     %tr
-      %th{:width => '25%'}
-        First Name
-      %th{:width => '25%'}
-        Last Name
-      %th{:width => '25%'}
-        Email
-      %th{:width => '25%'}
+      %th{:width => '13px'}
+      %th{:width => '290px'} Name
+      %th{:width => '280px'} Email
+      %th
     -@students.each do |student|
       %tr
         %td
-          %a.first-name-input{:href => '#'}
-            = student.first_name
+          %a
+            %i.icon-remove
         %td
-          %a.last-name-input{:href => '#'}
-            = student.last_name
+          %a.x-editable-staff-name{:href => "#", 'data-type' => 'user_name'}
+            = student.name
         %td
-          %a.email-input{:href => '#'}
+          %a.x-editable-email{:href => '#'}
             = student.email
         %td
           %button.btn.btn-primary{'type' => 'button', 'data-toggle' => 'button'}

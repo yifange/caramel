@@ -8,11 +8,11 @@
   %table.table.table-bordered.table-striped{:style => 'clear: both'}
     %tr
       %th{:width => '100%'}
-        Instrument Types
+        Instrument Type
     - @instruments.each do |instrument|
       %tr
         %td
-          %a.instrument-input{:href => '#'}
+          %a.x-editable-instrument-name{:href => '#'}
             = instrument.name
   %button.btn.btn-primary{'type' => 'button'}
     New Instrument Type

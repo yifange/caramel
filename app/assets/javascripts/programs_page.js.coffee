@@ -4,30 +4,6 @@
 
 attachHandler = ->
   $.fn.editable.defaults.mode = 'inline'
-  $('.instrument-input').editable({
-    pk: 1,
-    url: '/instruments',
-    type: 'text',
-    placeholder: 'instrument'
-  })
-
-  $('.program-input').editable({
-    url: '',
-    type: 'text',
-    placeholder: 'program'
-  })
-
-  $.fn.editable.defaults.mode = 'inline'
-  $('.region-name-input').editable({
-    url: '',
-    type: 'text',
-    placeholder: 'region name'
-  })
-
-  $.fn.editable.defaults.mode = 'inline'
-  $('.school-input').select2({
-    data:[{id:0,text:'GWU'},{id:1,text:'JHU'},{id:2,text:'SJU'}]
-  })
 
   #$.fn.editable.defaults.mode = 'inline'
 	#	$('.instrument-options').editable({

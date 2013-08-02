@@ -45,7 +45,7 @@
         $(element).empty();
         return; 
       }
-      var html = $('<div>').text(value.first_name).html() + ' ' + $('<div>').text(value.last_name).html();
+      var html = value.first_name + ' ' + value.last_name;
       $(element).html(html); 
     },
 
@@ -54,7 +54,7 @@
 
       @method html2value(html) 
      **/        
-    html2value: function(html) {        
+    html2value: function(html) {
       return {
         first_name: html.split(" ")[0], 
         last_name: html.split(" ")[1] 

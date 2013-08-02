@@ -10,7 +10,7 @@ class ProgramsController < ApplicationController
 	end
 
   def get_instruments
-    @instruments = Instrument.all
+    @instruments = Instrument.all.order("name ASC")
     @results = @instruments.map { |instrument| {:id => instrument.id, :text => instrument.name}}
     render :json => @results
   end
@@ -18,7 +18,7 @@ class ProgramsController < ApplicationController
   def save_instruments
     @program = Program.find(params[:pk])
     @program.update_attributes(:instrument_id => params[:value])
-    render :text => 'hahahah'
+    render :text => "Save Instrument Successully!"
   end
 
   def get_teachers
@@ -31,23 +31,16 @@ class ProgramsController < ApplicationController
 
   def get_assigned_teachers
     programs = Program.all
-    assigned_teachers = {}
+    @assigned_teachers = {}
     programs.each do |program|
       assignments_for_program = Assignment.where(:program_id => program.id)
       assignments_str = assignments_for_program.map do |assignment| 
         teacher = Teacher.find(assignment.teacher_id)
         teacher.id.to_s + ":" + teacher.first_name + teacher.last_name
       end.join(",")
-      assigned_teachers[program.id] = assignments_str
+      @assigned_teachers[program.id] = assignments_str
     end
-    # render :json => @assigned_teachers
-    # @assignments = Assignment.all
-    # @assigned_teachers = ""
-    # @assignments.each do |assignment|
-    #   @teacher = Teacher.find(assignment.teacher_id)
-    #   @assigned_teachers += assignment.teacher_id + ":"  + @teacher.first_name + " " + @teacher.last_name + ","
-    # end
-    return assigned_teachers
+    return @assigned_teachers
   end
 
   
@@ -70,43 +63,25 @@ class ProgramsController < ApplicationController
     @values.each do |val| # assignment created
       Assignment.create(:program_id => params[:pk], :teacher_id => val.to_i)
     end
-
-    render :text => 'hahahh'
+    render :text => "Save Teachers Successfully!"
   end
 
 
   def schools
 # <<<<<<< HEAD
-    # if current_user && current_user.type != "Admin"
-    #   @schools = School.where(:region_id => current_user.region_id)
-    #   @teachers = Teacher.where(:region_id => current_user.region_id)
-    #   @instruments = Instrument.all
-    #   @assigned_teachers = get_assigned_teachers
-    #   # @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
-    #   # @students = Student.find(:all, :conditions => {:region_id => current_user.region_id})
-    # else
-    @schools = School.all
-    @teachers = Teacher.all
-    @instruments = Instrument.all
-    @assigned_teachers = get_assigned_teachers
-    # puts '****************************************************************' + get_assigned_teachers.to_s
+    if current_user && current_user.type != "Admin"
+      dm = Domain.where(:user_id => current_user.id).first
+      @schools = School.where(:region_id => dm.region_id)
+      @teachers = Teacher.where("region_id = current_user.region_id'")
+      @programs = Program.all
+    elsif current_user && current_user.type == "Admin"
+      @schools = School.all
+      @teachers = Teacher.all
+      @programs = Program.all
+    end
 
-    # end
-# =======
-# 		verify_user
-#     if current_user && current_user.type != "Admin"
-#       @schools = School.where(:region_id => current_user.region_id)
-#       @teachers = Teacher.where(:region_id => current_user.region_id)
-#       @instruments = Instrument.all
-#       # @teachers = Teacher.find(:all, :conditions => {:region_id => current_user.region_id})
-#       # @students = Student.find(:all, :conditions => {:region_id => current_user.region_id})
-#     else
-#       @schools = School.all
-#       @teachers = Teacher.all
-#       @instruments = Instrument.all
-#     end
-# >>>>>>> origin/Jinqiu
-    @programs = Program.all
+    @assigned_teachers = get_assigned_teachers
+    @instruments = Instrument.all
   end
 
 	def instrument_types

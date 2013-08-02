@@ -6,37 +6,36 @@
 
 = content_for :main do
   .tabbable
-    %ul.nav.nav-tabs
+    %ul#school-tabs.nav.nav-tabs
       - if current_user
-        - @schools.each do |school|
-          %li
-            %a{:href => "#tab2", "data-toggle" => "tab"}
-              = school.abbrev
+        = school_tabs_for(@schools)
     .tab-content
-      .tab-pane.active#tab1
+      = school_tab_panes_for(@schools, @programs)
+      -# - @schools.each do |school|
+      -#   .tab-pane{:id => "tab-#{school.id}"}
 
-        %table.table.table-stripped.table-bordered
-          %tbody
-            -@programs.each do |program|
-              %tr
-                %td
-                  %a.instrument-options{:href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-url" => "/programs/save_instruments", "data-source" => "/programs/get_instruments.json", "data-value" => "1", "data-title" => "Select Instrument"}
-                    = Instrument.find(program.instrument_id).name
-                %td= program.course_type.full
-                %td= program.regular_courses_per_year
-                %td= program.group_courses_per_year
-                %td{"data-toggle" => "collapse", "data-target" => "#collapse-#{program.id}", :class => "accordion-toggle"} Show Detail
-              %tr
-                %td.detailInfo{:colspan => "6"}
-                  %div.accodian-body.collapse{:id => "collapse-#{program.id}"}
-                    Teachers:
-                    -# .teacher.options{select_tag "teacher-options", options_from_collection_for_select(@teachers, "id", "name")}
-                    %input.teacher-options{:type => "hidden", :value => "#{@assigned_teachers[program.id]}", "data-pk" => "#{program.id}"}
+      -#     %table.table.table-stripped.table-bordered
+      -#       %tbody
+      -#         -@programs.each do |program|
+      -#           %tr
+      -#             %td
+      -#               %a.instrument-options{:href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-url" => "/programs/save_instruments", "data-source" => "/programs/get_instruments.json", "data-value" => "1", "data-title" => "Select Instrument"}
+      -#                 = Instrument.find(program.instrument_id).name
+      -#             %td= program.course_type.full
+      -#             %td= program.regular_courses_per_year
+      -#             %td= program.group_courses_per_year
+      -#             %td{"data-toggle" => "collapse", "data-target" => "#collapse-#{program.id}", :class => "accordion-toggle"} Show Detail
+      -#           %tr
+      -#             %td.detailInfo{:colspan => "6"}
+      -#               %div.accodian-body.collapse{:id => "collapse-#{program.id}"}
+      -#                 Teachers:
+      -#                 -# .teacher.options{select_tag "teacher-options", options_from_collection_for_select(@teachers, "id", "name")}
+      -#                 %input.teacher-options{:type => "hidden", :value => "#{@assigned_teachers[program.id]}", "data-pk" => "#{program.id}"}
 
 
 
-    .tab-pane#tab2
-      %p Hahah2
+    -# .tab-pane#tab2
+    -#   %p Hahah2
 
 
 

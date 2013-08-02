@@ -54,6 +54,16 @@ Program.delete_all
                course_type_id: CourseType.where(full: 'individual').first.id,
                regular_courses_per_year: 120,
                group_courses_per_year: 30)
+@p_3 = Program.create(school_id: @s_ub.id,
+               instrument_id: Instrument.where(name: 'guitar').first.id,
+               course_type_id: CourseType.where(full: 'individual').first.id,
+               regular_courses_per_year: 120,
+               group_courses_per_year: 50)
+@p_4 = Program.create(school_id: @s_ub.id,
+               instrument_id: Instrument.where(name: 'violin').first.id,
+               course_type_id: CourseType.where(full: 'individual').first.id,
+               regular_courses_per_year: 100,
+               group_courses_per_year: 50)
 
 Assignment.create(program_id: @p_1.id, teacher_id: @u_ge.id)
 Assignment.create(program_id: @p_2.id, teacher_id: @u_ge.id)

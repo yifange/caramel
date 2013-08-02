@@ -1,19 +1,12 @@
 Caramel::Application.routes.draw do
-  get "programs/get_teachers" => "programs#get_teachers"
-  post "programs/save_teachers" => "programs#save_teachers"
+  get "programs_page/get_teachers" => "programs_page#get_teachers"
+  post "programs_page/save_teachers" => "programs_page#save_teachers"
 
-  get "programs/get_instruments" => "programs#get_instruments"
-  post "programs/save_instruments" => "programs#save_instruments"
-
-  # get "lunchpads" => "lunchpads#index"
-  # get "lunchpads/api" => "lunchpads#api"
-  # post "lunchpads/lunch" => "lunchpads#lunch"
-
-  resources :lunchpads
-  
-	get ':controller/:action/'
+  get "programs_page/get_instruments" => "programs_page#get_instruments"
+  post "programs_page/save_instruments" => "programs_page#save_instruments"
 
 	root 'session_page#signin'
+	get ':controller/:action/'
 
   resources :instruments
 end

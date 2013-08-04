@@ -8,4 +8,11 @@ class Program < ActiveRecord::Base
   has_many :teachers, :through => :assignments
   has_many :students, :through => :enrollments
   has_many :courses
+
+  def start_date
+    term.start_date
+  end
+  def end_date
+    term.end_date
+  end
 end

@@ -4,14 +4,14 @@ one:
   school_id: 
   instrument_id: 
   program_type_id: 
-  regular_course_total: 1
-  group_course_total: 1
   term_id: 
+  annual_regular_total: 1
+  annaul_group_total: MyString
 
 two:
   school_id: 
   instrument_id: 
   program_type_id: 
-  regular_course_total: 1
-  group_course_total: 1
   term_id: 
+  annual_regular_total: 1
+  annaul_group_total: MyString

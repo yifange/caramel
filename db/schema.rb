@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130729225346) do
+ActiveRecord::Schema.define(version: 20130802231442) do
 
   create_table "assignments", force: true do |t|
     t.integer  "teacher_id"
@@ -41,24 +41,20 @@ ActiveRecord::Schema.define(version: 20130729225346) do
   add_index "attendances", ["attendance_marking_id"], name: "index_attendances_on_attendance_marking_id"
   add_index "attendances", ["roster_id"], name: "index_attendances_on_roster_id"
 
-  create_table "calendar_markings", force: true do |t|
-    t.string   "abbrev"
-    t.string   "full"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "calendars", force: true do |t|
     t.date     "date"
+    t.integer  "term_id"
     t.time     "start_time"
     t.time     "end_time"
     t.integer  "school_id"
     t.boolean  "available"
+    t.integer  "day_of_week"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "calendars", ["school_id"], name: "index_calendars_on_school_id"
+  add_index "calendars", ["term_id"], name: "index_calendars_on_term_id"
 
   create_table "courses", force: true do |t|
     t.integer  "program_id"
@@ -94,9 +90,9 @@ ActiveRecord::Schema.define(version: 20130729225346) do
     t.integer  "school_id"
     t.integer  "instrument_id"
     t.integer  "program_type_id"
-    t.integer  "regular_course_total"
-    t.integer  "group_course_total"
     t.integer  "term_id"
+    t.integer  "annual_regular_total"
+    t.string   "annaul_group_total"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -135,6 +131,8 @@ ActiveRecord::Schema.define(version: 20130729225346) do
 
   create_table "terms", force: true do |t|
     t.string   "name"
+    t.date     "start_date"
+    t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

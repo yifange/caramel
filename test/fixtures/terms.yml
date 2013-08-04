@@ -2,6 +2,10 @@
 
 one:
   name: MyString
+  start_date: 2013-08-02
+  end_date: 2013-08-02
 
 two:
   name: MyString
+  start_date: 2013-08-02
+  end_date: 2013-08-02

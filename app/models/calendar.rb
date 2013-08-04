@@ -1,7 +1,17 @@
 class Calendar < ActiveRecord::Base
-  belongs_to :calendar_marking
+  attr_accessor :recurring
   belongs_to :school
+  belongs_to :term
   validate :start_time_cannot_after_end_time, :start_time_and_end_time_must_in_school_hour, :events_cannot_overlap
+
+  def save_recurring
+    save
+  end
+
+  def all_similar_events
+    @similar_events || (@similar_events = Calendar.where(:term_id => term_id, :school_id => school_id, :day_of_week => day_of_week))
+  end
+
   def start_time_cannot_after_end_time
     if start_time >= end_time
       errors.add(:end_time, "must after start time.")

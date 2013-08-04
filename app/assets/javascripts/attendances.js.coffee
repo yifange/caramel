@@ -14,5 +14,12 @@ attachSubnavHandler = ->
   $subnavToday.attr("href", $todayLink)
   $subnavText.html($title)
 
+attachModalXeditableFieldsHandler = ->
+  $("#attendance-form-course").editable()
+
+
 $(document).ready attachSubnavHandler
+$(document).ready attachModalXeditableFieldsHandler
+
 $(document).on "page:load", attachSubnavHandler
+$(document).on "page:load", attachModalXeditableFieldsHandler

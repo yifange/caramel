@@ -6,6 +6,11 @@
   table {
     table-layout: fixed;
     text-align: center;
+    a.fmc-grid-link {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
     td {
       border: 1px solid #DFDFDF;
       width: 0.5em;
@@ -18,6 +23,15 @@
     .fmc-cal-header-wday {
       width: 3%;
       font-weight: bold;
+    }
+    td.regular-class-day {
+      background-color: #CC1100;
+    }
+    td.group-class-day {
+      background-color: #22DD00;
+    }
+    td.mix-class-day {
+      background-color: #1122EE;
     }
   }
 

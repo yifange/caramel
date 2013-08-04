@@ -20,7 +20,8 @@ class CalendarsController < ApplicationController
 
   def create
     @calendar = Calendar.new(calendar_params)
-    if @calendar.save
+    r = params[:calendar][:recurring] ? @calendar.save_recurring : @calendar.save
+    if r
       redirect_to :controller => "calendars", :action => :index_week
     else
       render :new, :status => :unprocessable_entity
@@ -28,6 +29,7 @@ class CalendarsController < ApplicationController
   end
   def edit
     @calendar = Calendar.find(params[:id])
+    @similar_events = @calendar.all_similar_events
   end
   def update
     @calendar = Calendar.find(params[:id])

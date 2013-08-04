@@ -37,10 +37,13 @@ class CoursesController < ApplicationController
   def rehash_objs(objs)
     r = {}
     for obj in objs
-      unless r.has_key? obj[:date]
-        r[obj[:date]] = []
+      if obj[:type] == "GroupCourse"
+        r[obj[:date]] = [] unless r.has_key? obj[:date]
+        r[obj[:date]] << obj
+      else
+        r[obj[:day_of_week]] = [] unless r.has_key? obj[:day_of_week]
+        r[obj[:day_of_week]] << obj
       end
-      r[obj[:date]] << obj
     end
     r
   end

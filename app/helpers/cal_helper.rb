@@ -1,3 +1,7 @@
+# TODO Recurring events for calendar, number of similar events, check the recurring box, change & delete all similar events. 
+# TODO Regular class recurring in showEvent.
+# TODO Calendar remainder in monthly flat calendar
+
 module CalHelper
   def monthly_calendar_for(objects, *args, &block)
     options = args.last.is_a?(Hash) ? args.pop : {}
@@ -51,8 +55,10 @@ module CalHelper
       content = "".html_safe
       content.concat(draw_calendar_nav)
       content.concat(draw_calendar_header)
-      @objects.each do |enrollment, date_hash|
-        content.concat(draw_calendar_row_for_enrollment(enrollment, date_hash))
+      @objects.each do |program, program_detail|
+        program_detail[:enrollments].each do |enrollment, date_hash|
+          content.concat(draw_calendar_row_for_enrollment(enrollment, date_hash, program_detail[:schedule]))
+        end
       end
       content_tag :table, content
     end
@@ -78,11 +84,12 @@ module CalHelper
       end
       (content_tag :tr, wdays).concat(content_tag :tr, days)
     end
-    def draw_calendar_row_for_enrollment(enrollment, date_hash)
+
+    def draw_calendar_row_for_enrollment(enrollment, date_hash, schedule)
       buf = "".html_safe
       student = enrollment.student
       program = enrollment.program
-      #XXX the summary text for the enrollment
+      # XXX the summary text for the enrollment
       text = student.first_name
       buf.concat(content_tag :td, text, :class => "fmc-cal-enrollment-text")
       for day in @date.beginning_of_month .. @date.end_of_month
@@ -92,7 +99,36 @@ module CalHelper
           klass = date_hash[day].attendance_marking.full
           grid_text = date_hash[day].attendance_marking.abbrev
         end
-        buf.concat(content_tag :td, grid_text, :class => klass)
+        # XXX group class on the day?
+        regular_course_ids = []
+        group_course_ids = []
+        if schedule.has_key? day
+          course_id = schedule[day]
+          schedule[day].each do |group_course|
+            group_course_ids << group_course.id
+          end
+        end
+        # XXX regular class on the day? Need to constrain the date range 
+        if schedule.has_key? day.wday
+          schedule[day.wday].each do |regular_course|
+            if @date.beginning_of_month >= regular_course.start_date and @date.end_of_month <= regular_course.end_date
+              regular_course_ids << regular_course.id
+            end
+          end
+        end
+        unless regular_course_ids.empty? or group_course_ids.empty?
+          klass << "mix-class-day"
+        else
+          klass << "regular-class-day" unless regular_course_ids.empty?
+          klass << "group-class-day" unless group_course_ids.empty?
+        end
+        # modal_link = link_to grid_text, "#attendance-modal", "data-toggle" => "modal", :class => "fmc-grid-link"
+        if date_hash.has_key? day
+          grid_link = link_to grid_text, edit_attendance_path(date_hash[day].id), :class => "fmc-grid-link"
+        else
+          grid_link = link_to grid_text, "attendances/new", :class => "fmc-grid-link"
+        end
+        buf.concat(content_tag :td, grid_link, :class => klass, :data => {:regular => regular_course_ids, :group => group_course_ids})
       end
       content_tag :tr, buf
     end
@@ -119,6 +155,10 @@ module CalHelper
         events = @objects[day]
         buf = "".html_safe
         for event in events
+          # XXX the event should only appear within the program range
+          # if event.instance_of? Course and event.type == "GroupCourse"
+          #   break if @date.beginning_of_week > event.end_date or @date.end_of_week < event.start_date 
+          # end
           style = ""
           style << "height: #{event_height(event[:start_time], event[:end_time])}px;"
           style << "top: #{event_top(event[:start_time])}px;"
@@ -137,7 +177,7 @@ module CalHelper
         buf
       end
     end
-    
+
     def event_height(start_time, end_time)
       length = end_time - start_time
       height = length / 3600 * @slots_per_hour * @slot_height
@@ -226,7 +266,7 @@ module CalHelper
                 end
                 column = content_tag :td, :class => klass do
                   content_tag :div, :class => "wc-day-column-inner #{@calendar_name}-cal" ,:data => {:date => day.strftime} do
-                    draw_events(day) 
+                    (draw_events(day) || "".html_safe).concat(draw_events(day.wday))
                   end
                 end
                 columns.concat(column)

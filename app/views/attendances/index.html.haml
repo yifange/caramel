@@ -17,6 +17,8 @@
     -# %li.pull-right.active
     -#   %a#subnav-year.pull-right{:href => "/calendars"}
     -#     year
-= flat_monthly_calendar_for @enrollment_hash, :year => @year.to_i, :month => @month.to_i do |f|
+= flat_monthly_calendar_for @program_hash, :year => @year.to_i, :month => @month.to_i do |f|
   = f.draw_calendar
 = content_tag :span, "Teacher: " + @teacher.first_name + @teacher.last_name
+= modal_for "attendance", :modal_title => "attendance"
+

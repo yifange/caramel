@@ -1,0 +1,5 @@
+= simple_form_for @attendance do |f|
+  = f.input :date
+  = f.association :roster, :label_method => :course_summary, :collection => Enrollment.find(params[:enrollment_id]).rosters, :include_blank => false
+  = f.association :attendance_marking, :label_method => :full, :include_blank => false
+

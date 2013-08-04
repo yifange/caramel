@@ -57,7 +57,7 @@ module CalHelper
       content.concat(draw_calendar_header)
       @objects.each do |program, program_detail|
         program_detail[:enrollments].each do |enrollment, date_hash|
-          content.concat(draw_calendar_row_for_enrollment(enrollment, date_hash, program_detail[:schedule]))
+          content.concat(draw_calendar_row_for_enrollment(enrollment, date_hash,program_detail[:schedule]))
         end
       end
       content_tag :table, content
@@ -124,9 +124,11 @@ module CalHelper
         end
         # modal_link = link_to grid_text, "#attendance-modal", "data-toggle" => "modal", :class => "fmc-grid-link"
         if date_hash.has_key? day
-          grid_link = link_to grid_text, edit_attendance_path(date_hash[day].id), :class => "fmc-grid-link"
+          grid_link = link_to grid_text, edit_attendance_path(date_hash[day].id, :enrollment_id => enrollment.id), :class => "fmc-grid-link"
         else
-          grid_link = link_to grid_text, "attendances/new", :class => "fmc-grid-link"
+          course_id = [regular_course_ids + group_course_ids].first
+          roster_id = Roster.where(:student_id => student.id, :course_id => course_id).first.id
+          grid_link = link_to grid_text, {:controller => :attendances, :action => :new, :enrollment_id => enrollment.id, :roster_id => roster_id}, :class => "fmc-grid-link"
         end
         buf.concat(content_tag :td, grid_link, :class => klass, :data => {:regular => regular_course_ids, :group => group_course_ids})
       end

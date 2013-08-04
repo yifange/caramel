@@ -32,19 +32,6 @@ class AttendancesController < ApplicationController
     @attendance = Attendance.find(params[:id])
   end
   private
-  def get_roster_for_enrollment(enrollment)
-    student = enrollment.student
-    program = enrollment.program
-    courses_of_program = program.courses
-
-    rosters_of_enrollment = []
-    for course in courses_of_program
-      item = Roster.where(:student_id => student.id, :course_id => course.id)
-      # XXX date range??
-      rosters_of_enrollment += item
-    end
-    rosters_of_enrollment
-  end
   def get_teachers_by_school_id(school_id)
     school = School.find(school_id)
     programs_of_school = school.programs
@@ -55,7 +42,7 @@ class AttendancesController < ApplicationController
     teachers.uniq
   end
   def get_date_hash_for_enrollment(enrollment)
-    rosters = get_roster_for_enrollment(enrollment)
+    rosters = enrollment.rosters
     date_hash = {}
     for roster in rosters
       attendances_of_roster = Attendance.where(:roster_id => roster.id)

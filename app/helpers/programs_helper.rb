@@ -26,12 +26,21 @@ module ProgramsHelper
           programs_for_school.each do |program|
             buf_tr = content_tag :tr do
               buf_td1 = content_tag :td do
-                content_tag :a, Instrument.find(program.instrument_id).name, :class => "instrument-options", :href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-url" => "/programs_page/save_instruments", "data-source" => "/programs_page/get_instruments.json", "data-value" => "1", "data-title" => "Select Instrument"
+                content_tag :a, Instrument.find(program.instrument_id).name, :class => "instrument-options", :href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-url" => "/programs_page/save_instrument", "data-source" => "/programs_page/get_instruments.json", "data-value" => "1", "data-title" => "Select Instrument"
               end
 
-              buf_td2 = content_tag :td, program.course_type.full
-              buf_td3 = content_tag :td, program.regular_courses_per_year
-              buf_td4 = content_tag :td, program.group_courses_per_year
+              buf_td2 = content_tag :td do
+                content_tag :a, CourseType.find(program.course_type_id).abbrev, :class => "course-type-options", :href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-url" => "/programs_page/save_course_type", "data-source" => "/programs_page/get_course_types.json", "data-value" => "1", "data-title" => "Select Course Type"
+              end
+
+              buf_td3 = content_tag :td do
+                content_tag :a, program.regular_courses_per_year, :class => "regular-courses-per-year", :href => "#", "data-type" => "text", "data-pk" => "#{program.id}", "data-url" => "/programs_page/save_regular_courses", "data-value" => program.regular_courses_per_year, "data-title" => "Input Regular Courses per Year"
+              end
+
+              buf_td4 = content_tag :td do
+                content_tag :a, program.group_courses_per_year, :class => "group-courses-per-year", :href => "#", "data-type" => "text", "data-pk" => "#{program.id}", "data-url" => "/programs_page/save_group_courses", "data-value" => program.group_courses_per_year, "data-title" => "Input Group Courses per Year"
+              end
+
               buf_td5 = content_tag :td, "Show Detail", "data-toggle" => "collapse", "data-target" => "#collapse-#{program.id}", :class => "accordin-toggle"
               buf_td1.concat(buf_td2).concat(buf_td3).concat(buf_td4).concat(buf_td5)
             end

@@ -8,6 +8,18 @@ attachHandler = ->
     showbuttons: false
   })
 
+  $('.course-type-options').editable({
+    showbuttons: false
+  })
+
+  $('.regular-courses-per-year').editable({
+    showbuttons: false
+  })
+
+  $('.group-courses-per-year').editable({
+    showbuttons: false
+  })
+
   $(".teacher-options").on("select2-blur", ->
     $.ajax(
       type: "POST",
@@ -40,5 +52,39 @@ attachHandler = ->
     multiple: true
   })
 
+attachNewProgramHandler = ->
+  $(".new-program").on "click", (e) ->
+    e.preventDefault()
+    href = $(this).attr("href")
+    $.get(href, (data, status) ->
+      $("#new-program-modal-body").html($(data).find("#new-program-form-body").html())
+      $("#new-program-modal").modal({
+        keyboard: true
+      })
+    )
+    return false
+
+attachSubmitHandler = ->
+  $("#new-program-modal-confirm").on "click", ->
+    $form = $("form.new-program")
+    $.ajax({
+      type: $form.attr("method"),
+      url: $form.attr("action"),
+      data: $form.serialize(),
+      success: (data, status) ->
+        $("#new-program-modal").modal("toggle")
+        $.get(document.URL, (data, status) ->
+          $(".fmc-container").html($(data).find(".fmc-container").html())
+          attachAttendanceGridHandler()
+        )
+      error: (data, status) ->
+        $("#new-program-modal-body").html($(data.responseText).find("#new-program-form-body").html())
+    })
+
+
 $(document).ready attachHandler
+$(document).ready attachNewProgramHandler
+$(document).ready attachSubmitHandler
 $(document).on "page:load", attachHandler
+$(document).on "page:load", attachNewProgramHandler
+$(document).on "page:load", attachSubmitHandler

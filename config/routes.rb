@@ -71,8 +71,10 @@ Caramel::Application.routes.draw do
   delete '/programs', to: redirect('/programs/remove')
 
   # teachers of a program
+  # instruments of a program  
   resources :programs do
       resources :teachers, only: [:index, :update]
+      resources :instruments, only: [:show, :update]
   end
 
   # programs of a teacher  
@@ -80,8 +82,17 @@ Caramel::Application.routes.draw do
       resources :programs, only: [:index]
   end
 
-  # instruments of a program  
-  resources :programs do
-      resources :instruments, only: [:show, :update]
-  end
+# =======
+#   get "programs_page/get_course_types" => "programs_page#get_course_types"
+#   post "programs_page/save_course_type" => "programs_page#save_course_type"
+# 
+#   post "programs_page/save_regular_courses" => "programs_page#save_regular_courses"
+#   post "programs_page/save_group_courses" => "programs_page#save_group_courses"
+#   
+# 
+# 	root 'session_page#signin'
+# 	get ':controller/:action/'
+# 
+#   resources :instruments, :programs
+# >>>>>>> origin/latte
 end

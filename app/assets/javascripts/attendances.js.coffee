@@ -20,7 +20,6 @@ attachModalXeditableFieldsHandler = ->
 attachAttendanceGridHandler = ->
   $("a.fmc-grid-link").on "click", (e) ->
     e.preventDefault()
-    console.log("modal")
     href = $(this).attr("href")
     $.get(href, (data, status) ->
       $("#attendance-modal-body").html($(data).find("#attendance-form-body").html())

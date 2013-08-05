@@ -94,10 +94,10 @@ module CalHelper
       text = student.first_name
       buf.concat(content_tag :td, text, :class => "fmc-cal-enrollment-text")
       for day in @date.beginning_of_month .. @date.end_of_month
-        klass = ""
+        marking = ""
         grid_text = ""
         if date_hash.has_key? day
-          klass = date_hash[day].attendance_marking.full
+          marking = date_hash[day].attendance_marking.abbrev
           grid_text = date_hash[day].attendance_marking.abbrev
         end
         # XXX group class on the day?
@@ -106,20 +106,21 @@ module CalHelper
         regular_roster_ids = rosters_regular.map {|r| r.id}
         group_roster_ids = rosters_group.map {|r| r.id}
         # XXX regular class on the day? Need to constrain the date range 
+        class_type = "" 
         unless regular_roster_ids.empty? or group_roster_ids.empty?
-          klass << " mix-class-day"
+          class_type = "mix-class-day"
         else
-          klass << " regular-class-day" unless regular_roster_ids.empty?
-          klass << " group-class-day" unless group_roster_ids.empty?
+          class_type = "regular-class-day" unless regular_roster_ids.empty?
+          class_type = "group-class-day" unless group_roster_ids.empty?
         end
-        # modal_link = link_to grid_text, "#attendance-modal", "data-toggle" => "modal", :class => "fmc-grid-link"
+
         roster_id = (regular_roster_ids + group_roster_ids).first
         if date_hash.has_key? day
           grid_link = link_to grid_text, edit_attendance_path(date_hash[day].id, :enrollment_id => enrollment.id), :class => "fmc-grid-link"
         else
           grid_link = link_to grid_text, {:controller => :attendances, :action => :new, :enrollment_id => enrollment.id, :roster_id => roster_id, :date => day}, :class => "fmc-grid-link"
         end
-        buf.concat(content_tag :td, grid_link, :class => klass, :data => {:regular => regular_roster_ids, :group => group_roster_ids})
+        buf.concat(content_tag :td, grid_link, :class => marking + " " + class_type, :data => {:regular => regular_roster_ids, :group => group_roster_ids})
       end
       content_tag :tr, buf
     end

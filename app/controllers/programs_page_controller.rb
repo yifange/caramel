@@ -7,7 +7,7 @@ class ProgramsPageController < ApplicationController
 
 	def regions
 		verify_user
-    @regions = Region.all
+    @regions = RegionsController.index
 	end
 
   def get_instruments
@@ -46,6 +46,7 @@ class ProgramsPageController < ApplicationController
   
   def save_teachers
     @values = params[:value].split(',')
+    puts params[:value]
     @assignments = Assignment.where(:program_id => params[:pk])
     @assignments.each do |assignment|
       @values.each do |val|

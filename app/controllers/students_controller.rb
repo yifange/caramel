@@ -1,4 +1,4 @@
-class InstrumentsController < ApplicationController
+class StudentsController < ApplicationController
   respond_to :json
 
   def index 

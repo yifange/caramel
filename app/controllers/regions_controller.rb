@@ -1,8 +1,8 @@
-class InstrumentsController < ApplicationController
+class RegionsController < ApplicationController
   respond_to :json
 
   def index 
-
+    Region.all
   end
 
   def show 

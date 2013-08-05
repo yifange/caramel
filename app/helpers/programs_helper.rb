@@ -41,7 +41,7 @@ module ProgramsHelper
                 content_tag :div, :class => "accodian-body collapse", :id => "collapse-#{program.id}" do
                   buf_detail = "".html_safe
                   buf_dt1 = content_tag :span, "Teachers"
-                  buf_dt2 = content_tag :input, nil, :class => "teacher-options", :type => "hidden", :value => "#{@assigned_teachers[program.id]}", "data-pk" => "#{program.id}"
+                  buf_dt2 = content_tag :input, nil, :class => "teacher-options",  :value => "#{@assigned_teachers[program.id]}", "data-pk" => "#{program.id}"
                   buf_detail.concat(buf_dt1).concat(buf_dt2)
                 end
               end

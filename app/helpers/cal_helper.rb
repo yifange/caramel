@@ -58,7 +58,7 @@ module CalHelper
       content.concat(draw_calendar_header)
       @objects.each do |program, program_detail|
         program_detail[:enrollments].each do |enrollment, date_hash|
-          content.concat(draw_calendar_row_for_enrollment(enrollment, date_hash))
+          content.concat(draw_calendar_row_for_enrollment(enrollment, date_hash, program_detail[:schedule]))
         end
       end
       content_tag :table, content
@@ -86,7 +86,7 @@ module CalHelper
       (content_tag :tr, wdays).concat(content_tag :tr, days)
     end
 
-    def draw_calendar_row_for_enrollment(enrollment, date_hash)
+    def draw_calendar_row_for_enrollment(enrollment, date_hash, schedule)
       buf = "".html_safe
       student = enrollment.student
       program = enrollment.program
@@ -101,10 +101,8 @@ module CalHelper
           grid_text = date_hash[day].attendance_marking.abbrev
         end
         # XXX group class on the day?
-        regular_roster_ids = []
-        group_roster_ids = []
-        rosters_regular = enrollment.rosters_by_day_of_week(day.wday)
-        rosters_group = enrollment.rosters_by_date(day)
+        rosters_regular = schedule[enrollment][day.wday] || []
+        rosters_group = schedule[enrollment][day] || []
         regular_roster_ids = rosters_regular.map {|r| r.id}
         group_roster_ids = rosters_group.map {|r| r.id}
         # XXX regular class on the day? Need to constrain the date range 

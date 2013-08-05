@@ -4,7 +4,10 @@ class AttendancesController < ApplicationController
     # =>  programs = School.find(school_id).programs
     # if params[:teacher_id]
       params[:teacher_id] = 1
+      params[:school_id] = 1
+      params[:term_id] = 1
       @teacher = Teacher.find(params[:teacher_id])
+      rosters_hash = Roster.select_by_school_and_teacher_and_term_group_by_program_and_day(params[:school_id], params[:teacher_id], params[:term_id])
       programs = @teacher.programs
       @program_hash = {}
       # programs = Program.all
@@ -17,7 +20,7 @@ class AttendancesController < ApplicationController
         end
         @program_hash[program] = {}
         @program_hash[program][:enrollments] = enrollment_hash
-        # @program_hash[program][:schedule] = rehash_courses(Course.where(:program_id => program.id))
+        @program_hash[program][:schedule] = rosters_hash[program]
       end
       # end
     @year = params[:year] || Date.today.year

@@ -3,11 +3,13 @@
 one:
   student_id: 
   course_id: 
-  start_date: 2013-07-24
-  end_date: 2013-07-24
+  start_date: 2013-08-05
+  end_date: 2013-08-05
+  enrollment_id: 
 
 two:
   student_id: 
   course_id: 
-  start_date: 2013-07-24
-  end_date: 2013-07-24
+  start_date: 2013-08-05
+  end_date: 2013-08-05
+  enrollment_id: 

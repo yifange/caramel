@@ -46,6 +46,7 @@ class ProgramsPageController < ApplicationController
   
   def save_teachers
     @values = params[:value].split(',')
+    puts params[:value]
     @assignments = Assignment.where(:program_id => params[:pk])
     @assignments.each do |assignment|
       @values.each do |val|

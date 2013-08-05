@@ -11,3 +11,7 @@
         = school_tabs_for(@schools)
     .tab-content
       = school_tab_panes_for(@schools, @programs)
+  %a.btn.btn-primary.new-program{:href => "/programs_page/new"}
+
+    New Program
+  = modal_for "new-program", :modal_title => "new program"

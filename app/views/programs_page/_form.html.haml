@@ -4,4 +4,4 @@
   = f.association :course_type, :label_method => :full, :value_method => :id, :include_blank => false, collection: CourseType.order('full ASC')
   = f.input :regular_courses_per_year
   = f.input :group_courses_per_year
-  = f.button :wrapped, :cancel => programs_path
+  -# = f.button :wrapped, :cancel => programs_path

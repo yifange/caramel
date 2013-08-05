@@ -16,10 +16,34 @@ class ProgramsPageController < ApplicationController
     render :json => @results
   end
 
-  def save_instruments
+  def save_instrument
     @program = Program.find(params[:pk])
     @program.update_attributes(:instrument_id => params[:value])
     render :text => "Save Instrument Successully!"
+  end
+
+  def get_course_types
+    @course_types = CourseType.all
+    @results = @course_types.map { |course_type| {:id => course_type.id, :text => course_type.abbrev}}
+    render :json => @results
+  end
+
+  def save_course_type
+    @program = Program.find(params[:pk])
+    @program.update_attributes(:course_type_id => params[:value])
+    render :text => "Save Course Type Successully!"
+  end
+
+  def save_regular_courses
+    @program = Program.find(params[:pk])
+    @program.update_attributes(:regular_courses_per_year => params[:value])
+    render :text => "Save Regular Courses Successully!"
+  end
+
+  def save_group_courses
+    @program = Program.find(params[:pk])
+    @program.update_attributes(:group_courses_per_year => params[:value])
+    render :text => "Save Group Courses Successully!"
   end
 
   def get_teachers
@@ -95,7 +119,7 @@ class ProgramsPageController < ApplicationController
   def create
     @program = Program.new(program_params)
     if @program.save
-      redirect_to programs_path
+      redirect_to programs_page_path
     else
       render :new
     end

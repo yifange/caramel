@@ -1,5 +1,7 @@
-= simple_form_for @attendance do |f|
-  = f.input :date
-  = f.association :roster, :label_method => :course_summary, :collection => Enrollment.find(params[:enrollment_id]).rosters, :include_blank => false
-  = f.association :attendance_marking, :label_method => :full, :include_blank => false
+#attendance-form-body
+  = simple_form_for @attendance do |f|
+    = f.input :date, :default => params[:date] ? Date.strptime(params[:date]) : Date.today
+    = f.association :roster, :label_method => :course_summary, :collection => Enrollment.find(params[:enrollment_id]).rosters, :selected => params[:roster_id], :include_blank => false
+    = f.association :attendance_marking, :label_method => :full, :include_blank => false
+    -# = f.button :submit
 

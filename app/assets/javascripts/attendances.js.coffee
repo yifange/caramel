@@ -16,10 +16,23 @@ attachSubnavHandler = ->
 
 attachModalXeditableFieldsHandler = ->
   $("#attendance-form-course").editable()
+attachAttendanceGridHandler = ->
+  $("a.fmc-grid-link").on "click", (e) ->
+    e.preventDefault()
+    href = $(this).attr("href")
+    $.get(href, (data, status) ->
+      $("#attendance-modal-body").html($(data).find("#attendance-form-body").html())
+      $("#attendance-modal").modal({
+        keyboard: true
+      })
+    )
+
 
 
 $(document).ready attachSubnavHandler
 $(document).ready attachModalXeditableFieldsHandler
+$(document).ready attachAttendanceGridHandler
 
 $(document).on "page:load", attachSubnavHandler
 $(document).on "page:load", attachModalXeditableFieldsHandler
+$(document).on "page:load", attachAttendanceGridHandler

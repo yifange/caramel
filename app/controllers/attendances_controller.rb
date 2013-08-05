@@ -17,7 +17,7 @@ class AttendancesController < ApplicationController
         end
         @program_hash[program] = {}
         @program_hash[program][:enrollments] = enrollment_hash
-        @program_hash[program][:schedule] = rehash_courses(Course.where(:program_id => program.id))
+        # @program_hash[program][:schedule] = rehash_courses(Course.where(:program_id => program.id))
       end
       # end
     @year = params[:year] || Date.today.year
@@ -27,6 +27,12 @@ class AttendancesController < ApplicationController
     @attendance = Attendance.new
   end
   def create
+    attendance = Attendance.new(attendance_params) 
+    if attendance.save
+      redirect_to attendances_path
+    else
+      render :new
+    end
   end
   def edit
     @attendance = Attendance.find(params[:id])
@@ -70,5 +76,7 @@ class AttendancesController < ApplicationController
     end
     r
   end
-
+  def attendance_params
+    params.require(:attendance).permit(:roster_id, :date, :attendance_marking_id)
+  end
 end

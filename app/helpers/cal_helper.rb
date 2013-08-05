@@ -43,6 +43,7 @@ module CalHelper
   end
 
   class FlatMonthlyCalendarBuilder < CalendarBuilder
+    delegate :edit_attendance_path, :to => :parent
     def initialize(parent, objects, options)
       super(parent, objects, options)
       @year = options[:year] || Date.today.year
@@ -57,7 +58,7 @@ module CalHelper
       content.concat(draw_calendar_header)
       @objects.each do |program, program_detail|
         program_detail[:enrollments].each do |enrollment, date_hash|
-          content.concat(draw_calendar_row_for_enrollment(enrollment, date_hash,program_detail[:schedule]))
+          content.concat(draw_calendar_row_for_enrollment(enrollment, date_hash))
         end
       end
       content_tag :table, content
@@ -85,7 +86,7 @@ module CalHelper
       (content_tag :tr, wdays).concat(content_tag :tr, days)
     end
 
-    def draw_calendar_row_for_enrollment(enrollment, date_hash, schedule)
+    def draw_calendar_row_for_enrollment(enrollment, date_hash)
       buf = "".html_safe
       student = enrollment.student
       program = enrollment.program
@@ -100,37 +101,27 @@ module CalHelper
           grid_text = date_hash[day].attendance_marking.abbrev
         end
         # XXX group class on the day?
-        regular_course_ids = []
-        group_course_ids = []
-        if schedule.has_key? day
-          course_id = schedule[day]
-          schedule[day].each do |group_course|
-            group_course_ids << group_course.id
-          end
-        end
+        regular_roster_ids = []
+        group_roster_ids = []
+        rosters_regular = enrollment.rosters_by_day_of_week(day.wday)
+        rosters_group = enrollment.rosters_by_date(day)
+        regular_roster_ids = rosters_regular.map {|r| r.id}
+        group_roster_ids = rosters_group.map {|r| r.id}
         # XXX regular class on the day? Need to constrain the date range 
-        if schedule.has_key? day.wday
-          schedule[day.wday].each do |regular_course|
-            if @date.beginning_of_month >= regular_course.start_date and @date.end_of_month <= regular_course.end_date
-              regular_course_ids << regular_course.id
-            end
-          end
-        end
-        unless regular_course_ids.empty? or group_course_ids.empty?
-          klass << "mix-class-day"
+        unless regular_roster_ids.empty? or group_roster_ids.empty?
+          klass << " mix-class-day"
         else
-          klass << "regular-class-day" unless regular_course_ids.empty?
-          klass << "group-class-day" unless group_course_ids.empty?
+          klass << " regular-class-day" unless regular_roster_ids.empty?
+          klass << " group-class-day" unless group_roster_ids.empty?
         end
         # modal_link = link_to grid_text, "#attendance-modal", "data-toggle" => "modal", :class => "fmc-grid-link"
+        roster_id = (regular_roster_ids + group_roster_ids).first
         if date_hash.has_key? day
           grid_link = link_to grid_text, edit_attendance_path(date_hash[day].id, :enrollment_id => enrollment.id), :class => "fmc-grid-link"
         else
-          course_id = [regular_course_ids + group_course_ids].first
-          roster_id = Roster.where(:student_id => student.id, :course_id => course_id).first.id
-          grid_link = link_to grid_text, {:controller => :attendances, :action => :new, :enrollment_id => enrollment.id, :roster_id => roster_id}, :class => "fmc-grid-link"
+          grid_link = link_to grid_text, {:controller => :attendances, :action => :new, :enrollment_id => enrollment.id, :roster_id => roster_id, :date => day}, :class => "fmc-grid-link"
         end
-        buf.concat(content_tag :td, grid_link, :class => klass, :data => {:regular => regular_course_ids, :group => group_course_ids})
+        buf.concat(content_tag :td, grid_link, :class => klass, :data => {:regular => regular_roster_ids, :group => group_roster_ids})
       end
       content_tag :tr, buf
     end

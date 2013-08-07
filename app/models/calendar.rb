@@ -3,13 +3,35 @@ class Calendar < ActiveRecord::Base
   belongs_to :school
   belongs_to :term
   validate :start_time_cannot_after_end_time, :start_time_and_end_time_must_in_school_hour, :events_cannot_overlap
+  
+
 
   def save_recurring
-    save
+    day_of_week = date.wday
+    days = Term.find(term_id).recurring_days(day_of_week)
+    r = true
+    days.each do |day|
+      r = r && Calendar.new(:date => day, :term_id => term_id, :start_time => start_time, :end_time => end_time, :school_id => school_id, :available => available, :day_of_week => day_of_week).save
+    end
+    # XXX report error. Use flash???
+    # unless r end
   end
-
+  def update_recurring(calendar_params)
+    all_similar_events.each do |e|
+      puts e
+      e.update_attributes(calendar_params)
+    end
+  end
+  def destroy_recurring
+    all_similar_events.each do |e|
+      e.destroy
+    end
+  end
   def all_similar_events
     @similar_events || (@similar_events = Calendar.where(:term_id => term_id, :school_id => school_id, :day_of_week => day_of_week))
+  end
+  def date_must_in_term
+    errors.add(:date, "must in term") unless Term.find(term_id).in_term?(date)
   end
 
   def start_time_cannot_after_end_time
@@ -31,9 +53,8 @@ class Calendar < ActiveRecord::Base
   def events_cannot_overlap
     @dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
     @dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
-    events = Calendar.where(:date => date)
-    for event in events
-      if overlap?(event)
+    Calendar.where(:date => date).find_each do |event|
+      if event.id != id and overlap?(event)
         errors.add(:base, "events overlap")
         return
       end
@@ -48,4 +69,5 @@ class Calendar < ActiveRecord::Base
       false
     end
   end
+
 end

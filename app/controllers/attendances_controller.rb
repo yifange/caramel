@@ -7,27 +7,24 @@ class AttendancesController < ApplicationController
       params[:school_id] = 1
       params[:term_id] = 1
       @teacher = Teacher.find(params[:teacher_id])
-      rosters_hash = Roster.select_by_school_and_teacher_and_term_group_by_program_and_day(params[:school_id], params[:teacher_id], params[:term_id])
-      programs = @teacher.programs
-      @program_hash = {}
-      # programs = Program.all
-      programs.each do |program|
-        enrollments = program.enrollments
-        enrollment_hash = {}
-        enrollments.each do |enrollment|
-          date_hash = get_date_hash_for_enrollment(enrollment)
-          enrollment_hash[enrollment] = date_hash
-        end
-        @program_hash[program] = {}
-        @program_hash[program][:enrollments] = enrollment_hash
-        @program_hash[program][:schedule] = rosters_hash[program]
-      end
-      # end
+      # programs = @teacher.programs
+      @program_hash = rehash_rosters_and_attendances(params[:term_id], params[:school_id], params[:teacher_id])
     @year = params[:year] || Date.today.year
     @month = params[:month] || Date.today.month
   end
   def new
     @attendance = Attendance.new
+  end
+  def edit
+    @attendance = Attendance.find(params[:id])
+  end
+  def update
+    attendance = Attendance.find(params[:id])
+    if attendance.update_attributes(attendance_params)
+      redirect_to attendances_path
+    else
+      render :edit
+    end
   end
   def create
     attendance = Attendance.new(attendance_params) 
@@ -37,10 +34,38 @@ class AttendancesController < ApplicationController
       render :new
     end
   end
-  def edit
-    @attendance = Attendance.find(params[:id])
-  end
   private
+  def rehash_rosters_and_attendances(term_id, school_id, teacher_id)
+    programs = Teacher.find(teacher_id).programs.where(:school_id => school_id, :term_id => term_id)
+    program_hash = {}
+    programs.each do |program|
+      enrollment_hash = {}
+      enrollments = program.enrollments
+      enrollments.each do |enrollment|
+        rosters = enrollment.rosters
+        roster_hash = {}
+        attendance_hash = {}
+        rosters.each do |r|
+          attendances = r.attendances
+          attendances.each do |attendance|
+            attendance_hash[attendance.date] = attendance
+          end
+
+          course = r.course
+          if course.type == "GroupCourse"
+            roster_hash[course.date] = [] unless roster_hash.has_key? course.date
+            roster_hash[course.date] << r
+          else
+            roster_hash[course.day_of_week] = [] unless roster_hash.has_key? course.day_of_week
+            roster_hash[course.day_of_week] << r
+          end
+        end
+        enrollment_hash[enrollment] = [attendance_hash, roster_hash]
+      end
+      program_hash[program] = enrollment_hash
+    end
+    program_hash
+  end
   def get_teachers_by_school_id(school_id)
     school = School.find(school_id)
     programs_of_school = school.programs

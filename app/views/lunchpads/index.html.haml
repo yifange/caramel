@@ -1,6 +1,6 @@
 %ul.nav.nav-tabs
   %li
-    %a{:href => "#home", "data-toggle" => "tab"}
+    %a.hah{:href => "#home", "data-toggle" => "tab", :title => "hello"}
       Home
   %li
     %a{:href => "#profile", "data-toggle" => "tab"}
@@ -43,3 +43,6 @@
 %a#country{"data-pk" => "1", "data-type" => "select2", "data-source" => "/lunchpads/api.json", "data-url" => "/lunchpads/lunch", :href => "#", "data-title" => "Select country", "data-value" => "1"}
 
 %input#bfast{:type => "hidden", :value => "gb:Great Britain,us:United States,", :data => {:options => "gb:Great Britain,us:United States,cn:China"}}
+
+%a#tooltip{:href => "#", "data-toggle" => "tooltip", :title => "first tooltip"}
+  hover me

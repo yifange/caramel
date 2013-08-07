@@ -6,7 +6,7 @@ attachDayGridHandler = ->
     window.location.href = "/calendars/week?year=" + year + "&month=" + month + "&day=" + day
 
 attachColumnHandler = ->
-  $("div.wc-day-column-inner.calendar-cal").css("cursor", "pointer").on "click", ->
+  $("div.wc-day-column-inner.calendar-cal.editable").css("cursor", "pointer").on "click", ->
     date = $(this).data("date")
     # window.location.href = "/events/new?date=" + date
     $.get("/calendars/new?date=" + date, (data, status) ->
@@ -21,7 +21,7 @@ attachColumnHandler = ->
     return false
 
 attachEventHandler = ->
-  $("div.wc-cal-event.calendar-cal").on "click", ->
+  $("div.wc-cal-event.calendar-cal.editable").on "click", ->
     eventId = $(this).data("eventid")
     $.data($("#calendar-modal-delete")[0], "eventid", eventId)
     $.get("/calendars/" + eventId + "/edit", (data, status) ->
@@ -54,13 +54,15 @@ attachSubmitHandler = ->
       error: (data, status) ->
         $("#calendar-modal-body").html($(data.responseText).find("#calendar-form-body").html())
     })
+# XXX Choose the right event to delete? What if the user chooses a different event in the form??
 attachDeleteHandler = ->
   $("#calendar-modal-delete").on "click", ->
     eventId = $(this).data("eventid")
+    recurring = $("input#calendar_recurring").is(":checked")
     $.ajax({
       type: "POST",
       url: "/calendars/" + eventId,
-      data: {"_method": "delete"},
+      data: {"_method": "delete", "recurring": recurring},
       complete: (data, status) ->
         $("#calendar-modal").modal("toggle")
         $.get(document.URL, (data, status) ->

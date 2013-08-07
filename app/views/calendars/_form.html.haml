@@ -3,7 +3,7 @@
     -# = f.error_notification
     = f.input :start_time, :start_hour => 8, :end_hour => 16
     = f.input :end_time, :start_hour => 8, :end_hour => 16
-    = f.input :date, :default => @date ? Date.strptime(@date) : Date.today
+    = f.input :date, :default => @date ? Date.strptime(@date) : Date.today, :input_html => {:style => "display: none"}, :label => false
     = f.input :recurring, :as => :boolean, :input_html => { :checked => (@similar_events and @similar_events.length > 1)}
     = f.input :available
 

@@ -32,23 +32,30 @@
 }
 td.day-text:hover {
   background-color: #DFDFDF;
-  border-radius: 4px;
+  // border-radius: 4px;
 }
 td.day-text {
   cursor: pointer;
+  border: 4px;
 }
 
 td.available {
-  background-color: #00EE22;
-  border-radius: 4px;
+  // background-color: #00EE22;
+  // border-radius: 4px;
+  border: 1px solid green;
+  // border-bottom: 4px solid green;
 }
 td.unavailable {
-  background-color: #EE0000;
-  border-radius: 4px;
+  // background-color: #EE0000;
+  // border-radius: 4px;
+  border: 1px solid red;
+  // border-bottom: 4px solid red;
 }
 td.mix {
-  background-color: #DDDD00;
-  border-radius: 4px;
+  // background-color: #DDDD00;
+  // border-radius: 4px;
+  border: 1px solid yellow;
+  // border-bottom: 4px solid yellow;
 }
 a.day-link {
   display: block;

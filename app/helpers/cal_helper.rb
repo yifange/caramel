@@ -32,6 +32,8 @@ module CalHelper
     delegate :capture, :content_tag, :tag, :link_to, :concat, :to => :parent
     def initialize(parent, objects, options)
       @parent, @objects, @options = parent, objects, options
+      @current_term = Term.current_term
+      @current_and_future_terms = Term.current_and_future_terms
     end
     def boolean_flag(obj, method, true_flag, false_flag)
       if obj.send(method)
@@ -39,6 +41,9 @@ module CalHelper
       else
         false_flag
       end
+    end
+    def in_current_or_future_terms?(day)
+      Term.in_terms?(day, @current_and_future_terms)
     end
   end
 
@@ -57,8 +62,8 @@ module CalHelper
       content.concat(draw_calendar_nav)
       content.concat(draw_calendar_header)
       @objects.each do |program, program_detail|
-        program_detail[:enrollments].each do |enrollment, date_hash|
-          content.concat(draw_calendar_row_for_enrollment(enrollment, date_hash, program_detail[:schedule]))
+        program_detail.each do |enrollment, enrollment_detail|
+          content.concat(draw_calendar_row_for_enrollment(enrollment, enrollment_detail[0], enrollment_detail[1]))
         end
       end
       content_tag :table, content
@@ -86,7 +91,7 @@ module CalHelper
       (content_tag :tr, wdays).concat(content_tag :tr, days)
     end
 
-    def draw_calendar_row_for_enrollment(enrollment, date_hash, schedule)
+    def draw_calendar_row_for_enrollment(enrollment, attendance_hash, roster_hash)
       buf = "".html_safe
       student = enrollment.student
       program = enrollment.program
@@ -96,29 +101,39 @@ module CalHelper
       for day in @date.beginning_of_month .. @date.end_of_month
         marking = ""
         grid_text = ""
-        if date_hash.has_key? day
-          marking = date_hash[day].attendance_marking.abbrev
-          grid_text = date_hash[day].attendance_marking.abbrev
+        if attendance_hash.has_key? day
+          marking = attendance_hash[day].attendance_marking.abbrev
+          grid_text = attendance_hash[day].attendance_marking.abbrev
         end
         # XXX group class on the day?
-        rosters_regular = schedule[enrollment][day.wday] || []
-        rosters_group = schedule[enrollment][day] || []
+        rosters_regular = roster_hash[day.wday] || []
+        rosters_group = roster_hash[day] || []
         regular_roster_ids = rosters_regular.map {|r| r.id}
         group_roster_ids = rosters_group.map {|r| r.id}
         # XXX regular class on the day? Need to constrain the date range 
         class_type = "" 
         unless regular_roster_ids.empty? or group_roster_ids.empty?
-          class_type = "mix-class-day"
+          class_type = "mix-class-day class-day"
         else
-          class_type = "regular-class-day" unless regular_roster_ids.empty?
-          class_type = "group-class-day" unless group_roster_ids.empty?
+          class_type = "regular-class-day class-day" unless regular_roster_ids.empty?
+          class_type = "group-class-day class-day" unless group_roster_ids.empty?
         end
 
         roster_id = (regular_roster_ids + group_roster_ids).first
-        if date_hash.has_key? day
-          grid_link = link_to grid_text, edit_attendance_path(date_hash[day].id, :enrollment_id => enrollment.id), :class => "fmc-grid-link"
+        roster = (rosters_regular + rosters_group).first
+        time_title = nil
+        link_class = "fmc-grid-link"
+        if roster
+          start_time = roster.start_time.strftime("%H:%M")
+          end_time = roster.end_time.strftime("%H:%M")
+          time_title = start_time + "-" + end_time
+          link_class << " class-day"
+        end
+        
+        if attendance_hash.has_key? day
+          grid_link = link_to grid_text, edit_attendance_path(attendance_hash[day].id, :enrollment_id => enrollment.id), :class => link_class, :data => {:toggle => "tooltip"}, :title => time_title
         else
-          grid_link = link_to grid_text, {:controller => :attendances, :action => :new, :enrollment_id => enrollment.id, :roster_id => roster_id, :date => day}, :class => "fmc-grid-link"
+          grid_link = link_to grid_text, {:controller => :attendances, :action => :new, :enrollment_id => enrollment.id, :roster_id => roster_id, :date => day}, :class => link_class, :data => {:toggle => "tooltip"}, :title => time_title
         end
         buf.concat(content_tag :td, grid_link, :class => marking + " " + class_type, :data => {:regular => regular_roster_ids, :group => group_roster_ids})
       end
@@ -140,6 +155,9 @@ module CalHelper
       @today = Date.today
       @category_method = options[:category_method] || :available
       @calendar_name = options[:calendar_name] || "calendar"
+      # XXX what if no current_term provided????
+      @displayed_term = Term.find_term(@date)
+      @current_term = Term.current_term
     end
 
     def draw_events(day)
@@ -157,6 +175,8 @@ module CalHelper
 
           klass = "wc-cal-event #{@calendar_name}-cal "
           klass << boolean_flag(event, @category_method, "available", "unavailable")
+          # klass << " editable" if @current_term[:start_date] <= day and @current_term[:end_date] >= day
+          klass << " editable" if in_current_or_future_terms?(day)
           event_buf = 
             content_tag :div, :class => klass, :style => style, :data => {:eventid => event.id} do
               content_buf = "".html_safe
@@ -253,11 +273,13 @@ module CalHelper
               columns = "".html_safe
               for day in @date.beginning_of_week(:sunday)..@date.end_of_week(:sunday)
                 klass = "wc-day-column day-#{day.strftime("%w")} #{@calendar_name}-cal"
-                if day == @today
-                  klass << " wc-today"
-                end
+                klass << " wc-today" if day == @today
+                editable = ""
+                # editable = " editable" if @current_term[:start_date] <= day and @current_term[:end_date] >= day
+                editable = " editable" if in_current_or_future_terms?(day)
+                
                 column = content_tag :td, :class => klass do
-                  content_tag :div, :class => "wc-day-column-inner #{@calendar_name}-cal" ,:data => {:date => day.strftime} do
+                  content_tag :div, :class => "wc-day-column-inner #{@calendar_name}-cal" + editable,:data => {:date => day.strftime} do
                     (draw_events(day) || "".html_safe).concat(draw_events(day.wday))
                   end
                 end

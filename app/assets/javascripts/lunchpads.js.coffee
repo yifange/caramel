@@ -1,4 +1,7 @@
 $ ->
+  $(".hah").tooltip({
+    placement: "left"
+  })
   $("#username").editable({
     url : "/lunchpads",
     title: "Enter username"
@@ -33,8 +36,7 @@ $ ->
 
     # ajax: {
     #   url: "/lunchpads/api",
-    #   dataType: "json",
-    #   results: (data, page) ->
+    #   dataType: "json", #   results: (data, page) ->
     #     {results: data}
     # }
 

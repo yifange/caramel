@@ -2,6 +2,7 @@ class Roster < ActiveRecord::Base
   belongs_to :student
   belongs_to :course
   belongs_to :enrollment
+  has_many :attendances
   before_save :set_enrollment
   def course_summary
     c = course
@@ -10,36 +11,17 @@ class Roster < ActiveRecord::Base
   def course_type
     course.type
   end
+  def start_time
+    course.start_time
+  end
+  def end_time
+    course.end_time
+  end
   def date
     course.date
   end
   def day_of_week
     course.day_of_week
-  end
-  def self.select_by_school_and_teacher_and_term_group_by_program_and_day(school_id, teacher_id, term_id)
-    programs = Teacher.find(teacher_id).programs.where(:school_id => school_id, :term_id => term_id)
-    program_hash = {}
-    programs.each do |program|
-      enrollment_hash = {}
-      enrollments = program.enrollments
-      enrollments.each do |enrollment|
-        rosters = enrollment.rosters
-        date_hash = {}
-        rosters.each do |r|
-          course = r.course
-          if course.type == "GroupCourse"
-            date_hash[course.date] = [] unless date_hash.has_key? course.date
-            date_hash[course.date] << r
-          else
-            date_hash[course.day_of_week] = [] unless date_hash.has_key? course.day_of_week
-            date_hash[course.day_of_week] << r
-          end
-        end
-        enrollment_hash[enrollment] = date_hash
-      end
-      program_hash[program] = enrollment_hash
-    end
-    program_hash
   end
   private
 

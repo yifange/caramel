@@ -19,8 +19,12 @@ class CalendarsController < ApplicationController
   end
 
   def create
+    date = Date.new(params[:calendar]["date(1i)"].to_i, params[:calendar]["date(2i)"].to_i, params[:calendar]["date(3i)"].to_i)
+    params[:calendar][:term_id] = Term.find_term(date).id
     @calendar = Calendar.new(calendar_params)
-    r = params[:calendar][:recurring] ? @calendar.save_recurring : @calendar.save
+    # text = params[:calendar][:recurring].to_i ? "yes" : "no"
+    # render :text => params[:calendar][:recurring].to_i
+    r = params[:calendar][:recurring].to_i == 1 ? @calendar.save_recurring : @calendar.save
     if r
       redirect_to :controller => "calendars", :action => :index_week
     else
@@ -32,8 +36,17 @@ class CalendarsController < ApplicationController
     @similar_events = @calendar.all_similar_events
   end
   def update
-    @calendar = Calendar.find(params[:id])
-    if @calendar.update_attributes(calendar_params)
+    calendar = Calendar.find(params[:id])
+    params[:calendar].delete("date(1i)")
+    params[:calendar].delete("date(2i)")
+    params[:calendar].delete("date(3i)")
+    # render :json => params
+    if params[:calendar][:recurring].to_i == 1
+      r = calendar.update_recurring(calendar_params)
+    else 
+      r = calendar.update_attributes(calendar_params)
+    end
+    if r
       redirect_to calendars_path
     else
       render :edit
@@ -41,8 +54,13 @@ class CalendarsController < ApplicationController
   end
   def destroy
     @calendar = Calendar.find(params[:id])
-    @calendar.destroy
-    # redirect_to :controller => :calendars, :action => :index_week
+    # render :json => params
+    if params[:recurring] == "true"
+      @calendar.destroy_recurring
+    else
+      @calendar.destroy
+    end
+    redirect_to :controller => :calendars, :action => :index_week
   end
   def show
     
@@ -59,6 +77,6 @@ class CalendarsController < ApplicationController
     r
   end
   def calendar_params
-    params.require(:calendar).permit(:date, :available, :start_time, :end_time)
+    params.require(:calendar).permit(:date, :available, :start_time, :end_time, :term_id, :school_id)
   end
 end

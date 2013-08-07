@@ -31,11 +31,14 @@ attachCourseEventHandler = ->
 attachCourseSubmitHandler = ->
   $("#course-modal-confirm").on "click", ->
     $form = $("form.course")
+    alert("click submit")
+    alert($form.serialize())
     $.ajax({
       type: $form.attr("method"),
       url: $form.attr("action"),
       data: $form.serialize(),
       success: (data, status) ->
+        alert("success")
         $("#course-modal").modal("toggle")
         $.get(document.URL, (data, status) ->
           $(".wc-container").html($(data).find(".wc-container").html())
@@ -43,8 +46,11 @@ attachCourseSubmitHandler = ->
           attachCourseEventHandler()
         )
       error: (data, status) ->
+        alert("error")
         $("#course-modal-body").html($(data.responseText).find("#course-form-body").html())
     })
+    return false
+
 attachCourseDeleteHandler = ->
   $("#course-modal-delete").on "click", ->
     eventId = $(this).data("eventid")

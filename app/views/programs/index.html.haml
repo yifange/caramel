@@ -1,0 +1,18 @@
+%h1 Programs
+%table 
+  %tr
+    %td School
+    %td Instrument
+    %td Course Type
+    %td Regular Courses Per Year
+    %td Group Courses Per Year
+  - @programs.each do |program|
+    %tr
+      %td= program.school.full
+      %td= program.instrument.name
+      %td= program.course_type.full
+      %td= program.regular_courses_per_year
+      %td= program.group_courses_per_year
+      %td= link_to('edit', edit_program_path(program))
+      %td= link_to('delet', program, :method => :delete, :data => {:confirm => "Are you sure?"})
+= link_to('Add A New Program', new_program_path)

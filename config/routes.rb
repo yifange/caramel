@@ -11,7 +11,6 @@ Caramel::Application.routes.draw do
   post "programs_page/save_regular_courses" => "programs_page#save_regular_courses"
   post "programs_page/save_group_courses" => "programs_page#save_group_courses"
   
-
 	root 'session_page#signin'
 	get ':controller/:action/'
 

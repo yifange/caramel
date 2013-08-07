@@ -2,7 +2,7 @@ module ProgramsHelper
   def school_tabs_for(schools)
     buf = "".html_safe
     for i in 0...schools.length
-      anchor_content = content_tag :a, schools[i].abbrev, :href => "#tab-#{schools[i].id}", "data-toggle" => "tab"
+      anchor_content = content_tag :a, schools[i].abbrev, :href => "#tab-#{schools[i].id}", "data-toggle" => "tab", :title => schools[i].full, :class => "tab-hover"
       if i == 0
         tab = content_tag :li, anchor_content, :class => "active"
       else
@@ -20,7 +20,7 @@ module ProgramsHelper
       buf_table = "".html_safe
       programs_for_school = programs.where( :school_id => schools[i].id )
 
-      tab_content = content_tag :table, :class => "table table-stripped table-bordered" do
+      tab_content = content_tag :table, :class => "table table-striped table-bordered" do
         content_tag :tbody do
           buf_program = "".html_safe
           programs_for_school.each do |program|
@@ -60,7 +60,9 @@ module ProgramsHelper
           buf_program
         end # end for tbody
       end # end for table
-      buf_tab.concat(tab_content)
+      buf_pane_button = content_tag :a, "New Program", :class => "btn btn-primary new-program", :href => "/programs/new", "data-school" => "#{schools[i].id}"
+      
+      buf_tab.concat(tab_content).concat(buf_pane_button)
 
       if i == 0
         buf_pane = content_tag :div, buf_tab, :class => "tab-pane active", :id => "tab-#{schools[i].id}"

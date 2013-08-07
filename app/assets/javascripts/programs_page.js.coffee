@@ -56,27 +56,33 @@ attachNewProgramHandler = ->
   $(".new-program").on "click", (e) ->
     e.preventDefault()
     href = $(this).attr("href")
-    $.get(href, (data, status) ->
+    $.get(href + "?school_id=" + $(this).data("school"), (data, status) ->
       $("#new-program-modal-body").html($(data).find("#new-program-form-body").html())
       $("#new-program-modal").modal({
         keyboard: true
       })
     )
-    return false
-
+attachTooltipHandler = ->
+  $("a.tab-hover").tooltip({
+    placement: "right"
+  })
 attachSubmitHandler = ->
   $("#new-program-modal-confirm").on "click", ->
-    $form = $("form.new-program")
+    $form = $("form#new_program")
     $.ajax({
       type: $form.attr("method"),
       url: $form.attr("action"),
       data: $form.serialize(),
       success: (data, status) ->
         $("#new-program-modal").modal("toggle")
-        $.get(document.URL, (data, status) ->
-          $(".fmc-container").html($(data).find(".fmc-container").html())
-          attachAttendanceGridHandler()
-        )
+        cur_pane_id = $(".tab-pane.active").attr("id")
+        # alert cur_pane_id
+        $(".tab-pane.active").html($(data).find("#" + cur_pane_id).html())
+          # document.URL, (data, status) ->
+          # $(".tabbable").html($(data).find(".tabbable").html())
+        attachNewProgramHandler()
+        attachHandler()
+
       error: (data, status) ->
         $("#new-program-modal-body").html($(data.responseText).find("#new-program-form-body").html())
     })
@@ -85,6 +91,8 @@ attachSubmitHandler = ->
 $(document).ready attachHandler
 $(document).ready attachNewProgramHandler
 $(document).ready attachSubmitHandler
+$(document).ready attachTooltipHandler
 $(document).on "page:load", attachHandler
 $(document).on "page:load", attachNewProgramHandler
 $(document).on "page:load", attachSubmitHandler
+$(document).on "page:load", attachTooltipHandler

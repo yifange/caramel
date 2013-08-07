@@ -1,0 +1,9 @@
+#new-program-form-body
+  = simple_form_for @program do |f|
+    -# = f.collection_select :school_id, @schools, :id, :abbrev
+    = f.hidden_field :school_id, :value => @school_id
+    = f.association :instrument, :label_method => :name, :value_method => :id, :include_blank => false
+    = f.association :course_type, :label_method => :full, :value_method => :id, :include_blank => false
+    = f.input :regular_courses_per_year
+    = f.input :group_courses_per_year
+    -# = f.button :submit

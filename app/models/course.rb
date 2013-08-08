@@ -15,9 +15,16 @@ class Course < ActiveRecord::Base
   private
   def events_must_in_available_time_slots
     available = false
+    term_id = program.id
     dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
     dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
-    Calendar.where(:date => date, :available => true).find_each do |cal|
+    
+    if course_type == "GroupCourse"
+      calendars = Calendar.where(:date => date, :term_id => term_id, :available => true)
+    else
+      calendars = Calendar.where(:day_of_week => day_of_week, :term_id => term_id, :available => true)
+    end
+    calendars.find_each do |cal|
       if cal[:start_time] <= dummy_start_time and dummy_end_time <= cal[:end_time]
         available = true
         break
@@ -27,8 +34,10 @@ class Course < ActiveRecord::Base
   end
   def courses_must_in_term
     term = program.term
-    unless term.start_date <= date and date <= term.end_date
-      errors.add(:date, "must in term")
+    if course_type == "GroupCourse"
+      unless term.start_date <= date and date <= term.end_date
+        errors.add(:date, "must in term")
+      end
     end
   end
   def events_cannot_overlap

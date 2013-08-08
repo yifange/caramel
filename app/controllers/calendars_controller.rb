@@ -1,13 +1,8 @@
 class CalendarsController < ApplicationController
   def index
     params[:school_id] = 1 # FIXME THIS IS FAKED
-    # if params.has_key?(:school_id)
-      @school_id = params[:school_id]
-      @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
-    # else
-    #   @school_id = nil
-    #   @calendars = rehash_objs(Calendar.all)
-    # end
+    @school_id = params[:school_id]
+    @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
     @month = params[:month] || Date.today.month
     @year = params[:year] || Date.today.year
     @day = params[:day] || Date.today.day
@@ -15,13 +10,8 @@ class CalendarsController < ApplicationController
 
   def index_week
     params[:school_id] = 1 # FIXME THIS IS FAKED
-    # if params.has_key?(:school_id)
-      @school_id = params[:school_id]
-      @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
-    # else
-    #   @school_id = nil
-    #   @calendars = rehash_objs(Calendar.all)
-    # end
+    @school_id = params[:school_id]
+    @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
     @month = params[:month] || Date.today.month
     @year = params[:year] || Date.today.year
     @day = params[:day] || Date.today.day
@@ -33,6 +23,7 @@ class CalendarsController < ApplicationController
   end
 
   def create
+    # date = Date.new(params[:calendar]["date(1i)"].to_i, params[:calendar]["date(2i)"].to_i, params[:calendar]["date(3i)"].to_i)
     date = Date.new(params[:calendar]["date(1i)"].to_i, params[:calendar]["date(2i)"].to_i, params[:calendar]["date(3i)"].to_i)
     params[:calendar][:term_id] = Term.find_term(date).id
     @calendar = Calendar.new(calendar_params)

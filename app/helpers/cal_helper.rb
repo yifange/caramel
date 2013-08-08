@@ -29,7 +29,7 @@ module CalHelper
   
   class CalendarBuilder
     attr_accessor :parent
-    delegate :capture, :content_tag, :tag, :link_to, :concat, :to => :parent
+    delegate :capture, :content_tag, :tag, :link_to, :concat, :debug, :to => :parent
     def initialize(parent, objects, options)
       @parent, @objects, @options = parent, objects, options
       @current_term = Term.current_term
@@ -190,6 +190,45 @@ module CalHelper
         buf
       end
     end
+    def draw_recurring_events(day)
+      wday = day.wday
+      if @objects.has_key? wday
+        events = @objects[wday]
+        background_cal_events = []
+        background_cal_events = @background_calendar[wday][day] if @background_calendar.has_key? wday and @background_calendar[wday].has_key? day
+        return if background_cal_events.empty?
+        buf = "".html_safe
+        for event in events
+          # XXX the event should only appear within the program range
+          available = false
+          background_cal_events.each do |e|
+            if e.start_time <= event.start_time and e.end_time >= event.end_time
+              available = true
+              break
+            end
+          end
+          break unless available
+
+          style = ""
+          style << "height: #{event_height(event[:start_time], event[:end_time])}px;"
+          style << "top: #{event_top(event[:start_time])}px;"
+
+          klass = "wc-cal-event #{@calendar_name}-cal "
+          klass << boolean_flag(event, @category_method, "available", "unavailable")
+          # klass << " editable" if @current_term[:start_date] <= day and @current_term[:end_date] >= day
+          klass << " editable" if in_current_or_future_terms?(day)
+          event_buf = 
+            content_tag :div, :class => klass, :style => style, :data => {:eventid => event.id} do
+              content_buf = "".html_safe
+              content_buf.concat(content_tag :div, event.start_time.strftime("%R") + "-" + event.end_time.strftime("%R"), :class => "wc-time ui-corner-all")
+              # content_buf.concat(content_tag :div, event.title, :class => "wc-title")
+              content_buf
+            end
+          buf.concat(event_buf)
+        end
+        buf
+      end
+    end
     
     def draw_background_calendar(day)
       if @background_calendar and @background_calendar.has_key?(day)
@@ -307,7 +346,7 @@ module CalHelper
                 
                 column = content_tag :td, :class => klass do
                   content_tag :div, :class => "wc-day-column-inner #{@calendar_name}-cal" + editable,:data => {:date => day.strftime} do
-                    (draw_events(day) || "".html_safe).concat(draw_events(day.wday)).concat(draw_background_calendar(day))
+                    (draw_background_calendar(day) || "".html_safe).concat(draw_events(day)).concat(draw_recurring_events(day))
                   end
                 end
                 columns.concat(column)

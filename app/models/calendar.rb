@@ -3,6 +3,7 @@ class Calendar < ActiveRecord::Base
   belongs_to :school
   belongs_to :term
   validate :start_time_cannot_after_end_time, :start_time_and_end_time_must_in_school_hour, :events_cannot_overlap
+  before_save :set_day_of_week
   
 
 
@@ -69,5 +70,7 @@ class Calendar < ActiveRecord::Base
       false
     end
   end
-
+  def set_day_of_week
+    self.day_of_week = date.wday
+  end
 end

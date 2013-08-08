@@ -13,6 +13,7 @@ class CoursesController < ApplicationController
     @month = params[:month] || Date.today.month
     @year = params[:year] || Date.today.year
     @day = params[:day] || Date.today.day
+    # render :json => @calendars
   end
   def new
     @course = Course.new
@@ -43,16 +44,33 @@ class CoursesController < ApplicationController
     @course.destroy
   end
   private
+  # def rehash_cal_objs(objs)
+  #   r = {}
+  #   for obj in objs
+  #     unless r.has_key? obj[:date]
+  #       r[obj[:date]] = []
+  #     end
+  #     r[obj[:date]] << obj
+  #   end
+  #   r
+  # end
   def rehash_cal_objs(objs)
     r = {}
     for obj in objs
-      unless r.has_key? obj[:date]
-        r[obj[:date]] = []
-      end
+     
+      r[obj[:date]] = [] unless r.has_key? obj[:date]
+      
+      r[obj[:day_of_week]] = {} unless r.has_key? obj[:day_of_week]
+     
+      r[obj[:day_of_week]][obj[:date]] = [] unless r[obj[:day_of_week]].has_key? obj[:date]
+
       r[obj[:date]] << obj
+      r[obj[:day_of_week]][obj[:date]] << obj
+
     end
     r
   end
+
   def rehash_objs(objs)
     r = {}
     for obj in objs

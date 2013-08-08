@@ -140,7 +140,7 @@
   });
 
   userName.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
-    tpl: '<div class="x-editable-user-name"><label><span>First Name: </span><input type="text" name="first_name" class="input-small"></label></div>' + '<div class="x-editable-user-name"><label><span>Last Name: </span><input type="text" name="last_name" class="input-small"></label></div>',
+    tpl: '<div class="x-editable-user-name"><input type="text" name="first_name" class="input-small name-input"><input type="text" name="last_name" class="input-small"></div>',
     inputclass: ''
   });
 

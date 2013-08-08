@@ -1,10 +1,10 @@
-= content_for :title do
-  people
+- content_for :title do
+  people/teachers
 
-= content_for :sidemenu do
-  = render 'people_page/sidebar'
-
-= content_for :main do
+- content_for :sidemenu do
+  - render '/layouts/people_page_sidebar'
+  
+- content_for :main do
   %table.table.table-bordered.table-striped{:style => 'clear: both'}
     %tr
       %th{:width => '13px'}
@@ -12,21 +12,21 @@
       %th{:width => '280px'} Email
       %th Region
       %th
-    -@staffs.each do |staff|
+    - @teachers.each do |teacher|
       %tr
         %td
           %a
             %i.icon-remove
         %td
-          %a.x-editable-staff-name{:href => "#"}
-            = staff.name
+          %a.x-editable-teacher-name{:href => "#"}
+            = teacher.name
         %td
           %a.x-editable-email{:href => '#'}
-            = staff.email
+            = teacher.email
         %td
           %a.select2-region{:href => '#'}
         %td
           %button.btn.btn-primary{'type' => 'button'}
             Reset Password
-  %button.btn.btn-primary{'type' => 'button', :herf => '#'}
-    New Staff
+          %button.btn.btn-primary{'type' => 'button', :herf => '#'}
+            New teacher

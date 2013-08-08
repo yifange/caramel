@@ -11,7 +11,7 @@ class SessionPageController < ApplicationController
 	def verify
 		user = login(params[:email], params[:password], params[:remember_me])
     if user
-      redirect_to '/people_page/staff'
+      redirect_to '/staff'
     else
 			redirect_to root_url
     end

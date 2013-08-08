@@ -1,0 +1,2 @@
+module InstrumentTypesHelper
+end

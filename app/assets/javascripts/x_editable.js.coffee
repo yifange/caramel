@@ -1,4 +1,18 @@
 attachHandler = ->
+
+  $('#address').editable({
+    ajaxOptions: {
+      type: 'PUT'
+    }
+    url: '/post'
+    title: 'Enter city, street and building #'
+    value: {
+      city: "Moscow"
+      street: "Lenina"
+      building: "15"
+    }
+  })
+
   $.fn.editable.defaults.mode = 'inline'
 
   # select2
@@ -22,7 +36,10 @@ attachHandler = ->
   })
 
   $('.x-editable-email').editable({
-    url: ''
+    ajaxOptions: {
+      type: 'PUT'
+    }
+    name: 'email'
     type: 'text'
     placeholder: 'input email'
   })
@@ -30,8 +47,7 @@ attachHandler = ->
   $('.x-editable-instrument-name').editable({
     url: ''
     type: 'text'
-    placeholder: 'input instrument name'
-  })
+    placeholder: 'input instrument name' })
 
   $('.x-editable-program-name').editable({
     url: ''
@@ -41,7 +57,9 @@ attachHandler = ->
 
   # user_name
   $('.x-editable-staff-name').editable({
-    url: ''
+    ajaxOptions: {
+      type: 'PUT'
+    }
     type: 'user_name'
   })
 

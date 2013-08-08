@@ -1,8 +1,6 @@
 class StaffController < ApplicationController
-  respond_to :json
-
   def index 
-
+    @staff = Staff.all
   end
 
   def show 
@@ -14,7 +12,11 @@ class StaffController < ApplicationController
   end
 
   def update 
-
+    @staff = Staff.find(params[:pk])
+    if params[:name] == 'email'
+      @staff.update_attribute(:email, params[:value])
+    end
+    render :text => ""
   end
 
   def destroy 

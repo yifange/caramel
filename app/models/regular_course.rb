@@ -1,2 +1,0 @@
-class RegularCourse < Course
-end

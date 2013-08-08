@@ -1,3 +1,0 @@
-class GroupCourse < Course
-end
-

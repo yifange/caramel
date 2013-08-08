@@ -161,6 +161,18 @@ table.wc-time-slots {
 	width: 100%;
   background-color: #68a1e5;
 }
+.wc-cal-background-event {
+	filter:alpha(opacity=80);
+	-moz-opacity:0.4;
+	-khtml-opacity: 0.4;
+	opacity: 0.4;
+	position: absolute;	
+	text-align: center;
+	overflow: hidden;
+	color: #000;
+	width: 100%;
+  background-color: #DDDDDD;
+}
 .wc-cal-event div {
   padding: 0 5px;
   font-size: $timeslotHeight * 0.7;

@@ -1,6 +1,15 @@
 class CoursesController < ApplicationController
   def index
-    @courses = rehash_objs(Course.all)
+    params[:program_id] = 1
+    @school_id = Program.find(params[:program_id]).school.id
+    # if params.has_key?(:program_id)
+      @program_id = params[:program_id]
+      @courses = rehash_objs(Course.where(:program_id => params[:program_id]))
+      @calendars = rehash_cal_objs(Calendar.where(:school_id => @school_id))
+    # else
+    #   @program_id = nil
+    #   @courses = rehash_objs(Course.all)
+    # end
     @month = params[:month] || Date.today.month
     @year = params[:year] || Date.today.year
     @day = params[:day] || Date.today.day
@@ -34,10 +43,20 @@ class CoursesController < ApplicationController
     @course.destroy
   end
   private
+  def rehash_cal_objs(objs)
+    r = {}
+    for obj in objs
+      unless r.has_key? obj[:date]
+        r[obj[:date]] = []
+      end
+      r[obj[:date]] << obj
+    end
+    r
+  end
   def rehash_objs(objs)
     r = {}
     for obj in objs
-      if obj[:type] == "GroupCourse"
+      if obj[:course_type] == "GroupCourse"
         r[obj[:date]] = [] unless r.has_key? obj[:date]
         r[obj[:date]] << obj
       else
@@ -48,6 +67,6 @@ class CoursesController < ApplicationController
     r
   end
   def course_params
-    params.require(:course).permit(:date, :start_time, :end_time, :day_of_week, :type, :program_id)
+    params.require(:course).permit(:date, :start_time, :end_time, :day_of_week, :course_type, :program_id)
   end
 end

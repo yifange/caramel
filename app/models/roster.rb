@@ -6,10 +6,10 @@ class Roster < ActiveRecord::Base
   before_save :set_enrollment
   def course_summary
     c = course
-    c.id.to_s + " " + c.type
+    c.id.to_s + " " + c.course_type
   end
   def course_type
-    course.type
+    course.course_type
   end
   def start_time
     course.start_time

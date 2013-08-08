@@ -12,13 +12,13 @@ module CalHelper
   def annual_calendar_for(objects, *args, &block)
     options = args.last.is_a?(Hash) ? args.pop : {}
     content = capture(AnnualCalendarBuilder.new(self, objects || [], options), &block)
-    content_tag :div, content, :class => "ac-container"
+    content_tag :div, content, :class => "ac-container", :data => {:school => options[:school]}
   end
 
   def weekly_calendar_for(objects, *args, &block)
     options = args.last.is_a?(Hash) ? args.pop : {}
     content = capture(WeeklyCalendarBuilder.new(self, objects || [], options), &block)
-    content_tag :div, content, :class => "wc-container"
+    content_tag :div, content, :class => "wc-container", :data => {:school => options[:school], :program => options[:program]}
   end
   
   def flat_monthly_calendar_for(objects, *args, &block)
@@ -158,6 +158,7 @@ module CalHelper
       # XXX what if no current_term provided????
       @displayed_term = Term.find_term(@date)
       @current_term = Term.current_term
+      @background_calendar = options[:background_calendar] if options.has_key?(:background_calendar)
     end
 
     def draw_events(day)
@@ -166,7 +167,7 @@ module CalHelper
         buf = "".html_safe
         for event in events
           # XXX the event should only appear within the program range
-          # if event.instance_of? Course and event.type == "GroupCourse"
+          # if event.instance_of? Course and event.course_type == "GroupCourse"
           #   break if @date.beginning_of_week > event.end_date or @date.end_of_week < event.start_date 
           # end
           style = ""
@@ -189,7 +190,33 @@ module CalHelper
         buf
       end
     end
+    
+    def draw_background_calendar(day)
+      if @background_calendar and @background_calendar.has_key?(day)
+        events = @background_calendar[day]
+        buf = "".html_safe
+        for event in events
+          style = ""
+          style << "height: #{event_height(event[:start_time], event[:end_time])}px;"
+          style << "top: #{event_top(event[:start_time])}px;"
 
+          klass = "wc-cal-background-event #{@calendar_name}-cal "
+          klass << boolean_flag(event, :available, "available", "unavailable")
+
+          event_buf = 
+            content_tag :div, :class => klass, :style => style, :data => {:eventid => event.id} do
+              content_buf = "".html_safe
+              content_buf.concat(content_tag :div, event.start_time.strftime("%R") + "-" + event.end_time.strftime("%R"), :class => "wc-time ui-corner-all")
+              # content_buf.concat(content_tag :div, event.title, :class => "wc-title")
+              content_buf
+            end
+          buf.concat(event_buf)
+        end
+        buf
+      else
+        "".html_safe
+      end
+    end
     def event_height(start_time, end_time)
       length = end_time - start_time
       height = length / 3600 * @slots_per_hour * @slot_height
@@ -280,7 +307,7 @@ module CalHelper
                 
                 column = content_tag :td, :class => klass do
                   content_tag :div, :class => "wc-day-column-inner #{@calendar_name}-cal" + editable,:data => {:date => day.strftime} do
-                    (draw_events(day) || "".html_safe).concat(draw_events(day.wday))
+                    (draw_events(day) || "".html_safe).concat(draw_events(day.wday)).concat(draw_background_calendar(day))
                   end
                 end
                 columns.concat(column)

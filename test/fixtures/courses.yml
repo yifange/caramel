@@ -2,16 +2,16 @@
 
 one:
   program_id: 
-  start_time: 2013-07-29 18:53:46
-  end_time: 2013-07-29 18:53:46
+  start_time: 2013-08-07 16:53:05
+  end_time: 2013-08-07 16:53:05
   day_of_week: 1
-  date: 2013-07-29
-  type: 
+  date: 2013-08-07
+  course_type: MyString
 
 two:
   program_id: 
-  start_time: 2013-07-29 18:53:46
-  end_time: 2013-07-29 18:53:46
+  start_time: 2013-08-07 16:53:05
+  end_time: 2013-08-07 16:53:05
   day_of_week: 1
-  date: 2013-07-29
-  type: 
+  date: 2013-08-07
+  course_type: MyString

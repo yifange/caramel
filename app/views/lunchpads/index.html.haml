@@ -1,6 +1,6 @@
 %ul.nav.nav-tabs
   %li
-    %a.hah{:href => "#home", "data-toggle" => "tab", :title => "hello"}
+    %a{:href => "#home", "data-toggle" => "tab", :title => "hello"}
       Home
   %li
     %a{:href => "#profile", "data-toggle" => "tab"}
@@ -46,3 +46,40 @@
 
 %a#tooltip{:href => "#", "data-toggle" => "tooltip", :title => "first tooltip"}
   hover me
+
+
+.navbar
+  .navbar-inner
+    %ul.nav.navbar-nav
+      %li.active
+        %a{:href => "#"}
+          Home
+      %li
+        %a{:href => "#"}
+          Link
+      %li
+        %a{:href => "#"}
+          Link
+      %li.dropdown
+        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          Programs
+        %ul.dropdown-menu{:role => "menu", "aria-labelledby" => "dlabel"}
+          %li
+            %a
+              %p{:style => "font-weight: bold"}
+                St. John Academy
+              %p
+                Violin, POD 
+          %li
+            %a
+              %p{:style => "font-weight: bold"}
+                Johns Hopkins University
+              %p
+                Piano, IND
+          %li
+            %a
+              %p{:style => "font-weight: bold"}
+                Johns Hopkins University
+              %p
+                Guitar, IND
+

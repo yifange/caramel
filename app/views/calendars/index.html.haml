@@ -39,7 +39,7 @@
       
 
 
-= annual_calendar_for @calendars, :year => @year.to_i do |c|
+= annual_calendar_for @calendars, :year => @year.to_i, :school => @school_id do |c|
   = c.draw_annual_calendar_body
 
 

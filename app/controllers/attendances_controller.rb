@@ -52,7 +52,7 @@ class AttendancesController < ApplicationController
           end
 
           course = r.course
-          if course.type == "GroupCourse"
+          if course.course_type == "GroupCourse"
             roster_hash[course.date] = [] unless roster_hash.has_key? course.date
             roster_hash[course.date] << r
           else
@@ -94,7 +94,7 @@ class AttendancesController < ApplicationController
   def rehash_courses(objs)
     r = {}
     for obj in objs
-      if obj[:type] == "GroupCourse"
+      if obj[:course_type] == "GroupCourse"
         r[obj[:date]] = [] unless r.has_key? obj[:date]
         r[obj[:date]] << obj
       else

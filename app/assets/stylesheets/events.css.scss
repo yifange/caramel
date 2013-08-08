@@ -173,7 +173,12 @@ table.wc-time-slots {
   background-color: #EC1829;
   border-color: #F71919;
 }
-
+.wc-cal-background-event.available {
+  border: 3px dotted #1122DD;
+}
+.wc-cal-background-event.unavailable {
+  border: 3px dotted #DD2211;
+}
 .wc-cal-event .wc-time {
 	background-color: #2b72d0;
 	border: 1px solid #1b62c0;

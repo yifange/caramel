@@ -1,13 +1,27 @@
 class CalendarsController < ApplicationController
   def index
-    @calendars = rehash_objs(Calendar.all)
+    params[:school_id] = 1 # FIXME THIS IS FAKED
+    # if params.has_key?(:school_id)
+      @school_id = params[:school_id]
+      @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
+    # else
+    #   @school_id = nil
+    #   @calendars = rehash_objs(Calendar.all)
+    # end
     @month = params[:month] || Date.today.month
     @year = params[:year] || Date.today.year
     @day = params[:day] || Date.today.day
   end
 
   def index_week
-    @calendars = rehash_objs(Calendar.all)
+    params[:school_id] = 1 # FIXME THIS IS FAKED
+    # if params.has_key?(:school_id)
+      @school_id = params[:school_id]
+      @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
+    # else
+    #   @school_id = nil
+    #   @calendars = rehash_objs(Calendar.all)
+    # end
     @month = params[:month] || Date.today.month
     @year = params[:year] || Date.today.year
     @day = params[:day] || Date.today.day

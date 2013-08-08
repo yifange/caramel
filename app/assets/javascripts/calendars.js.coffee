@@ -9,7 +9,7 @@ attachColumnHandler = ->
   $("div.wc-day-column-inner.calendar-cal.editable").css("cursor", "pointer").on "click", ->
     date = $(this).data("date")
     # window.location.href = "/events/new?date=" + date
-    $.get("/calendars/new?date=" + date, (data, status) ->
+    $.get("/calendars/new?date=" + date + "&school_id=" + $(".wc-container").data("school"), (data, status) ->
       $("#calendar-modal-body").html($(data).find("#calendar-form-body").html())
       $("#calendar-form-submit").hide()
       $("#calendar-modal-delete").hide()

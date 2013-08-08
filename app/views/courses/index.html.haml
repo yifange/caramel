@@ -17,7 +17,7 @@
     -# %li.pull-right
     -#   %a#subnav-year{:href => "/courses"}
     -#     year
-= weekly_calendar_for @courses, :year => @year.to_i, :month => @month.to_i, :day => @day.to_i, :category_method => :group, :calendar_name => "course" do |c|
+= weekly_calendar_for @courses, :year => @year.to_i, :month => @month.to_i, :day => @day.to_i, :category_method => :group, :calendar_name => "course", :program => @program_id, :background_calendar => @calendars do |c|
   = c.draw_weekly_calendar_nav
   = c.draw_weekly_calendar_body
 

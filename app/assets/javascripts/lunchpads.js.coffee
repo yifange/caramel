@@ -1,4 +1,8 @@
 $ ->
+  $(".dropdown-menu a").on "click", ->
+    # console.log($("p", this).html())
+    $("a.dropdown-toggle").text($("p", this).text())
+
   $(".hah").tooltip({
     placement: "left"
   })

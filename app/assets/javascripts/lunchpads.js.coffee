@@ -21,28 +21,35 @@ $ ->
     # }
   })
   $("#bfast").on("select2-blur", ->
-    alert($(this).val())
+    # alert($(this).val())
   )
   $("#bfast").select2({
     width: "300px"
     multiple: true
-    data: (->
-      data = []
+    # data: (->
+    #   data = []
 
-      $($("#bfast").data("options").split(",")).each( ->
-        item = this.split(":")
-        data.push({
-          id: item[0],
-          text: item[1]
-        })
-      )
-      data)()
+      # $($("#bfast").data("options").split(",")).each( ->
+      #   item = this.split(":")
+      #   data.push({
+      #     id: item[0],
+      #     text: item[1]
+      #   })
+      # )
+      # data)()
 
-    # ajax: {
-    #   url: "/lunchpads/api",
-    #   dataType: "json", #   results: (data, page) ->
-    #     {results: data}
-    # }
+    ajax: {
+      url: "/lunchpads/api",
+      dataType: "json",
+      results: (data, page) ->
+        {results: data}
+    }
+    formatSelection: (object, container) ->
+      console.log("object")
+      console.log(object)
+      console.log("container")
+      console.log(container)
+      return $("<span>", {id: "bfast-" + object.id}).text(object.text)[0].outerHTML
 
     initSelection: (element, callback) ->
       data = []
@@ -56,7 +63,8 @@ $ ->
       )
       element.val('')
       callback(data)
-  }).change((e) ->
-    # alert("changed")
-  )
+  })
+
+  $(".select2-choices").on "click", ".select2-search-choice", ->
+    alert($(this).find("span").text())
 

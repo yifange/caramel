@@ -23,12 +23,9 @@ class CalendarsController < ApplicationController
   end
 
   def create
-    # date = Date.new(params[:calendar]["date(1i)"].to_i, params[:calendar]["date(2i)"].to_i, params[:calendar]["date(3i)"].to_i)
-    date = Date.new(params[:calendar]["date(1i)"].to_i, params[:calendar]["date(2i)"].to_i, params[:calendar]["date(3i)"].to_i)
+    date = Date.parse(params[:calendar][:date])
     params[:calendar][:term_id] = Term.find_term(date).id
     @calendar = Calendar.new(calendar_params)
-    # text = params[:calendar][:recurring].to_i ? "yes" : "no"
-    # render :text => params[:calendar][:recurring].to_i
     r = params[:calendar][:recurring].to_i == 1 ? @calendar.save_recurring : @calendar.save
     if r
       redirect_to :controller => "calendars", :action => :index_week

@@ -4,7 +4,11 @@
 
 attachHandler = ->
   $.fn.editable.defaults.mode = 'inline'
-  $('.instrument-options').editable({
+  $(".select2-search-field").on "click", (e) ->
+    alert "hhahaha!"
+
+
+  $(".instrument-options").editable({
     showbuttons: false
   })
 
@@ -52,12 +56,49 @@ attachHandler = ->
     multiple: true
   })
 
+
+
+  $(".student-options").on("select2-blur", ->
+    $.ajax(
+      type: "POST",
+      url: "/programs_page/save_students",
+      data: {value: $(this).val(), pk: $(this).data("pk")},
+      dataType: "json", results: (data, page) ->
+        return {results: data}
+    )
+  )
+
+  $(".student-options").select2({
+    ajax: {
+      type: "GET",
+      url: "/programs_page/get_students",
+      dataType: "json",
+      results: (data, page) ->
+        return {results: data}
+    }
+    initSelection: (element, callback) ->
+      data = []
+      $(element.val().split(",")).each( ->
+        item = this.split(":")
+        data.push({
+          id: item[0], text: item[1]
+        })
+      )
+      element.val('')
+      callback(data)
+    width: '100%',
+    multiple: true
+  })
+
+
+
 attachNewProgramHandler = ->
   $(".new-program").on "click", (e) ->
     e.preventDefault()
     href = $(this).attr("href")
     $.get(href + "?school_id=" + $(this).data("school"), (data, status) ->
       $("#new-program-modal-body").html($(data).find("#new-program-form-body").html())
+      attachHandler()
       $("#new-program-modal").modal({
         keyboard: true
       })

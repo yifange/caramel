@@ -54,40 +54,58 @@ class ProgramsPageController < ApplicationController
     render :json => @results
   end
 
-  def get_assigned_teachers
+  def get_details
     programs = Program.all
     @assigned_teachers = {}
+    @enrolled_students = {}
     programs.each do |program|
       assignments_for_program = Assignment.where(:program_id => program.id)
+      enrollments_for_program = Enrollment.where(:program_id => program.id)
       assignments_str = assignments_for_program.map do |assignment| 
         teacher = Teacher.find(assignment.teacher_id)
         teacher.id.to_s + ":" + teacher.first_name + teacher.last_name
       end.join(",")
+      enrollments_str = enrollments_for_program.map do |enrollment| 
+        student = Student.find(enrollment.student_id)
+        student.id.to_s + ":" + student.first_name + student.last_name
+      end.join(",")
       @assigned_teachers[program.id] = assignments_str
+      @enrolled_students[program.id] = enrollments_str
     end
-    return @assigned_teachers
+    return [@assigned_teachers, @enrolled_students]
   end
   
   def save_teachers
-    @values = params[:value].split(',')
-    @assignments = Assignment.where(:program_id => params[:pk])
-    @assignments.each do |assignment|
-      @values.each do |val|
-        v = val.to_i
-        if assignment.teacher_id == v # assignment already exists
-          @values.delete(val)
-          @assignments.delete(assignment)
-        end
-      end
+    new_ids = params[:value].split(",").map(&:to_i)
+    old_ids = Assignment.where(:program_id => params[:pk]).map {|a| a.teacher_id}
+    (old_ids - new_ids).each do |id|
+      Assignment.where(:program_id => params[:pk], :teacher_id => id).delete_all
     end
-
-    @assignments.each do |assignment| # assignment not found, deleted
-      Assignment.delete(assignment)
-    end
-    @values.each do |val| # assignment created
-      Assignment.create(:program_id => params[:pk], :teacher_id => val.to_i)
+    (new_ids - old_ids).each do |id|
+      Assignment.create(:program_id => params[:pk], :teacher_id => id)
     end
     render :text => "Save Teachers Successfully!"
+  end
+
+  
+  def get_students
+    @students = Student.all
+    @results = @students.map do |student|  
+      {:id => student.id, :text => student.first_name + " " + student.last_name}
+    end
+    render :json => @results
+  end
+  
+  def save_students
+    new_ids = params[:value].split(",").map(&:to_i)
+    old_ids = Enrollment.where(:program_id => params[:pk]).map {|a| a.student_id}
+    (old_ids - new_ids).each do |id|
+      Enrollment.where(:program_id => params[:pk], :student_id => id).delete_all
+    end
+    (new_ids - old_ids).each do |id|
+      Enrollment.create(:program_id => params[:pk], :student_id => id)
+    end
+    render :text => "Save Students Successfully!"
   end
 
 
@@ -103,7 +121,8 @@ class ProgramsPageController < ApplicationController
       @programs = Program.all
     end
 
-    @assigned_teachers = get_assigned_teachers
+    @assigned_teachers = get_details[0]
+    @enrolled_students = get_details[1]
     @instruments = Instrument.all
   end
 

@@ -51,7 +51,9 @@ module ProgramsHelper
                   buf_detail = "".html_safe
                   buf_dt1 = content_tag :span, "Teachers"
                   buf_dt2 = content_tag :input, nil, :class => "teacher-options", :type => "hidden", :value => "#{@assigned_teachers[program.id]}", "data-pk" => "#{program.id}"
-                  buf_detail.concat(buf_dt1).concat(buf_dt2)
+                  buf_dt3 = content_tag :span, "Students"
+                  buf_dt4 = content_tag :input, nil, :class => "student-options", :type => "hidden", :value => "#{@enrolled_students[program.id]}", "data-pk" => "#{program.id}"
+                  buf_detail.concat(buf_dt1).concat(buf_dt2).concat(buf_dt3).concat(buf_dt4)
                 end
               end
             end

@@ -1,6 +1,7 @@
 class StaffController < ApplicationController
   def index 
     @staff = Staff.all
+    @staff_with_region = Staff.all_with_region_name
   end
 
   def show 
@@ -14,9 +15,11 @@ class StaffController < ApplicationController
   def update 
     @staff = Staff.find(params[:pk])
     if params[:name] == 'email'
-      @staff.update_attribute(:email, params[:value])
+      params[:value] = {params[:name] => params[:value]}
     end
-    render :text => ""
+
+    @staff.update_attributes(staff_params)
+    render :text => ''
   end
 
   def destroy 
@@ -25,5 +28,9 @@ class StaffController < ApplicationController
 
   def remove
 
+  end
+
+  def staff_params
+    params.require(:value).permit(:email, :first_name, :last_name, :middle_name)
   end
 end

@@ -18,13 +18,13 @@
           %a
             %i.icon-remove
         %td
-          %a.x-editable-staff-name{:href => '#', 'data-url' => "/staff/#{staff.id}", 'data-pk' => "#{staff.id}"}
+          %a.x-editable-input-user{:href => '#', 'data-url' => "/staff/#{staff.id}", 'data-pk' => "#{staff.id}"}
             = staff.name
         %td
-          %a.x-editable-email{:href => '#', 'data-url' => "/staff/#{staff.id}", 'data-pk' => "#{staff.id}"}
+          %a.x-editable-input-email{:href => '#', 'data-url' => "/staff/#{staff.id}", 'data-pk' => "#{staff.id}"}
             = staff.email
         %td
-          %a.select2-region{:href => '#'}
+          %a.select2-region{:href => '#', :value => "#{@staff_with_region[staff.id][0]}"}
         %td
           %button.btn.btn-primary{'type' => 'button'}
             Reset Password

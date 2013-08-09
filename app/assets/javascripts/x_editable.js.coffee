@@ -1,23 +1,22 @@
 attachHandler = ->
-
-  $('#address').editable({
-    ajaxOptions: {
-      type: 'PUT'
-    }
-    url: '/post'
-    title: 'Enter city, street and building #'
-    value: {
-      city: "Moscow"
-      street: "Lenina"
-      building: "15"
-    }
-  })
-
   $.fn.editable.defaults.mode = 'inline'
 
   # select2
+  $('.select2-region').select2().select2('val', 'dddd')
   $('.select2-region').select2({
-    data: [{id:0,text:'Washington'},{id:1,text:'Baltimore'},{id:2,text:'Chicago'}]
+    # ajax: {
+    #   type: 'PUT'
+    # }
+    initSelection: (element, callback) ->
+      # data = {id: 1, text: 'dddddd'}
+      # data = [{id: 1, text: 'GWU'}]
+      # value = element.val()
+      data = {id: element.val(), text: element.val()}
+      # data = {id: 1, text: 'eeeeee'}
+      # $(element.val().split(",")).first( ->
+        # data.push({id: this, text: this})
+      # )
+      callback(data)
     placeholder: 'select region'
   })
 
@@ -29,13 +28,16 @@ attachHandler = ->
   })
 
   # text
-  $('.x-editable-region-name').editable({
-    url: ''
+  $('.x-editable-input-region').editable({
+    ajaxOptions: {
+      type: 'PUT'
+    }
+    name: 'region'
     type: 'text'
     placeholder: 'input region'
   })
 
-  $('.x-editable-email').editable({
+  $('.x-editable-input-email').editable({
     ajaxOptions: {
       type: 'PUT'
     }
@@ -44,32 +46,27 @@ attachHandler = ->
     placeholder: 'input email'
   })
 
-  $('.x-editable-instrument-name').editable({
-    url: ''
-    type: 'text'
-    placeholder: 'input instrument name' })
-
-  $('.x-editable-program-name').editable({
-    url: ''
-    type: 'text'
-    placeholder: 'input program name'
-  })
-
-  # user_name
-  $('.x-editable-staff-name').editable({
+  $('.x-editable-input-instrument').editable({
     ajaxOptions: {
       type: 'PUT'
     }
-    type: 'user_name'
+    type: 'text'
+    placeholder: 'input instrument'
   })
 
-  $('.x-editable-teacher-name').editable({
-    url: ''
-    type: 'user_name'
+  $('.x-editable-input-program-type').editable({
+    ajaxOptions: {
+      type: 'PUT'
+    }
+    type: 'text'
+    placeholder: 'input program type'
   })
 
-  $('.x-editable-student-name').editable({
-    url: ''
+  # user_name
+  $('.x-editable-input-user').editable({
+    ajaxOptions: {
+      type: 'PUT'
+    }
     type: 'user_name'
   })
 

@@ -1,11 +1,25 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+attachTagClickHandler = ->
+
+  clickHandlerA = ->
+    $(".select2-search-choice").unbind("click")
+    $(".select2-search-choice").bind("click", clickHandlerA)
+    $( ->
+      alert "~"
+      $(".select2-search-choice").popover()
+    )
+
+  $(".select2-search-choice").bind("click", clickHandlerA)
+
+  # $(".select2-choices").on "click", ".select2-search-choice", (e) ->
+  #   $(".select2-choices").unbind("click")
+  #   # e.stopPropagation()
+  #   return false
 
 attachHandler = ->
   $.fn.editable.defaults.mode = 'inline'
-  $(".select2-search-field").on "click", (e) ->
-    alert "hhahaha!"
 
 
   $(".instrument-options").editable({
@@ -90,7 +104,11 @@ attachHandler = ->
     multiple: true
   })
 
+  $(".teacher-options").on "change", ->
+    attachTagClickHandler()
 
+  $(".student-options").on "change", ->
+    attachTagClickHandler()
 
 attachNewProgramHandler = ->
   $(".new-program").on "click", (e) ->
@@ -117,12 +135,10 @@ attachSubmitHandler = ->
       success: (data, status) ->
         $("#new-program-modal").modal("toggle")
         cur_pane_id = $(".tab-pane.active").attr("id")
-        # alert cur_pane_id
         $(".tab-pane.active").html($(data).find("#" + cur_pane_id).html())
-          # document.URL, (data, status) ->
-          # $(".tabbable").html($(data).find(".tabbable").html())
         attachNewProgramHandler()
         attachHandler()
+        attachTagClickHandler()
 
       error: (data, status) ->
         $("#new-program-modal-body").html($(data.responseText).find("#new-program-form-body").html())
@@ -133,7 +149,9 @@ $(document).ready attachHandler
 $(document).ready attachNewProgramHandler
 $(document).ready attachSubmitHandler
 $(document).ready attachTooltipHandler
+$(document).ready attachTagClickHandler
 $(document).on "page:load", attachHandler
 $(document).on "page:load", attachNewProgramHandler
 $(document).on "page:load", attachSubmitHandler
 $(document).on "page:load", attachTooltipHandler
+$(document).on "page:load", attachTagClickHandler

@@ -13,6 +13,7 @@ module ProgramsHelper
     buf
   end
 
+
   def school_tab_panes_for(schools, programs)
     buf = "".html_safe
     for i in 0...schools.length

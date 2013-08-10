@@ -3,8 +3,28 @@ attachHandler = ->
 
   # select2
   $('.select2-region').select2({
-    data: [{id:0,text:'Washington'},{id:1,text:'Baltimore'},{id:2,text:'Chicago'}]
-    placeholder: 'select region'
+    # data: [{id:0,text:'Washington'},{id:1,text:'Baltimore'},{id:2,text:'Chicago'}]
+    # option: {id:'select region', text:"haha"}
+    ajax: {
+      type: 'GET',
+      url: "/people_page/get_regions",
+      datatype: 'json',
+      results: (data, page) ->
+        return {results: data}
+    }
+
+    initSelection: (element, callback) ->
+      data = []
+
+      alert(element.val())
+      $(element.val().split(',')).each( ->
+        item = this.split(':')
+        data.push({id: item[0], text: item[1]
+        })
+      )
+      element.val('')
+      callback(data)
+    width: '100%'
   })
 
   # select2 multiple

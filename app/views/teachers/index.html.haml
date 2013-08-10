@@ -24,6 +24,7 @@
           %a.x-editable-input-email{:href => '#', 'data-url' => "/teachers/#{teacher.id}", 'data-pk' => "#{teacher.id}"}
             = teacher.email
         %td
+          %a.x-editable-select2-multiple{:href => '#'}
         %td
           %button.btn.btn-primary{'type' => 'button'}
             Reset Password

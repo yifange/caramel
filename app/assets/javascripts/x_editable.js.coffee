@@ -2,14 +2,14 @@ attachHandler = ->
   $.fn.editable.defaults.mode = 'inline'
 
   # select2 multiple
-  $('.select2-mul-school').select2({
+  $('.x-editable-select2-multiple').select2({
     data:[{id:0,text:'GWU'},{id:1,text:'JHU'},{id:2,text:'SJU'},{id:3,text:'ddd'}]
     multiple: true
     placeholder: 'select schools'
   })
 
   # select2 singular
-  $('.x-editable-select2').editable({
+  $('.x-editable-select2-singular').editable({
     ajaxOptions: {
       type: 'PUT'
     }

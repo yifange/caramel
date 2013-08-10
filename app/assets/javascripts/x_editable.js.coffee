@@ -2,10 +2,23 @@ attachHandler = ->
   $.fn.editable.defaults.mode = 'inline'
 
   # select2 multiple
-  $('.x-editable-select2-multiple').select2({
-    data:[{id:0,text:'GWU'},{id:1,text:'JHU'},{id:2,text:'SJU'},{id:3,text:'ddd'}]
-    multiple: true
-    placeholder: 'select schools'
+  # $('.x-editable-select2-multiple').select2({
+  #   data:[{id:0,text:'GWU'},{id:1,text:'JHU'},{id:2,text:'SJU'},{id:3,text:'ddd'}]
+  #   multiple: true
+  #   placeholder: 'select schools'
+  # })
+
+  $('.x-editable-select2-multiple').editable({
+    source: [
+      {id: 'gb', text: 'Great Britain'},
+      {id: 'us', text: 'United States'},
+      {id: 'ru', text: 'Russia'}
+    ]
+    select2: {
+      multiple: true
+    }
+    showbuttons: false
+    type: 'select2'
   })
 
   # select2 singular

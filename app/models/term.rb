@@ -33,12 +33,14 @@ class Term < ActiveRecord::Base
   def self.find_term(day)
     where("start_date <= :day AND end_date >= :day", {:day => day}).first
   end
-  def recurring_days(wday)
-    start_wday = start_date.wday
+  def recurring_days(wday, *args)
+    options = args.last.is_a?(Hash) ? args.pop : {}
+    recurring_start_date = options[:start_date] || start_date
+    start_wday = recurring_start_date.wday
     if wday >= start_wday
-      first_day = start_date + wday - start_wday
+      first_day = recurring_start_date + wday - start_wday
     else
-      first_day = start_date + wday + 7 - start_wday
+      first_day = recurring_start_date + wday + 7 - start_wday
     end
     days = []
     (first_day..end_date).step(7) do |day|

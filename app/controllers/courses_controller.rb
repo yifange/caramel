@@ -1,15 +1,25 @@
 class CoursesController < ApplicationController
   def index
-    params[:program_id] = 1
-    @school_id = Program.find(params[:program_id]).school.id
-    # if params.has_key?(:program_id)
-      @program_id = params[:program_id]
-      @courses = rehash_objs(Course.where(:program_id => params[:program_id]))
-      @calendars = rehash_cal_objs(Calendar.where(:school_id => @school_id))
+    # params[:program_id] = 1
+    # @school_id = Program.find(params[:program_id]).school.id
+    # # if params.has_key?(:program_id)
+    #   @program_id = params[:program_id]
+    #   @courses = rehash_objs(Course.where(:program_id => params[:program_id]))
+    #   @calendars = rehash_cal_objs(Calendar.where(:school_id => @school_id))
     # else
     #   @program_id = nil
     #   @courses = rehash_objs(Course.all)
-    # end
+      # end
+
+    if current_user[:type] == "Teacher"
+      @programs = Teacher.find(current_user[:id]).programs.order("school_id ASC")
+    end
+    @program = (@programs.find_by :id => params[:program_id]) || @programs.first
+    @program_id = @program[:id]
+    school_id = @program.school[:id]
+    @courses = rehash_objs(Course.where(:program_id => @program_id))
+    @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
+
     @month = params[:month] || Date.today.month
     @year = params[:year] || Date.today.year
     @day = params[:day] || Date.today.day

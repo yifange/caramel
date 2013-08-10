@@ -1,42 +1,26 @@
--# .nav-container.well
--#   %table
--#     %tr
--#       %td
--#         #cal-date-nav.btn-group.pull-left
--#           %button.btn#cal-nav-prev
--#             %i.icon-arrow-left
--#               %button.btn#cal-nav-today
--#                 today
--#               %button.btn#cal-nav-next
--#                 %i.icon-arrow-right
--#           %td.text
--#             %span#cal-current-date
--#           %td.pull-right
--#             #cal-view-switch.btn-group.pull-right
--#               %a.btn#cal-switch-year{:href => "/calendars"}
--#                 year
--#               %a.btn#cal-switch-week.active{:href => "/calendars/week"}
--#                 week
-.subnav
-  %ul.nav.nav-pills.unselectable
-    %li
-      %a#subnav-today{:href => "#"}
-        now
-    %li
-      %a#subnav-prev{:href => "#"}
-        <
-    %li
-      %a#subnav-next{:href => "#"}
-        >
-    %li
-      %span.navbar-text#subnav-text
-    %li.pull-right.active
-      %a#subnav-week{:href => "/calendars/week"}
-        week
-    %li.pull-right
-      %a#subnav-year{:href => "/calendars"}
-        year
-= weekly_calendar_for @calendars, :year => @year.to_i, :month => @month.to_i, :day => @day.to_i, :school => @school_id do |c|
+.navbar.navbar-fixed-top
+  .navbar-inner
+    %ul.nav.nav-pills.unselectable
+      %li
+        %a#subnav-today{:href => "#"}
+          now
+      %li
+        %a#subnav-prev{:href => "#"}
+          <
+      %li
+        %a#subnav-next{:href => "#"}
+          >
+      %li
+        %span.navbar-text#subnav-text
+    %ul.nav.nav-pills.unselectable.pull-right
+      = nav_filter_for "school", @schools, :base_url => "/calendars/week", :year => params[:year], :month => params[:month], :day => params[:day] do |school|
+        = content_tag :span, school.full
+      %li.active
+        = link_to "week", calendar_week_path(:school_id => @school[:id]), :id => "subnav-week"
+      %li
+        = link_to "year", calendars_path(:school_id => @school[:id]), :id => "subnav-year"
+
+= weekly_calendar_for @calendars, :year => @year.to_i, :month => @month.to_i, :day => @day.to_i, :school => @school do |c|
   = c.draw_weekly_calendar_nav
   = c.draw_weekly_calendar_body
 

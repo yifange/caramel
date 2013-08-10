@@ -1,7 +1,12 @@
 class CalendarsController < ApplicationController
   def index
-    params[:school_id] = 1 # FIXME THIS IS FAKED
-    @school_id = params[:school_id]
+    # params[:school_id] = 1 # FIXME THIS IS FAKED
+    if current_user[:type] == "Teacher"
+      @schools = Teacher.find(current_user[:id]).schools
+    end
+    @school = (@schools.find_by :id => params[:school_id]) || @schools.first
+    @schools = @schools.uniq
+    @school_id = @school[:id]
     @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
     @month = params[:month] || Date.today.month
     @year = params[:year] || Date.today.year
@@ -9,8 +14,14 @@ class CalendarsController < ApplicationController
   end
 
   def index_week
-    params[:school_id] = 1 # FIXME THIS IS FAKED
-    @school_id = params[:school_id]
+    # params[:school_id] = 1 # FIXME THIS IS FAKED
+    if current_user[:type] == "Teacher"
+      @schools = Teacher.find(current_user[:id]).schools
+    end
+    @school = (@schools.find_by :id => params[:school_id]) || @schools.first
+    @schools = @schools.uniq
+    @school_id = @school[:id]
+
     @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
     @month = params[:month] || Date.today.month
     @year = params[:year] || Date.today.year
@@ -39,9 +50,8 @@ class CalendarsController < ApplicationController
   end
   def update
     calendar = Calendar.find(params[:id])
-    params[:calendar].delete("date(1i)")
-    params[:calendar].delete("date(2i)")
-    params[:calendar].delete("date(3i)")
+    params[:calendar].delete("date")
+    params[:calendar].delete("school_id")
     # render :json => params
     if params[:calendar][:recurring].to_i == 1
       r = calendar.update_recurring(calendar_params)

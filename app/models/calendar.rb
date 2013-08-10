@@ -5,11 +5,9 @@ class Calendar < ActiveRecord::Base
   validate :start_time_cannot_after_end_time, :start_time_and_end_time_must_in_school_hour, :events_cannot_overlap
   before_save :set_day_of_week
   
-
-
   def save_recurring
     day_of_week = date.wday
-    days = Term.find(term_id).recurring_days(day_of_week)
+    days = Term.find(term_id).recurring_days(day_of_week, :start_date => date)
     r = true
     days.each do |day|
       r = r && Calendar.new(:date => day, :term_id => term_id, :start_time => start_time, :end_time => end_time, :school_id => school_id, :available => available, :day_of_week => day_of_week).save
@@ -19,7 +17,6 @@ class Calendar < ActiveRecord::Base
   end
   def update_recurring(calendar_params)
     all_similar_events.each do |e|
-      puts e
       e.update_attributes(calendar_params)
     end
   end
@@ -54,7 +51,7 @@ class Calendar < ActiveRecord::Base
   def events_cannot_overlap
     @dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
     @dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
-    Calendar.where(:date => date).find_each do |event|
+    Calendar.where(:date => date, :school_id => :school_id).find_each do |event|
       if event.id != id and overlap?(event)
         errors.add(:base, "events overlap")
         return

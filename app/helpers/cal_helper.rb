@@ -12,13 +12,15 @@ module CalHelper
   def annual_calendar_for(objects, *args, &block)
     options = args.last.is_a?(Hash) ? args.pop : {}
     content = capture(AnnualCalendarBuilder.new(self, objects || [], options), &block)
-    content_tag :div, content, :class => "ac-container", :data => {:school => options[:school]}
+    content_tag :div, content, :class => "ac-container", :data => {:school => options[:school][:id]}
   end
 
   def weekly_calendar_for(objects, *args, &block)
     options = args.last.is_a?(Hash) ? args.pop : {}
     content = capture(WeeklyCalendarBuilder.new(self, objects || [], options), &block)
-    content_tag :div, content, :class => "wc-container", :data => {:school => options[:school], :program => options[:program]}
+    school_id = options[:school].id if options.has_key? :school
+    program_id = options[:program].id if options.has_key? :program
+    content_tag :div, content, :class => "wc-container", :data => {:school => school_id, :program => program_id}
   end
   
   def flat_monthly_calendar_for(objects, *args, &block)
@@ -159,6 +161,10 @@ module CalHelper
       @displayed_term = Term.find_term(@date)
       @current_term = Term.current_term
       @background_calendar = options[:background_calendar] if options.has_key?(:background_calendar)
+      @school = options[:school]
+      @school_id = @school[:id] if @school
+      @program = options[:program]
+      @program_id = @program[:id] if @program
     end
 
     def draw_events(day)
@@ -276,11 +282,16 @@ module CalHelper
       end
     end
     def draw_weekly_calendar_nav
-      prev_link = link_to nil, {:year => @date.prev_week.year, :month => @date.prev_week.month, :day => @date.prev_week.day}, :id => "cal-nav-prev"
-      today_link = link_to nil, {:year => @today.year, :month => @today.month, :day => @today.day}, :id => "cal-nav-today"
-      next_link = link_to nil, {:year => @date.next_week.year, :month => @date.next_week.month, :day => @date.next_week.day}, :id => "cal-nav-next"
+      prev_link = link_to nil, {:year => @date.prev_week.year, :month => @date.prev_week.month, :day => @date.prev_week.day, :school_id => @school_id, :program_id => @program_id}, :id => "cal-nav-prev"
+      today_link = link_to nil, {:year => @today.year, :month => @today.month, :day => @today.day, :school_id => @school_id, :program_id => @program_id}, :id => "cal-nav-today"
+      next_link = link_to nil, {:year => @date.next_week.year, :month => @date.next_week.month, :day => @date.next_week.day, :school_id => @school_id, :program_id => @program_id}, :id => "cal-nav-next"
       current_week = content_tag :span, @date.beginning_of_week(:sunday).strftime("%-d %b %Y") + " - " + @date.end_of_week(:sunday).strftime("%-d %b %Y"), :id => "cal-nav-title"
-      nav = prev_link.concat(today_link).concat(next_link).concat(current_week)
+      school_name = content_tag :span, @school.full, :id => "cal-nav-school-name" if @school
+      school_id = content_tag :span, @school.id, :id => "cal-nav-school-id" if @school
+      program_id = content_tag :span, @program.id, :id => "cal-nav-program-id" if @program
+      program_name = content_tag :span, @program.school.full + ", " + @program.program_type.name + ", " + @program.instrument.name, :id => "cal-nav-program-name" if @program
+      nav = prev_link.concat(today_link).concat(next_link).concat(current_week).concat(school_name).concat(school_id).concat(program_id).concat(program_name)
+      
       content_tag :div, nav, :id => "cal-nav", :style => "display: none"
     end
     
@@ -373,6 +384,8 @@ module CalHelper
       first_month = options[:first_month] || 9
       @year = options[:year] || Date.today.year
       @months = [*(first_month..12)].concat([*(1...first_month)])
+      @school = options[:school]
+      @school_id = @school[:id]
     end
 
     def draw_annual_calendar_body
@@ -381,11 +394,13 @@ module CalHelper
     end
     
     def draw_annual_calendar_title
-      prev_link = link_to nil, {:year => @year - 1}, :id => "cal-nav-prev"
-      next_link = link_to nil, {:year => @year + 1}, :id => "cal-nav-next"
-      today_link = link_to nil, {:year => Date.today.year}, :id => "cal-nav-today"
+      prev_link = link_to nil, {:year => @year - 1, :school_id => @school_id}, :id => "cal-nav-prev"
+      next_link = link_to nil, {:year => @year + 1, :school_id => @school_id}, :id => "cal-nav-next"
+      today_link = link_to nil, {:year => Date.today.year, :school_id => @school_id}, :id => "cal-nav-today"
       title = content_tag :span, @year, :id => "cal-nav-title" 
-      content = prev_link.concat(today_link).concat(next_link).concat(title)
+      school_name = content_tag :span, @school.full, :id => "cal-nav-school-name"
+      school_id = content_tag :span, @school.id, :id => "cal-nav-school-id"
+      content = prev_link.concat(today_link).concat(next_link).concat(title).concat(school_name).concat(school_id)
       content_tag :div, content, :id => "cal-nav", :style => "display: none"
     end
 
@@ -399,7 +414,7 @@ module CalHelper
         row_content = "".html_safe
         for column_ind in 0...columns
           month = @months[row_ind  * columns + column_ind]
-          builder = MonthlyCalendarBuilder.new(@parent, @objects, :month => month, :year => @year)
+          builder = MonthlyCalendarBuilder.new(@parent, @objects, :month => month, :year => @year, :school => @school)
           grid_content = "".html_safe
           monthly_calendar_content = content_tag :div, (builder.draw_calendar :show_links => false, :show_year => false), :class => "ac-mc-container"
           grid_content.concat(monthly_calendar_content)
@@ -417,6 +432,7 @@ module CalHelper
       @today = options[:today] || Date.today
       @year = options[:year] || @today.year
       @month = options[:month] || @today.month
+      @school = options[:school]
       @date = Date.new(@year, @month)
     end
 
@@ -459,7 +475,7 @@ module CalHelper
           week += 1
         end
 
-        text = link_to day.day, {:controller => :calendars, :action => :index_week, :year => day.year, :month => day.month, :day => day.day}, :class => "day-link"
+        text = link_to day.day, {:controller => :calendars, :action => :index_week, :year => day.year, :month => day.month, :day => day.day, :school => @school[:id]}, :class => "day-link"
         cal_days.concat(klass.empty? ? (content_tag :td, text, :data => {:year => day.year, :month => day.month, :day => day.day}) : (content_tag :td, text, :class => klass, :data => {:year => day.year, :month => day.month, :day => day.day}))
         cal_days.concat("</tr>".html_safe) if day.saturday?
       end

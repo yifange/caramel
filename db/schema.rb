@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130807205305) do
+ActiveRecord::Schema.define(version: 20130810025153) do
 
   create_table "assignments", force: true do |t|
     t.integer  "teacher_id"
@@ -79,9 +79,21 @@ ActiveRecord::Schema.define(version: 20130807205305) do
   add_index "enrollments", ["program_id"], name: "index_enrollments_on_program_id"
   add_index "enrollments", ["student_id"], name: "index_enrollments_on_student_id"
 
+  create_table "instruments", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "month_events", force: true do |t|
     t.datetime "date"
     t.string   "mark"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "program_types", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

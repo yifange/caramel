@@ -3,14 +3,12 @@ class Region < ActiveRecord::Base
   has_many :domains
   has_many :users, through: :domains
 
-  def self.all_ordered_json
-    regions = Region.all.order("name")
-    regions.map do |region| 
+  def self.all_ordered
+    @regions = Region.order("name").all
+    puts 'dddddddddd'
+    @regions.map do |region| 
+      puts region.name
       {:id => region.id, :text => region.name}
     end
-  end
-
-  def self.all_ordered
-    regions = Region.all.order("name")
   end
 end

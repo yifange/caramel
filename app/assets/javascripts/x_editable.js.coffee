@@ -63,30 +63,44 @@ attachHandler = ->
     placeholder: 'input email'
   })
 
-  # text
+  # region
   $('.x-editable-input-region').editable({
     ajaxOptions: {
       type: 'PUT'
     }
-    name: 'region'
+    name: 'name'
     type: 'text'
-    placeholder: 'input region'
+    placeholder: 'input region name'
   })
+
+  # instrument
   $('.x-editable-input-instrument').editable({
     ajaxOptions: {
       type: 'PUT'
     }
+    name: 'name'
     type: 'text'
-    placeholder: 'input instrument'
+    placeholder: 'input instrument name'
   })
 
+  # program type
   $('.x-editable-input-program-type').editable({
     ajaxOptions: {
       type: 'PUT'
     }
+    name: 'name'
     type: 'text'
-    placeholder: 'input program type'
+    placeholder: 'input program type name'
   })
 
+  # school
+  $('.x-editable-input-schools').editable({
+    ajaxOptions: {
+      type: 'PUT'
+    }
+    name: 'name'
+    type: 'text'
+    placeholder: 'input school name'
+  })
 $(document).ready attachHandler
 $(document).on "page:load", attachHandler

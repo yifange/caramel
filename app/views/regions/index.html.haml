@@ -1,0 +1,19 @@
+- content_for :title do
+  people/region
+
+- content_for :sidemenu do
+  - render '/layouts/programs_page_sidebar'
+
+- content_for :main do
+  %table.table.table-bordered.table-striped{:style => 'clear: both'}
+    %tr
+      %th{:width => '13px'}
+      %th Region
+      - @regions.each do |region|
+        %tr
+          %td
+            %a
+              %i.icon-remove
+          %td
+            %a.x-editable-input-region{:href => '#', 'data-url' => "/regions/#{region[:id]}", 'data-pk' => "#{region[:id]}"}
+              = region[:name]

@@ -1,6 +1,9 @@
 class StudentsController < ApplicationController
-  def index
-    @students = Student.all
+ 
+  respond_to :html
+
+  def index 
+    @students = Student.all_ordered
   end
 
   def update 

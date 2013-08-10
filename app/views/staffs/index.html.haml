@@ -25,7 +25,7 @@
             = staff.email
         %td
           %a.x-editable-select2-singular{:href => '#', 'data-source' => '/regions.json','data-url' => "/staffs/#{staff.id}", 'data-pk' => "#{staff.id}", 'data-name' => 'region'}
-            = @staffs_with_region[staff.id][0]
+            = staff.regions[0].name
         %td
           %button.btn.btn-primary{'type' => 'button'}
             Reset Password

@@ -1,15 +1,9 @@
 class StaffsController < UsersController
+
+  respond_to :html
+
   def index 
-    @staffs = Staff.all
-    @staffs_with_region = Staff.all_with_region_name
-  end
-
-  def show 
-
-  end
-
-  def create 
-
+    @staffs = Staff.all_ordered
   end
 
   def update 
@@ -23,14 +17,6 @@ class StaffsController < UsersController
       @staff.update_attributes(user_params)
     end
     render nothing: true
-  end
-
-  def destroy 
-
-  end
-
-  def remove
-
   end
 
 end

@@ -1,4 +1,4 @@
-class StaffsController < PeoplesController
+class StaffsController < UsersController
   def index 
     @staffs = Staff.all
     @staffs_with_region = Staff.all_with_region_name
@@ -22,7 +22,7 @@ class StaffsController < PeoplesController
     elsif params[:name] == 'user_name'
       @staff.update_attributes(user_params)
     end
-    render :text => ''
+    render nothing: true
   end
 
   def destroy 

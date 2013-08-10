@@ -1,4 +1,4 @@
-class TeachersController < PeoplesController
+class TeachersController < UsersController
   def index
     @teachers = Teacher.all
     @teachers_with_region = Teacher.all_with_region_name
@@ -14,7 +14,7 @@ class TeachersController < PeoplesController
     elsif params[:name] == 'user_name'
       @teacher.update_attributes(user_params)
     end
-    render :text => ''
+    render nothing: true
   end
 
 end

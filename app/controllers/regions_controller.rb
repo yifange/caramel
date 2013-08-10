@@ -1,11 +1,10 @@
 class RegionsController < ApplicationController
+  respond_to :html, :json
   def update
 
   end
 
   def index
-    @regions = Region.all.order("name ASC")
-    @results = @regions.map { |region| {:id => region.id, :text => region.name}}
-    render :json => @results
+    respond_with(Region.all_ordered_json)
   end
 end

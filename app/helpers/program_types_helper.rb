@@ -1,2 +1,0 @@
-module ProgramTypesHelper
-end

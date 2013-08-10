@@ -1,28 +1,11 @@
 Caramel::Application.routes.draw do
-  get "students/regions"
   root 'session_page#signin'
 
   get 'session_page/signin' => 'session_page#signin'
   get 'session_page/verify' => 'session_page#verify'
   get 'session_page/signout' => 'session_page#signout'
 
-  # instruments
-  resources :instruments
-
-  # students
-  resources :students
-
-  # staff
-  resources :staffs
-
-  # teachers
-  resources :teachers
-
-  # regions
-  resources :regions
-
-  # programs
-  resources :programs
+  resources :staffs, :teachers, :regions, :programs, :instruments, :students
 
   # teachers of a program
   # instruments of a program  

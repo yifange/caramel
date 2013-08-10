@@ -2,7 +2,7 @@ module ProgramsHelper
   def school_tabs_for(schools)
     buf = "".html_safe
     for i in 0...schools.length
-      anchor_content = content_tag :a, schools[i].abbrev, :href => "#tab-#{schools[i].id}", "data-toggle" => "tab"
+      anchor_content = content_tag :a, schools[i].abbrev, :href => "#tab-#{schools[i].id}", "data-toggle" => "tab", :title => schools[i].full, :class => "tab-hover"
       if i == 0
         tab = content_tag :li, anchor_content, :class => "active"
       else
@@ -13,6 +13,7 @@ module ProgramsHelper
     buf
   end
 
+
   def school_tab_panes_for(schools, programs)
     buf = "".html_safe
     for i in 0...schools.length
@@ -20,7 +21,7 @@ module ProgramsHelper
       buf_table = "".html_safe
       programs_for_school = programs.where( :school_id => schools[i].id )
 
-      tab_content = content_tag :table, :class => "table table-stripped table-bordered" do
+      tab_content = content_tag :table, :class => "table table-striped table-bordered" do
         content_tag :tbody do
           buf_program = "".html_safe
           programs_for_school.each do |program|
@@ -50,8 +51,15 @@ module ProgramsHelper
                 content_tag :div, :class => "accodian-body collapse", :id => "collapse-#{program.id}" do
                   buf_detail = "".html_safe
                   buf_dt1 = content_tag :span, "Teachers"
-                  buf_dt2 = content_tag :input, nil, :class => "teacher-options",  :value => "#{@assigned_teachers[program.id]}", "data-pk" => "#{program.id}"
-                  buf_detail.concat(buf_dt1).concat(buf_dt2)
+# <<<<<<< HEAD
+#                   buf_dt2 = content_tag :input, nil, :class => "teacher-options",  :value => "#{@assigned_teachers[program.id]}", "data-pk" => "#{program.id}"
+#                   buf_detail.concat(buf_dt1).concat(buf_dt2)
+# =======
+                  buf_dt2 = content_tag :input, nil, :class => "teacher-options", :type => "hidden", :value => "#{@assigned_teachers[program.id]}", "data-pk" => "#{program.id}"
+                  buf_dt3 = content_tag :span, "Students"
+                  buf_dt4 = content_tag :input, nil, :class => "student-options", :type => "hidden", :value => "#{@enrolled_students[program.id]}", "data-pk" => "#{program.id}"
+                  buf_detail.concat(buf_dt1).concat(buf_dt2).concat(buf_dt3).concat(buf_dt4)
+# >>>>>>> origin/latte
                 end
               end
             end
@@ -60,7 +68,9 @@ module ProgramsHelper
           buf_program
         end # end for tbody
       end # end for table
-      buf_tab.concat(tab_content)
+      buf_pane_button = content_tag :a, "New Program", :class => "btn btn-primary new-program", :href => "/programs/new", "data-school" => "#{schools[i].id}"
+      
+      buf_tab.concat(tab_content).concat(buf_pane_button)
 
       if i == 0
         buf_pane = content_tag :div, buf_tab, :class => "tab-pane active", :id => "tab-#{schools[i].id}"

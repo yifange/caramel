@@ -4,10 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
 	private
-# Using current_user to verify weather the user has sign in and can view this page  
+  # Using current_user to verify weather the user has sign in and can view this page  
 	def verify_user
 		if !current_user
-			puts 'Cannot access before sign in, redirect to sign in page.'
 			redirect_to root_url
 		end
 	end

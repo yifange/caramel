@@ -12,21 +12,20 @@
       %th{:width => '280px'} Email
       %th Region
       %th
-    - @staff.each do |staff|
+    - @staffs.each do |staff|
       %tr
         %td
           %a
             %i.icon-remove
         %td
-          %a.x-editable-input-user{:href => '#', 'data-url' => "/staff/#{staff.id}", 'data-pk' => "#{staff.id}"}
+          %a.x-editable-input-user-name{:href => '#', 'data-url' => "/staffs/#{staff.id}", 'data-pk' => "#{staff.id}"}
             = staff.name
         %td
-          %a.x-editable-input-email{:href => '#', 'data-url' => "/staff/#{staff.id}", 'data-pk' => "#{staff.id}"}
+          %a.x-editable-input-email{:href => '#', 'data-url' => "/staffs/#{staff.id}", 'data-pk' => "#{staff.id}"}
             = staff.email
         %td
-          %a.select2-region{:href => '#', :value => "#{@staff_with_region[staff.id][0]}"}
+          %a.x-editable-select2{:href => '#', 'data-source' => '/regions','data-url' => "/staffs/#{staff.id}", 'data-pk' => "#{staff.id}", 'data-name' => 'region'}
+            = @staffs_with_region[staff.id][0]
         %td
           %button.btn.btn-primary{'type' => 'button'}
             Reset Password
-          %button.btn.btn-primary{'type' => 'button', :herf => '#'}
-            New Staff

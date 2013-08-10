@@ -15,25 +15,25 @@ Region.delete_all
 
 User.delete_all
 @adm_deng  = User.create(email: 'deng.jinqiu@gmail.com', password: '123456', password_confirmation: '123456', 
-                       first_name: 'Jinqiu', middle_name: nil, last_name: 'Deng', type: 'Admin', 
+                       first_name: 'Jinqiu', last_name: 'Deng', type: 'Admin', 
                        remember_me_token: nil, remember_me_token_expires_at: nil)
 @stf_shen  = User.create(email: 'shen.dongye@gmail.com', password: '123456', password_confirmation: '123456', 
-                       first_name: 'Dongye', middle_name: 'D', last_name: 'Shen', type: 'Staff', 
+                       first_name: 'Dongye', last_name: 'Shen', type: 'Staff', 
                        remember_me_token: nil, remember_me_token_expires_at: nil)
 @stf_lu    = User.create(email: 'lu.fenghuan@gmail.com', password: '123456', password_confirmation: '123456', 
-                       first_name: 'Fenghuan', middle_name: 'J', last_name: 'Lu', type: 'Staff', 
+                       first_name: 'Fenghuan', last_name: 'Lu', type: 'Staff', 
                        remember_me_token: nil, remember_me_token_expires_at: nil)
 @stf_huang = User.create(email: 'huang.yunchi@gmail.com', password: '123456', password_confirmation: '123456', 
-                       first_name: 'Yunchi', middle_name: 'K', last_name: 'Huang', type: 'Staff', 
+                       first_name: 'Yunchi', last_name: 'Huang', type: 'Staff', 
                        remember_me_token: nil, remember_me_token_expires_at: nil)
 @t_ge    = User.create(email: 'ge.yifan@gmail.com', password: '123456', password_confirmation: '123456', 
-                       first_name: 'Yifan', middle_name: nil, last_name: 'Ge', type: 'Teacher', 
+                       first_name: 'Yifan', last_name: 'Ge', type: 'Teacher', 
                        remember_me_token: nil, remember_me_token_expires_at: nil)
 @t_chu   = User.create(email: 'chu.shuya@gmail.com', password: '123456', password_confirmation: '123456', 
-                       first_name: 'Shuya', middle_name: nil, last_name: 'Chu', type: 'Teacher', 
+                       first_name: 'Shuya', last_name: 'Chu', type: 'Teacher', 
                        remember_me_token: nil, remember_me_token_expires_at: nil)
 @t_yue   = User.create(email: 'yue.mengchao@gmail.com', password: '123456', password_confirmation: '123456', 
-                       first_name: 'Mengchao', middle_name: nil, last_name: 'Yue', type: 'Teacher', 
+                       first_name: 'Mengchao', last_name: 'Yue', type: 'Teacher', 
                        remember_me_token: nil, remember_me_token_expires_at: nil)
 
 Domain.delete_all
@@ -53,12 +53,12 @@ School.delete_all
 @s_uic = School.create(abbrev: 'UIC', full: 'University of Illinois at Chicago', region_id: @r_chgo.id)
 
 Student.delete_all
-@stu_gregg   = Student.create(first_name: 'Gregg', middle_name: nil, last_name: 'Smith', school_id: @s_jhu.id)
-@stu_cherry  = Student.create(first_name: 'Cherry', middle_name: nil, last_name: 'Minto', school_id: @s_jhu.id)
-@stu_maxwell = Student.create(first_name: 'Maxwell', middle_name: nil, last_name: 'MacPhaull', school_id: @s_jhu.id)
-@stu_trip    = Student.create(first_name: 'Trip', middle_name: nil, last_name: 'Pate', school_id: @s_ub.id)
-@stu_connor  = Student.create(first_name: 'Connor', middle_name: nil, last_name: 'Wightman', school_id: @s_ub.id)
-@stu_nikki   = Student.create(first_name: 'Nikki', middle_name: nil, last_name: 'Rafferty', school_id: @s_ub.id)
+@stu_gregg   = Student.create(first_name: 'Gregg', last_name: 'Smith', school_id: @s_jhu.id)
+@stu_cherry  = Student.create(first_name: 'Cherry', last_name: 'Minto', school_id: @s_jhu.id)
+@stu_maxwell = Student.create(first_name: 'Maxwell', last_name: 'MacPhaull', school_id: @s_jhu.id)
+@stu_trip    = Student.create(first_name: 'Trip', last_name: 'Pate', school_id: @s_ub.id)
+@stu_connor  = Student.create(first_name: 'Connor', last_name: 'Wightman', school_id: @s_ub.id)
+@stu_nikki   = Student.create(first_name: 'Nikki', last_name: 'Rafferty', school_id: @s_ub.id)
 
 Program.delete_all
 @p_1 = Program.create(school_id: @s_jhu.id,

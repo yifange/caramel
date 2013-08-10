@@ -8,7 +8,7 @@
   %table.table.table-bordered.table-striped{:style => 'clear: both'}
     %tr
       %th{:width => '13px'}
-      %th{:width => '290px'} Name
+      %th{:width => '310'} Name
       %th{:width => '280px'} Email
       %th Region
       %th
@@ -18,15 +18,12 @@
           %a
             %i.icon-remove
         %td
-          %a.x-editable-teacher-name{:href => "#"}
+          %a.x-editable-input-user-name{:href => "#", 'data-url' => "/teachers/#{teacher.id}", 'data-pk' => "#{teacher.id}"}
             = teacher.name
         %td
-          %a.x-editable-email{:href => '#'}
+          %a.x-editable-input-email{:href => '#', 'data-url' => "/teachers/#{teacher.id}", 'data-pk' => "#{teacher.id}"}
             = teacher.email
         %td
-          %a.select2-region{:href => '#'}
         %td
           %button.btn.btn-primary{'type' => 'button'}
             Reset Password
-          %button.btn.btn-primary{'type' => 'button', :herf => '#'}
-            New teacher

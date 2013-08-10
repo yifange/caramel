@@ -13,7 +13,7 @@ Caramel::Application.routes.draw do
   resources :students
 
   # staff
-  resources :staff
+  resources :staffs
 
   # teachers
   resources :teachers

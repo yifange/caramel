@@ -9,13 +9,27 @@ attachHandler = ->
   # })
 
   $('.x-editable-select2-multiple').editable({
-    source: [
-      {id: 'gb', text: 'Great Britain'},
-      {id: 'us', text: 'United States'},
-      {id: 'ru', text: 'Russia'}
-    ]
     select2: {
       multiple: true
+      # id: (item) ->
+      #   return item.CountryId
+      # ajax: {
+      #   url: '/getCountries'
+      #   dataType: 'json'
+      #   data: (term, page) ->
+      #     return { query: term }
+      #   results: (data, page) ->
+      #     return { results: data }
+      # }
+      # formatResult: (item) ->
+      #   return item.CountryName
+      # formatSelection: (item) ->
+      #   return item.CountryName
+      # initSelection: (element, callback) ->
+      #   return $.get('/getCountryById', { query: element.val() },
+      #   (data) ->
+      #     callback(data)
+      #   )
     }
     showbuttons: false
     type: 'select2'
@@ -73,7 +87,6 @@ attachHandler = ->
     type: 'text'
     placeholder: 'input program type'
   })
-
 
 $(document).ready attachHandler
 $(document).on "page:load", attachHandler

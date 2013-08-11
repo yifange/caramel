@@ -1,6 +1,6 @@
-class CreateCourseTypes < ActiveRecord::Migration
+class CreateProgramTypes < ActiveRecord::Migration
   def change
-    create_table :course_types do |t|
+    create_table :program_types do |t|
       t.string :abbrev
       t.string :full
 

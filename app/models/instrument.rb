@@ -2,8 +2,12 @@ class Instrument < ActiveRecord::Base
   has_many :programs
 
   def self.all_ordered
-    @instruments = Instrument.all.order("name ASC")
-    @instruments.map do |instrument| 
+    Instrument.all.order("name")
+  end
+
+  def self.all_ordered_json 
+    instruments = Instrument.all.order("name")
+    instruments.map do |instrument| 
       {:id => instrument.id, :text => instrument.name}
     end
   end

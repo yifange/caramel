@@ -11,6 +11,6 @@ class Region < ActiveRecord::Base
   end
 
   def self.all_ordered
-    regions = Region.all.order("name")
+    Region.all.order("name")
   end
 end

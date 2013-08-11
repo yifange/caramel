@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   protected
   def self.all_ordered(type)
-    users = User.where(:type => type).order("first_name")
+    User.where(:type => type).order("first_name")
   end
 
   private

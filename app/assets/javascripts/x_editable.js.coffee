@@ -53,54 +53,13 @@ attachHandler = ->
     type: 'user_name'
   })
 
-  # email
-  $('.x-editable-input-email').editable({
+  # text
+  $('.x-editable-input-text').editable({
     ajaxOptions: {
       type: 'PUT'
     }
-    name: 'email'
     type: 'text'
-    placeholder: 'input email'
   })
 
-  # region
-  $('.x-editable-input-region').editable({
-    ajaxOptions: {
-      type: 'PUT'
-    }
-    name: 'name'
-    type: 'text'
-    placeholder: 'input region name'
-  })
-
-  # instrument
-  $('.x-editable-input-instrument').editable({
-    ajaxOptions: {
-      type: 'PUT'
-    }
-    name: 'name'
-    type: 'text'
-    placeholder: 'input instrument name'
-  })
-
-  # program type
-  $('.x-editable-input-program-type').editable({
-    ajaxOptions: {
-      type: 'PUT'
-    }
-    name: 'name'
-    type: 'text'
-    placeholder: 'input program type name'
-  })
-
-  # school
-  $('.x-editable-input-schools').editable({
-    ajaxOptions: {
-      type: 'PUT'
-    }
-    name: 'name'
-    type: 'text'
-    placeholder: 'input school name'
-  })
 $(document).ready attachHandler
 $(document).on "page:load", attachHandler

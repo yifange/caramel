@@ -1,10 +1,10 @@
 class ProgramType < ActiveRecord::Base
 
+  validates_presence_of :full
+  validates :abbrev, :uniqueness => {:scope => :full}
+
   def self.all_ordered
-    @program_types = ProgramType.all.order("name ASC")
-    @program_types.map do |program_type| 
-      {:id => program_type.id, :text => program_type.name}
-    end
+    ProgramType.all.order("full")
   end
 
 end

@@ -3,9 +3,9 @@ Instrument.create(name: 'piano')
 Instrument.create(name: 'guitar')
 Instrument.create(name: 'violin')
 
-CourseType.delete_all
-CourseType.create(abbrev: 'IND', full: 'individual')
-CourseType.create(abbrev: 'POD', full: 'pod program')
+ProgramType.delete_all
+ProgramType.create(abbrev: 'IND', full: 'individual')
+ProgramType.create(abbrev: 'POD', full: 'pod program')
 
 Region.delete_all
 @r_wdc  = Region.create(name: 'Washington DC')
@@ -63,22 +63,22 @@ Student.delete_all
 Program.delete_all
 @p_1 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'piano').first.id,
-               course_type_id: CourseType.where(full: 'individual').first.id,
+               course_type_id: ProgramType.where(full: 'individual').first.id,
                regular_courses_per_year: 120,
                group_courses_per_year: 40)
 @p_2 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'guitar').first.id,
-               course_type_id: CourseType.where(full: 'individual').first.id,
+               course_type_id: ProgramType.where(full: 'individual').first.id,
                regular_courses_per_year: 120,
                group_courses_per_year: 30)
 @p_3 = Program.create(school_id: @s_ub.id,
                instrument_id: Instrument.where(name: 'guitar').first.id,
-               course_type_id: CourseType.where(full: 'individual').first.id,
+               course_type_id: ProgramType.where(full: 'individual').first.id,
                regular_courses_per_year: 120,
                group_courses_per_year: 50)
 @p_4 = Program.create(school_id: @s_ub.id,
                instrument_id: Instrument.where(name: 'violin').first.id,
-               course_type_id: CourseType.where(full: 'individual').first.id,
+               course_type_id: ProgramType.where(full: 'individual').first.id,
                regular_courses_per_year: 100,
                group_courses_per_year: 50)
 

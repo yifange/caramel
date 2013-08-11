@@ -1,6 +1,6 @@
 class InstrumentsController < ApplicationController
 
-  respond_to :html
+  respond_to :html, :json
 
   def update
     @instrument = Instrument.find(params[:pk])
@@ -11,6 +11,7 @@ class InstrumentsController < ApplicationController
 
   def index
     @instruments = Instrument.all_ordered
+    respond_with(Instrument.all_ordered_json)
   end
 
   private

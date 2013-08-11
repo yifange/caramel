@@ -1,6 +1,6 @@
 class ProgramTypesController < ApplicationController
 
-  respond_to :html
+  respond_to :html, :json
 
   def update
     @program_type = ProgramType.find(params[:pk])
@@ -11,6 +11,7 @@ class ProgramTypesController < ApplicationController
 
   def index
     @program_types = ProgramType.all_ordered
+    respond_with(ProgramType.all_ordered_json)
   end
 
   private

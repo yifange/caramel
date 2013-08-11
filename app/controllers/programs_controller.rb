@@ -27,11 +27,13 @@ class ProgramsController < ApplicationController
 
   def update
     @program = Program.find(params[:id])
-    if @program.update_attributes(program_params)
-      redirect_to programs_path
+    if params[:name] == 'number'
+      @program.update_attributes(program_params)
     else
-      render :edit
+      params[:value] = {params[:name] => params[:value]}
+      @program.update_attributes(program_params)
     end
+    render nothing: true
   end
 
   def destroy
@@ -42,6 +44,6 @@ class ProgramsController < ApplicationController
 
 private
   def program_params
-    params.require(:program).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
+    params.require(:value).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
   end
 end

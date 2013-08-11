@@ -53,6 +53,15 @@ attachHandler = ->
     type: 'user_name'
   })
 
+  # user_name
+  $('.x-editable-input-number').editable({
+    ajaxOptions: {
+      type: 'PUT'
+    }
+    name: 'number'
+    type: 'number'
+  })
+
   # text
   $('.x-editable-input-text').editable({
     ajaxOptions: {

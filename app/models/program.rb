@@ -16,5 +16,7 @@ class Program < ActiveRecord::Base
   end
   def end_date
     term.end_date
+  def regular_group_course
+    "#{regular_courses_per_year}" + " / " + "#{group_courses_per_year}"
   end
 end

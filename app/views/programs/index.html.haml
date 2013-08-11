@@ -1,0 +1,49 @@
+- content_for :title do
+  programs/programs
+
+- content_for :sidemenu do
+  - render '/layouts/programs_page_sidebar'
+
+- content_for :main do
+  %ul.nav.nav-tabs
+    - i = 0
+    - @schools.each do |school|
+      %li{:class => (i == 0 ? 'active' : nil)}
+        %a.tab-hover{:href => "#tab#{school.id}", "data-toggle" => "tab", :title => "#{school.full}"}
+          = school.abbrev
+      - i += 1
+  .tab-content
+    - i = 0
+    - @schools.each do |school|
+      .tab-pane{:class => (i == 0 ? 'active' : nil), :id => "tab#{school.id}"}
+        %table.table.table-bordered.table-striped{:style => 'clear: both'}
+          %tr
+            %th INSTRUMENT
+            %th PROGRAM TYPE
+            %th REGULAR / GROUP CLASS PER YEAR
+            %th 
+          - school.programs.each do |program|
+            %tr
+              %td
+                %a.x-editable-select2-singular{:href => '#', 'data-source' => '/instruments','data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}", 'data-name' => 'instrument_id'}
+                  = Instrument.find(program.instrument_id).name
+              %td
+                %a.x-editable-select2-singular{:href => '#', 'data-source' => '/program_types','data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}", 'data-name' => 'program_type_id'}
+                  = ProgramType.find(program.program_type_id).full
+              %td
+                %a.x-editable-input-number{:href => '#', 'data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}"}
+                  = program.regular_group_course
+              %td
+                .accordion-group
+                  .accordion-heading
+                    %button.btn.accordion-toggle{'data-toggle'=>"collapse", :href=>"#collapse#{program.id}"}
+                      Detail
+                      %span.caret
+            %tr
+              .accordion-body.collapse{:id => "collapse#{program.id}"}
+                .accordion-inner
+                  %td
+                    Anim pariatur cliche...
+
+      - i += 1
+  -# = modal_for "new-program", :modal_title => "New Program"

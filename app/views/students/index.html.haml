@@ -1,0 +1,19 @@
+- content_for :title do
+  people/students
+
+- content_for :sidemenu do
+  - render '/layouts/people_page_sidebar'
+  
+- content_for :main do
+  %table.table.table-bordered.table-striped{:style => 'clear: both'}
+    %tr
+      %th{:width => '13px'}
+      %th Name
+    - @students.each do |student|
+      %tr
+        %td
+          %a
+            %i.icon-remove
+        %td
+          %a.x-editable-input-user-name{:href => "#", 'data-url' => "/students/#{student.id}", 'data-pk' => "#{student.id}"}
+            = student.name

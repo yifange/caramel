@@ -9,5 +9,7 @@ class School < ActiveRecord::Base
       teachers += program.teachers
     end
     teachers.uniq
+  def self.all_ordered
+    School.all.order("full")
   end
 end

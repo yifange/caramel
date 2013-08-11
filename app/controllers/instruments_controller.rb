@@ -1,6 +1,7 @@
 class InstrumentsController < ApplicationController
 
   respond_to :html, :json
+
   def show 
 
   end
@@ -15,7 +16,7 @@ class InstrumentsController < ApplicationController
 
   def remove
 
-
+  end
 
   def update
     @instrument = Instrument.find(params[:pk])

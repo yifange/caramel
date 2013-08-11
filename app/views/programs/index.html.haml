@@ -29,7 +29,7 @@
                   = Instrument.find(program.instrument_id).name
               %td
                 %a.x-editable-select2-singular{:href => '#', 'data-source' => '/program_types','data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}", 'data-name' => 'program_type_id'}
-                  = ProgramType.find(program.program_type_id).full
+                  = ProgramType.find(program.program_type_id).name
               %td
                 %a.x-editable-input-number{:href => '#', 'data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}"}
                   = program.regular_group_course

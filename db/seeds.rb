@@ -90,11 +90,6 @@ Domain.create(user_id: @t_yue.id, region_id: @r_bal.id)
 @s_uc  = School.create(abbrev: 'UC', full: 'University of Chicago', region_id: @r_chgo.id)
 @s_uic = School.create(abbrev: 'UIC', full: 'University of Illinois at Chicago', region_id: @r_chgo.id)
 
-<<<<<<< HEAD
-@p_1 = Program.create(school_id: @s_jhu.id,
-               instrument_id: Instrument.where(name: 'piano').first.id,
-               program_type_id: ProgramType.where(name: 'IND').first.id,
-=======
 Student.delete_all
 @stu_gregg   = Student.create(first_name: 'Gregg', last_name: 'Smith', school_id: @s_jhu.id)
 @stu_cherry  = Student.create(first_name: 'Cherry', last_name: 'Minto', school_id: @s_jhu.id)
@@ -106,35 +101,22 @@ Student.delete_all
 Program.delete_all
 @p_1 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'piano').first.id,
-               program_type_id: ProgramType.where(full: 'individual').first.id,
->>>>>>> origin/Jinqiu
+               program_type_id: ProgramType.where(name: 'IND').first.id,
                regular_courses_per_year: 120,
                group_courses_per_year: 40)
 @p_2 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'guitar').first.id,
-<<<<<<< HEAD
                program_type_id: ProgramType.where(name: 'IND').first.id,
-=======
-               program_type_id: ProgramType.where(full: 'individual').first.id,
->>>>>>> origin/Jinqiu
                regular_courses_per_year: 120,
                group_courses_per_year: 30)
 @p_3 = Program.create(school_id: @s_ub.id,
                instrument_id: Instrument.where(name: 'guitar').first.id,
-<<<<<<< HEAD
                program_type_id: ProgramType.where(name: 'IND').first.id,
-=======
-               program_type_id: ProgramType.where(full: 'individual').first.id,
->>>>>>> origin/Jinqiu
                regular_courses_per_year: 120,
                group_courses_per_year: 50)
 @p_4 = Program.create(school_id: @s_ub.id,
                instrument_id: Instrument.where(name: 'violin').first.id,
-<<<<<<< HEAD
                program_type_id: ProgramType.where(name: 'IND').first.id,
-=======
-               program_type_id: ProgramType.where(full: 'individual').first.id,
->>>>>>> origin/Jinqiu
                regular_courses_per_year: 100,
                group_courses_per_year: 50)
 

@@ -22,15 +22,15 @@ class ProgramsPageController < ApplicationController
     render :text => "Save Instrument Successully!"
   end
 
-  def get_course_types
-    @course_types = CourseType.all
-    @results = @course_types.map { |course_type| {:id => course_type.id, :text => course_type.abbrev}}
+  def get_program_types
+    @program_types = CourseType.all
+    @results = @program_types.map { |program_type| {:id => program_type.id, :text => program_type.abbrev}}
     render :json => @results
   end
 
-  def save_course_type
+  def save_program_type
     @program = Program.find(params[:pk])
-    @program.update_attributes(:course_type_id => params[:value])
+    @program.update_attributes(:program_type_id => params[:value])
     render :text => "Save Course Type Successully!"
   end
 
@@ -164,6 +164,6 @@ class ProgramsPageController < ApplicationController
 
 private
   def program_params
-    params.require(:program).permit(:school_id, :instrument_id, :course_type_id, :regular_courses_per_year, :group_courses_per_year)
+    params.require(:program).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
   end
 end

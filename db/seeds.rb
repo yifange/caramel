@@ -63,22 +63,22 @@ Student.delete_all
 Program.delete_all
 @p_1 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'piano').first.id,
-               course_type_id: ProgramType.where(full: 'individual').first.id,
+               program_type_id: ProgramType.where(full: 'individual').first.id,
                regular_courses_per_year: 120,
                group_courses_per_year: 40)
 @p_2 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'guitar').first.id,
-               course_type_id: ProgramType.where(full: 'individual').first.id,
+               program_type_id: ProgramType.where(full: 'individual').first.id,
                regular_courses_per_year: 120,
                group_courses_per_year: 30)
 @p_3 = Program.create(school_id: @s_ub.id,
                instrument_id: Instrument.where(name: 'guitar').first.id,
-               course_type_id: ProgramType.where(full: 'individual').first.id,
+               program_type_id: ProgramType.where(full: 'individual').first.id,
                regular_courses_per_year: 120,
                group_courses_per_year: 50)
 @p_4 = Program.create(school_id: @s_ub.id,
                instrument_id: Instrument.where(name: 'violin').first.id,
-               course_type_id: ProgramType.where(full: 'individual').first.id,
+               program_type_id: ProgramType.where(full: 'individual').first.id,
                regular_courses_per_year: 100,
                group_courses_per_year: 50)
 

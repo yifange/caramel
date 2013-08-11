@@ -1,18 +1,30 @@
-%h1 Programs
-%table 
-  %tr
-    %td School
-    %td Instrument
-    %td Course Type
-    %td Regular Courses Per Year
-    %td Group Courses Per Year
-  - @programs.each do |program|
+- content_for :title do
+  programs/programs
+
+- content_for :sidemenu do
+  - render '/layouts/programs_page_sidebar'
+
+- content_for :main do
+  %ul.nav.nav-tabs
+    - i = 0
+    - @schools.each do |school|
+      %li{:class => (i == 0 ? 'active' : nil)}
+        %a.tab-hover{:href => "#tab-#{school.id}", "data-toggle" => "tab", :title => "#{school.full}"}
+          = school.abbrev
+      - i += 1
+  %table.table.table-bordered.table-striped{:style => 'clear: both'}
     %tr
-      %td= program.school.full
-      %td= program.instrument.name
-      %td= program.course_type.full
-      %td= program.regular_courses_per_year
-      %td= program.group_courses_per_year
-      %td= link_to('edit', edit_program_path(program))
-      %td= link_to('delet', program, :method => :delete, :data => {:confirm => "Are you sure?"})
-= link_to('Add A New Program', new_program_path)
+      %th INSTRUMENT
+      %th PROGRAM TYPE
+      %th REGULAR CLASS PER YEAR
+      %th GROUP CLASS PER YEAR
+    .tab-content
+      .tab-pane{:class => (i == 0 ? 'active' : nil)}
+      %tr
+        %td
+          1
+        %td
+        %td
+        %td
+
+  -# = modal_for "new-program", :modal_title => "New Program"

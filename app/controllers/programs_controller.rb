@@ -1,6 +1,6 @@
 class ProgramsController < ApplicationController
   def index
-    @programs = Program.all
+    @schools = School.all
   end
 
   def new
@@ -42,6 +42,6 @@ class ProgramsController < ApplicationController
 
 private
   def program_params
-    params.require(:program).permit(:school_id, :instrument_id, :course_type_id, :regular_courses_per_year, :group_courses_per_year)
+    params.require(:program).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
   end
 end

@@ -15,7 +15,7 @@ class CoursesController < ApplicationController
       @programs = Teacher.find(current_user[:id]).programs.order("school_id ASC")
     end
     @program = (@programs.find_by :id => params[:program_id]) || @programs.first
-    @program_id = @program[:id]
+    @program_id = @program[:id] if @program
     school_id = @program.school[:id]
     @courses = rehash_objs(Course.where(:program_id => @program_id))
     @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))

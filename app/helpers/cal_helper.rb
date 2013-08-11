@@ -58,15 +58,29 @@ module CalHelper
       @date = Date.new(@year, @month)
       @today = Date.today
       @day_of_week = ["Su", "M", "Tu", "W", "Th", "F", "Sa"]
+      @program = options[:program]
+      @program_id = @program[:id] if @program
+      @background_calendar = options[:background_calendar]
+      @term_id = options[:term_id]
     end
+    # def draw_calendar
+    #   content = "".html_safe
+    #   content.concat(draw_calendar_nav)
+    #   content.concat(draw_calendar_header)
+    #   @objects.each do |program, program_detail|
+    #     program_detail.each do |enrollment, enrollment_detail|
+    #       content.concat(draw_calendar_row_for_enrollment(enrollment, enrollment_detail[0], enrollment_detail[1]))
+    #     end
+    #   end
+    #   content_tag :table, content
+    # end
     def draw_calendar
       content = "".html_safe
       content.concat(draw_calendar_nav)
       content.concat(draw_calendar_header)
-      @objects.each do |program, program_detail|
-        program_detail.each do |enrollment, enrollment_detail|
-          content.concat(draw_calendar_row_for_enrollment(enrollment, enrollment_detail[0], enrollment_detail[1]))
-        end
+
+      @objects.each do |enrollment, enrollment_detail|
+        content.concat(draw_calendar_row_for_enrollment(enrollment, enrollment_detail[0], enrollment_detail[1]))
       end
       content_tag :table, content
     end
@@ -75,7 +89,9 @@ module CalHelper
       today_link = link_to nil, {:year => @today.year, :month => @today.month}, :id => "cal-nav-today"
       next_link = link_to nil, {:year => @date.next_month.year, :month => @date.next_month.month}, :id => "cal-nav-next"
       current_text = content_tag :span, @date.strftime("%Y %B"), :id => "cal-nav-title"
-      nav = prev_link.concat(today_link).concat(next_link).concat(current_text)
+      program_id = content_tag :span, @program.id, :id => "cal-nav-program-id" if @program
+      program_name = content_tag :span, @program.school.full + ", " + @program.program_type.name + ", " + @program.instrument.name, :id => "cal-nav-program-name" if @program
+      nav = prev_link.concat(today_link).concat(next_link).concat(current_text).concat(program_id).concat(program_name)
       content_tag :div, nav, :id => "cal-nav", :style => "display: none"
     end
     def draw_calendar_header
@@ -94,35 +110,40 @@ module CalHelper
     end
 
     def draw_calendar_row_for_enrollment(enrollment, attendance_hash, roster_hash)
-      buf = "".html_safe
+      # return debug attendance_hash
+      regular_row = "".html_safe
+      group_row = "".html_safe
       student = enrollment.student
       program = enrollment.program
       # XXX the summary text for the enrollment
       text = student.first_name
-      buf.concat(content_tag :td, text, :class => "fmc-cal-enrollment-text")
+      regular_row.concat(content_tag :td, text, :class => "fmc-cal-enrollment-text", :rowspan => 2)
       for day in @date.beginning_of_month .. @date.end_of_month
         marking = ""
         grid_text = ""
-        if attendance_hash.has_key? day
-          marking = attendance_hash[day].attendance_marking.abbrev
-          grid_text = attendance_hash[day].attendance_marking.abbrev
+        if attendance_hash[:regular].has_key? day
+          marking = attendance_hash[:regular][day].attendance_marking.abbrev
+          grid_text = attendance_hash[:regular][day].attendance_marking.abbrev
         end
-        # XXX group class on the day?
         rosters_regular = roster_hash[day.wday] || []
-        rosters_group = roster_hash[day] || []
-        regular_roster_ids = rosters_regular.map {|r| r.id}
-        group_roster_ids = rosters_group.map {|r| r.id}
-        # XXX regular class on the day? Need to constrain the date range 
-        class_type = "" 
-        unless regular_roster_ids.empty? or group_roster_ids.empty?
-          class_type = "mix-class-day class-day"
-        else
-          class_type = "regular-class-day class-day" unless regular_roster_ids.empty?
-          class_type = "group-class-day class-day" unless group_roster_ids.empty?
+        rosters_regular.select! do |roster|
+          course = roster.course
+          available = false 
+          @background_calendar.where(:date => day, :term_id => @term_id).each do |cal|
+            if cal.start_time <= course.start_time and course.end_time <= cal.end_time
+              available = true
+              break
+            end
+          end
+          available
         end
+        regular_roster_ids = rosters_regular.map {|r| r.id}
+        # XXX regular class on the day? Need to constrain the date range 
+        class_type = "fmc-grid" 
+        class_type << " regular-class-day class-day" unless regular_roster_ids.empty?
 
-        roster_id = (regular_roster_ids + group_roster_ids).first
-        roster = (rosters_regular + rosters_group).first
+        roster_id = regular_roster_ids.first
+        roster = rosters_regular.first
         time_title = nil
         link_class = "fmc-grid-link"
         if roster
@@ -132,14 +153,47 @@ module CalHelper
           link_class << " class-day"
         end
         
-        if attendance_hash.has_key? day
-          grid_link = link_to grid_text, edit_attendance_path(attendance_hash[day].id, :enrollment_id => enrollment.id), :class => link_class, :data => {:toggle => "tooltip"}, :title => time_title
+        if attendance_hash[:regular].has_key? day
+          grid_link = link_to grid_text, edit_attendance_path(attendance_hash[:regular][day].id, :enrollment_id => enrollment.id), :class => link_class, :data => {:toggle => "tooltip", "attendance-id" => attendance_hash[:regular][day].id}, :title => time_title
         else
           grid_link = link_to grid_text, {:controller => :attendances, :action => :new, :enrollment_id => enrollment.id, :roster_id => roster_id, :date => day}, :class => link_class, :data => {:toggle => "tooltip"}, :title => time_title
         end
-        buf.concat(content_tag :td, grid_link, :class => marking + " " + class_type, :data => {:regular => regular_roster_ids, :group => group_roster_ids})
+        regular_row.concat(content_tag :td, grid_link, :class => marking + " " + class_type, :data => {:regular => regular_roster_ids})
       end
-      content_tag :tr, buf
+      
+      for day in @date.beginning_of_month .. @date.end_of_month
+        marking = ""
+        grid_text = ""
+        if attendance_hash[:group].has_key? day
+          marking = attendance_hash[:group][day].attendance_marking.abbrev
+          grid_text = attendance_hash[:group][day].attendance_marking.abbrev
+        end
+        # XXX group class on the day?
+        rosters_group = roster_hash[day] || []
+        group_roster_ids = rosters_group.map {|r| r.id}
+        # XXX regular class on the day? Need to constrain the date range 
+        class_type = "fmc-grid" 
+        class_type << " group-class-day class-day" unless group_roster_ids.empty?
+
+        roster_id = group_roster_ids.first
+        roster = rosters_group.first
+        time_title = nil
+        link_class = "fmc-grid-link"
+        if roster
+          start_time = roster.start_time.strftime("%H:%M")
+          end_time = roster.end_time.strftime("%H:%M")
+          time_title = start_time + "-" + end_time
+          link_class << " class-day"
+        end
+        
+        if attendance_hash[:group].has_key? day
+          grid_link = link_to grid_text, edit_attendance_path(attendance_hash[:group][day].id, :enrollment_id => enrollment.id), :class => link_class, :data => {:toggle => "tooltip", "attendance-id " => attendance_hash[:group][day].id}, :title => time_title
+        else
+          grid_link = link_to grid_text, {:controller => :attendances, :action => :new, :enrollment_id => enrollment.id, :roster_id => roster_id, :date => day}, :class => link_class, :data => {:toggle => "tooltip"}, :title => time_title
+        end
+        group_row.concat(content_tag :td, grid_link, :class => marking + " " + class_type, :data => {:group => group_roster_ids})
+      end
+      (content_tag :tr, regular_row).concat(content_tag :tr, group_row)
     end
   end
 

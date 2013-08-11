@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  enrollment_id: 
+  date: 2013-07-08
+  attendence_marking_id: 
+
+two:
+  enrollment_id: 
+  date: 2013-07-08
+  attendence_marking_id: 

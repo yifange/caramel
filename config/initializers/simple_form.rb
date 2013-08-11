@@ -1,4 +1,5 @@
 # Use this setup block to configure all options available in SimpleForm.
+require 'simple_form_extensions'
 SimpleForm.setup do |config|
   # Components used by the form builder to generate a complete input. You can remove
   # any of them, change the order, or even add your own components to the stack.
@@ -57,6 +58,8 @@ SimpleForm.setup do |config|
 
   # You can define the class to use on all forms. Default is simple_form.
   # config.form_class = 'simple_form form-horizontal'
+  # config.label_class = nil
+
 
   # Whether attributes are required by default (or not). Default is true.
   # config.required_by_default = true

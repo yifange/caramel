@@ -1,0 +1,32 @@
+= content_for :title do
+  people
+
+= content_for :sidemenu do
+  = render 'people_page/sidebar'
+
+= content_for :main do
+  %table.table.table-bordered.table-striped{:style => 'clear: both'}
+    %tr
+      %th{:width => '13px'}
+      %th{:width => '290px'} Name
+      %th{:width => '280px'} Email
+      %th Region
+      %th
+    -@staffs.each do |staff|
+      %tr
+        %td
+          %a
+            %i.icon-remove
+        %td
+          %a.x-editable-staff-name{:href => "#"}
+            = staff.name
+        %td
+          %a.x-editable-email{:href => '#'}
+            = staff.email
+        %td
+          %a.select2-region{:href => '#'}
+        %td
+          %button.btn.btn-primary{'type' => 'button'}
+            Reset Password
+  %button.btn.btn-primary{'type' => 'button', :herf => '#'}
+    New Staff

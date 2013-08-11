@@ -1,60 +1,85 @@
-Cal::Application.routes.draw do
+Caramel::Application.routes.draw do
   get 'calendars/week' => 'calendars#index_week', :as => :calendar_week
   get 'lunchpads/api' => 'lunchpads#api'
   post 'lunchpads/lunch' => 'lunchpads#lunch'
   resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+	root 'session_page#signin'
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  get 'session_page/signin' => 'session_page#signin'
+  get 'session_page/verify' => 'session_page#verify'
+  get 'session_page/signout' => 'session_page#signout'
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+  get 'people_page/staff' => 'people_page#staff'
+  get 'people_page/staff' => 'people_page#teachers'
+  get 'people_page/staff' => 'people_page#students'
 
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  get 'programs_page/regions' => 'programs_page#regions'
+  get 'programs_page/instrument_types' => 'programs_page#instrument_types'
+  get 'programs_page/program_types' => 'programs_page#program_types'
+  get 'programs_page/schools' => 'programs_page#schools'
+  get 'programs_page/programs' => 'programs_page#programs'
 
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
 
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
+  # instruments
+  resources :instruments, only: [:index, :show, :create, :update, :destroy] do
+    collection do
+      delete 'remove'
+    end
+  end
+  delete '/instruments', to: redirect('/instruments/remove')
 
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
+  # students
+  resources :students, only: [:index, :show, :create, :update, :destroy] do
+    collection do
+      delete 'remove'
+    end
+  end
+  delete '/students', to: redirect('/students/remove')
 
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-  
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
+  # staff
+  resources :staff, only: [:index, :show, :create, :update, :destroy] do
+    collection do
+      delete 'remove'
+    end
+  end
+  delete '/staffs', to: redirect('/staffs/remove')
 
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
+  # teachers
+  resources :teachers, only: [:index, :show, :create, :update, :destroy] do
+    collection do
+      delete 'remove'
+    end
+  end
+  delete '/teachers', to: redirect('/teachers/remove')
+
+  # regions
+  resources :regions, only: [:index, :show, :create, :update, :destroy] do
+    collection do
+      delete 'remove'
+    end
+  end
+  delete '/regions', to: redirect('/regions/remove')
+
+  # programs
+  resources :programs, only: [:index, :show, :create, :update, :destroy] do
+    collection do
+      delete 'remove'
+    end
+  end
+  delete '/programs', to: redirect('/programs/remove')
+
+  # teachers of a program
+  resources :programs do
+      resources :teachers, only: [:index, :update]
+  end
+
+  # programs of a teacher  
+  resources :teachers do
+      resources :programs, only: [:index]
+  end
+
+  # instruments of a program  
+  resources :programs do
+      resources :instruments, only: [:show, :update]
+  end
 end

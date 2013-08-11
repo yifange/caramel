@@ -5,8 +5,8 @@ class CreatePrograms < ActiveRecord::Migration
       t.references :instrument, index: true
       t.references :program_type, index: true
       t.references :term, index: true
-      t.integer :annual_regular_total
-      t.string :annaul_group_total
+      t.integer :regular_courses_per_year
+      t.string :group_courses_per_year
 
       t.timestamps
     end

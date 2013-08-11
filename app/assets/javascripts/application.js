@@ -19,4 +19,3 @@
 //= require select2
 //= require bootstrap-editable
 //= require_tree .
-//

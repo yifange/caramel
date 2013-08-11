@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Cal::Application.load_tasks
+Caramel::Application.load_tasks

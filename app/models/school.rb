@@ -1,5 +1,8 @@
 class School < ActiveRecord::Base
   has_many :programs
+  validates_presence_of :abbrev, :full, :region
+  validates :abbrev, :uniqueness => {:scope => :full}
+  belongs_to :region
   def teachers
     teachers = []
     programs.each do |program|

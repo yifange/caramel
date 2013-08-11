@@ -10,6 +10,11 @@ en:
       # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: "Some errors were found, please take a look:"
+    creating: "Creating..."
+    updating: 'Updating...'
+    buttons:
+      or: 'or'
+      cancel: 'cancel'
     # Labels and hints examples
     # labels:
     #   password: 'Password'
@@ -21,4 +26,3 @@ en:
     # hints:
     #   username: 'User name to sign in.'
     #   password: 'No special characters, please.'
-

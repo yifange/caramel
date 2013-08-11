@@ -1,0 +1,10 @@
+%h1 Instruments
+%table
+  %tr
+    %td Name
+  - @instruments.each do |instrument|
+    %tr
+      %td= instrument.name
+      %td= link_to('edit', edit_instrument_path(instrument))
+      %td= link_to('delete', instrument, :method => :delete, :data => {:confirm => "Are you sure?"})
+= link_to('Add An Instrument', new_instrument_path)

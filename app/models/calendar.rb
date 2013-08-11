@@ -1,5 +1,6 @@
 class Calendar < ActiveRecord::Base
   attr_accessor :recurring
+  belongs_to :calendar_marking
   belongs_to :school
   belongs_to :term
   validate :start_time_cannot_after_end_time, :start_time_and_end_time_must_in_school_hour, :events_cannot_overlap

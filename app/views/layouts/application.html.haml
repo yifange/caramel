@@ -1,0 +1,39 @@
+!!!
+%html
+  %head
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1"}
+    %title= content_for?(:title) ? yield(:title) : "App_Name"
+    = stylesheet_link_tag :application, :media => "all"
+    = javascript_include_tag :application
+    = csrf_meta_tags
+  %body
+    .navbar.navbar-inverse
+      .navbar-inner
+        .brand Musikids Class Attendance
+        %ul.nav
+          = active_link_partialpath 'PEOPLE', '/people_page/staff'
+          = active_link_partialpath 'PROGRAMS', '/programs_page/regions'
+          = active_link_partialpath 'CLASSES', '/classes_page/calendar'
+          = active_link_partialpath 'INSTRUMENTS','/instruments_page/index'
+          %li.dropdown
+            %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => ''}
+              SEMESTER
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                %a{:href => ''} Semester One
+              %li
+                %a{:href => ''} Semester Two
+        .pull-right
+          %a.brand#nav-right
+            %i.icon-user.icon-white
+            = current_user.name
+          %ul.nav
+            %li
+              %a{:href => '/session_page/signout'} Sign out
+    .container-fluid
+      .row-fluid
+        .span2.content
+          = yield(:sidemenu)
+        .span10.content
+          = yield(:main)

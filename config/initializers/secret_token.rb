@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Cal::Application.config.secret_key_base = '0c74cbaf7ae949e96d65a432b87dea38b8526b0dfe2032195f722d88266ae17321244eef623b970c1552931026647493125b7000f4f92c083f632efcbda6ccf9'
+Caramel::Application.config.secret_key_base = '25bb4f8b0b27d53cd509dd8cecdff1e358502b6c1dd7f192341288820e03705a21a868baa18892203414b787017859a15054add8e03a07d1d42db8fe267359ff'

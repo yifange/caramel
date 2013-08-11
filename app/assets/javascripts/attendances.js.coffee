@@ -50,8 +50,10 @@ attachSubmitHandler = ->
       data: $form.serialize(),
       success: (data, status) ->
         $("#attendance-modal").modal("toggle")
-        $(".fmc-container").html($(data).find(".fmc-container").html())
-        attachAttendanceGridHandler()
+        $.get(document.URL, (data, status) ->
+          $(".fmc-container").html($(data).find(".fmc-container").html())
+          attachAttendanceGridHandler()
+        )
       error: (data, status) ->
         $("#attendance-modal-body").html($(data.responseText).find("#attendance-form-body").html())
     })

@@ -4,8 +4,9 @@ class CreateCourses < ActiveRecord::Migration
       t.references :program, index: true
       t.time :start_time
       t.time :end_time
-      t.string :day_of_week
+      t.integer :day_of_week
       t.date :date
+      t.string :course_type
 
       t.timestamps
     end

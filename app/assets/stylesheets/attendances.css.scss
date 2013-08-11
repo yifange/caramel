@@ -1,0 +1,43 @@
+// Place all the styles related to the attendances controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.fmc-container {
+  padding-top: 50px;
+  table {
+    table-layout: fixed;
+    text-align: center;
+    a.fmc-grid-link {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    td {
+      border: 1px solid #DFDFDF;
+      width: 0.5em;
+      height: 0.5em;
+      padding: 3px;
+    }
+    td.fmc-grid {
+      height: 1.3em;
+    }
+    .fmc-cal-header-blank {
+      width: 7%;
+    }
+    .fmc-cal-header-wday {
+      width: 3%;
+      font-weight: bold;
+    }
+    td.regular-class-day {
+      background-color: #CC1100;
+    }
+    td.group-class-day {
+      background-color: #22DD00;
+    }
+    td.mix-class-day {
+      background-color: #1122EE;
+    }
+  }
+
+
+}
+

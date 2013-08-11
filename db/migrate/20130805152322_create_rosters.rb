@@ -3,8 +3,9 @@ class CreateRosters < ActiveRecord::Migration
     create_table :rosters do |t|
       t.references :student, index: true
       t.references :course, index: true
-      t.integer :start_date
-      t.integer :end_date
+      t.date :start_date
+      t.date :end_date
+      t.references :enrollment, index: true
 
       t.timestamps
     end

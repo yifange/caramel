@@ -23,7 +23,7 @@ class ProgramsPageController < ApplicationController
   end
 
   def get_program_types
-    @program_types = CourseType.all
+    @program_types = ProgramType.all
     @results = @program_types.map { |program_type| {:id => program_type.id, :text => program_type.abbrev}}
     render :json => @results
   end
@@ -76,19 +76,6 @@ class ProgramsPageController < ApplicationController
   end
   
   def save_teachers
-# <<<<<<< HEAD
-#     @values = params[:value].split(',')
-#     puts params[:value]
-#     @assignments = Assignment.where(:program_id => params[:pk])
-#     @assignments.each do |assignment|
-#       @values.each do |val|
-#         v = val.to_i
-#         if assignment.teacher_id == v # assignment already exists
-#           @values.delete(val)
-#           @assignments.delete(assignment)
-#         end
-#       end
-# =======
     new_ids = params[:value].split(",").map(&:to_i)
     old_ids = Assignment.where(:program_id => params[:pk]).map {|a| a.teacher_id}
     (old_ids - new_ids).each do |id|
@@ -96,7 +83,6 @@ class ProgramsPageController < ApplicationController
     end
     (new_ids - old_ids).each do |id|
       Assignment.create(:program_id => params[:pk], :teacher_id => id)
-# >>>>>>> origin/latte
     end
     render :text => "Save Teachers Successfully!"
   end

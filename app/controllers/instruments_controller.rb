@@ -1,6 +1,21 @@
 class InstrumentsController < ApplicationController
 
   respond_to :html, :json
+  def show 
+
+  end
+
+  def create 
+
+  end
+
+  def destroy 
+
+  end
+
+  def remove
+
+
 
   def update
     @instrument = Instrument.find(params[:pk])

@@ -1,0 +1,23 @@
+.navbar.navbar-fixed-top
+  .navbar-inner
+    %ul.nav.nav-pills.unselectable
+      %li
+        %a#subnav-today{:href => "#"}
+          now
+      %li
+        %a#subnav-prev{:href => "#"}
+          <
+      %li
+        %a#subnav-next{:href => "#"}
+          >
+      %li
+        %span.navbar-text#subnav-text
+    %ul.nav.nav-pills.pull-right.unselectable
+      = nav_filter_for "program", @programs, :base_url => "/courses", :year => params[:year], :month => params[:month], :day => params[:day] do |program|
+        = (content_tag :p, program.school.full, :class => "dropdown-item-school-name").concat(content_tag :p, program.program_type.name + ", " + program.instrument.name, :class => "dropdown-item-program")
+
+= weekly_calendar_for @courses, :year => @year.to_i, :month => @month.to_i, :day => @day.to_i, :category_method => :group, :calendar_name => "course", :program => @program, :background_calendar => @calendars do |c|
+  = c.draw_weekly_calendar_nav
+  = c.draw_weekly_calendar_body
+
+= modal_for "course", :delete_button => true

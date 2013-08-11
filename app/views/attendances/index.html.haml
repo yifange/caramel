@@ -1,0 +1,28 @@
+.navbar.navbar-fixed-top
+  .navbar-inner
+    %ul.nav.nav-pills.unselectable
+      %li
+        %a#subnav-today{:href => "#"}
+          now
+      %li
+        %a#subnav-prev{:href => "#"}
+          <
+      %li
+        %a#subnav-next{:href => "#"}
+          >
+      %li
+        %p.navbar-text#subnav-text
+    %ul.nav.nav-pills.pull-right.unselectable
+      = nav_filter_for "program", @programs, :base_url => "/attendances", :year => params[:year], :month => params[:month] do |program|
+        = (content_tag :p, program.school.full, :class => "dropdown-item-school-name").concat(content_tag :p, program.program_type.name + ", " + program.instrument.name, :class => "dropdown-item-program")
+      -# %li.pull-right
+      -#   %a#subnav-week.pull-right{:href => "/calendars/week"}
+      -#     week
+      -# %li.pull-right.active
+      -#   %a#subnav-year.pull-right{:href => "/calendars"}
+      -#     year
+= flat_monthly_calendar_for @program_hash, :year => @year.to_i, :month => @month.to_i, :program => @program, :background_calendar => @background_calendar, :term_id => @term_id do |f|
+  = f.draw_calendar
+= content_tag :span, "Teacher: " + @teacher.first_name + @teacher.last_name
+= modal_for "attendance", :modal_title => "attendance", :delete_button => true
+

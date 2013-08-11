@@ -1,0 +1,219 @@
+// Place all the styles related to the events controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+$timeslotHeight: 16px;
+$timeslotsPerHour: 3;
+$timeslotsPerDay: $timeslotsPerHour * 9;
+a.wc-day-column-header {
+  text-decoration: none;
+  display: display;
+}
+.wc-time-header-cell {
+  height: ($timeslotHeight * $timeslotsPerHour) - 11;
+  padding: 5;
+}
+.wc-container {
+  font-size: 13px;
+  font-family: arial, helvetica;
+  margin: 0 auto;
+  padding-top: 40px;
+}
+.wc-nav {
+  padding: 1em;
+  text-align: right;
+}
+
+.wc-nav .btn {
+  margin: 0 0.5em;
+}
+
+.wc-container table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.wc-container table td {
+  margin: 0;
+  padding: 0;
+}
+
+.wc-header {
+  background: #eee;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.wc-header .wc-time-column-header {
+  width: 6%;
+}
+
+.wc-header .wc-scrollbar-shim {
+  width: 16px;
+}
+
+.wc-header .wc-day-column-header {
+  text-align: center;
+  padding: 0.4em;
+}
+
+.wc-header td {
+  background-color: #eee;
+}
+
+.wc-grid-timeslot-header {
+  background: #eee;
+  width: 6%;
+}
+
+.wc-scrollable-grid {
+  overflow: auto;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  height: 800px;
+}
+table.wc-time-slots {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.wc-day-column {
+  width: 13.5%;
+  height: $timeslotHeight * $timeslotsPerDay;
+  border-left: 1px solid #ddd;
+  overflow: visible;
+  vertical-align: top;
+}
+.wc-day-column-inner {
+  width: 93%;
+  height: 100%;
+  position: relative;
+}
+.wc-time-slot-wrapper {
+  position: relative;
+  height: 1px;
+  top: 1px;
+}
+.wc-time-slots {
+  position: absolute;
+  width: 100%;
+}
+
+.wc-time-header-cell {
+  padding: 5px;
+}
+
+.wc-time-slot {
+  height: $timeslotHeight - 1;
+  border-bottom: 1px dotted #ddd;
+}
+
+.wc-hour-header {
+  text-align: right;
+}
+.wc-hour-end, .wc-hour-header {
+  border-bottom: 1px solid #ccc;
+  color: #555;
+}
+
+.wc-business-hours {
+	background-color: #E6EEF1;
+	border-bottom: 1px solid #ccc;
+	color: #333;
+	font-size: 1.4em;
+}
+
+.wc-business-hours .wc-am-pm {
+	font-size: 0.6em;	
+}
+.wc-day-header-cell {
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
+}
+.wc-time-slot-header .wc-header-cell {
+  text-align: right;
+  padding-right: 10px;
+}
+.wc-header .wc-today {
+  font-weight: bold;
+}
+.wc-time-slots .wc-today {
+  background-color: #ffffcc;
+}
+.wc-time-slots .wc-holiday {
+  background-color: #ffcccc;
+}
+
+.wc-cal-event {
+	filter:alpha(opacity=80);
+	-moz-opacity:0.8;
+	-khtml-opacity: 0.8;
+	opacity: 0.8;
+	position: absolute;	
+	text-align: center;
+	overflow: hidden;
+	color: #fff;
+	width: 100%;
+  background-color: #68a1e5;
+}
+.wc-cal-background-event {
+	filter:alpha(opacity=80);
+	-moz-opacity:0.4;
+	-khtml-opacity: 0.4;
+	opacity: 0.4;
+	position: absolute;	
+	text-align: center;
+	overflow: hidden;
+	color: #000;
+	width: 100%;
+  background-color: #DDDDDD;
+}
+.wc-cal-event div {
+  padding: 0 5px;
+  font-size: $timeslotHeight * 0.7;
+}
+
+.wc-cal-event.unavailable {
+  background-color: #F1454C;
+}
+.wc-cal-event.unavailable .wc-time {
+  background-color: #EC1829;
+  border-color: #F71919;
+}
+.wc-cal-background-event.available {
+  border: 3px dotted #1122DD;
+}
+.wc-cal-background-event.unavailable {
+  border: 3px dotted #DD2211;
+}
+.wc-cal-event .wc-time {
+	background-color: #2b72d0;
+	border: 1px solid #1b62c0;
+	color: #fff;
+	padding: 0;
+	font-weight: bold;
+  line-height: $timeslotHeight * 0.8;
+
+}
+
+.wc-container .ui-draggable .wc-time {
+	cursor: move;
+}
+
+.wc-cal-event .wc-title {
+	position: relative;	
+}
+
+.wc-container .wc-resizable-s {
+	height: 10px;
+	bottom: -8px;	
+}
+
+
+.wc-container .ui-draggable-dragging {
+}

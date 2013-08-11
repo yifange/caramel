@@ -21,7 +21,7 @@
         = nav_filter_for "school", @schools, :base_url => "/calendars", :year => params[:year]  do |school|
           = content_tag :span, school.full
         %li
-          = link_to "week", calendar_week_path(:school_id => @school[:id]), :id => "subnav-week"
+          = link_to_if @school, "week", calendar_week_path(:school_id => @school[:id]), :id => "subnav-week"
         %li.active
           = link_to "year", calendars_path(:school_id => @school[:id]), :id => "subnav-year"
 

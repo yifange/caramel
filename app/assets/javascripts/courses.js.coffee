@@ -3,7 +3,7 @@ attachCourseColumnHandler = ->
     date = $(this).data("date")
     # window.location.href = "/events/new?date=" + date
     $.get("/courses/new?date=" + date + "&program_id=" + $(".wc-container").data("program"), (data, status) ->
-      $("#course-modal-body").html($(data).find("#course-form-body").html())
+      $("#course-modal-body").html($(data).filter("#course-form-body").html())
       $("#course-form-submit").hide()
       $("#course-modal-delete").hide()
       $("#course-modal-title").html("Create Course")

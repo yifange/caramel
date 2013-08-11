@@ -18,8 +18,8 @@ module CalHelper
   def weekly_calendar_for(objects, *args, &block)
     options = args.last.is_a?(Hash) ? args.pop : {}
     content = capture(WeeklyCalendarBuilder.new(self, objects || [], options), &block)
-    school_id = options[:school].id if options.has_key? :school
-    program_id = options[:program].id if options.has_key? :program
+    school_id = options[:school].id if options.has_key? :school and options[:school]
+    program_id = options[:program].id if options.has_key? :program and options[:program]
     content_tag :div, content, :class => "wc-container", :data => {:school => school_id, :program => program_id}
   end
   

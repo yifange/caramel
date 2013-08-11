@@ -1,12 +1,11 @@
 module NavFilterHelper
   def nav_filter_for(name, objs, *args, &block)
+    return unless objs
     options = args.last.is_a?(Hash) ? args.pop : {}
     base_url = options[:base_url]
     year = options[:year]
     month = options[:month]
     day = options[:day]
-    
-
     content_tag :li, :class => "dropdown pull-right" do
       name_content = content_tag :a, (content_tag :span, name, :id => "subnav-#{name}-name").concat(content_tag :b, nil, :class => "caret"), :class => "dropdown-toggle", "data-toggle" => "dropdown", :href => "#"
       menu_content = content_tag :ul, :role => "menu", "aria-labelledby" => "dlabel", :class => "dropdown-menu" do

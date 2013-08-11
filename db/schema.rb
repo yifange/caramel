@@ -79,13 +79,6 @@ ActiveRecord::Schema.define(version: 20130810025153) do
   add_index "calendars", ["school_id"], name: "index_calendars_on_school_id"
   add_index "calendars", ["term_id"], name: "index_calendars_on_term_id"
 
-  create_table "course_types", force: true do |t|
-    t.string   "abbrev"
-    t.string   "full"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "courses", force: true do |t|
     t.integer  "program_id"
     t.time     "start_time"
@@ -191,11 +184,13 @@ ActiveRecord::Schema.define(version: 20130810025153) do
 
   create_table "students", force: true do |t|
     t.string   "first_name"
-    t.string   "middle_name"
     t.string   "last_name"
+    t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "students", ["school_id"], name: "index_students_on_school_id"
 
   create_table "teachers", force: true do |t|
   end
@@ -213,7 +208,6 @@ ActiveRecord::Schema.define(version: 20130810025153) do
     t.string   "crypted_password"
     t.string   "salt"
     t.string   "first_name"
-    t.string   "middle_name"
     t.string   "last_name"
     t.string   "type"
     t.string   "remember_me_token"

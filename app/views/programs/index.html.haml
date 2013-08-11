@@ -9,22 +9,24 @@
     - i = 0
     - @schools.each do |school|
       %li{:class => (i == 0 ? 'active' : nil)}
-        %a.tab-hover{:href => "#tab-#{school.id}", "data-toggle" => "tab", :title => "#{school.full}"}
+        %a.tab-hover{:href => "#tab#{school.id}", "data-toggle" => "tab", :title => "#{school.full}"}
           = school.abbrev
       - i += 1
-  %table.table.table-bordered.table-striped{:style => 'clear: both'}
-    %tr
-      %th INSTRUMENT
-      %th PROGRAM TYPE
-      %th REGULAR CLASS PER YEAR
-      %th GROUP CLASS PER YEAR
-    .tab-content
-      .tab-pane{:class => (i == 0 ? 'active' : nil)}
-      %tr
-        %td
-          1
-        %td
-        %td
-        %td
-
+  .tab-content
+    - i = 0
+    - @schools.each do |school|
+      .tab-pane{:class => (i == 0 ? 'active' : nil), :id => "tab#{school.id}"}
+        %table.table.table-bordered.table-striped{:style => 'clear: both'}
+          %tr
+            %th INSTRUMENT
+            %th PROGRAM TYPE
+            %th REGULAR CLASS PER YEAR
+            %th GROUP CLASS PER YEAR
+          %tr
+            %td
+              = i
+            %td
+            %td
+            %td
+      - i += 1
   -# = modal_for "new-program", :modal_title => "New Program"

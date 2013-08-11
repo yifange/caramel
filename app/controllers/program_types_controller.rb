@@ -16,7 +16,7 @@ class ProgramTypesController < ApplicationController
 
   private
   def program_type_params
-    params.require(:value).permit(:full, :abbrev)
+    params.require(:value).permit(:name)
   end
 
 end

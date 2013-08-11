@@ -5,9 +5,6 @@ class ApplicationController < ActionController::Base
 
   def get_term
   end
-  def current_user
-    {:id => 1, :first_name => "Yifan", :last_name => "Ge", :type => "Teacher"}
-  end
 	private
   # Using current_user to verify weather the user has sign in and can view this page  
 	def verify_user

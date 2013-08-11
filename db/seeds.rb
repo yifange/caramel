@@ -5,7 +5,13 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Teacher.create(first_name: "Albus", last_name: "Dumbledore")
+User.delete_all
+Assignment.delete_all
+Student.delete_all
+Program.delete_all
+Enrollment.delete_all
+
+Teacher.create(first_name: "Albus", last_name: "Dumbledore", password: "123456", password_confirmation: "123456", email: "ha@ha.com")
 Student.create(first_name: "Harry", last_name: "Potter")
 Student.create(first_name: "Tom", last_name: "Riddle")
 School.create(abbrev: "LHS", full: "Linton Hall School")
@@ -52,7 +58,6 @@ Region.delete_all
 @r_chgo = Region.create(name: 'Chicago')
 
 
-User.delete_all
 @adm_deng  = User.create(email: 'deng.jinqiu@gmail.com', password: '123456', password_confirmation: '123456', 
                        first_name: 'Jinqiu', last_name: 'Deng', type: 'Admin', 
                        remember_me_token: nil, remember_me_token_expires_at: nil)
@@ -90,7 +95,6 @@ Domain.create(user_id: @t_yue.id, region_id: @r_bal.id)
 @s_uc  = School.create(abbrev: 'UC', full: 'University of Chicago', region_id: @r_chgo.id)
 @s_uic = School.create(abbrev: 'UIC', full: 'University of Illinois at Chicago', region_id: @r_chgo.id)
 
-Student.delete_all
 @stu_gregg   = Student.create(first_name: 'Gregg', last_name: 'Smith', school_id: @s_jhu.id)
 @stu_cherry  = Student.create(first_name: 'Cherry', last_name: 'Minto', school_id: @s_jhu.id)
 @stu_maxwell = Student.create(first_name: 'Maxwell', last_name: 'MacPhaull', school_id: @s_jhu.id)
@@ -98,7 +102,6 @@ Student.delete_all
 @stu_connor  = Student.create(first_name: 'Connor', last_name: 'Wightman', school_id: @s_ub.id)
 @stu_nikki   = Student.create(first_name: 'Nikki', last_name: 'Rafferty', school_id: @s_ub.id)
 
-Program.delete_all
 @p_1 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'piano').first.id,
                program_type_id: ProgramType.where(name: 'IND').first.id,
@@ -120,14 +123,12 @@ Program.delete_all
                regular_courses_per_year: 100,
                group_courses_per_year: 50)
 
-Assignment.delete_all
 Assignment.create(program_id: @p_1.id, teacher_id: @t_ge.id)
 Assignment.create(program_id: @p_2.id, teacher_id: @t_ge.id)
 Assignment.create(program_id: @p_3.id, teacher_id: @t_chu.id)
 Assignment.create(program_id: @p_3.id, teacher_id: @t_yue.id)
 Assignment.create(program_id: @p_4.id, teacher_id: @t_yue.id)
 
-Enrollment.delete_all
 Enrollment.create(program_id:@p_1.id, student_id: @stu_gregg.id)
 Enrollment.create(program_id:@p_1.id, student_id: @stu_cherry.id)
 Enrollment.create(program_id:@p_2.id, student_id: @stu_gregg.id)

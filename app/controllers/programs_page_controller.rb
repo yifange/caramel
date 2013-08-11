@@ -23,7 +23,7 @@ class ProgramsPageController < ApplicationController
   end
 
   def get_program_types
-    @program_types = CourseType.all
+    @program_types = ProgramType.all
     @results = @program_types.map { |program_type| {:id => program_type.id, :text => program_type.abbrev}}
     render :json => @results
   end

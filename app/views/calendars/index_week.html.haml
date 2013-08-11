@@ -1,27 +1,32 @@
-.navbar.navbar-fixed-top
-  .navbar-inner
-    %ul.nav.nav-pills.unselectable
-      %li
-        %a#subnav-today{:href => "#"}
-          now
-      %li
-        %a#subnav-prev{:href => "#"}
-          <
-      %li
-        %a#subnav-next{:href => "#"}
-          >
-      %li
-        %span.navbar-text#subnav-text
-    %ul.nav.nav-pills.unselectable.pull-right
-      = nav_filter_for "school", @schools, :base_url => "/calendars/week", :year => params[:year], :month => params[:month], :day => params[:day] do |school|
-        = content_tag :span, school.full
-      %li.active
-        = link_to "week", calendar_week_path(:school_id => @school[:id]), :id => "subnav-week"
-      %li
-        = link_to "year", calendars_path(:school_id => @school[:id]), :id => "subnav-year"
+- content_for :title do
+  calendar 
+- content_for :sidemenu do
+  - render '/layouts/classes_page_sidebar'
+- content_for :subnav do
+  .navbar.navbar-fixed-top.subnav
+    .navbar-inner
+      %ul.nav.nav-pills.unselectable
+        %li
+          %a#subnav-today{:href => "#"}
+            now
+        %li
+          %a#subnav-prev{:href => "#"}
+            <
+        %li
+          %a#subnav-next{:href => "#"}
+            >
+        %li
+          %span.navbar-text#subnav-text
+      %ul.nav.nav-pills.unselectable.pull-right
+        = nav_filter_for "school", @schools, :base_url => "/calendars/week", :year => params[:year], :month => params[:month], :day => params[:day] do |school|
+          = content_tag :span, school.full
+        %li.active
+          = link_to "week", calendar_week_path(:school_id => @school[:id]), :id => "subnav-week"
+        %li
+          = link_to "year", calendars_path(:school_id => @school[:id]), :id => "subnav-year"
 
-= weekly_calendar_for @calendars, :year => @year.to_i, :month => @month.to_i, :day => @day.to_i, :school => @school do |c|
-  = c.draw_weekly_calendar_nav
-  = c.draw_weekly_calendar_body
-
-= modal_for "calendar", :delete_button => true
+- content_for :main do
+  = weekly_calendar_for @calendars, :year => @year.to_i, :month => @month.to_i, :day => @day.to_i, :school => @school do |c|
+    = c.draw_weekly_calendar_nav
+    = c.draw_weekly_calendar_body
+  = modal_for "calendar", :delete_button => true

@@ -4,7 +4,8 @@
 // make the brand white
 .navbar-inverse .brand {
 	color: #ffffff;
-	cursor: default;
+  margin-left: 10px;
+	// cursor: default;
 	font-weight: bold;
 }
 
@@ -36,4 +37,11 @@
 #nav-right {
 	font-size: 100%;
 	font-weight: normal;
+}
+.subnav {
+  top: 40px;
+}
+
+.container-fluid {
+  padding-top: 50px;
 }

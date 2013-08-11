@@ -14,9 +14,11 @@ class AttendancesController < ApplicationController
   end
   def new
     @attendance = Attendance.new
+    render :layout => false
   end
   def edit
     @attendance = Attendance.find(params[:id])
+    render :layout => false
   end
   def update
     attendance = Attendance.find(params[:id])

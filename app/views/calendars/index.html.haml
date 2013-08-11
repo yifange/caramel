@@ -1,26 +1,32 @@
-.navbar.navbar-fixed-top
-  .navbar-inner
-    %ul.nav.nav-pills.unselectable
-      %li
-        %a#subnav-today{:href => "#"}
-          now
-      %li
-        %a#subnav-prev{:href => "#"}
-          <
-      %li
-        %a#subnav-next{:href => "#"}
-          >
-      %li
-        %p.navbar-text#subnav-text
-    %ul.nav.nav-pills.pull-right.unselectable
-      = nav_filter_for "school", @schools, :base_url => "/calendars", :year => params[:year]  do |school|
-        = content_tag :span, school.full
-      %li
-        = link_to "week", calendar_week_path(:school_id => @school[:id]), :id => "subnav-week"
-      %li.active
-        = link_to "year", calendars_path(:school_id => @school[:id]), :id => "subnav-year"
+- content_for :title do
+  calendar 
+- content_for :sidemenu do
+  - render '/layouts/classes_page_sidebar'
+- content_for :subnav do
+  .navbar.navbar-fixed-top.subnav
+    .navbar-inner
+      %ul.nav.nav-pills.unselectable
+        %li
+          %a#subnav-today{:href => "#"}
+            now
+        %li
+          %a#subnav-prev{:href => "#"}
+            <
+        %li
+          %a#subnav-next{:href => "#"}
+            >
+        %li
+          %p.navbar-text#subnav-text
+      %ul.nav.nav-pills.pull-right.unselectable
+        = nav_filter_for "school", @schools, :base_url => "/calendars", :year => params[:year]  do |school|
+          = content_tag :span, school.full
+        %li
+          = link_to "week", calendar_week_path(:school_id => @school[:id]), :id => "subnav-week"
+        %li.active
+          = link_to "year", calendars_path(:school_id => @school[:id]), :id => "subnav-year"
 
-= annual_calendar_for @calendars, :year => @year.to_i, :school => @school do |c|
-  = c.draw_annual_calendar_body
+- content_for :main do
+  = annual_calendar_for @calendars, :year => @year.to_i, :school => @school do |c|
+    = c.draw_annual_calendar_body
 
 

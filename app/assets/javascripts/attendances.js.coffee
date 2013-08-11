@@ -29,7 +29,7 @@ attachAttendanceGridHandler = ->
     else
       editing = false
     $.get(href, (data, status) ->
-      $("#attendance-modal-body").html($(data).find("#attendance-form-body").html())
+      $("#attendance-modal-body").html($(data).filter("#attendance-form-body").html())
       if editing
         $("#attendance-modal-delete").show()
       else

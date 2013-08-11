@@ -31,6 +31,7 @@ class CalendarsController < ApplicationController
   def new
     @calendar = Calendar.new
     @date = params[:date]
+		render :layout => false
   end
 
   def create
@@ -47,6 +48,7 @@ class CalendarsController < ApplicationController
   def edit
     @calendar = Calendar.find(params[:id])
     @similar_events = @calendar.all_similar_events
+    render :layout => false
   end
   def update
     calendar = Calendar.find(params[:id])

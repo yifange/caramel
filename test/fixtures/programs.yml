@@ -3,13 +3,13 @@ one:
   instrument_id: 
   program_type_id: 
   term_id: 
-  annual_regular_total: 1
-  annaul_group_total: MyString
+  regular_courses_per_year: 1
+  group_courses_per_year: MyString
 
 two:
   school_id: 
   instrument_id: 
   program_type_id: 
   term_id: 
-  annual_regular_total: 1
-  annaul_group_total: MyString
+  regular_courses_per_year: 1
+  group_courses_per_year: MyString

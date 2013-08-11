@@ -37,7 +37,7 @@ Caramel::Application.routes.draw do
   delete '/students', to: redirect('/students/remove')
 
   # staff
-  resources :staff, only: [:index, :show, :create, :update, :destroy] do
+  resources :staffs, only: [:index, :show, :create, :update, :destroy] do
     collection do
       delete 'remove'
     end

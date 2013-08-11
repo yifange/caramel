@@ -34,6 +34,7 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.0)
     atomic (1.1.10)
+    bcrypt-ruby (3.0.1)
     bootstrap-datepicker-rails (1.1.1.2)
       railties (>= 3.0)
     bootstrap-sass (2.3.2.0)
@@ -51,6 +52,8 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    faraday (0.8.8)
+      multipart-post (~> 1.2.0)
     haml (4.0.3)
       tilt
     haml-rails (0.4)
@@ -59,6 +62,7 @@ GEM
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
     hike (1.2.3)
+    httpauth (0.2.0)
     i18n (0.6.4)
     jbuilder (1.4.2)
       activesupport (>= 3.0.0)
@@ -70,6 +74,8 @@ GEM
       jquery-rails
       railties (>= 3.1.0)
     json (1.8.0)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
     libv8 (3.11.8.17)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -77,6 +83,14 @@ GEM
     mime-types (1.23)
     minitest (4.7.5)
     multi_json (1.7.7)
+    multipart-post (1.2.0)
+    oauth (0.4.7)
+    oauth2 (0.8.1)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      rack (~> 1.2)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -112,6 +126,10 @@ GEM
       sass-rails
       thor (~> 0.14)
     simple_form (1.4.1)
+    sorcery (0.8.2)
+      bcrypt-ruby (~> 3.0.0)
+      oauth (~> 0.4.4)
+      oauth2 (~> 0.8.0)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -158,6 +176,7 @@ DEPENDENCIES
   sdoc
   select2-rails
   simple_form
+  sorcery
   sqlite3
   therubyracer
   turbolinks

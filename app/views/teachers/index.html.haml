@@ -26,10 +26,9 @@
         %td
           %a.x-editable-select2-multiple{:href => '#', 'data-url' => "/teachers/#{teacher.id}", 'data-pk' => "#{teacher.id}", 'data-value' => "url,/teachers/#{teacher.id}/regions.json", 'data-name' => 'regions'}
             = teacher.regions_ordered_str
-          = teacher.regions_ordered_str
         %td
           %button.btn{'type' => 'button'}
             Reset Password
 
-  %a.btn.btn-primary.new-people{:href => "/teachers/new", "data-people" => "teacher"} New Teacher
-  = modal_for "new-people", :modal_title => "New People", :css_class => "new-people"
+  %a.btn.btn-primary.new-entry{:href => "/teachers/new", "data-entry" => "teacher"} New Teacher
+  = modal_for "new-entry", :modal_title => "New Entry", :css_class => "new-entry"

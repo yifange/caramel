@@ -1,5 +1,7 @@
 class Instrument < ActiveRecord::Base
   has_many :programs
+  validates_presence_of :name
+  validates_uniqueness_of :name
 
   def self.all_ordered
     Instrument.all.order("name")

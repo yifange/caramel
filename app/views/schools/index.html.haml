@@ -25,3 +25,5 @@
         %td
           %a.x-editable-select2-singular{:href => '#', 'data-source' => '/regions','data-url' => "/schools/#{school.id}", 'data-pk' => "#{school.id}", 'data-name' => 'region_id'}
             = school.region.name
+  %a.btn.btn-primary.new-entry{:href => "/schools/new", "data-entry" => "school"} New School
+  = modal_for "new-entry", :modal_title => "New School", :css_class => "new-entry"

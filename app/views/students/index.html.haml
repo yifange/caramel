@@ -18,5 +18,5 @@
           %a.x-editable-input-user-name{:href => "#", 'data-url' => "/students/#{student.id}", 'data-pk' => "#{student.id}"}
             = student.name
 
-  %a.btn.btn-primary.new-people{:href => "/students/new", "data-people" => "student"} New Student
-  = modal_for "new-people", :modal_title => "New People", :css_class => "new-people"
+  %a.btn.btn-primary.new-entry{:href => "/students/new", "data-entry" => "student"} New Student
+  = modal_for "new-entry", :modal_title => "New Entry", :css_class => "new-entry"

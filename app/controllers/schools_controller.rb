@@ -2,6 +2,19 @@ class SchoolsController < ApplicationController
 
   respond_to :html
 
+  def new
+    @school = School.new
+  end
+
+  def create
+    @school = School.new(school_params)
+    if @school.save
+      redirect_to :controller => "schools", :action => "index"
+    else
+      render :new, :status => :unprocessable_entity
+    end
+  end
+
   def update
     @school = School.find(params[:pk])
     params[:value] = {params[:name] => params[:value]}
@@ -13,9 +26,9 @@ class SchoolsController < ApplicationController
     @schools = School.all_ordered
   end
 
-  private
+private
   def school_params
-    params.require(:value).permit(:region_id, :abbrev, :full)
+    params.require(:school).permit(:region_id, :abbrev, :full)
   end
 
 end

@@ -13,7 +13,7 @@ class ProgramsController < ApplicationController
     if @program.save
       redirect_to :controller => "programs_page", :action => "schools"
     else
-      render :new
+      render :new, :status => :unprocessable_entity
     end
   end
 

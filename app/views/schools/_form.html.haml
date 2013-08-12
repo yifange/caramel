@@ -1,0 +1,7 @@
+.new-entry-form-body
+  = simple_form_for @school, :html => {:class => 'new_entry'} do |f|
+    = f.input :abbrev, :label => "School Name Abbreviation"
+    = f.input :full, :label => "School Full Name"
+    = f.association :region, :label => "Region"
+
+

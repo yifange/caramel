@@ -18,7 +18,7 @@ class StaffsController < UsersController
     if @staff.save and @domain.save
       redirect_to :controller => "staffs", :actoin => "index"
     else
-      render :new
+      render :new, :status => :unprocessable_entity
     end
   end
 

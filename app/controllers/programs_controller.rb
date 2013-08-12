@@ -5,13 +5,14 @@ class ProgramsController < ApplicationController
 
   def new
     @school_id = params[:school_id]
+    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa " + params.to_s
     @program = Program.new
   end
 
   def create
     @program = Program.new(program_params)
     if @program.save
-      redirect_to :controller => "programs_page", :action => "schools"
+      redirect_to :controller => "programs", :action => "index"
     else
       render :new, :status => :unprocessable_entity
     end
@@ -44,6 +45,6 @@ class ProgramsController < ApplicationController
 
 private
   def program_params
-    params.require(:value).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
+    params.require(:program).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
   end
 end

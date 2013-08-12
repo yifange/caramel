@@ -17,9 +17,9 @@
     - @schools.each do |school|
       .tab-pane{:class => (i == 0 ? 'active' : nil), :id => "tab#{school.id}"}
 
-        %a.btn.btn-primary.new-entry{:href => "/programs/new", "data-entry" => "program"} New Program
-        = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
-        %p
+        -# %a.btn.btn-primary.new-entry{:href => "/programs/new", "data-entry" => "program"} New Program
+        -# = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
+        -# %p
 
         %table.table.table-bordered.table-striped{:style => 'clear: both'}
           %tr
@@ -55,3 +55,6 @@
                       STUDENTS:&nbsp&nbsp
                       %a.x-editable-select2-multiple{:href => '#', 'data-value' => 'ru'}
       - i += 1
+  %a.btn.btn-primary.new-entry{:href => "/programs/new", "data-entry" => "#{@school.id}"} New Program
+  = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
+  %p

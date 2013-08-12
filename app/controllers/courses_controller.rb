@@ -15,7 +15,7 @@ class CoursesController < ApplicationController
       @programs = Teacher.find(current_user[:id]).programs.order("school_id ASC")
     end
     @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
-    if @progarm
+    if @program
       @program_id = @program[:id]
       school_id = @program.school[:id]
     end

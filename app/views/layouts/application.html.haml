@@ -10,29 +10,35 @@
   %body
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
-        %a.brand{:href => "#"}
-          Musikids
-        %ul.nav
-          = active_link_partialpath 'PEOPLE', '/staffs'
-          = active_link_partialpath 'PROGRAMS', '/regions'
-          = active_link_partialpath 'CLASSES', '/courses'
-          = active_link_partialpath 'INSTRUMENTS','#'
-          %li.dropdown
-            %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
-              SEMESTER
-              %span.caret
-            %ul.dropdown-menu
+        .container
+          %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#main-nav-collapse"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand{:href => "#"}
+            Musikids
+          #main-nav-collapse.nav-collapse.collapse
+            %ul.nav
+              = active_link_partialpath 'PEOPLE', '/staffs'
+              = active_link_partialpath 'PROGRAMS', '/regions'
+              = active_link_partialpath 'CLASSES', '/courses'
+              = active_link_partialpath 'INSTRUMENTS','#'
+              %li.dropdown
+                %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
+                  SEMESTER
+                  %span.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{:href => '#'} Semester One
+                  %li
+                    %a{:href => '#'} Semester Two
+            %ul.nav.pull-right
               %li
-                %a{:href => '#'} Semester One
+                %a
+                  %i.icon-user.icon-white
+                  = current_user.name
               %li
-                %a{:href => '#'} Semester Two
-        .pull-right
-          %a.brand#nav-right
-            %i.icon-user.icon-white
-            = current_user.name
-          %ul.nav
-            %li
-              %a{:href => '/session_page/signout'} Sign out
+                %a{:href => '/session_page/signout'} Sign out
     = yield(:subnav)
     .container-fluid
       .row-fluid

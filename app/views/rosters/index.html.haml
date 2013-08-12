@@ -1,3 +1,6 @@
+- content_for :sidemenu do
+  - render '/layouts/classes_page_sidebar'
+
 - content_for :subnav do
   .navbar.navbar-fixed-top.subnav
     .navbar-inner
@@ -14,7 +17,7 @@
         %li
           %p.navbar-text#subnav-text
       %ul.nav.nav-pills.pull-right.unselectable
-        = nav_filter_for "program", @programs, :base_url => "/attendances", :year => params[:year], :month => params[:month] do |program|
+        = nav_filter_for "program", @programs, :base_url => "/rosters", :year => params[:year], :month => params[:month] do |program|
           = (content_tag :p, program.school.full, :class => "dropdown-item-school-name").concat(content_tag :p, program.program_type.name + ", " + program.instrument.name, :class => "dropdown-item-program")
         %li.active
           = link_to "roster", rosters_path(:program_id => @program_id, :term_id => @term_id), :id => "subnav-roster"
@@ -23,4 +26,11 @@
 
 
 - content_for :main do
-  = "hello"
+  .hidden-nav{:style => "display: none"}
+    %span#cal-nav-program-id
+      = @program_id
+    %span#cal-nav-program-name
+      = @program.school.full + ", " + @program.program_type.name + ", " + @program.instrument.name
+
+
+

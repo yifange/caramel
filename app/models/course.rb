@@ -1,5 +1,7 @@
 class Course < ActiveRecord::Base
   belongs_to :program
+  has_many :rosters
+  has_many :students, :through => :rosters
   validate :events_cannot_overlap, :courses_must_in_term, :events_must_in_available_time_slots
   def start_date
     program.start_date

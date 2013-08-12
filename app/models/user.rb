@@ -20,13 +20,28 @@ class User < ActiveRecord::Base
     add_region(region_id)
   end
 
+  def update_regions(region_ids)
+    delete_regions
+    region_ids.each do |region_id|
+      add_region(region_id)
+    end
+  end
+
   def regions_ordered_json
     regions.map do |region| 
       {:id => region.id, :text => region.name}
     end
   end
 
-  protected
+  def regions_ordered_str
+    result = ""
+    regions.each do |region|
+      result += region.name
+      result += ', '
+    end
+    result.chop.chop
+  end
+
   def self.all_ordered(type)
     User.where(:type => type).order("first_name")
   end

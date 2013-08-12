@@ -1,7 +1,3 @@
-- content_for :title do
-  attendance
-- content_for :sidemenu do
-  - render '/layouts/classes_page_sidebar'
 - content_for :subnav do
   .navbar.navbar-fixed-top.subnav
     .navbar-inner
@@ -20,14 +16,11 @@
       %ul.nav.nav-pills.pull-right.unselectable
         = nav_filter_for "program", @programs, :base_url => "/attendances", :year => params[:year], :month => params[:month] do |program|
           = (content_tag :p, program.school.full, :class => "dropdown-item-school-name").concat(content_tag :p, program.program_type.name + ", " + program.instrument.name, :class => "dropdown-item-program")
-        %li
-          = link_to "roster", rosters_path(:program_id => @program_id, :term_id => @term_id), :id => "subnav-roster"
         %li.active
+          = link_to "roster", rosters_path(:program_id => @program_id, :term_id => @term_id), :id => "subnav-roster"
+        %li
           = link_to "attendance", attendances_path(:program_id => @program_id, :term_id => @term_id), :id => "subnav-attendance"
 
-- content_for :main do
-  = flat_monthly_calendar_for @program_hash, :year => @year.to_i, :month => @month.to_i, :program => @program, :background_calendar => @background_calendar, :term_id => @term_id do |f|
-    = f.draw_calendar
-  = content_tag :span, "Teacher: " + @teacher.first_name + @teacher.last_name
-  = modal_for "attendance", :modal_title => "attendance", :delete_button => true
 
+- content_for :main do
+  = "hello"

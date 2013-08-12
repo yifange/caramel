@@ -29,3 +29,5 @@
         %td
           %button.btn{'type' => 'button'}
             Reset Password
+  %a.btn.btn-primary.new-people{:href => "/staffs/new", "data-people" => "staff"} New Staff
+  = modal_for "new-people", :modal_title => "New People", :css_class => "new-people"

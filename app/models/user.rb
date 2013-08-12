@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
 
   has_many :domains
   has_many :regions, through: :domains
+  accepts_nested_attributes_for :domains
 
   def update_region(region_id)
     delete_regions

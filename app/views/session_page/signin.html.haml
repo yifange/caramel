@@ -5,9 +5,9 @@
     %title Sign in
     = stylesheet_link_tag :session_page, :media => "all"
   %body
-    .navbar.navbar-inverse
+    .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
-        %a.brand{:href => '#'} Musikids Class Attendance
+        %a.brand{:href => '#'} Musikids
     .content#login-content
       = form_tag '/session_page/verify', method: 'get' do
         %fieldset

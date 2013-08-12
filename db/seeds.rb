@@ -79,27 +79,32 @@ ProgramType.create(name: "POD")
                instrument_id: Instrument.where(name: 'piano').first.id,
                program_type_id: ProgramType.where(name: 'IND').first.id,
                regular_courses_per_year: 120,
-               group_courses_per_year: 40)
+               group_courses_per_year: 40, 
+               term_id: 1)
 @p_2 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'guitar').first.id,
                program_type_id: ProgramType.where(name: 'IND').first.id,
                regular_courses_per_year: 120,
-               group_courses_per_year: 30)
+               group_courses_per_year: 30,
+               term_id: 1)
 @p_3 = Program.create(school_id: @s_ub.id,
                instrument_id: Instrument.where(name: 'guitar').first.id,
                program_type_id: ProgramType.where(name: 'IND').first.id,
                regular_courses_per_year: 120,
-               group_courses_per_year: 50)
+               group_courses_per_year: 50,
+               term_id: 1)
 @p_4 = Program.create(school_id: @s_ub.id,
                instrument_id: Instrument.where(name: 'violin').first.id,
                program_type_id: ProgramType.where(name: 'IND').first.id,
                regular_courses_per_year: 100,
-               group_courses_per_year: 50)
+               group_courses_per_year: 50, 
+               term_id: 1)
 @p_5 = Program.create(school_id: @s_gtu.id,
                instrument_id: Instrument.where(name: 'violin').first.id,
                program_type_id: ProgramType.where(name: 'IND').first.id,
                regular_courses_per_year: 100,
-               group_courses_per_year: 50)
+               group_courses_per_year: 50,
+               term_id: 1)
 
 Assignment.create(program_id: @p_1.id, teacher_id: @t_ge.id)
 Assignment.create(program_id: @p_2.id, teacher_id: @t_ge.id)

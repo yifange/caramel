@@ -14,9 +14,11 @@ class CoursesController < ApplicationController
     if current_user[:type] == "Teacher"
       @programs = Teacher.find(current_user[:id]).programs.order("school_id ASC")
     end
-    @program = (@programs.find_by :id => params[:program_id]) || @programs.first
-    @program_id = @program[:id] if @program
-    school_id = @program.school[:id]
+    @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
+    if @progarm
+      @program_id = @program[:id]
+      school_id = @program.school[:id]
+    end
     @courses = rehash_objs(Course.where(:program_id => @program_id))
     @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
 
@@ -28,6 +30,7 @@ class CoursesController < ApplicationController
   def new
     @course = Course.new
     @date = params[:date]
+    render :layout => false
   end
   def create
     @course = Course.new(course_params)
@@ -39,6 +42,7 @@ class CoursesController < ApplicationController
   end
   def edit
     @course = Course.find(params[:id])
+    render :layout => false
   end
   def update
     @course = Course.find(params[:id])

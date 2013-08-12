@@ -90,5 +90,14 @@ attachHandler = ->
     type: 'text'
   })
 
+  $('.x-editable-input-text').editable({
+    ajaxOptions: {
+      type: 'PUT'
+      dataType: 'json'
+    }
+    type: 'text'
+  })
+
+
 $(document).ready attachHandler
 $(document).on "page:load", attachHandler

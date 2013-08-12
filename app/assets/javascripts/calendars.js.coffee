@@ -10,7 +10,7 @@ attachColumnHandler = ->
     date = $(this).data("date")
     # window.location.href = "/events/new?date=" + date
     $.get("/calendars/new?date=" + date + "&school_id=" + $(".wc-container").data("school"), (data, status) ->
-      $("#calendar-modal-body").html($(data).find("#calendar-form-body").html())
+      $("#calendar-modal-body").html($(data).filter("#calendar-form-body").html())
       $("#calendar-form-submit").hide()
       $("#calendar-modal-delete").hide()
       $("#calendar-modal-title").html("Create Event")

@@ -4,7 +4,7 @@ class AttendancesController < ApplicationController
     if current_user[:type] == "Teacher"
       @teacher = Teacher.find(current_user[:id])
     end
-      @programs = @teacher.programs.where(:term_id => @term_id).order("school_id ASC")
+    @programs = @teacher.programs.where(:term_id => @term_id).order("school_id ASC")
     @program = (@programs.find_by :id => params[:program_id]) || @programs.first
     @program_id = @program[:id] if @program
     @background_calendar = Calendar.where(:term_id => @term_id, :school_id => @program.school[:id])
@@ -14,9 +14,11 @@ class AttendancesController < ApplicationController
   end
   def new
     @attendance = Attendance.new
+    render :layout => false
   end
   def edit
     @attendance = Attendance.find(params[:id])
+    render :layout => false
   end
   def update
     attendance = Attendance.find(params[:id])

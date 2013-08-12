@@ -5,6 +5,7 @@
     %title= content_for?(:title) ? yield(:title) : "App_Name"
     = stylesheet_link_tag :application, :media => "all"
     = javascript_include_tag :application
+    = favicon_link_tag
     = csrf_meta_tags
   %body
     .navbar.navbar-inverse.navbar-fixed-top
@@ -17,14 +18,14 @@
           = active_link_partialpath 'CLASSES', '/courses'
           = active_link_partialpath 'INSTRUMENTS','#'
           %li.dropdown
-            %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => ''}
+            %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
               SEMESTER
               %span.caret
             %ul.dropdown-menu
               %li
-                %a{:href => ''} Semester One
+                %a{:href => '#'} Semester One
               %li
-                %a{:href => ''} Semester Two
+                %a{:href => '#'} Semester Two
         .pull-right
           %a.brand#nav-right
             %i.icon-user.icon-white

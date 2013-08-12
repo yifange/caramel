@@ -122,7 +122,7 @@ attachNewProgramHandler = ->
     )
 attachTooltipHandler = ->
   $("a.tab-hover").tooltip({
-    placement: "right"
+    placement: "bottom"
   })
 attachSubmitHandler = ->
   $("#new-program-modal-confirm").on "click", ->

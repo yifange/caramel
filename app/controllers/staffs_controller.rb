@@ -1,11 +1,9 @@
 class StaffsController < UsersController
+
+  respond_to :html
+
   def index 
-    @staffs = Staff.all
-    @staffs_with_region = Staff.all_with_region_name
-  end
-
-  def show 
-
+    @staffs = Staff.all_ordered
   end
 
   def new

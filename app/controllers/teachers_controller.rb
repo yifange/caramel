@@ -1,7 +1,9 @@
 class TeachersController < UsersController
-  def index
-    @teachers = Teacher.all
-    @teachers_with_region = Teacher.all_with_region_name
+
+  respond_to :html
+
+  def index 
+    @teachers = Teacher.all_ordered
   end
 
   def update 

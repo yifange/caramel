@@ -31,7 +31,7 @@ module ProgramsHelper
               end
 
               buf_td2 = content_tag :td do
-                content_tag :a, CourseType.find(program.course_type_id).abbrev, :class => "course-type-options", :href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-url" => "/programs_page/save_course_type", "data-source" => "/programs_page/get_course_types.json", "data-value" => "1", "data-title" => "Select Course Type"
+                content_tag :a, ProgramType.find(program.program_type_id).name, :class => "course-type-options", :href => "#", "data-type" => "select2", "data-pk" => "#{program.id}", "data-url" => "/programs_page/save_program_type", "data-source" => "/programs_page/get_program_types.json", "data-value" => "1", "data-title" => "Select Course Type"
               end
 
               buf_td3 = content_tag :td do

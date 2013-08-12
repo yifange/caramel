@@ -1,0 +1,8 @@
+#event-form-body
+  = simple_form_for @event do |f|
+    = f.input :start_time, :start_hour => 8, :end_hour => 16
+    = f.input :end_time, :start_hour => 8, :end_hour => 16
+    = f.input :date, :default => @date ? Date.strptime(@date) : Date.today
+    = f.input :title
+    = f.button :submit, :class => "btn-primary", :id => "event-new-submit"
+

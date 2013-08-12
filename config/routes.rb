@@ -1,11 +1,15 @@
 Caramel::Application.routes.draw do
-  root 'session_page#signin'
+  get 'calendars/week' => 'calendars#index_week', :as => :calendar_week
+  get 'lunchpads/api' => 'lunchpads#api'
+  post 'lunchpads/lunch' => 'lunchpads#lunch'
+  resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses, :rosters
+	root 'session_page#signin'
 
   get 'session_page/signin' => 'session_page#signin'
   get 'session_page/verify' => 'session_page#verify'
   get 'session_page/signout' => 'session_page#signout'
 
-  resources :staffs, :teachers, :regions, :programs, :instruments, :students, :profiles, :admins
+  resources :staffs, :teachers, :regions, :programs, :instruments, :students, :profiles, :admins, :program_types, :schools
 
   # teachers of a program
   # instruments of a program  

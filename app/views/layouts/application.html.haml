@@ -5,23 +5,25 @@
     %title= content_for?(:title) ? yield(:title) : "App_Name"
     = stylesheet_link_tag :application, :media => "all"
     = javascript_include_tag :application
+    = favicon_link_tag
     = csrf_meta_tags
   %body
-    .navbar.navbar-inverse
+    .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
-        .brand Musikids Class Attendance
+        %a.brand{:href => "#"}
+          Musikids
         %ul.nav
           = active_link_partialpath 'PEOPLE', '/staffs'
           = active_link_partialpath 'PROGRAMS', '/regions'
-          = active_link_partialpath 'CLASSES', '#'
+          = active_link_partialpath 'CLASSES', '/courses'
           = active_link_partialpath 'INSTRUMENTS','#'
           %li.dropdown
-            %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => ''}
+            %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
               SEMESTER
               %span.caret
             %ul.dropdown-menu
               %li
-                %a{:href => ''} Semester One
+                %a{:href => '#'} Semester One
               %li
                 %a{:href => ''} Semester Two
         %ul.nav.pull-right

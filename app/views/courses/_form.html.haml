@@ -1,0 +1,11 @@
+#course-form-body
+  = simple_form_for @course, :as => :course do |f|
+    = f.input :program_id, :input_html => {:value => params[:program_id]}, :as => :hidden
+    = f.input :start_time, :start_hour => 8, :end_hour => 16
+    = f.input :end_time, :start_hour => 8, :end_hour => 16
+    = f.input :day_of_week, :collection => [["Sunday", 0], ["Monday", 1], ["Tuesday", 2], ["Wednesday", 3], ["Thursday", 4], ["Friday", 5], ["Saturday", 6]], :include_blank => false, :selected => @date ? Date.parse(@date).wday : Date.today.wday, :input_html => {:style => "display: none"}, :label => false
+    = f.input :date, :input_html => {:value => @date ? Date.strptime(@date) : Date.today}, :as => :hidden
+    = f.collection_radio_buttons :course_type, [["RegularCourse", "regular course"], ["GroupCourse", "group course"]], :first, :last #TODO default value??
+    -# = f.button :submit
+
+-#XXX Use javascript to hide the submit button, but reappear if error occurs during the submission

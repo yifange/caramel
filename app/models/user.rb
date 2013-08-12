@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 
   include People
+
   authenticates_with_sorcery!
 
   validates_confirmation_of :password
@@ -8,7 +9,6 @@ class User < ActiveRecord::Base
   validates_presence_of :email
   validates_presence_of :first_name
   validates_presence_of :last_name
-  
   validates_uniqueness_of :email
 
   has_many :domains
@@ -21,18 +21,8 @@ class User < ActiveRecord::Base
   end
 
   protected
-  def self.all_with_region_name(type)
-    users = User.all
-    users_with_region_name = Hash.new
-    users.each do |user|
-      if user.type == type
-        users_with_region_name[user.id] = []
-        user.regions.each do |region|
-          users_with_region_name[user.id].push region.name
-        end
-      end
-    end
-    users_with_region_name
+  def self.all_ordered(type)
+    User.where(:type => type).order("first_name")
   end
 
   private
@@ -43,5 +33,5 @@ class User < ActiveRecord::Base
   def add_region(region_id)
     Domain.create(user_id: id, region_id: region_id)
   end
-  
+
 end

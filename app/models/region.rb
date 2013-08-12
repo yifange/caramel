@@ -1,4 +1,5 @@
 class Region < ActiveRecord::Base
+
   has_many :schools
   has_many :domains
   has_many :users, through: :domains
@@ -13,4 +14,5 @@ class Region < ActiveRecord::Base
   def self.all_ordered
     Region.all.order("name")
   end
+
 end

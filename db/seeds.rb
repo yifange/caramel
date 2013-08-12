@@ -52,6 +52,7 @@ Domain.create(user_id: @stf_huang.id, region_id: @r_wdc.id)
 Domain.create(user_id: @t_ge.id, region_id: @r_wdc.id)
 Domain.create(user_id: @t_chu.id, region_id: @r_wdc.id)
 Domain.create(user_id: @t_yue.id, region_id: @r_bal.id)
+Domain.create(user_id: @t_yue.id, region_id: @r_wdc.id)
 
 @s_jhu = School.create(abbrev: 'JHU', full: 'Johns Hopkins University', region_id: @r_bal.id)
 @s_ub  = School.create(abbrev: 'UB', full: 'University of Baltimore', region_id: @r_bal.id)

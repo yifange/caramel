@@ -23,4 +23,9 @@ Caramel::Application.routes.draw do
     resources :programs
   end
 
+  # regions of a teacher  
+  resources :teachers do
+    resources :regions
+  end
+
 end

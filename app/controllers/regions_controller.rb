@@ -10,8 +10,12 @@ class RegionsController < ApplicationController
   end
 
   def index
-    @regions = Region.all_ordered
-    respond_with(Region.all_ordered_json)
+    if params[:teacher_id].present?
+      respond_with(Teacher.find(params[:teacher_id]).regions_ordered_json)
+    else
+      @regions = Region.all_ordered
+      respond_with(Region.all_ordered_json)
+    end
   end
 
   private

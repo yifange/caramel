@@ -8,28 +8,48 @@ attachHandler = ->
   #   placeholder: 'select schools'
   # })
 
+  # $('#tags').editable({
+  #   inputclass: 'input-large'
+  #   select2: {
+  #     tags: ['html', 'javascript', 'css', 'ajax'],
+  #     tokenSeparators: [",", " "]
+  #   }
+  # })
+
   $('.x-editable-select2-multiple').editable({
+    ajaxOptions: {
+      type: 'PUT'
+    }
     select2: {
       multiple: true
       # id: (item) ->
-      #   return item.CountryId
-      # ajax: {
-      #   url: '/getCountries'
-      #   dataType: 'json'
-      #   data: (term, page) ->
-      #     return { query: term }
-      #   results: (data, page) ->
-      #     return { results: data }
-      # }
+        # return item.CountryId
+      ajax: {
+        url: '/regions'
+        data: (term, page) ->
+          return { query: term }
+        results: (data, page) ->
+          return { results: data }
+      }
       # formatResult: (item) ->
-      #   return item.CountryName
+        # return item.CountryName
       # formatSelection: (item) ->
-      #   return item.CountryName
-      # initSelection: (element, callback) ->
-      #   return $.get('/getCountryById', { query: element.val() },
-      #   (data) ->
-      #     callback(data)
-      #   )
+        # return item.CountryName
+      initSelection: (element, callback) ->
+        # data = element.val()
+        # $(element.val().split(",")).each( ->
+        #   alert(this)
+        #   data.push({id: this, text: this})
+        # )
+        # data = {id: element.val().split(",")[0], text: element.val().split(",")[1]}
+        # data = {id: element.val().split(",")[0], text: element.val().split(",")[1]}
+        # data = element.val()
+        # alert(element.val())
+        # callback(data)
+        return $.get(element.val(), { query: element.val() },
+          (data) ->
+            callback(data)
+        )
     }
     showbuttons: false
     type: 'select2'

@@ -4,7 +4,6 @@ class Student < ActiveRecord::Base
 
   include People
 
-
   def self.all_ordered
     users = Student.all.order("first_name")
   end

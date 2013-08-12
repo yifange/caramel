@@ -19,6 +19,12 @@ class User < ActiveRecord::Base
     add_region(region_id)
   end
 
+  def regions_ordered_json
+    regions.map do |region| 
+      {:id => region.id, :text => region.name}
+    end
+  end
+
   protected
   def self.all_ordered(type)
     User.where(:type => type).order("first_name")

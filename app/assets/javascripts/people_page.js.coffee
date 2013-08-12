@@ -24,6 +24,12 @@ attachSubmitHandler = ->
 
       error: (data, status) ->
         $(".new-entry-modal-body").html($(data.responseText).find(".new-entry-form-body").html())
+        # $.get(href + "?entry_identity=" + identity, (data, status) ->
+        # $(".new-entry-modal").show()
+        # $(".new-entry-modal-body").html($(data).find(".new-entry-modal-body").html())
+        # $(".new-entry-modal").modal({
+        #   keyboard: true
+        # })
     })
 
 $(document).ready attachNewEntryHandler

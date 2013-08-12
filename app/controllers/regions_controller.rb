@@ -11,7 +11,7 @@ class RegionsController < ApplicationController
     if @region.save
       redirect_to :controller => "regions", :action => "index"
     else
-      render:new
+      render :new, :status => :unprocessable_entity
     end
   end
 

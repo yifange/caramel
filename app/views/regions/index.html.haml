@@ -17,3 +17,5 @@
           %td
             %a.x-editable-input-text{:href => '#', 'data-url' => "/regions/#{region.id}", 'data-pk' => "#{region.id}", 'data-name' => 'name', 'data-placeholder' => 'input region name'}
               = region.name
+  %a.btn.btn-primary.new-entry{:href => "/regions/new", "data-entry" => "region"} New Region
+  = modal_for "new-entry", :modal_title => "New Region", :css_class => "new-entry"

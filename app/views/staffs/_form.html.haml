@@ -6,9 +6,7 @@
     = f.input :email, :label => "Email"
     = f.input :password, :label => "Password"
     = f.input :password_confirmation, :label => "Confirm Password"
-
-    = f.simple_fields_for :domains do |domain|
-      = domain.association :region, :include_blank => false
-      -# :label_method => :full, :value_method => :id, :label => "Region"
-  -# = f.button :submit
+# XXX select domain in modal
+    -# = f.simple_fields_for :domains do |domain|
+    -#   = domain.association :region, :include_blank => false
 

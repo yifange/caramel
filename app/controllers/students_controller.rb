@@ -27,7 +27,7 @@ class StudentsController < ApplicationController
     if @student.save
       redirect_to :controller => "students", :actoin => "index"
     else
-      render :new
+      render :new, :status => :unprocessable_entity
     end
   end
 

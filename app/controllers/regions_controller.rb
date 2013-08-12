@@ -2,6 +2,19 @@ class RegionsController < ApplicationController
 
   respond_to :html, :json
 
+  def new
+    @region = Region.new
+  end
+
+  def create
+    @region = Region.new(region_params)
+    if @region.save
+      redirect_to :controller => "regions", :action => "index"
+    else
+      render:new
+    end
+  end
+
   def update
     @region = Region.find(params[:pk])
     params[:value] = {params[:name] => params[:value]}
@@ -16,7 +29,7 @@ class RegionsController < ApplicationController
 
   private
   def region_params
-    params.require(:value).permit(:name)
+    params.require(:region).permit(:name)
   end
 
 end

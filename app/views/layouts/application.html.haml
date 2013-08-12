@@ -24,13 +24,23 @@
                 %a{:href => ''} Semester One
               %li
                 %a{:href => ''} Semester Two
-        .pull-right
+        %ul.nav.pull-right
           %a.brand#nav-right
             %i.icon-user.icon-white
-            = current_user.name
-          %ul.nav
-            %li
-              %a{:href => '/session_page/signout'} Sign out
+          %li.dropdown
+            %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => ''}
+              = current_user.name
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                %a{:href => '/profiles'} Profile
+              %li
+                %a{:href => '#'} B
+              %li
+                %a{:href => '/session_page/signout'} Sign out
+          -# %ul.nav
+          -#   %li
+          -#     %a{:href => '/session_page/signout'} Sign out
     .container-fluid
       .row-fluid
         .span2.content

@@ -5,7 +5,7 @@ Caramel::Application.routes.draw do
   get 'session_page/verify' => 'session_page#verify'
   get 'session_page/signout' => 'session_page#signout'
 
-  resources :staffs, :teachers, :regions, :programs, :instruments, :students
+  resources :staffs, :teachers, :regions, :programs, :instruments, :students, :profiles, :admins
 
   # teachers of a program
   # instruments of a program  

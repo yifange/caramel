@@ -7,7 +7,6 @@ attachTagClickHandler = ->
     $(".select2-search-choice").unbind("click")
     $(".select2-search-choice").bind("click", clickHandlerA)
     $( ->
-      alert "~"
       $(".select2-search-choice").popover()
     )
 

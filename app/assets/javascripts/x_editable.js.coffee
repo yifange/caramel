@@ -72,13 +72,24 @@ attachHandler = ->
 
   $(".x-editable.roster-date").editable({
     type: "date"
+    onblur: "submit"
     showbuttons: false
+    ajaxOptions: {
+      type: "PUT"
+    }
   })
   $(".x-editable.roster-notes").editable({
-    placeholder: "notes, ctrl-enter to submit",
+    type: "textarea"
+    onblur: "submit"
+    placeholder: "notes, ctrl-enter to submit"
     showbuttons: false
     inputclass: "input-small"
     rows: 2
+    ajaxOptions: {
+      type: "PUT"
+    }
+
+
   })
 $(document).ready attachHandler
 $(document).on "page:load", attachHandler

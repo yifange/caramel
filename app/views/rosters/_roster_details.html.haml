@@ -5,8 +5,8 @@
       = content_tag :p, course.summary[1]
       = content_tag :p, course.summary[2]
   %td
-    %a.x-editable.roster-date{:href => "#", "data-pk" => "#{roster.id}", "data-value" => roster.start_date}
+    %a.x-editable.roster-date{:href => "#", "data-pk" => "#{roster.id}", "data-url" => "/rosters/#{roster.id}", "data-value" => roster.start_date, "data-name" => "start_date"}
   %td
-    %a.x-editable.roster-date{:href => "#", "data-pk" => "#{roster.id}", "data-value" => roster.end_date}
+    %a.x-editable.roster-date{:href => "#", "data-pk" => "#{roster.id}", "data-url" => "/rosters/#{roster.id}", "data-value" => roster.end_date, "data-name" => "end_date"}
   %td
-    %a.x-editable.roster-notes{:href => "#", "data-type" => "textarea", "data-pk" => "#{roster.id}", "data-name" => "notes"}
+    %a.x-editable.roster-notes{:href => "#", "data-pk" => "#{roster.id}", "data-url" => "/rosters/#{roster.id}", "data-name" => "notes", "data-value" => roster.notes}

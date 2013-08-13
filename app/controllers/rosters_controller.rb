@@ -13,7 +13,19 @@ class RostersController < ApplicationController
       @courses = @program.courses.includes(:students)
       @students = @program.students.includes(:rosters, :courses)
     end
+  end
 
+  def edit
+  end
 
+  def update
+    name = params[:name]
+    value = params[:value]
+    roster = Roster.find(params[:pk])
+    if roster.update_attribute(name, value)
+      render :text => "success"
+    else
+      render :text => "error", :status => :unprocessable_entity
+    end
   end
 end

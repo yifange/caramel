@@ -4,6 +4,18 @@
       %th{:colspan => 4}
         = student.name
         %a.btn.btn-primary.pull-right{:href => "#"}
-          action
-
-
+          add
+    %tr
+      %th{:colspan => 4}
+        Regular Class
+    - student.rosters.each do |roster|
+      - course = roster.course
+      - if course[:course_type] == "RegularCourse"
+        = render "roster_details", :course => course, :roster => roster
+    %tr
+      %th{:colspan => 4}
+        Group Class
+    - student.rosters.each do |roster|
+      - course = roster.course
+      - if course.course_type == "GroupCourse"
+        = render "roster_details", :course => course, :roster => roster

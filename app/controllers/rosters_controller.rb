@@ -11,7 +11,7 @@ class RostersController < ApplicationController
     if @program
       @program_id = @program[:id]
       @courses = @program.courses.includes(:students)
-      @students = @program.students.includes(:courses)
+      @students = @program.students.includes(:rosters, :courses)
     end
 
 

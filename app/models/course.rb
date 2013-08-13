@@ -13,7 +13,14 @@ class Course < ActiveRecord::Base
     course_type == "GroupCourse"
   end
 
-  
+  def summary
+    time_str = start_time.strftime("%I:%M %p") + " - " + end_time.strftime("%I:%M %p")
+    if course_type == "GroupCourse"
+      ["Group Class", "#{date.strftime("%-d %b")}", time_str]
+    else
+      ["Regular Class", "#{Date::DAYNAMES[day_of_week]}", time_str]
+    end
+  end
   private
   def events_must_in_available_time_slots
     available = false

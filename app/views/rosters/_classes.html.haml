@@ -1,0 +1,52 @@
+%table.classes-table.table.table-striped.table-bordered
+  %tr
+    %th{:colspan => 2}
+      Regular Class
+  - @courses.where(:course_type => "RegularCourse").each do |course|
+    - students = course.students
+    %tr
+      %td{:rowspan => "#{students.count}"}
+        - date = course.date
+        %a{:href => "/courses?program_id=" + @program_id.to_s + "&year=" + date.year.to_s + "&month=" + date.month.to_s + "&day=" + date.day.to_s}
+          - summary = course.summary
+          = content_tag :p, summary[1]
+          = content_tag :p, summary[2]
+      %td
+        - if students.count == 0
+          %span.empty-class
+            empty
+        - else
+          %span.student-name
+            = students.first.name
+    - unless students.empty?
+      - students[1..-1].each do |student|
+        %tr
+          %td
+            %span.student-name
+              = student.name
+  %tr
+    %th{:colspan => 2}
+      Group Class
+  - @courses.where(:course_type => "GroupCourse").each do |course|
+    - students = course.students
+    %tr
+      %td{:rowspan => "#{students.count}"}
+        - date = course.date
+        %a{:href => "/courses?program_id=" + @program_id.to_s + "&year=" + date.year.to_s + "&month=" + date.month.to_s + "&day=" + date.day.to_s}
+          - summary = course.summary
+          = content_tag :p, summary[1]
+          = content_tag :p, summary[2]
+      %td
+        - if students.count == 0
+          %span.empty-class
+            empty
+
+        - else
+          %span.student-name
+            = students.first.name
+    - unless students.empty?
+      - students[1..-1].each do |student|
+        %tr
+          %td
+            %span.student-name
+              = student.name

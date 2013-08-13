@@ -10,7 +10,10 @@ class RostersController < ApplicationController
     @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
     if @program
       @program_id = @program[:id]
-      @courses = @program.courses
+      @courses = @program.courses.includes(:students)
+      @students = @program.students.includes(:courses)
     end
+
+
   end
 end

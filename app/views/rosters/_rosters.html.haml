@@ -1,0 +1,9 @@
+%table.rosters-table.table.table-striped.table-bordered
+  - @students.each do |student|
+    %tr
+      %th{:colspan => 4}
+        = student.name
+        %a.btn.btn-primary.pull-right{:href => "#"}
+          action
+
+

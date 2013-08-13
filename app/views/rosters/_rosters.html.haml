@@ -3,11 +3,14 @@
     %tr
       %th{:colspan => 4}
         = student.name
-        %a.btn.btn-primary.pull-right{:href => "#"}
-          add
+        %a.btn.pull-right{:href => "#"}
+          actions
     %tr
       %th{:colspan => 4}
         Regular Class
+        %a.btn.pull-right.new-roster{:href => "/rosters/new?program_id=" + @program_id.to_s + "&student_id=" + student.id.to_s + "&term_id" + @term_id.to_s + "&type=regular"}
+          %i.icon-plus
+          
     - student.rosters.each do |roster|
       - course = roster.course
       - if course[:course_type] == "RegularCourse"
@@ -15,6 +18,8 @@
     %tr
       %th{:colspan => 4}
         Group Class
+        %a.btn.pull-right.new-roster{:href => "/rosters/new?program_id=" + @program_id.to_s + "&student_id=" + student.id.to_s + "&term_id" + @term_id.to_s + "&type=group"}
+          %i.icon-plus
     - student.rosters.each do |roster|
       - course = roster.course
       - if course.course_type == "GroupCourse"

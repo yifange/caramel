@@ -14,7 +14,23 @@ class RostersController < ApplicationController
       @students = @program.students.includes(:rosters, :courses)
     end
   end
+  
+  def new
+    course_type = params[:type]
+    program_id = params[:program_id]
 
+    if course_type == "group"
+      @courses = Course.where(:program_id => program_id, :course_type => "GroupCourse")
+    elsif course_type == "regular"
+      @courses = Course.where(:program_id => program_id, :course_type => "RegularCourse")
+    else
+      @courses = Course.where(:program_id => program_id)
+    end
+
+    @roster = Roster.new
+    render :layout => false
+
+  end
   def edit
   end
 

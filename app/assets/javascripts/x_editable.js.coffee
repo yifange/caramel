@@ -88,8 +88,7 @@ attachHandler = ->
     ajaxOptions: {
       type: "PUT"
     }
-
-
   })
+
 $(document).ready attachHandler
 $(document).on "page:load", attachHandler

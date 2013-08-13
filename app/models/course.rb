@@ -21,6 +21,9 @@ class Course < ActiveRecord::Base
       ["Regular Class", "#{Date::DAYNAMES[day_of_week]}", time_str]
     end
   end
+  def summary_text
+    summary[1..-1].join(", ")
+  end
   private
   def events_must_in_available_time_slots
     available = false

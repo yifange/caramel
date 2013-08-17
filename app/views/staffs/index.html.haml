@@ -1,0 +1,33 @@
+- content_for :title do
+  people/staff
+
+- content_for :sidemenu do
+  - render '/layouts/people_page_sidebar'
+  
+- content_for :main do
+  %table.table.table-bordered.table-striped{:style => 'clear: both'}
+    %tr
+      %th{:width => '13px'}
+      %th{:width => '310px'} Name
+      %th{:width => '280px'} Email
+      %th Region
+      %th
+    - @staffs.each do |staff|
+      %tr
+        %td
+          %a
+            %i.icon-remove
+        %td
+          %a.x-editable-input-user-name{:href => '#', 'data-url' => "/staffs/#{staff.id}", 'data-pk' => "#{staff.id}"}
+            = staff.name
+        %td
+          %a.x-editable-input-text{:href => '#', 'data-url' => "/staffs/#{staff.id}", 'data-pk' => "#{staff.id}", 'data-name' => 'email', 'data-placeholder' => 'input email'}
+            = staff.email
+        %td
+          %a.x-editable-select2-singular{:href => '#', 'data-source' => '/regions','data-url' => "/staffs/#{staff.id}", 'data-pk' => "#{staff.id}", 'data-name' => 'region'}
+            = staff.regions[0].name
+        %td
+          %button.btn{'type' => 'button'}
+            Reset Password
+  %a.btn.btn-primary.new-entry{:href => "/staffs/new", "data-entry" => "staff"} New Staff
+  = modal_for "new-entry", :modal_title => "New Staff", :css_class => "new-entry"

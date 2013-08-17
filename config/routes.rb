@@ -1,19 +1,31 @@
 Caramel::Application.routes.draw do
-	get 'people' => 'people#staff'
-	get 'programs' => 'programs#regions'
-	get 'classes' => 'classes#calendar'
+  get 'calendars/week' => 'calendars#index_week', :as => :calendar_week
+  get 'lunchpads/api' => 'lunchpads#api'
+  post 'lunchpads/lunch' => 'lunchpads#lunch'
+  resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses, :rosters
+	root 'session_page#signin'
 
-  get "programs/get_teachers" => "programs#get_teachers"
-  post "programs/save_teachers" => "programs#save_teachers"
+  get 'session_page/signin' => 'session_page#signin'
+  get 'session_page/verify' => 'session_page#verify'
+  get 'session_page/signout' => 'session_page#signout'
 
-  get "programs/get_instruments" => "programs#get_instruments"
-  post "programs/save_instruments" => "programs#save_instruments"
+  resources :staffs, :teachers, :regions, :programs, :instruments, :students, :profiles, :admins, :program_types, :schools
 
-  get "lunchpads" => "lunchpads#index"
-  get "lunchpads/api" => "lunchpads#api"
-  post "lunchpads/lunch" => "lunchpads#lunch"
+  # teachers of a program
+  # instruments of a program  
+  resources :programs do
+    resources :teachers
+    resources :instruments
+  end
 
-	get ':controller/:action/'
+  # programs of a teacher  
+  resources :teachers do
+    resources :programs
+  end
 
-	root 'session#signin'
+  # regions of a teacher  
+  resources :teachers do
+    resources :regions
+  end
+
 end

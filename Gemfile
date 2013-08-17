@@ -27,17 +27,22 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+gem 'simple_form'
+gem 'haml-rails'
+gem 'bootstrap-sass'
+gem 'jquery-ui-rails'
+gem 'bootstrap-timepicker-rails', :require => 'bootstrap-timepicker-rails', :git => 'git://github.com/tispratik/bootstrap-timepicker-rails.git'
+gem 'bootstrap-datepicker-rails'
+# gem 'bootstrap-select-rails'
+gem 'select2-rails'
+gem 'bootstrap-x-editable-rails'
+# gem 'rails-footnotes'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
 
-gem 'haml-rails'
-gem 'bootstrap-sass'
 gem 'sorcery'
-gem 'select2-rails'
-gem 'bootstrap-x-editable-rails'
-gem 'simple_form'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

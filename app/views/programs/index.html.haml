@@ -1,0 +1,57 @@
+- content_for :title do
+  programs/programs
+
+- content_for :sidemenu do
+  - render '/layouts/programs_page_sidebar'
+
+- content_for :main do
+  %ul.nav.nav-tabs
+    - i = 0
+    - @schools.each do |school|
+      %li{:class => (i == 0 ? 'active' : nil)}
+        %a.tab-hover{:href => "#tab#{school.id}", "data-toggle" => "tab", :title => "#{school.full}"}
+          = school.abbrev
+      - i += 1
+  .tab-content
+    - i = 0
+    - @schools.each do |school|
+      .tab-pane{:class => (i == 0 ? 'active' : nil), :id => "tab#{school.id}"}
+
+        %a.btn.btn-primary.new-entry{:href => "/programs/new", "data-entry" => "program"} New Program
+        = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
+        %p
+
+        %table.table.table-bordered.table-striped{:style => 'clear: both'}
+          %tr
+            %th{:width => '200px'} INSTRUMENT
+            %th{:width => '200px'} PROGRAM TYPE
+            %th{:width => '310px'} REGULAR / GROUP CLASS PER YEAR
+            %th 
+          - school.programs.each do |program|
+            %tr.accordion-group
+              %td
+                %a.x-editable-select2-singular{:href => '#', 'data-source' => '/instruments','data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}", 'data-name' => 'instrument_id'}
+                  = Instrument.find(program.instrument_id).name
+              %td
+                %a.x-editable-select2-singular{:href => '#', 'data-source' => '/program_types','data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}", 'data-name' => 'program_type_id'}
+                  = ProgramType.find(program.program_type_id).name
+              %td
+                %a.x-editable-input-number{:href => '#', 'data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}"}
+                  = program.regular_group_course
+              %td
+                .accordion-heading
+                  .accordion-toggle{:style => 'padding-top: 0px; padding-bottom: 0px;'}
+                    %button.btn{'data-toggle' => 'collapse', :href => "#collapse#{program.id}"}
+                      Detail
+                      %span.caret
+            %tr
+              %td{'colspan' => "4", :style => "height: auto"}
+                .accordion-body.collapse{:id => "collapse#{program.id}"}
+                  .accordion-inner{:style => 'border-top-width: 0px'}
+                    .well
+                      TEACHERS:&nbsp&nbsp
+                      %a.x-editable-select2-multiple{:href => '#', 'data-value' => 'ru'}
+                    .well
+                      STUDENTS:&nbsp&nbsp
+                      %a.x-editable-select2-multiple{:href => '#', 'data-value' => 'ru'}
+      - i += 1

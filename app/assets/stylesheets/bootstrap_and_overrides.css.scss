@@ -4,7 +4,7 @@
 // make the brand white
 .navbar-inverse .brand {
 	color: #ffffff;
-	cursor: default;
+	// cursor: default;
 	font-weight: bold;
 }
 
@@ -24,17 +24,24 @@
 	vertical-align: middle;
 }
 
-// the width of input field
-.input-medium {
-	width: 100px;
+.table {
+  table-layout: fixed;
 }
 
 // the min width of select2
 .select2-container {
 	min-width: 200px;
 }
+
 #nav-right {
 	font-size: 100%;
 	font-weight: normal;
 }
 
+.subnav {
+  top: 40px;
+}
+
+.container-fluid {
+  padding-top: 50px;
+}

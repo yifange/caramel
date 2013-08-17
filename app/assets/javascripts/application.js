@@ -13,7 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require turbolinks
+//= require bootstrap-timepicker
+//= require bootstrap-datepicker
 //= require select2
 //= require bootstrap-editable
-//= require turbolinks
 //= require_tree .

@@ -1,2 +1,0 @@
-module AttendenceMarkingsHelper
-end

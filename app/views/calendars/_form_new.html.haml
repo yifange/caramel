@@ -1,0 +1,28 @@
+#calendar-form-body
+  = simple_form_for @calendar do |f|
+    %div.bootstrap-timepicker.input-append.input.time.optional
+      %input#calendar_start_time.dateselect-time.input-small{:type => 'text', :name => "calendar[start_time]"}
+      %span.add-on
+        %i.icon-time
+    %span
+      \-
+    %div.bootstrap-timepicker.input-append.input.time.optional
+      %input#calendar_end_time.dateselect-time.input-small{:type => 'text', :name => "calendar[end_time]"}
+      %span.add-on
+        %i.icon-time
+    %div.input-append.date
+      %input#calendar_date{:type => 'text', :name => "calendar[date]"}
+      %span.add-on
+        %i.icon-th
+    -# = f.input :start_time
+    -# = f.input :end_time
+    -# = f.input :date, :default => @date ? Date.strptime(@date) : Date.today
+    %br
+    %div.btn-group{"data-toggle-name" => "calendar_marking_id", "data-toggle" => "buttons-radio"}
+      %button.btn{:type => "button", :value => "1", "data-toggle" => "button"}
+        %i.icon-ok
+      %button.btn{:type => "button", :value => "2", "data-toggle" => "button"}
+        %i.icon-remove
+          %input{:type => "hidden", :name => "calendar_marking_id", :value => "0"}
+
+    = f.button :submit, :id => "calendar-form-submit"

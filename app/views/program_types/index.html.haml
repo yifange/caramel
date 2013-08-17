@@ -1,0 +1,21 @@
+- content_for :title do
+  programs/program types
+
+- content_for :sidemenu do
+  - render '/layouts/programs_page_sidebar'
+
+- content_for :main do
+  %table.table.table-bordered.table-striped{:style => 'clear: both'}
+    %tr
+      %th{:width => '13px'}
+      %th NAME
+      - @program_types.each do |program_type|
+        %tr
+          %td
+            %a
+              %i.icon-remove
+          %td
+            %a.x-editable-input-text{:href => '#', 'data-url' => "/program_types/#{program_type.id}", 'data-pk' => "#{program_type.id}", 'data-name' => 'full', 'data-placeholder' => 'input full name'}
+              = program_type.name
+  %a.btn.btn-primary.new-entry{:href => "/program_types/new", "data-entry" => "program_type"} New Program Type
+  = modal_for "new-entry", :modal_title => "New Program Type", :css_class => "new-entry"

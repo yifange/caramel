@@ -1,3 +1,5 @@
-= simple_form_for @instrument do |f|
-  = f.input :name
-  = f.button :wrapped, :cancel => instruments_path
+.new-entry-form-body
+  = simple_form_for @instrument, :html => {:class => 'new_entry'} do |f|
+    = f.input :name, :label => "Instrument Name"
+
+

@@ -53,6 +53,7 @@ class AttendancesController < ApplicationController
       rosters.each do |r|
 
         course = r.course
+        break unless course
         if course.course_type == "GroupCourse"
           r.attendances.each do |attendance|
             attendance_hash[:group][attendance.date] = attendance

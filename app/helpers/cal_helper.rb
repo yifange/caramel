@@ -126,24 +126,25 @@ module CalHelper
           grid_text = attendance_hash[:regular][day].attendance_marking.abbrev
         end
         rosters_regular = roster_hash[day.wday] || []
-        rosters_regular.select! do |roster|
+        filtered_rosters_regular = rosters_regular.select do |roster|
           course = roster.course
           available = false 
+
           @background_calendar.where(:date => day, :term_id => @term_id).each do |cal|
-            if cal.start_time <= course.start_time and course.end_time <= cal.end_time
+            if cal.start_time <= course.start_time and course.end_time <= cal.end_time and cal.available == true
               available = true
               break
             end
           end
           available
         end
-        regular_roster_ids = rosters_regular.map {|r| r.id}
+        regular_roster_ids = filtered_rosters_regular.map {|r| r.id}
         # XXX regular class on the day? Need to constrain the date range 
         class_type = "fmc-grid" 
         class_type << " regular-class-day class-day" unless regular_roster_ids.empty?
 
         roster_id = regular_roster_ids.first
-        roster = rosters_regular.first
+        roster = filtered_rosters_regular.first
         time_title = nil
         link_class = "fmc-grid-link"
         if roster

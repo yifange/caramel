@@ -26,7 +26,9 @@ class Roster < ActiveRecord::Base
   private
 
   def set_enrollment
-    program_id = course.program.id
-    self.enrollment_id = Enrollment.where(:program_id => program_id, :student_id => student_id).first.id
+    if course
+      program_id = course.program.id
+      self.enrollment_id = Enrollment.where(:program_id => program_id, :student_id => student_id).first.id
+    end
   end
 end

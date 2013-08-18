@@ -31,6 +31,15 @@ class RostersController < ApplicationController
     render :layout => false
 
   end
+  def create
+    roster = Roster.new(roster_params)
+    if roster.save
+      render :text => "success"
+    else
+      render :new
+    end
+
+  end
   def edit
   end
 
@@ -43,5 +52,9 @@ class RostersController < ApplicationController
     else
       render :text => "error", :status => :unprocessable_entity
     end
+  end
+  private
+  def roster_params
+    params.require(:roster).permit(:course_id, :student_id, :start_date, :end_date)
   end
 end

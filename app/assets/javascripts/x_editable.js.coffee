@@ -1,32 +1,21 @@
 attachHandler = ->
   $.fn.editable.defaults.mode = 'inline'
 
-  $('.x-editable-select2-multiple').editable({
-    ajaxOptions: {
-      type: 'PUT'
-    }
-    select2: {
-      multiple: true
-      # id: (item) ->
-        # return item.CountryId
-      ajax: {
-        url: '/regions'
-        data: (term, page) ->
-          return { query: term }
-        results: (data, page) ->
-          return { results: data }
-      }
-      initSelection: (element, callback) ->
-        if element.val().split(",")[0] == 'url'
-          window.url = element.val().split(",")[1]
-        element.val('')
-        return $.get(window.url,
-          (data) ->
-            callback(data))
-    }
-    showbuttons: false
-    type: 'select2'
-  })
+  $('.select2-multiple').select2()
+
+  $(".select2-multiple").on("change", (e) ->
+    if e.added
+      data = {id: e.added.id, pk: $(this).data("pk")}
+    else
+      data = {id: e.removed.id, pk: $(this).data("pk")}
+    $.ajax(
+      type: "PUT",
+      url: $(this).data("value")
+      data: data
+      dataType: "json", results: (data, page) ->
+        return {results: data}
+    )
+  )
 
   # select2 singular
   $('.x-editable-select2-singular').editable({

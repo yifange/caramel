@@ -28,18 +28,14 @@ class User < ActiveRecord::Base
   end
 
   def regions_ordered_json
-    regions.map do |region| 
-      {:id => region.id, :text => region.name}
+    regions_ordered = regions.order("name")
+    result = []
+    regions_ordered.each do |region| 
+      result.push({:id => region.id, :text => region.name})
     end
-  end
-
-  def regions_ordered_str
-    result = ""
-    regions.each do |region|
-      result += region.name
-      result += ', '
-    end
-    result.chop.chop
+    puts 'dddddddddddddddddddddddddddddddd'
+    puts result[0][:id]
+    result
   end
 
   def self.all_ordered(type)

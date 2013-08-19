@@ -10,3 +10,8 @@
 .name-input {
   margin-right: 5px;
 }
+
+.select2-container-multi .select2-choices .select2-search-field input {
+  padding-top: 3px;
+  padding-bottom: 2px;
+}

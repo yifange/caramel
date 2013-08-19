@@ -18,6 +18,8 @@ initRosterEditable = ->
       type: "PUT"
     }
   })
+initDropdown = ->
+  $('.dropdown-toggle').dropdown()
 
 newRosterHandler = ->
   $(".new-roster").on "click", (e) ->
@@ -52,5 +54,9 @@ rosterModalSubmitHandler = ->
 $(document).ready newRosterHandler
 $(document).ready rosterModalSubmitHandler
 $(document).ready initRosterEditable
+# $(document).ready initDropdown
+
 $(document).on "page:load", newRosterHandler
 $(document).on "page:load", rosterModalSubmitHandler
+$(document).on "page:load", initRosterEditable
+# $(document).on "page:load", initDropdown

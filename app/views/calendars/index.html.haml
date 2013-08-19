@@ -5,24 +5,30 @@
 - content_for :subnav do
   .navbar.navbar-fixed-top.subnav
     .navbar-inner
-      %ul.nav.nav-pills.unselectable
-        %li
-          %a#subnav-today{:href => "#"}
-            now
-        %li
-          %a#subnav-prev{:href => "#"}
-            <
-        %li
-          %a#subnav-next{:href => "#"}
-            >
-        %li
-          %p.navbar-text#subnav-text
-      %ul.nav.nav-pills.pull-right.unselectable
-        = nav_filter_for "school", @schools, :base_url => "/calendars", :year => params[:year]
-        %li
-          = link_to_if @school, "week", calendar_week_path(:school_id => @school[:id]), :id => "subnav-week"
-        %li.active
-          = link_to "year", calendars_path(:school_id => @school[:id]), :id => "subnav-year"
+      .container
+        %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#subnav-collapse"}
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        #subnav-collapse.nav-collapse.collapse
+          %ul.nav.nav-pills.unselectable
+            %li
+              %a#subnav-today{:href => "#"}
+                now
+            %li
+              %a#subnav-prev{:href => "#"}
+                <
+            %li
+              %a#subnav-next{:href => "#"}
+                >
+            %li
+              %p.navbar-text#subnav-text
+          %ul.nav.nav-pills.pull-right.unselectable
+            = nav_filter_for "school", @schools, :base_url => "/calendars", :year => params[:year]
+            %li
+              = link_to_if @school, "week", calendar_week_path(:school_id => @school[:id]), :id => "subnav-week"
+            %li.active
+              = link_to "year", calendars_path(:school_id => @school[:id]), :id => "subnav-year"
 
 - content_for :main do
   = annual_calendar_for @calendars, :year => @year.to_i, :school => @school do |c|

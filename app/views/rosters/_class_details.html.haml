@@ -2,8 +2,21 @@
 %tr
   %td{:rowspan => "#{students.count}"}
     - date = course.date
-    %a{:href => "/courses?program_id=" + @program_id.to_s + "&year=" + date.year.to_s + "&month=" + date.month.to_s + "&day=" + date.day.to_s}
-      = content_tag :span, course.name
+    .dropdown
+      %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+        %span
+          = course.name
+        %span.caret
+      %ul.dropdown-menu{:role => "menu", "aria-labelledby" => "dropdownMenu"}
+        %li
+          %a{:href => "#", :tabindex => "-1"}
+            Add a student
+        %li
+          %a{:href => "#", :tabindex => "-1"}
+            Update class
+        %li
+          %a{:href => "/courses?program_id=" + @program_id.to_s + "&year=" + date.year.to_s + "&month=" + date.month.to_s + "&day=" + date.day.to_s, :tabindex => "-1"}
+            Show in calendar
   %td
     - if students.count == 0
       %span.empty-class

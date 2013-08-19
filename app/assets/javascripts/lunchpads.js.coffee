@@ -1,4 +1,7 @@
 $ ->
+  $(".dropdown-menu.strange").on "click", "#show-in-calendar", (e) ->
+    e.preventDefault()
+    alert('helo')
   $(".dropdown-menu a").on "click", ->
     # console.log($("p", this).html())
     $("a.dropdown-toggle").text($("p", this).text())
@@ -13,9 +16,7 @@ $ ->
   $.fn.editable.defaults.mode = 'inline'
   $("#country").editable({
     # tags: true,
-    # showbuttons: false,
-    # source: [{id: 'gb', text: "Great Britain"}]
-    # autotext: "never",
+    # showbuttons: false, # source: [{id: 'gb', text: "Great Britain"}] # autotext: "never",
     # select2: {
     #   multiple: true
     # }

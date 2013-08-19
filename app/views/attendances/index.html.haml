@@ -25,10 +25,6 @@
               %p.navbar-text#subnav-text
           %ul.nav.nav-pills.pull-right.unselectable
             = nav_filter_for "program", @programs, :base_url => "/attendances", :year => params[:year], :month => params[:month]
-            %li
-              = link_to "roster", rosters_path(:program_id => @program_id, :term_id => @term_id), :id => "subnav-roster"
-            %li.active
-              = link_to "attendance", attendances_path(:program_id => @program_id, :term_id => @term_id), :id => "subnav-attendance"
 
 - content_for :main do
   = flat_monthly_calendar_for @program_hash, :year => @year.to_i, :month => @month.to_i, :program => @program, :background_calendar => @background_calendar, :term_id => @term_id do |f|

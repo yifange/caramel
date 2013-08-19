@@ -6,7 +6,7 @@ class RostersController < ApplicationController
     if current_user[:type] == "Teacher"
       @teacher = Teacher.find(current_user[:id])
     end
-    @programs = @teacher.programs.where(:term_id => @term_id).order("school_id ASC")
+    @programs = @teacher.programs.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
     @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
     if @program
       @program_id = @program[:id]

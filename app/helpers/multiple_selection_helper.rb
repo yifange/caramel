@@ -1,6 +1,6 @@
 module MultipleSelectionHelper
 
-  def multiple_selection(options, init_selected_options, pk, url)
+  def multiple_selection(options, init_selected_options, pk, url, name)
     buf = "".html_safe
     options_buf = "".html_safe
     options.each do |option|
@@ -13,7 +13,7 @@ module MultipleSelectionHelper
       end
       options_buf += content_tag("option", option[:text], value: option[:id], selected: ("selected" if selected))
     end
-    buf.concat(content_tag("select", options_buf, multiple: true, class: "select2-multiple", 'data-pk' => pk, 'data-value' => url))
+    buf.concat(content_tag("select", options_buf, multiple: true, class: "select2-multiple", 'data-pk' => pk, 'data-value' => url, 'data-name' => name))
   end
 
 end

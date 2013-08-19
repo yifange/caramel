@@ -18,8 +18,7 @@
         %li
           %p.navbar-text#subnav-text
       %ul.nav.nav-pills.pull-right.unselectable
-        = nav_filter_for "school", @schools, :base_url => "/calendars", :year => params[:year]  do |school|
-          = content_tag :span, school.full
+        = nav_filter_for "school", @schools, :base_url => "/calendars", :year => params[:year]
         %li
           = link_to_if @school, "week", calendar_week_path(:school_id => @school[:id]), :id => "subnav-week"
         %li.active

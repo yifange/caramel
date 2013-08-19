@@ -1,29 +1,28 @@
 module NavFilterHelper
-  def nav_filter_for(name, objs, *args, &block)
+  def nav_filter_for(name, objs, *args)
     return unless objs
     options = args.last.is_a?(Hash) ? args.pop : {}
     content_tag :li, :class => "dropdown pull-right" do
       name_content = content_tag :a, (content_tag :span, name, :id => "subnav-#{name}-name").concat(content_tag :b, nil, :class => "caret"), :class => "dropdown-toggle", "data-toggle" => "dropdown", :href => "#"
       menu_content = content_tag :ul, :role => "menu", "aria-labelledby" => "dlabel", :class => "dropdown-menu" do
         if name == "school"
-          school_menu(objs, options, &block)
+          school_menu(objs, options)
         elsif name == "program"
-          program_menu(objs, options, &block)
+          program_menu(objs, options)
         end
       end
       name_content.concat(menu_content)
     end
   end
 
-  def school_menu(objs, options, &block)
+  def school_menu(objs, options)
     base_url = options[:base_url]
     year = options[:year]
     month = options[:month]
     day = options[:day]
     buf = "".html_safe
     objs.each do |obj|
-      url = base_url + "?school_id=#{obj.id}" if obj.is_a? School
-      url = base_url + "?program_id=#{obj.id}" if obj.is_a? Program
+      url = base_url + "?school_id=#{obj.id}"
       url += "&year=#{year}" if year
       url += "&month=#{month}" if month
       url += "&day=#{day}" if day
@@ -36,7 +35,7 @@ module NavFilterHelper
     end
     buf
   end
-  def program_menu(objs, options, &block)
+  def program_menu(objs, options)
     base_url = options[:base_url]
     year = options[:year]
     month = options[:month]

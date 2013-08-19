@@ -24,8 +24,7 @@
             %li
               %p.navbar-text#subnav-text
           %ul.nav.nav-pills.pull-right.unselectable
-            = nav_filter_for "program", @programs, :base_url => "/attendances", :year => params[:year], :month => params[:month] do |program|
-              = (content_tag :p, program.school.full, :class => "dropdown-item-school-name").concat(content_tag :p, program.program_type.name + ", " + program.instrument.name, :class => "dropdown-item-program")
+            = nav_filter_for "program", @programs, :base_url => "/attendances", :year => params[:year], :month => params[:month]
             %li
               = link_to "roster", rosters_path(:program_id => @program_id, :term_id => @term_id), :id => "subnav-roster"
             %li.active

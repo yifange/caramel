@@ -3,9 +3,7 @@
   %td{:rowspan => "#{students.count}"}
     - date = course.date
     %a{:href => "/courses?program_id=" + @program_id.to_s + "&year=" + date.year.to_s + "&month=" + date.month.to_s + "&day=" + date.day.to_s}
-      - summary = course.summary
-      = content_tag :p, summary[1]
-      = content_tag :p, summary[2]
+      = content_tag :span, course.name
   %td
     - if students.count == 0
       %span.empty-class

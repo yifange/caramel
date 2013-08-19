@@ -4,9 +4,8 @@ class Roster < ActiveRecord::Base
   belongs_to :enrollment
   has_many :attendances
   before_save :set_enrollment
-  def course_summary
-    c = course
-    c.id.to_s + " " + c.course_type
+  def course_name
+    course.name
   end
   def course_type
     course.course_type

@@ -98,6 +98,6 @@ class CoursesController < ApplicationController
     r
   end
   def course_params
-    params.require(:course).permit(:date, :start_time, :end_time, :day_of_week, :course_type, :program_id)
+    params.require(:course).permit(:date, :start_time, :end_time, :day_of_week, :course_type, :program_id, :name)
   end
 end

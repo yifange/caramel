@@ -33,6 +33,5 @@
 - content_for :main do
   = flat_monthly_calendar_for @program_hash, :year => @year.to_i, :month => @month.to_i, :program => @program, :background_calendar => @background_calendar, :term_id => @term_id do |f|
     = f.draw_calendar
-  = content_tag :span, "Teacher: " + @teacher.first_name + @teacher.last_name
   = modal_for "attendance", :modal_title => "attendance", :delete_button => true
 

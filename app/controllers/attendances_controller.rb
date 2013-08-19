@@ -14,6 +14,7 @@ class AttendancesController < ApplicationController
   end
   def new
     @attendance = Attendance.new
+    @rosters = Enrollment.find(params[:enrollment_id]).rosters.includes(:course)
     render :layout => false
   end
   def edit

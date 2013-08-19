@@ -1,7 +1,10 @@
 attachHandler = ->
   $.fn.editable.defaults.mode = 'inline'
 
-  $('.select2-multiple').select2()
+  $('.select2-multiple').select2({
+    width: '100%'
+    closeOnSelect: false
+  })
 
   $(".select2-multiple").on("change", (e) ->
     data = {pk: $(this).data("pk"), name: $(this).data("name")}

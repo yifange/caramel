@@ -10,18 +10,18 @@
           %span.icon-bar
           %span.icon-bar
         #subnav-collapse.nav-collapse.collapse
-          %ul.nav.nav-pills.unselectable
-            %li
-              %a#subnav-today{:href => "#"}
-                now
-            %li
-              %a#subnav-prev{:href => "#"}
-                <
-            %li
-              %a#subnav-next{:href => "#"}
-                >
-            %li
-              %p.navbar-text#subnav-text
+          -# %ul.nav.nav-pills.unselectable
+          -#   %li
+          -#     %a#subnav-today{:href => "#"}
+          -#       now
+          -#   %li
+          -#     %a#subnav-prev{:href => "#"}
+          -#       <
+          -#   %li
+          -#     %a#subnav-next{:href => "#"}
+          -#       >
+          -#   %li
+          -#     %p.navbar-text#subnav-text
           %ul.nav.nav-pills.pull-right.unselectable
             = nav_filter_for "program", @programs, :base_url => "/rosters", :year => params[:year], :month => params[:month]
 
@@ -39,3 +39,5 @@
     = render "rosters"
 
   = modal_for "roster", :modal_title => "New Roster"
+  = modal_for "add-student", :modal_title => "Add a student"
+  = modal_for "update-class", :modal_title => "Update class"

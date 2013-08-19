@@ -26,10 +26,15 @@ class RostersController < ApplicationController
     else
       @courses = Course.where(:program_id => program_id)
     end
-
     @roster = Roster.new
     render :layout => false
+  end
 
+  def add_student
+    course_id = params[:course_id]
+    @students = Program.find(params[:program_id]).students
+    @roster = Roster.new
+    render :layout => false
   end
   def create
     roster = Roster.new(roster_params)

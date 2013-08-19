@@ -47,14 +47,16 @@ class CoursesController < ApplicationController
   def update
     @course = Course.find(params[:id])
     if @course.update_attributes(course_params)
-      redirect_to courses_path
+      render :text => "success"
+      # redirect_to courses_path
     else
-      render :edit
+      render :edit, :status => :unprocessable_entity
     end
   end
   def destroy
     @course = Course.find(params[:id])
     @course.destroy
+    render :text => "delete success"
   end
   private
   # def rehash_cal_objs(objs)

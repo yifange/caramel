@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-attachHandler = ->
+attachProfileHandler = ->
 
   $.fn.editable.defaults.mode = 'inline'
   $('.email-input').editable({
@@ -17,7 +17,5 @@ attachHandler = ->
     }
   })
 
-
-
-$(document).ready attachHandler
-$(document).on "page:load", attachHandler
+$(document).ready attachProfileHandler
+$(document).on "page:load", attachProfileHandler

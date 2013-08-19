@@ -1,11 +1,12 @@
 class ProgramsController < ApplicationController
+  respond_to  :html, :json
+
   def index
     @schools = School.all
   end
 
   def new
     @school_id = params[:entry_identity]
-    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa " + params.to_s
     @program = Program.new
   end
 
@@ -40,7 +41,7 @@ class ProgramsController < ApplicationController
   def destroy
     @program = Program.find(params[:id])
     @program.destroy
-    redirect_to programs_path
+    redirect_to :controller => "programs", :action => "index"
   end
 
 private

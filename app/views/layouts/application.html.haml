@@ -23,22 +23,20 @@
               = active_link_partialpath 'PROGRAMS', '/regions'
               = active_link_partialpath 'CLASSES', '/courses'
               = active_link_partialpath 'INSTRUMENTS','#'
-              -# %li.dropdown
-              -#   %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
               -#     SEMESTER
-              -#     %span.caret
-              -#   %ul.dropdown-menu
-              -#     %li
-              -#       %a{:href => '#'} Semester One
-              -#     %li
-              -#       %a{:href => '#'} Semester Two
             %ul.nav.pull-right
               %li
                 %a
                   %i.icon-user.icon-white
-                  = current_user.name
-              %li
-                %a{:href => '/session_page/signout'} Sign out
+                %li.dropdown
+                  %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
+                    = current_user.name
+                    %span.caret
+                  %ul.dropdown-menu
+                    %li
+                      %a{:href => '/profiles'} Profile
+                    %li
+                      %a{:href => '/session_page/signout'} Sign out
     = yield(:subnav)
     .container-fluid
       .row-fluid

@@ -24,7 +24,7 @@
           %a.x-editable-input-text{:href => '#', 'data-url' => "/teachers/#{teacher.id}", 'data-pk' => "#{teacher.id}", 'data-name' => 'email', 'data-placeholder' => 'input email'}
             = teacher.email
         %td
-          = multiple_selection(Region.all_ordered_json, teacher.regions_ordered_json, teacher.id, "/teachers/#{teacher.id}")
+          = multiple_selection(Region.all_ordered_json, teacher.regions_ordered_json, teacher.id, "/teachers/#{teacher.id}", 'regions')
         %td
           %button.btn{'type' => 'button'}
             Reset Password

@@ -33,8 +33,6 @@ class User < ActiveRecord::Base
     regions_ordered.each do |region| 
       result.push({:id => region.id, :text => region.name})
     end
-    puts 'dddddddddddddddddddddddddddddddd'
-    puts result[0][:id]
     result
   end
 
@@ -42,9 +40,12 @@ class User < ActiveRecord::Base
     User.where(:type => type).order("first_name")
   end
 
-  private
   def delete_regions
     Domain.where(:user_id => id).delete_all
+  end
+
+  def delete_region(region_id)
+    Domain.destroy(Domain.where(:user_id => id, :region_id => region_id))
   end
 
   def add_region(region_id)

@@ -118,11 +118,11 @@ Assignment.create(program_id: @p_4.id, teacher_id: @t_yue.id)
 
 @t_1 = Term.create(name: "CURRENT TERM", start_date: "2013-07-01", end_date: "2013-09-01")
 
-Calendar.create(date: "2013-08-01", term_id: @t_1.id, start_time: "2000-01-01 08:00:00", end_time: "2000-01-01 16:00:00", day_of_week: 4, available: true, school_id: @s_jhu)
-Calendar.create(date: "2013-08-02", term_id: @t_1.id, start_time: "2000-01-01 08:00:00", end_time: "2000-01-01 16:00:00", day_of_week: 5, available: true, school_id: @s_jhu)
+# Calendar.create(date: "2013-08-01", term_id: @t_1.id, start_time: "2000-01-01 08:00:00", end_time: "2000-01-01 16:00:00", day_of_week: 4, available: true, school_id: @s_jhu)
+# Calendar.create(date: "2013-08-02", term_id: @t_1.id, start_time: "2000-01-01 08:00:00", end_time: "2000-01-01 16:00:00", day_of_week: 5, available: true, school_id: @s_jhu)
 
-@a_1 = AttendanceMarking.create(:abbrev => "CP", :full => "complete")
-@a_2 = AttendanceMarking.create(:abbrev => "SA", :full => "student absence")
+# @a_1 = AttendanceMarking.create(:abbrev => "CP", :full => "complete")
+# @a_2 = AttendanceMarking.create(:abbrev => "SA", :full => "student absence")
 
 # @c_1 = Course.create(program_id: @p_1.id, start_time: "2000-01-01 08:50:00", end_time: "2000-01-01 09:50:00", day_of_week: 5, course_type: "RegularCourse")
 # @c_2 = Course.create(program_id: @p_2.id, start_time: "2000-01-01 08:50:00", end_time: "2000-01-01 09:50:00", date: "2013-08-01", course_type: "GroupCourse")

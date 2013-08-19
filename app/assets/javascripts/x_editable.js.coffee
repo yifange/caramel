@@ -4,10 +4,13 @@ attachHandler = ->
   $('.select2-multiple').select2()
 
   $(".select2-multiple").on("change", (e) ->
+    data = {pk: $(this).data("pk"), name: $(this).data("name")}
     if e.added
-      data = {id: e.added.id, pk: $(this).data("pk")}
+      data["option"] = "add"
+      data["value"] = e.added.id
     else
-      data = {id: e.removed.id, pk: $(this).data("pk")}
+      data["option"] = "remove"
+      data["value"] = e.removed.id
     $.ajax(
       type: "PUT",
       url: $(this).data("value")

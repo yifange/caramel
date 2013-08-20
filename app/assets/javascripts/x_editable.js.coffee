@@ -15,7 +15,7 @@ attachHandler = ->
       data["option"] = "remove"
       data["value"] = e.removed.id
     $.ajax(
-      type: "PUT",
+      type: "PUT"
       url: $(this).data("value")
       data: data
       dataType: "json", results: (data, page) ->

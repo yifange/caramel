@@ -17,18 +17,24 @@
     - @schools.each do |school|
       .tab-pane{:class => (i == 0 ? 'active' : nil), :id => "tab#{school.id}"}
 
-        %a.btn.btn-primary.new-entry{:href => "/programs/new", "data-entry" => "program"} New Program
-        = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
+        -########################################
+        -# ENTRY DELETE
+        -########################################
+        %a.btn.btn-primary.delete-entry Delete
         %p
 
         %table.table.table-bordered.table-striped{:style => 'clear: both'}
           %tr
+            %th{:width => '10px'} 
             %th{:width => '200px'} INSTRUMENT
             %th{:width => '200px'} PROGRAM TYPE
             %th{:width => '310px'} REGULAR / GROUP CLASS PER YEAR
             %th 
           - school.programs.each do |program|
             %tr.accordion-group
+              %td
+                %input.checkbox-select-to-delete{:type => 'checkbox', :value  => "#{program.id}"}
+                -# %a.x-editable-checkbox{:href => '#', 'data-type' => 'checkbox', 'data-pk' => 1, 'data-original-title' => 'Lala'}
               %td
                 %a.x-editable-select2-singular{:href => '#', 'data-source' => '/instruments','data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}", 'data-name' => 'instrument_id'}
                   = Instrument.find(program.instrument_id).name
@@ -54,4 +60,7 @@
                     .well
                       STUDENTS:&nbsp&nbsp
                       %a.x-editable-select2-multiple{:href => '#', 'data-value' => 'ru'}
+        %a.btn.btn-primary.new-entry{:href => "/programs/new", "data-entry" => "#{school.id}"} New Program
       - i += 1
+  = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
+  %p

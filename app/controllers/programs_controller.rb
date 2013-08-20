@@ -1,17 +1,19 @@
 class ProgramsController < ApplicationController
+  respond_to  :html, :json
+
   def index
     @schools = School.all
   end
 
   def new
-    @school_id = params[:school_id]
+    @school_id = params[:entry_identity]
     @program = Program.new
   end
 
   def create
     @program = Program.new(program_params)
     if @program.save
-      redirect_to :controller => "programs_page", :action => "schools"
+      redirect_to :controller => "programs", :action => "index"
     else
       render :new, :status => :unprocessable_entity
     end
@@ -39,11 +41,11 @@ class ProgramsController < ApplicationController
   def destroy
     @program = Program.find(params[:id])
     @program.destroy
-    redirect_to programs_path
+    redirect_to :controller => "programs", :action => "index"
   end
 
 private
   def program_params
-    params.require(:value).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
+    params.require(:program).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
   end
 end

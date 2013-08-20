@@ -6,8 +6,7 @@ ruby "2.0.0"
 gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record
-# gem 'sqlite3'
-gem 'pg'
+gem 'sqlite3'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -36,7 +35,6 @@ gem 'bootstrap-sass'
 gem 'jquery-ui-rails'
 gem 'bootstrap-timepicker-rails', :require => 'bootstrap-timepicker-rails', :git => 'git://github.com/tispratik/bootstrap-timepicker-rails.git'
 gem 'bootstrap-datepicker-rails'
-gem 'rails_12factor', group: :production
 # gem 'bootstrap-select-rails'
 gem 'select2-rails'
 gem 'bootstrap-x-editable-rails'

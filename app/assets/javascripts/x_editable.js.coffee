@@ -3,7 +3,6 @@ attachHandler = ->
 
   $('.select2').select2({
     width: '100%'
-    closeOnSelect: false
   })
 
   $(".select2").on("change", (e) ->

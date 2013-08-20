@@ -61,9 +61,26 @@ Domain.create(user_id: @t_yue.id, region_id: @r_wdc.id)
 @s_uc  = School.create(abbrev: 'THS', full: 'The Harbor School', region_id: @r_chgo.id)
 @s_uic = School.create(abbrev: 'CCS', full: 'Coventry Christian Schools', region_id: @r_chgo.id)
 
-@stu_gregg   = Student.create(first_name: 'Grant', last_name: 'Lebar', school_id: @s_jhu.id)
-@stu_cherry  = Student.create(first_name: 'Brylin', last_name: 'Beard', school_id: @s_jhu.id)
-@stu_maxwell = Student.create(first_name: 'Macie', last_name: 'Gidney', school_id: @s_jhu.id)
+@stu_gre   = Student.create(first_name: 'Grant', last_name: 'Lebar', school_id: @s_jhu.id)
+@stu_bry   = Student.create(first_name: 'Brylin', last_name: 'Beard', school_id: @s_jhu.id)
+@stu_had  = Student.create(first_name: 'Hadassah', last_name: 'Sullivan', school_id: @s_jhu.id)
+@stu_dan = Student.create(first_name: 'Daniah', last_name: 'Donovan', school_id: @s_jhu.id)
+@stu_dor  = Student.create(first_name: 'Dorian', last_name: 'Donovan', school_id: @s_jhu.id)
+@stu_mac = Student.create(first_name: 'Macie', last_name: 'Gidney', school_id: @s_jhu.id)
+@stu_cur  = Student.create(first_name: 'Curtis', last_name: 'Brown', school_id: @s_jhu.id)
+@stu_pay = Student.create(first_name: 'Payton', last_name: 'Brown', school_id: @s_jhu.id)
+@stu_hal  = Student.create(first_name: 'Haley', last_name: 'Mansfield', school_id: @s_jhu.id)
+@stu_aks = Student.create(first_name: 'Akshay', last_name: 'Kumar', school_id: @s_jhu.id)
+@stu_nas   = Student.create(first_name: 'Nash', last_name: 'Akowski', school_id: @s_jhu.id)
+@stu_cla   = Student.create(first_name: 'Clayton', last_name: 'Martone', school_id: @s_jhu.id)
+@stu_gra  = Student.create(first_name: 'Grace', last_name: 'Stephens', school_id: @s_jhu.id)
+@stu_ela = Student.create(first_name: 'Elana', last_name: 'Stephens', school_id: @s_jhu.id)
+@stu_nik  = Student.create(first_name: 'Nikki', last_name: 'Rafferty', school_id: @s_jhu.id)
+@stu_cas = Student.create(first_name: 'Cashel', last_name: 'Rafferty', school_id: @s_jhu.id)
+@stu_lin  = Student.create(first_name: 'Lindsay', last_name: 'Sanders', school_id: @s_jhu.id)
+@stu_kay = Student.create(first_name: 'Kayla', last_name: 'Huang', school_id: @s_jhu.id)
+@stu_hen  = Student.create(first_name: 'Henry', last_name: 'Whitehouse', school_id: @s_jhu.id)
+@stu_che = Student.create(first_name: 'Cherry', last_name: 'Minto', school_id: @s_jhu.id)
 @stu_trip    = Student.create(first_name: 'Nash', last_name: 'Akowski', school_id: @s_ub.id)
 @stu_connor  = Student.create(first_name: 'Sydney', last_name: 'Hall', school_id: @s_ub.id)
 @stu_nikki   = Student.create(first_name: 'Nikki', last_name: 'Rafferty', school_id: @s_ub.id)
@@ -82,26 +99,32 @@ ProgramType.create(name: "POD")
                group_courses_per_year: 40, 
                term_id: 1)
 @p_2 = Program.create(school_id: @s_jhu.id,
+               instrument_id: Instrument.where(name: 'piano').first.id,
+               program_type_id: ProgramType.where(name: 'POD').first.id,
+               regular_courses_per_year: 120,
+               group_courses_per_year: 40, 
+               term_id: 1)
+@p_3 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'guitar').first.id,
-               program_type_id: ProgramType.where(name: 'IND').first.id,
+               program_type_id: ProgramType.where(name: 'POD').first.id,
                regular_courses_per_year: 120,
                group_courses_per_year: 30,
                term_id: 1)
-@p_3 = Program.create(school_id: @s_ub.id,
+@p_4 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'guitar').first.id,
                program_type_id: ProgramType.where(name: 'IND').first.id,
                regular_courses_per_year: 120,
                group_courses_per_year: 50,
                term_id: 1)
-@p_4 = Program.create(school_id: @s_ub.id,
+@p_5 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'violin').first.id,
                program_type_id: ProgramType.where(name: 'IND').first.id,
                regular_courses_per_year: 100,
                group_courses_per_year: 50, 
                term_id: 1)
-@p_5 = Program.create(school_id: @s_gtu.id,
+@p_6 = Program.create(school_id: @s_jhu.id,
                instrument_id: Instrument.where(name: 'violin').first.id,
-               program_type_id: ProgramType.where(name: 'IND').first.id,
+               program_type_id: ProgramType.where(name: 'POD').first.id,
                regular_courses_per_year: 100,
                group_courses_per_year: 50,
                term_id: 1)
@@ -112,9 +135,27 @@ Assignment.create(program_id: @p_3.id, teacher_id: @t_chu.id)
 Assignment.create(program_id: @p_3.id, teacher_id: @t_yue.id)
 Assignment.create(program_id: @p_4.id, teacher_id: @t_yue.id)
 
-@e_1 = Enrollment.create(program_id:@p_1.id, student_id: @stu_gregg.id)
-@e_2 = Enrollment.create(program_id:@p_1.id, student_id: @stu_cherry.id)
-@e_3 = Enrollment.create(program_id:@p_2.id, student_id: @stu_gregg.id)
+@e_1 = Enrollment.create(program_id:@p_1.id, student_id: @stu_gre.id)
+@e_2 = Enrollment.create(program_id:@p_1.id, student_id: @stu_bry.id)
+@e_3 = Enrollment.create(program_id:@p_1.id, student_id: @stu_had.id)
+@e_4 = Enrollment.create(program_id:@p_1.id, student_id: @stu_dan.id)
+@e_5 = Enrollment.create(program_id:@p_1.id, student_id: @stu_dor.id)
+@e_6 = Enrollment.create(program_id:@p_1.id, student_id: @stu_mac.id)
+@e_7 = Enrollment.create(program_id:@p_1.id, student_id: @stu_cur.id)
+@e_8 = Enrollment.create(program_id:@p_1.id, student_id: @stu_pay.id)
+@e_9 = Enrollment.create(program_id:@p_1.id, student_id: @stu_hal.id)
+@e_10 = Enrollment.create(program_id:@p_1.id, student_id: @stu_aks.id)
+@e_11 = Enrollment.create(program_id:@p_1.id, student_id: @stu_nas.id)
+@e_12 = Enrollment.create(program_id:@p_1.id, student_id: @stu_cla.id)
+@e_13 = Enrollment.create(program_id:@p_1.id, student_id: @stu_gra.id)
+@e_14 = Enrollment.create(program_id:@p_1.id, student_id: @stu_ela.id)
+@e_15 = Enrollment.create(program_id:@p_1.id, student_id: @stu_nik.id)
+@e_16 = Enrollment.create(program_id:@p_1.id, student_id: @stu_cas.id)
+@e_17 = Enrollment.create(program_id:@p_1.id, student_id: @stu_lin.id)
+@e_18 = Enrollment.create(program_id:@p_1.id, student_id: @stu_kay.id)
+@e_19 = Enrollment.create(program_id:@p_1.id, student_id: @stu_hen.id)
+@e_20 = Enrollment.create(program_id:@p_1.id, student_id: @stu_che.id)
+@e_21 = Enrollment.create(program_id:@p_2.id, student_id: @stu_trip.id)
 
 @t_1 = Term.create(name: "CURRENT TERM", start_date: "2013-07-01", end_date: "2013-09-01")
 

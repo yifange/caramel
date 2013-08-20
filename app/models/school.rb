@@ -31,4 +31,16 @@ class School < ActiveRecord::Base
     School.all.order("full")
   end
 
+  def students_ordered_json
+    students.map do |student|
+      {:id => student.id, :text => student.name}
+    end
+  end
+
+  def teachers_ordered_json
+    teachers.map do |teacher|
+      {:id => teacher.id, :text => teacher.name}
+    end
+  end
+
 end

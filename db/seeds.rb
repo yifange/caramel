@@ -32,7 +32,7 @@ Calendar.delete_all
                        first_name: 'Yunchi', last_name: 'Huang', type: 'Staff', 
                        remember_me_token: nil, remember_me_token_expires_at: nil)
 @t_ge      = User.create(email: 'ge.yifan@gmail.com', password: '123456', password_confirmation: '123456', 
-                       first_name: 'Yifan', last_name: 'Ge', type: 'Teacher', 
+                       first_name: 'Luke', last_name: 'Hofmann', type: 'Teacher', 
                        remember_me_token: nil, remember_me_token_expires_at: nil)
 @t_chu     = User.create(email: 'chu.shuya@gmail.com', password: '123456', password_confirmation: '123456', 
                        first_name: 'Shuya', last_name: 'Chu', type: 'Teacher', 
@@ -54,18 +54,18 @@ Domain.create(user_id: @t_chu.id, region_id: @r_wdc.id)
 Domain.create(user_id: @t_yue.id, region_id: @r_bal.id)
 Domain.create(user_id: @t_yue.id, region_id: @r_wdc.id)
 
-@s_jhu = School.create(abbrev: 'JHU', full: 'Johns Hopkins University', region_id: @r_bal.id)
-@s_ub  = School.create(abbrev: 'UB', full: 'University of Baltimore', region_id: @r_bal.id)
-@s_gwu = School.create(abbrev: 'GWU', full: 'George Washington University', region_id: @r_wdc.id)
-@s_gtu = School.create(abbrev: 'GTU', full: 'George Town University', region_id: @r_wdc.id)
-@s_uc  = School.create(abbrev: 'UC', full: 'University of Chicago', region_id: @r_chgo.id)
-@s_uic = School.create(abbrev: 'UIC', full: 'University of Illinois at Chicago', region_id: @r_chgo.id)
+@s_jhu = School.create(abbrev: 'SMS', full: 'Saint Mary School', region_id: @r_bal.id)
+@s_ub  = School.create(abbrev: 'LHS', full: 'Linton Hall School', region_id: @r_bal.id)
+@s_gwu = School.create(abbrev: 'SJA', full: 'Saint John Academy', region_id: @r_wdc.id)
+@s_gtu = School.create(abbrev: 'HVA', full: 'Henson Valley Academy', region_id: @r_wdc.id)
+@s_uc  = School.create(abbrev: 'THS', full: 'The Harbor School', region_id: @r_chgo.id)
+@s_uic = School.create(abbrev: 'CCS', full: 'Coventry Christian Schools', region_id: @r_chgo.id)
 
-@stu_gregg   = Student.create(first_name: 'Gregg', last_name: 'Smith', school_id: @s_jhu.id)
-@stu_cherry  = Student.create(first_name: 'Cherry', last_name: 'Minto', school_id: @s_jhu.id)
-@stu_maxwell = Student.create(first_name: 'Maxwell', last_name: 'MacPhaull', school_id: @s_jhu.id)
-@stu_trip    = Student.create(first_name: 'Trip', last_name: 'Pate', school_id: @s_ub.id)
-@stu_connor  = Student.create(first_name: 'Connor', last_name: 'Wightman', school_id: @s_ub.id)
+@stu_gregg   = Student.create(first_name: 'Grant', last_name: 'Lebar', school_id: @s_jhu.id)
+@stu_cherry  = Student.create(first_name: 'Brylin', last_name: 'Beard', school_id: @s_jhu.id)
+@stu_maxwell = Student.create(first_name: 'Macie', last_name: 'Gidney', school_id: @s_jhu.id)
+@stu_trip    = Student.create(first_name: 'Nash', last_name: 'Akowski', school_id: @s_ub.id)
+@stu_connor  = Student.create(first_name: 'Sydney', last_name: 'Hall', school_id: @s_ub.id)
 @stu_nikki   = Student.create(first_name: 'Nikki', last_name: 'Rafferty', school_id: @s_ub.id)
 
 Instrument.create(name: "violin")

@@ -55,10 +55,10 @@
                   .accordion-inner{:style => 'border-top-width: 0px'}
                     .well
                       TEACHERS:&nbsp&nbsp
-                      %a.x-editable-select2-multiple{:href => '#', 'data-value' => 'ru'}
+                      = multiple_selection(program.school.teachers_ordered_json, program.teacher_ids, program.id, "/programs/#{program.id}", 'regions')
                     .well
                       STUDENTS:&nbsp&nbsp
-                      %a.x-editable-select2-multiple{:href => '#', 'data-value' => 'ru'}
+                      = multiple_selection(program.school.students_ordered_json, program.student_ids, program.id, "/programs/#{program.id}", 'regions')
         %a.btn.btn-primary.new-entry{:href => "/programs/new", "data-entry" => "#{school.id}"} New Program
       - i += 1
   = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"

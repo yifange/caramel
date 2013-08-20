@@ -30,11 +30,20 @@ class Program < ActiveRecord::Base
     "#{instrument.name}" + "-" + "#{program_type.name}"
   end
 
-  def self.all_ordered_json
-    programs = Program.all
-    programs.map do |program|
-      {:id => program.id, :text => program.name}
+  def teacher_ids
+    result = []
+    teachers.each do |teacher|
+      result.push(teacher.id)
     end
+    result
+  end
+
+  def student_ids
+    result = []
+    students.each do |student|
+      result.push(student.id)
+    end
+    result
   end
 
 end

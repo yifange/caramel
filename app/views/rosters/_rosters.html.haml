@@ -1,5 +1,5 @@
-%table.rosters-table.table.table-striped.table-bordered
-  - @students.each do |student|
+- @students.each do |student|
+  %table.rosters-table.table.table-striped.table-bordered
     %tr
       %th{:colspan => 4}
         = student.name
@@ -7,7 +7,7 @@
           actions
     %tr
       %th{:colspan => 4}
-        Regular Class
+        Regular Classes
         %a.btn.pull-right.new-roster{:href => "/rosters/new?student_id=" + student.id.to_s + "&program_id=" + @program_id.to_s + "&type=regular"}
           %i.icon-plus
           
@@ -18,7 +18,7 @@
         = render "roster_details", :course => course, :roster => roster
     %tr
       %th{:colspan => 4}
-        Group Class
+        Group Classes
         %a.btn.pull-right.new-roster{:href => "/rosters/new?student_id=" + student.id.to_s + "&program_id=" + @program_id.to_s + "&type=group"}
           %i.icon-plus
     - student.rosters.each do |roster|

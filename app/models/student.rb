@@ -1,6 +1,6 @@
 class Student < ActiveRecord::Base
   has_many :enrollments
-  has_many :progams, :through => :enrollments
+  has_many :programs, :through => :enrollments
   has_many :courses, :through => :rosters
   has_many :rosters
   include People

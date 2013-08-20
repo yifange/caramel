@@ -1,13 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
 one:
-  student_id: 
   course_id: 
-  start_date: 2013-08-05
-  end_date: 2013-08-05
   enrollment_id: 
+  student_id: 
+  start_date: 2013-08-13
+  end_date: 2013-08-13
+  notes: MyText
 
 two:
-  student_id: 
   course_id: 
-  start_date: 2013-08-05
-  end_date: 2013-08-05
   enrollment_id: 
+  student_id: 
+  start_date: 2013-08-13
+  end_date: 2013-08-13
+  notes: MyText

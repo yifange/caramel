@@ -3,12 +3,15 @@
 
 - content_for :sidemenu do
   - render '/layouts/people_page_sidebar'
-  
+
 - content_for :main do
-  %table.table.table-bordered.table-striped{:style => 'clear: both'}
+  %a.btn.btn-primary.new-entry{:href => "/students/new", "data-entry" => "student"} New Student
+  %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
       %th{:width => '13px'}
-      %th Name
+      %th{:width => '310'} Name
+      %th{:width => '250px'} School
+      %th Program
     - @students.each do |student|
       %tr
         %td
@@ -17,6 +20,9 @@
         %td
           %a.x-editable-input-user-name{:href => "#", 'data-url' => "/students/#{student.id}", 'data-pk' => "#{student.id}"}
             = student.name
+        %td
+          = singular_selection(School.all_ordered_json, student.school_id, student.id, "/students/#{student.id}", 'school')
+        %td
+          = multiple_selection(student.school.program_all_ordered_json, student.program_ids, student.id, "/students/#{student.id}", 'school')
 
-  %a.btn.btn-primary.new-entry{:href => "/students/new", "data-entry" => "student"} New Student
   = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"

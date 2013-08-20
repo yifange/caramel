@@ -1,14 +1,18 @@
 attachHandler = ->
   $.fn.editable.defaults.mode = 'inline'
 
-  $('.select2-multiple').select2({
+  $('.select2').select2({
     width: '100%'
     closeOnSelect: false
   })
 
-  $(".select2-multiple").on("change", (e) ->
+  $(".select2").on("change", (e) ->
     data = {pk: $(this).data("pk"), name: $(this).data("name")}
-    if e.added
+    if e.added && e.removed
+      data["option"] = 'change'
+      data["value_remove"] = e.removed.id
+      data["value_add"] = e.added.id
+    else if e.added
       data["option"] = "add"
       data["value"] = e.added.id
     else
@@ -23,15 +27,6 @@ attachHandler = ->
     )
   )
 
-  # select2 singular
-  $('.x-editable-select2-singular').editable({
-    ajaxOptions: {
-      type: 'PUT'
-    }
-    showbuttons: false
-    type: 'select2'
-  })
-
   # user_name
   $('.x-editable-input-user-name').editable({
     ajaxOptions: {
@@ -41,7 +36,7 @@ attachHandler = ->
     type: 'user_name'
   })
 
-  # user_name
+  # number
   $('.x-editable-input-number').editable({
     ajaxOptions: {
       type: 'PUT'
@@ -58,12 +53,25 @@ attachHandler = ->
     type: 'text'
   })
 
-  $('.x-editable-input-text').editable({
+  $(".x-editable.roster-date").editable({
+    type: "date"
+    onblur: "submit"
+    showbuttons: false
     ajaxOptions: {
-      type: 'PUT'
-      dataType: 'json'
+      type: "PUT"
     }
-    type: 'text'
+  })
+
+  $(".x-editable.roster-notes").editable({
+    type: "textarea"
+    onblur: "submit"
+    placeholder: "notes, ctrl-enter to submit"
+    showbuttons: false
+    inputclass: "input-small"
+    rows: 2
+    ajaxOptions: {
+      type: "PUT"
+    }
   })
 
 $(document).ready attachHandler

@@ -1,85 +1,100 @@
-%ul.nav.nav-tabs
-  %li
-    %a{:href => "#home", "data-toggle" => "tab", :title => "hello"}
-      Home
-  %li
-    %a{:href => "#profile", "data-toggle" => "tab"}
-      Profile
-.tab-content
-  .tab-pane.active#home
-    %p
-      %a#username{:href => "#", "data-type" => "text", "data-pk" => "1"}
-        awesome
-  .tab-pane#profile
-    %p
-      This is profile
+= content_for :main do
+
+  %ul.nav.nav-tabs
+    %li
+      %a{:href => "#home", "data-toggle" => "tab", :title => "hello"}
+        Home
+    %li
+      %a{:href => "#profile", "data-toggle" => "tab"}
+        Profile
+  .tab-content
+    .tab-pane.active#home
+      %p
+        %a#username{:href => "#", "data-type" => "text", "data-pk" => "1"}
+          awesome
+    .tab-pane#profile
+      %p
+        This is profile
 
 
-%table.table.table-striped
-  %tr
-    %td
-      Aha
-    %td
-      oooh
-    %td.accordion-toggle{:style => "width: 30px", "data-toggle" => "collapse", "data-target" => "#secret", :href => "#secret"}
-      detail
-  %tr
-    %td
-      %span#secret.collapse.accordion-body.in{:colspan => 3}
-        This is secret
+  %table.table.table-striped
+    %tr
+      %td
+        Aha
+      %td
+        oooh
+      %td.accordion-toggle{:style => "width: 30px", "data-toggle" => "collapse", "data-target" => "#secret", :href => "#secret"}
+        detail
+    %tr
+      %td
+        %span#secret.collapse.accordion-body.in{:colspan => 3}
+          This is secret
 
-  %tr
-    %td
-      Aha
-    %td
-      oooh
-    %td.accordion-toggle{:style => "width: 30px", "data-toggle" => "collapse", "data-target" => "#secret2", :href => "#secret2"}
-      detail
-  %tr
-    %td
-      #secret2.collapse.accordion-body.in{:colspan => 3}
-        This is also secret
+    %tr
+      %td
+        Aha
+      %td
+        oooh
+      %td.accordion-toggle{:style => "width: 30px", "data-toggle" => "collapse", "data-target" => "#secret2", :href => "#secret2"}
+        detail
+    %tr
+      %td
+        #secret2.collapse.accordion-body.in{:colspan => 3}
+          This is also secret
 
-%a#country{"data-pk" => "1", "data-type" => "select2", "data-source" => "/lunchpads/api.json", "data-url" => "/lunchpads/lunch", :href => "#", "data-title" => "Select country", "data-value" => "1"}
+  %a#country{"data-pk" => "1", "data-type" => "select2", "data-source" => "/lunchpads/api.json", "data-url" => "/lunchpads/lunch", :href => "#", "data-title" => "Select country", "data-value" => "1"}
 
-%input#bfast{:type => "hidden", :value => "gb:Great Britain,us:United States", :data => {:options => "gb:Great Britain,us:United States,cn:China"}}
+  %input#bfast{:type => "hidden", :value => "gb:Great Britain,us:United States", :data => {:options => "gb:Great Britain,us:United States,cn:China"}}
 
-%a#tooltip{:href => "#", "data-toggle" => "tooltip", :title => "first tooltip"}
-  hover me
+  %a#tooltip{:href => "#", "data-toggle" => "tooltip", :title => "first tooltip"}
+    hover me
 
 
-.navbar
-  .navbar-inner
-    %ul.nav.navbar-nav
-      %li.active
-        %a{:href => "#"}
-          Home
+  .navbar
+    .navbar-inner
+      %ul.nav.navbar-nav
+        %li.active
+          %a{:href => "#"}
+            Home
+        %li
+          %a{:href => "#"}
+            Link
+        %li
+          %a{:href => "#"}
+            Link
+        %li.dropdown
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            Programs
+          %ul.dropdown-menu{:role => "menu", "aria-labelledby" => "dlabel"}
+            %li
+              %a
+                %p{:style => "font-weight: bold"}
+                  St. John Academy
+                %p
+                  Violin, POD 
+            %li
+              %a
+                %p{:style => "font-weight: bold"}
+                  Johns Hopkins University
+                %p
+                  Piano, IND
+            %li
+              %a
+                %p{:style => "font-weight: bold"}
+                  Johns Hopkins University
+                %p
+                  Guitar, IND
+  .dropdown
+    %a.dropdown-toggle{:role => "button", "data-toggle" => "dropdown", :href => "#"}
+      haha 
+    %ul.dropdown-menu.strange{:role => "menu", "aria-labelledby" => "dropdownMenu"}
       %li
-        %a{:href => "#"}
-          Link
+        %a{:href => "#", :tabindex => "-1"}
+          Add a student
       %li
-        %a{:href => "#"}
-          Link
-      %li.dropdown
-        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-          Programs
-        %ul.dropdown-menu{:role => "menu", "aria-labelledby" => "dlabel"}
-          %li
-            %a
-              %p{:style => "font-weight: bold"}
-                St. John Academy
-              %p
-                Violin, POD 
-          %li
-            %a
-              %p{:style => "font-weight: bold"}
-                Johns Hopkins University
-              %p
-                Piano, IND
-          %li
-            %a
-              %p{:style => "font-weight: bold"}
-                Johns Hopkins University
-              %p
-                Guitar, IND
+        %a{:href => "#", :tabindex => "-1"}
+          Update class
+      %li
+        %a#show-in-calendar{:href => "/", :tabindex => "-1"}
+          Show in calendar
 

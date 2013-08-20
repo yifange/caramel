@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
- 
+
   respond_to :html
 
   def index 
@@ -7,15 +7,15 @@ class StudentsController < ApplicationController
   end
 
   def update 
-    @student = Student.find(params[:pk])
+    student = Student.find(params[:pk])
     if params[:name] == 'user_name'
-      @student.update_attributes(student_params)
+      params[:student] = params[:value]
+      student.update_attributes(student_params)
+    elsif params[:name] == 'school'
+      params[:student] = {:school_id => params[:value_add]}
+      student.update_attributes(student_params)
     end
     render nothing: true
-  end
-
-  def student_params
-    params.require(:value).permit(:first_name, :last_name)
   end
 
   def new
@@ -31,8 +31,9 @@ class StudentsController < ApplicationController
     end
   end
 
-private
+  private
   def student_params
-    params.require(:student).permit(:first_name, :last_name)
+    params.require(:student).permit(:first_name, :last_name, :school_id)
   end
+
 end

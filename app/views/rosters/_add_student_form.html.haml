@@ -1,0 +1,4 @@
+#roster-add-student-form-body
+  = simple_form_for @roster do |f|
+    = f.input :course_id, :input_html => {:value => params[:course_id]}, :as => :hidden
+    = f.association :student, :collection => @students, :label_method => :name, :value_method => :id, :include_blank => false 

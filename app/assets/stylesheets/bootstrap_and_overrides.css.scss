@@ -20,7 +20,7 @@
 
 // the height of table
 .table th, .table td {
-	height: 30px;
+  height: 30px;
 	vertical-align: middle;
 }
 
@@ -44,4 +44,7 @@
 
 .container-fluid {
   padding-top: 50px;
+}
+a:hover {
+  text-decoration: none;
 }

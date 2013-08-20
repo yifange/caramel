@@ -15,16 +15,12 @@ class User < ActiveRecord::Base
   has_many :regions, through: :domains
   accepts_nested_attributes_for :domains
 
-  def update_region(region_id)
-    delete_regions
-    add_region(region_id)
-  end
-
-  def update_regions(region_ids)
-    delete_regions
-    region_ids.each do |region_id|
-      add_region(region_id)
+  def region_ids
+    result = []
+    regions.each do |region|
+      result.push(region.id)
     end
+    result
   end
 
   def regions_ordered_json
@@ -40,11 +36,7 @@ class User < ActiveRecord::Base
     User.where(:type => type).order("first_name")
   end
 
-  def delete_regions
-    Domain.where(:user_id => id).delete_all
-  end
-
-  def delete_region(region_id)
+  def remove_region(region_id)
     Domain.destroy(Domain.where(:user_id => id, :region_id => region_id))
   end
 

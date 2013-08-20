@@ -7,6 +7,7 @@ class CreateCourses < ActiveRecord::Migration
       t.integer :day_of_week
       t.date :date
       t.string :course_type
+      t.string :name
 
       t.timestamps
     end

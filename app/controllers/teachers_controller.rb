@@ -15,7 +15,7 @@ class TeachersController < UsersController
       if params[:option] == "add"
         teacher.add_region(params[:value])
       else
-        teacher.delete_region(params[:value])
+        teacher.remove_region(params[:value])
       end
     elsif params[:name] == 'user_name'
       teacher.update_attributes(user_params)

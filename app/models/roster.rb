@@ -4,9 +4,8 @@ class Roster < ActiveRecord::Base
   belongs_to :enrollment
   has_many :attendances
   before_save :set_enrollment
-  def course_summary
-    c = course
-    c.id.to_s + " " + c.course_type
+  def course_name
+    course.name
   end
   def course_type
     course.course_type
@@ -26,7 +25,9 @@ class Roster < ActiveRecord::Base
   private
 
   def set_enrollment
-    program_id = course.program.id
-    self.enrollment_id = Enrollment.where(:program_id => program_id, :student_id => student_id).first.id
+    if course
+      program_id = course.program.id
+      self.enrollment_id = Enrollment.where(:program_id => program_id, :student_id => student_id).first.id
+    end
   end
 end

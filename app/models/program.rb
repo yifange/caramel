@@ -26,4 +26,15 @@ class Program < ActiveRecord::Base
     "#{regular_courses_per_year}" + " / " + "#{group_courses_per_year}"
   end
 
+  def name
+    "#{instrument.name}" + "-" + "#{program_type.name}"
+  end
+
+  def self.all_ordered_json
+    programs = Program.all
+    programs.map do |program|
+      {:id => program.id, :text => program.name}
+    end
+  end
+
 end

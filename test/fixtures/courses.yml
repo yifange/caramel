@@ -1,15 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
 one:
   program_id: 
-  start_time: 2013-08-07 16:53:05
-  end_time: 2013-08-07 16:53:05
+  start_time: 2013-08-18 20:55:37
+  end_time: 2013-08-18 20:55:37
   day_of_week: 1
-  date: 2013-08-07
+  date: 2013-08-18
   course_type: MyString
+  name: MyString
 
 two:
   program_id: 
-  start_time: 2013-08-07 16:53:05
-  end_time: 2013-08-07 16:53:05
+  start_time: 2013-08-18 20:55:37
+  end_time: 2013-08-18 20:55:37
   day_of_week: 1
-  date: 2013-08-07
+  date: 2013-08-18
   course_type: MyString
+  name: MyString

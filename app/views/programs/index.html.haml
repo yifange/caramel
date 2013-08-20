@@ -23,7 +23,7 @@
         %a.btn.btn-primary.delete-entry Delete
         %p
 
-        %table.table.table-bordered.table-striped{:style => 'clear: both'}
+        %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
           %tr
             %th{:width => '10px'} 
             %th{:width => '200px'} INSTRUMENT
@@ -34,7 +34,6 @@
             %tr.accordion-group
               %td
                 %input.checkbox-select-to-delete{:type => 'checkbox', :value  => "#{program.id}"}
-                -# %a.x-editable-checkbox{:href => '#', 'data-type' => 'checkbox', 'data-pk' => 1, 'data-original-title' => 'Lala'}
               %td
                 %a.x-editable-select2-singular{:href => '#', 'data-source' => '/instruments','data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}", 'data-name' => 'instrument_id'}
                   = Instrument.find(program.instrument_id).name
@@ -51,7 +50,7 @@
                       Detail
                       %span.caret
             %tr
-              %td{'colspan' => "4", :style => "height: auto"}
+              %td{'colspan' => "5", :style => "height: auto"}
                 .accordion-body.collapse{:id => "collapse#{program.id}"}
                   .accordion-inner{:style => 'border-top-width: 0px'}
                     .well

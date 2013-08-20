@@ -1,0 +1,13 @@
+%table.classes-table.table.table-striped.table-bordered
+  %tr
+    %th{:colspan => 2}
+      Regular Classes
+  - @courses.where(:course_type => "RegularCourse").each do |course|
+    = render "class_details", :course => course
+
+%table.classes-table.table.table-striped.table-bordered
+  %tr
+    %th{:colspan => 2}
+      Group Classes
+  - @courses.where(:course_type => "GroupCourse").each do |course|
+    = render "class_details", :course => course

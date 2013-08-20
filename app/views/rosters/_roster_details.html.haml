@@ -1,0 +1,11 @@
+%tr
+  %td
+    - date = course.date
+    %a{:href => "/courses?program_id=" + @program_id.to_s + "&year=" + date.year.to_s + "&month=" + date.month.to_s + "&day=" + date.day.to_s}
+      = content_tag :span, course.name
+  %td
+    %a.x-editable.roster-date{:href => "#", "data-pk" => "#{roster.id}", "data-url" => "/rosters/#{roster.id}", "data-value" => roster.start_date, "data-name" => "start_date", "data-emptytext" => "start date"}
+  %td
+    %a.x-editable.roster-date{:href => "#", "data-pk" => "#{roster.id}", "data-url" => "/rosters/#{roster.id}", "data-value" => roster.end_date, "data-name" => "end_date", "data-emptytext" => "end date"}
+  %td
+    %a.x-editable.roster-notes{:href => "#", "data-pk" => "#{roster.id}", "data-url" => "/rosters/#{roster.id}", "data-name" => "notes", "data-value" => roster.notes, "data-emptytext" => "notes"}

@@ -32,5 +32,5 @@
 
 - content_for :main do
   = annual_calendar_for @courses, :year => @year.to_i, :program => @program do |c|
-    c.draw_annaul_calendar_body
+    = c.draw_annual_calendar_body
   = modal_for "course", :delete_button => true

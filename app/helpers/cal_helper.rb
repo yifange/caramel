@@ -12,7 +12,9 @@ module CalHelper
   def annual_calendar_for(objects, *args, &block)
     options = args.last.is_a?(Hash) ? args.pop : {}
     content = capture(AnnualCalendarBuilder.new(self, objects || [], options), &block)
-    content_tag :div, content, :class => "ac-container", :data => {:school => options[:school][:id]}
+    school_id = options[:school].id if options.has_key? :school and options[:school]
+    program_id = options[:program].id if options.has_key? :program and options[:program]
+    content_tag :div, content, :class => "ac-container", :data => {:school => school_id, :program => program_id}
   end
 
   def weekly_calendar_for(objects, *args, &block)
@@ -438,7 +440,9 @@ module CalHelper
       @year = options[:year] || Date.today.year
       @months = [*(first_month..12)].concat([*(1...first_month)])
       @school = options[:school]
-      @school_id = @school[:id]
+      @school_id = @school[:id] if @school
+      @program = options[:program]
+      @program_id = @program[:id] if @program
     end
 
     def draw_annual_calendar_body
@@ -470,7 +474,7 @@ module CalHelper
         row_content = "".html_safe
         for column_ind in 0...columns
           month = @months[row_ind  * columns + column_ind]
-          builder = MonthlyCalendarBuilder.new(@parent, @objects, :month => month, :year => @year, :school => @school)
+          builder = MonthlyCalendarBuilder.new(@parent, @objects, :month => month, :year => @year, :school => @school, :program => @program)
           grid_content = "".html_safe
           monthly_calendar_content = content_tag :div, (builder.draw_calendar :show_links => false, :show_year => false), :class => "ac-mc-container"
           grid_content.concat(monthly_calendar_content)
@@ -489,6 +493,9 @@ module CalHelper
       @year = options[:year] || @today.year
       @month = options[:month] || @today.month
       @school = options[:school]
+      @school_id = @school.id if @school
+      @program = options[:program]
+      @program_id = @program.id if @program
       @date = Date.new(@year, @month)
     end
 
@@ -525,13 +532,17 @@ module CalHelper
         klass << "not-current-month" if day.month != @month
         if @objects.has_key? day
           klass << day_marking(@objects[day])
+          klass << "class-day" unless @objects[day].empty?
         end
         if day.sunday?
           cal_days.concat(tag :tr, nil, true)
           week += 1
         end
-
-        text = link_to day.day, {:controller => :calendars, :action => :index_week, :year => day.year, :month => day.month, :day => day.day, :school => @school[:id]}, :class => "day-link"
+        if @school_id
+          text = link_to day.day, {:controller => :calendars, :action => :index_week, :year => day.year, :month => day.month, :day => day.day, :school => @school_id}, :class => "day-link"
+        elsif @program_id
+          text = link_to day.day, {:controller => :courses, :action => :index_week, :year => day.year, :month => day.month, :day => day.day, :program => @program_id}, :class => "day-link"
+        end
         cal_days.concat(klass.empty? ? (content_tag :td, text, :data => {:year => day.year, :month => day.month, :day => day.day}) : (content_tag :td, text, :class => klass, :data => {:year => day.year, :month => day.month, :day => day.day}))
         cal_days.concat("</tr>".html_safe) if day.saturday?
       end
@@ -549,7 +560,7 @@ private
     def day_marking(objs)
       marking = ""
       for obj in objs
-        m = obj.available
+        m = obj.available if obj.respond_to? :available
         if marking.empty?
           marking = m ? "available" : "unavailable"
         else

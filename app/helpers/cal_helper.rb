@@ -63,17 +63,6 @@ module CalHelper
       @background_calendar = options[:background_calendar]
       @term_id = options[:term_id]
     end
-    # def draw_calendar
-    #   content = "".html_safe
-    #   content.concat(draw_calendar_nav)
-    #   content.concat(draw_calendar_header)
-    #   @objects.each do |program, program_detail|
-    #     program_detail.each do |enrollment, enrollment_detail|
-    #       content.concat(draw_calendar_row_for_enrollment(enrollment, enrollment_detail[0], enrollment_detail[1]))
-    #     end
-    #   end
-    #   content_tag :table, content
-    # end
     def draw_calendar
       content = "".html_safe
       content.concat(draw_calendar_nav)
@@ -462,9 +451,12 @@ module CalHelper
       next_link = link_to nil, {:year => @year + 1, :school_id => @school_id}, :id => "cal-nav-next"
       today_link = link_to nil, {:year => Date.today.year, :school_id => @school_id}, :id => "cal-nav-today"
       title = content_tag :span, @year, :id => "cal-nav-title" 
-      school_name = content_tag :span, @school.full, :id => "cal-nav-school-name"
-      school_id = content_tag :span, @school.id, :id => "cal-nav-school-id"
-      content = prev_link.concat(today_link).concat(next_link).concat(title).concat(school_name).concat(school_id)
+      school_name = content_tag :span, @school.full, :id => "cal-nav-school-name" if @school
+      school_id = content_tag :span, @school.id, :id => "cal-nav-school-id" if @school
+      program_id = content_tag :span, @program.id, :id => "cal-nav-program-id" if @program
+      program_name = content_tag :span, @program.school.full + ", " + @program.program_type.name + ", " + @program.instrument.name, :id => "cal-nav-program-name" if @program
+
+      content = prev_link.concat(today_link).concat(next_link).concat(title).concat(school_name).concat(school_id).concat(program_id).concat(program_name)
       content_tag :div, content, :id => "cal-nav", :style => "display: none"
     end
 

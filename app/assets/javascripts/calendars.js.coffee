@@ -25,7 +25,7 @@ attachEventHandler = ->
     eventId = $(this).data("eventid")
     $.data($("#calendar-modal-delete")[0], "eventid", eventId)
     $.get("/calendars/" + eventId + "/edit", (data, status) ->
-      $("#calendar-modal-body").html($(data).find("#calendar-form-body").html())
+      $("#calendar-modal-body").html($(data).filter("#calendar-form-body").html())
       $("#calendar-form-submit").hide()
       $("#calendar-modal-delete").show()
       $("#calendar-modal-title").html("Update Event")

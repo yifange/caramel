@@ -27,6 +27,22 @@ class CoursesController < ApplicationController
     @day = params[:day] || Date.today.day
     # render :json => @calendars
   end
+  def index_week
+    if current_user[:type] == "Teacher"
+      @programs = Teacher.find(current_user[:id]).programs.order("school_id ASC")
+    end
+    @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
+    if @program
+      @program_id = @program[:id]
+      school_id = @program.school[:id]
+    end
+    @courses = rehash_objs(Course.where(:program_id => @program_id))
+    @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
+
+    @month = params[:month] || Date.today.month
+    @year = params[:year] || Date.today.year
+    @day = params[:day] || Date.today.day
+  end
   def new
     @course = Course.new
     @date = params[:date]

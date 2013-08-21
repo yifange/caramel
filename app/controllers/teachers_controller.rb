@@ -1,4 +1,4 @@
-class TeachersController < UsersController
+class TeachersController < ApplicationController
 
   respond_to :html
 
@@ -9,8 +9,8 @@ class TeachersController < UsersController
   def update 
     teacher = Teacher.find(params[:pk])
     if params[:name] == 'email'
-      params[:value] = {params[:name] => params[:value]}
-      teacher.update_attributes(user_params)
+      params[:teacher] = {params[:name] => params[:value]}
+      teacher.update_attributes(teacher_params)
     elsif params[:name] == 'regions'
       if params[:option] == "add"
         teacher.add_region(params[:value])
@@ -18,7 +18,8 @@ class TeachersController < UsersController
         teacher.remove_region(params[:value])
       end
     elsif params[:name] == 'user_name'
-      teacher.update_attributes(user_params)
+      params[:teacher] = params[:value]
+      teacher.update_attributes(teacher_params)
     end
     render nothing: true
   end
@@ -36,7 +37,7 @@ class TeachersController < UsersController
     end
   end
 
-private
+  private
   def teacher_params
     params.require(:teacher).permit(:first_name, :last_name, :email, :password, :password_confirmation)
   end

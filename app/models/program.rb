@@ -31,19 +31,30 @@ class Program < ActiveRecord::Base
   end
 
   def teacher_ids
-    result = []
-    teachers.each do |teacher|
-      result.push(teacher.id)
+    teachers.map do |teacher|
+      teacher.id
     end
-    result
   end
 
   def student_ids
-    result = []
-    students.each do |student|
-      result.push(student.id)
+    students.map do |student|
+      student.id
     end
-    result
   end
 
+  def add_teacher(teacher_id)
+    Assignment.create(teacher_id: teacher_id, program_id: id)
+  end
+
+  def remove_teacher(teacher_id)
+    Assignment.destroy(Assignment.where(:teacher_id => teacher_id, :program_id => id))
+  end
+
+  def add_student(student_id)
+    Enrollment.create(student_id: student_id, program_id: id)
+  end
+
+  def remove_student(student_id)
+    Enrollment.destroy(Enrollment.where(:student_id => student_id, :program_id => id))
+  end 
 end

@@ -1,4 +1,4 @@
-class StaffsController < UsersController
+class StaffsController < ApplicationController
 
   respond_to :html
 
@@ -9,7 +9,7 @@ class StaffsController < UsersController
   def new
     # @staff = Staff.new
     @staff = Staff.new
-    @staff.domains.new
+    # @staff.domains.new
   end
 
   def create 
@@ -23,14 +23,15 @@ class StaffsController < UsersController
   end
 
   def update 
-    @staff = Staff.find(params[:pk])
+    staff = Staff.find(params[:pk])
     if params[:name] == 'email'
-      params[:value] = {params[:name] => params[:value]}
-      @staff.update_attributes(user_params)
+      params[:staff] = {params[:name] => params[:value]}
+      staff.update_attributes(staff_params)
     elsif params[:name] == 'region'
-      @staff.update_region(params[:value])
+      staff.change_region(params[:value_remove], params[:value_add])
     elsif params[:name] == 'user_name'
-      @staff.update_attributes(user_params)
+      params[:staff] = params[:value]
+      staff.update_attributes(staff_params)
     end
     render nothing: true
   end
@@ -43,9 +44,10 @@ class StaffsController < UsersController
 
   end
 
-private
+  private
   def staff_params
     params.require(:staff).permit(:first_name, :last_name, :email, :password, :password_confirmation)
     # params.require(:staff).permit(:first_name, :last_name, :email, :password, :password_confirmation, :domains_attributes)
   end
+
 end

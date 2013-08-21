@@ -23,7 +23,7 @@
         %a.btn.btn-primary.delete-entry Delete
         %p
 
-        %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
+        %table.table.table-bordered.table-striped.table-condensed.table-condensed{:style => 'clear: both'}
           %tr
             %th{:width => '10px'} 
             %th{:width => '200px'} INSTRUMENT
@@ -35,11 +35,9 @@
               %td
                 %input.checkbox-select-to-delete{:type => 'checkbox', :value  => "#{program.id}"}
               %td
-                %a.x-editable-select2-singular{:href => '#', 'data-source' => '/instruments','data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}", 'data-name' => 'instrument_id'}
-                  = Instrument.find(program.instrument_id).name
+                = singular_selection(Instrument.all_ordered_json, program.instrument_id, program.id, "/programs/#{program.id}", 'instrument_id')
               %td
-                %a.x-editable-select2-singular{:href => '#', 'data-source' => '/program_types','data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}", 'data-name' => 'program_type_id'}
-                  = ProgramType.find(program.program_type_id).name
+                = singular_selection(ProgramType.all_ordered_json, program.program_type_id, program.id, "/programs/#{program.id}", 'program_type_id')
               %td
                 %a.x-editable-input-number{:href => '#', 'data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}"}
                   = program.regular_group_course
@@ -54,11 +52,11 @@
                 .accordion-body.collapse{:id => "collapse#{program.id}"}
                   .accordion-inner{:style => 'border-top-width: 0px'}
                     .well
-                      TEACHERS:&nbsp&nbsp
-                      = multiple_selection(program.school.teachers_ordered_json, program.teacher_ids, program.id, "/programs/#{program.id}", 'regions')
+                      TEACHERS:
+                      = multiple_selection(program.school.teachers_ordered_json, program.teacher_ids, program.id, "/programs/#{program.id}", 'teachers')
                     .well
-                      STUDENTS:&nbsp&nbsp
-                      = multiple_selection(program.school.students_ordered_json, program.student_ids, program.id, "/programs/#{program.id}", 'regions')
+                      STUDENTS:
+                      = multiple_selection(program.school.students_ordered_json, program.student_ids, program.id, "/programs/#{program.id}", 'students')
         %a.btn.btn-primary.new-entry{:href => "/programs/new", "data-entry" => "#{school.id}"} New Program
       - i += 1
   = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"

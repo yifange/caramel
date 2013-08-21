@@ -16,32 +16,33 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :domains
 
   def region_ids
-    result = []
-    regions.each do |region|
-      result.push(region.id)
+    regions.map do |region|
+      region.id
     end
-    result
   end
 
   def regions_ordered_json
     regions_ordered = regions.order("name")
-    result = []
-    regions_ordered.each do |region| 
-      result.push({:id => region.id, :text => region.name})
+    regions_ordered.map do |region| 
+      {:id => region.id, :text => region.name}
     end
-    result
   end
 
   def self.all_ordered(type)
     User.where(:type => type).order("first_name")
   end
 
+  def add_region(region_id)
+    Domain.create(user_id: id, region_id: region_id)
+  end
+
   def remove_region(region_id)
     Domain.destroy(Domain.where(:user_id => id, :region_id => region_id))
   end
 
-  def add_region(region_id)
-    Domain.create(user_id: id, region_id: region_id)
+  def change_region(region_old_id, region_new_id)
+    remove_region(region_old_id)
+    add_region(region_new_id)
   end
 
 end

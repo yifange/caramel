@@ -16,9 +16,13 @@ class SchoolsController < ApplicationController
   end
 
   def update
-    @school = School.find(params[:pk])
-    params[:value] = {params[:name] => params[:value]}
-    @school.update_attributes(school_params)
+    school = School.find(params[:pk])
+    if params[:name] == 'full' || params[:name] == 'abbrev'
+      params[:school] = {params[:name] => params[:value]}
+    elsif params[:name] == 'region'
+      params[:school] = {:region_id => params[:value_add]}
+    end
+    school.update_attributes(school_params)
     render nothing: true
   end
 
@@ -26,7 +30,7 @@ class SchoolsController < ApplicationController
     @schools = School.all_ordered
   end
 
-private
+  private
   def school_params
     params.require(:school).permit(:region_id, :abbrev, :full)
   end

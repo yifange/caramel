@@ -5,5 +5,9 @@ class Staff < User
   def self.all_ordered
     User.all_ordered('Staff')
   end
+
+  def region_id
+    region_ids.first
+  end
   
 end

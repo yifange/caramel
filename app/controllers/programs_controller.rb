@@ -28,12 +28,25 @@ class ProgramsController < ApplicationController
   end
 
   def update
-    @program = Program.find(params[:id])
+    program = Program.find(params[:id])
     if params[:name] == 'number'
-      @program.update_attributes(program_params)
-    else
-      params[:value] = {params[:name] => params[:value]}
-      @program.update_attributes(program_params)
+      params[:program] = params[:value]
+      program.update_attributes(program_params)
+    elsif params[:name] == 'program_type_id' || params[:name] == 'instrument_id'
+      params[:program] = {params[:name] => params[:value_add]}
+      program.update_attributes(program_params)
+    elsif params[:name] == 'teachers'
+      if params[:option] == "add"
+        program.add_teacher(params[:value])
+      else
+        program.remove_teacher(params[:value])
+      end
+    elsif params[:name] == 'students'
+      if params[:option] == "add"
+        program.add_student(params[:value])
+      else
+        program.remove_student(params[:value])
+      end
     end
     render nothing: true
   end
@@ -44,7 +57,7 @@ class ProgramsController < ApplicationController
     redirect_to :controller => "programs", :action => "index"
   end
 
-private
+  private
   def program_params
     params.require(:program).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
   end

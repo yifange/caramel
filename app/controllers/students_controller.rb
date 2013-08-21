@@ -11,6 +11,12 @@ class StudentsController < ApplicationController
     if params[:name] == 'user_name'
       params[:student] = params[:value]
       student.update_attributes(student_params)
+    elsif params[:name] == 'programs'
+      if params[:option] == "add"
+        student.add_program(params[:value])
+      else
+        student.remove_program(params[:value])
+      end
     elsif params[:name] == 'school'
       params[:student] = {:school_id => params[:value_add]}
       student.update_attributes(student_params)

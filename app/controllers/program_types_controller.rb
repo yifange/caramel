@@ -17,7 +17,7 @@ class ProgramTypesController < ApplicationController
 
   def update
     @program_type = ProgramType.find(params[:pk])
-    params[:value] = {params[:name] => params[:value]}
+    params[:program_type] = {params[:name] => params[:value]}
     @program_type.update_attributes(program_type_params)
     render nothing: true
   end
@@ -27,7 +27,7 @@ class ProgramTypesController < ApplicationController
     respond_with(ProgramType.all_ordered_json)
   end
 
-private
+  private
   def program_type_params
     params.require(:program_type).permit(:name)
   end

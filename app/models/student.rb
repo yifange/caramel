@@ -16,11 +16,17 @@ class Student < ActiveRecord::Base
   end
 
   def program_ids
-    result = []
-    programs.each do |program|
-      result.push(program.id)
+    programs.map do |program|
+      program.id
     end
-    result
+  end
+
+  def add_program(program_id)
+    Enrollment.create(student_id: id, program_id: program_id)
+  end
+
+  def remove_program(program_id)
+    Enrollment.destroy(Enrollment.where(:student_id => id, :program_id => program_id))
   end
 
 end

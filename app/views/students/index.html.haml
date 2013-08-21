@@ -23,6 +23,6 @@
         %td
           = singular_selection(School.all_ordered_json, student.school_id, student.id, "/students/#{student.id}", 'school')
         %td
-          = multiple_selection(student.school.program_all_ordered_json, student.program_ids, student.id, "/students/#{student.id}", 'school')
+          = multiple_selection(student.school.program_all_ordered_json, student.program_ids, student.id, "/students/#{student.id}", 'programs')
 
   = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"

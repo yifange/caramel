@@ -532,7 +532,7 @@ module CalHelper
         klass << "not-current-month" if day.month != @month
         if @objects.has_key? day
           klass << day_marking(@objects[day])
-          klass << "class-day" unless @objects[day].empty?
+          klass << " class-day" unless @objects[day].empty?
         end
         if day.sunday?
           cal_days.concat(tag :tr, nil, true)

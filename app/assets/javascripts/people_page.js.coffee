@@ -1,22 +1,34 @@
+attachResetPwdHandler = ->
+  $('.reset-pwd').on "click", ->
+    toBeReset = "input[type=checkbox]:checked"
+    $( toBeReset ).each(i, val) ->
+    $.ajax(
+      type: "POST"
+      url:
+    )
+
 attachDeleteEntryHandler = ->
   $('.delete-entry').on "click", (e)->
-    # deleteList = []
+    deleteList = []
     toBeDelete = "input[type=checkbox]:checked"
     $( toBeDelete ).each((i, val) ->
-      # deleteList.push()
-      $.ajax(
-        type: "POST",
-        data: {"_method": "delete"},
-        url: "/programs/" + $(this).val(),
-        success: (data, status) ->
-          cur_pane_id = $(".tab-pane.active").attr("id")
-          console.log $(data).html()
-          $(".tab-pane.active").html($(data).find("#" + cur_pane_id).html())
-          attachBlockHandler()
-          attachNewEntryHandler()
-          attachTagClickHandler()
-          attachDeleteEntryHandler()
-      )
+      deleteList.push($(this).val())
+    )
+    $.ajax(
+      type: "POST",
+      # data: {"_method": "delete"},
+      # url: $(this).data("url"),
+      # url: "/programs/" + $(this).val(),
+      data: {"deleteList": deleteList},
+      url: "/programs/destroy_multi",
+      success: (data, status) ->
+        cur_pane_id = $(".tab-pane.active").attr("id")
+        console.log $(data).html()
+        $(".tab-pane.active").html($(data).find("#" + cur_pane_id).html())
+        attachBlockHandler()
+        attachNewEntryHandler()
+        attachTagClickHandler()
+        attachDeleteEntryHandler()
     )
 
 attachNewEntryHandler = ->
@@ -142,12 +154,14 @@ attachBlockHandler = ->
   })
 
 $(document).ready attachBlockHandler
+$(document).ready attachResetPwdHandler
 $(document).ready attachDeleteEntryHandler
 $(document).ready attachNewEntryHandler
 $(document).ready attachSubmitHandler
 $(document).ready attachTagClickHandler
 $(document).ready attachTooltipHandler
 $(document).on "page:load", attachBlockHandler
+$(document).on "page:load", attachResetPwdHandler
 $(document).on "page:load", attachDeleteEntryHandler
 $(document).on "page:load", attachNewEntryHandler
 $(document).on "page:load", attachSubmitHandler

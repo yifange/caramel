@@ -2,6 +2,7 @@ Caramel::Application.routes.draw do
   get 'calendars/week' => 'calendars#index_week', :as => :calendar_week
   get 'lunchpads/api' => 'lunchpads#api'
   post 'lunchpads/lunch' => 'lunchpads#lunch'
+  post 'programs/destroy_multi' => 'programs#destroy_multi'
   resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses, :rosters
 	root 'session_page#signin'
 

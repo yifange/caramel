@@ -44,6 +44,14 @@ class ProgramsController < ApplicationController
     redirect_to :controller => "programs", :action => "index"
   end
 
+  def destroy_multi
+    params[:deleteList].each do |item|
+      program = Program.find(item)
+      program.destroy
+    end
+    redirect_to :controller => "programs", :action => "index"
+  end
+
 private
   def program_params
     params.require(:program).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)

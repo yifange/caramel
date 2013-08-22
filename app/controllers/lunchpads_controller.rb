@@ -5,8 +5,8 @@ class LunchpadsController < ApplicationController
   def create
     render :json => params
   end
-  def lunch
-    render :json => params
+  def lunch(email)
+    mail to: email, subject: "MusicKids"
   end
   def api
     render :json => [{id: 'gb', text: "Great Britain"}, {id: "us", text: "United States"}]

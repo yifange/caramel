@@ -14,8 +14,8 @@ class StaffsController < ApplicationController
 
   def create 
     @staff = Staff.new(staff_params)
-    # @domain = Domain.new(:region_id => params[:staff][:domains_attributes]["0"][:region_id], :user => @staff)
-    if @staff.save and @domain.save
+    # dmn = Domain.new(:region_id => params[:staff][:domains_attributes]["0"][:region_id], :user => @staff)
+    if @staff.save
       redirect_to :controller => "staffs", :actoin => "index"
     else
       render :new, :status => :unprocessable_entity

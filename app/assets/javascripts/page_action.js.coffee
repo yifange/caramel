@@ -60,6 +60,7 @@ attachSubmitHandler = ->
         attachBlockHandler()
         attachTagClickHandler()
         attachDeleteEntryHandler()
+
       error: (data, status) ->
         $(".new-entry-modal-body").html($(data.responseText).find(".new-entry-form-body").html())
     })

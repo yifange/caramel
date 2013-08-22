@@ -3,6 +3,7 @@ Caramel::Application.routes.draw do
   get 'lunchpads/api' => 'lunchpads#api'
   post 'lunchpads/lunch' => 'lunchpads#lunch'
   get "rosters/add" => "rosters#add_student"
+  post 'programs/destroy_multi' => 'programs#destroy_multi'
   resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses, :rosters
 	root 'session_page#signin'
   

@@ -45,6 +45,7 @@ group :doc do
 end
 
 gem 'sorcery'
+gem 'roadie'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

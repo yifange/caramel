@@ -7,7 +7,13 @@
   %body
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
-        %a.brand{:href => '#'} Music Kids
+        .container{:style => 'margin-left: 10px; width: 100%;'}
+          %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#main-nav-collapse"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand{:href => "#"}
+            Music Kids
     .content#login-content
       = form_tag '/session_page/verify', method: 'get' do
         %fieldset

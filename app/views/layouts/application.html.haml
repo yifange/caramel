@@ -10,7 +10,7 @@
   %body
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
-        .container
+        .container{:style => 'margin-left: 10px; width: 100%;'}
           %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#main-nav-collapse"}
             %span.icon-bar
             %span.icon-bar
@@ -23,26 +23,23 @@
               = active_link_partialpath 'PROGRAMS', '/regions'
               = active_link_partialpath 'CLASSES', '/calendars'
               = active_link_partialpath 'INSTRUMENTS','#'
-              -#     SEMESTER
             %ul.nav.pull-right
-              %li
-                %a
+              %li.dropdown{:style => 'margin-right: 10px;'}
+                %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
                   %i.icon-user.icon-white
-                %li.dropdown
-                  %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
-                    = current_user.name
-                    %span.caret
-                  %ul.dropdown-menu
-                    %li
-                      %a{:href => '/profiles'} Profile
-                    %li
-                      %a{:href => '/session_page/signout'} Sign out
+                  = current_user.name
+                  %span.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{:href => '/profiles'} Profile
+                  %li
+                    %a{:href => '/session_page/signout'} Sign out
     = yield(:subnav)
     .container-fluid
-      .span12.content
-        dddd
       .row-fluid
         .span2.content
           = yield(:sidemenu)
+        .span10.content{:style => "margin-bottom: 15px"}
+          = yield(:action_button)
         .span10.content
           = yield(:main)

@@ -19,10 +19,10 @@
             Music Kids
           #main-nav-collapse.nav-collapse.collapse
             %ul.nav
-              = active_link_partialpath 'PEOPLE', '/staffs'
-              = active_link_partialpath 'PROGRAMS', '/regions'
-              = active_link_partialpath 'CLASSES', '/calendars'
-              = active_link_partialpath 'INSTRUMENTS','#'
+              = active_link_partialpath 'PEOPLE', '/staffs', ['/staffs', '/teachers', '/students']
+              = active_link_partialpath 'PROGRAMS', '/regions', ['/regions', '/instruments', '/program_types', '/schools', '/programs']
+              = active_link_partialpath 'CLASSES', '/calendars', []
+              = active_link_partialpath 'INSTRUMENTS', '#', []
             %ul.nav.pull-right
               %li.dropdown{:style => 'margin-right: 10px;'}
                 %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}

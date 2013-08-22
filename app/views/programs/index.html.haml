@@ -19,6 +19,13 @@
     - i = 0
     - @schools.each do |school|
       .tab-pane{:class => (i == 0 ? 'active' : nil), :id => "tab#{school.id}"}
+        -########################################
+        -# ENTRY DELETE
+        -########################################
+        %a.btn.btn-primary.delete-entry{} Delete
+        %a.btn.btn-primary.reset-pwd Reset Password
+        %p
+
         %table.table.table-bordered.table-striped.table-condensed.table-condensed{:style => 'clear: both'}
           %tr
             %th{:width => '10px'} 

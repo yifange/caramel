@@ -2,7 +2,10 @@
   programs/programs
 
 - content_for :sidemenu do
-  - render '/layouts/programs_page_sidebar'
+  = render '/layouts/programs_page_sidebar'
+  %a.btn.delete-entry.sidebar-button Delete Program
+  -# %a.btn.btn-primary.new-entry{:href => "/programs/new", "data-entry" => "#{school.id}"} New Program
+  %a.btn.new-entry.sidebar-button{:href => "/programs/new", "data-entry" => ""} New Program
 
 - content_for :main do
   %ul.nav.nav-tabs
@@ -16,13 +19,6 @@
     - i = 0
     - @schools.each do |school|
       .tab-pane{:class => (i == 0 ? 'active' : nil), :id => "tab#{school.id}"}
-
-        -########################################
-        -# ENTRY DELETE
-        -########################################
-        %a.btn.btn-primary.delete-entry Delete
-        %p
-
         %table.table.table-bordered.table-striped.table-condensed.table-condensed{:style => 'clear: both'}
           %tr
             %th{:width => '10px'} 
@@ -51,13 +47,11 @@
               %td{'colspan' => "5", :style => "height: auto"}
                 .accordion-body.collapse{:id => "collapse#{program.id}"}
                   .accordion-inner{:style => 'border-top-width: 0px'}
-                    .well
+                    .well.well-small
                       TEACHERS:
                       = multiple_selection(program.school.teachers_ordered_json, program.teacher_ids, program.id, "/programs/#{program.id}", 'teachers')
-                    .well
+                    .well.well-small
                       STUDENTS:
                       = multiple_selection(program.school.students_ordered_json, program.student_ids, program.id, "/programs/#{program.id}", 'students')
-        %a.btn.btn-primary.new-entry{:href => "/programs/new", "data-entry" => "#{school.id}"} New Program
       - i += 1
   = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
-  %p

@@ -1,8 +1,12 @@
 - content_for :title do
   people/staff
 
-- content_for :sidemenu do
-  - render '/layouts/people_page_sidebar'
+= content_for :sidemenu do
+  = render '/layouts/people_page_sidebar'
+  %br
+  %ul.nav.nav-list
+    %li 
+      %a{:href => "#"} Reset Password
   
 - content_for :main do
   %a.btn.btn-primary.new-entry{:href => "/staffs/new", "data-entry" => "staff"} New Staff
@@ -27,6 +31,4 @@
         %td
           = singular_selection(Region.all_ordered_json, staff.region_id, staff.id, "/staffs/#{staff.id}", 'region')
         %td
-          %button.btn{'type' => 'button'}
-            Reset Password
   = modal_for "new-entry", :modal_title => "New Staff", :css_class => "new-entry"

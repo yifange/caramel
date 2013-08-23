@@ -1,7 +1,8 @@
 class Course < ActiveRecord::Base
   belongs_to :program
   has_many :rosters
-  has_many :students, :through => :rosters
+  has_many :enrollments, :through => :rosters
+  has_many :students, :through => :enrollments
   has_many :schedules
   def start_date
     program.start_date

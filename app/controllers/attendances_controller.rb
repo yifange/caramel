@@ -46,7 +46,7 @@ class AttendancesController < ApplicationController
   def rehash_rosters_and_attendances(program)
     # program_hash = {}
     enrollment_hash = {}
-    enrollments = program.enrollments
+    enrollments = program.enrollments.includes(:rosters => [:course => :schedules])
     enrollments.each do |enrollment|
       rosters = enrollment.rosters
       roster_hash = {}
@@ -59,14 +59,18 @@ class AttendancesController < ApplicationController
           r.attendances.each do |attendance|
             attendance_hash[:group][attendance.date] = attendance
           end
-          roster_hash[course.date] = [] unless roster_hash.has_key? course.date
-          roster_hash[course.date] << r
+          course.schedules.each do |schedule|
+            roster_hash[schedule.date] = [] unless roster_hash.has_key? schedule.date
+            roster_hash[schedule.date] << r
+          end
         else
           r.attendances.each do |attendance|
             attendance_hash[:regular][attendance.date] = attendance
           end
-          roster_hash[course.day_of_week] = [] unless roster_hash.has_key? course.day_of_week
-          roster_hash[course.day_of_week] << r
+          course.schedules.each do |schedule|
+            roster_hash[schedule.day_of_week] = [] unless roster_hash.has_key? schedule.day_of_week
+            roster_hash[schedule.day_of_week] << r
+          end
         end
       end
       enrollment_hash[enrollment] = [attendance_hash, roster_hash]

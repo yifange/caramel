@@ -1,10 +1,13 @@
 Caramel::Application.routes.draw do
+  get "password_resets/create"
+  get "password_resets/edit"
+  get "password_resets/update"
   get 'calendars/week' => 'calendars#index_week', :as => :calendar_week
   get 'lunchpads/api' => 'lunchpads#api'
   post 'lunchpads/lunch' => 'lunchpads#lunch'
   get "rosters/add" => "rosters#add_student"
   post 'programs/destroy_multi' => 'programs#destroy_multi'
-  resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses, :rosters
+  resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses, :rosters, :password_resets
 	root 'session_page#signin'
   
 

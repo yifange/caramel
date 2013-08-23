@@ -3,6 +3,7 @@ class StudentsController < ApplicationController
   respond_to :html
 
   def index 
+    verify_user(['Admin', 'Staff', 'Teacher'])
     @students = Student.all_ordered
   end
 

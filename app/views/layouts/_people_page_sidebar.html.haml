@@ -1,4 +1,8 @@
 %ul.nav.nav-list
-  = active_link_fullpath 'STAFF', '/staffs'
-  = active_link_fullpath 'TEACHERS', '/teachers'
-  = active_link_fullpath 'STUDENTS', '/students'
+  - if verify_user(['Admin'])
+    = active_link_fullpath 'STAFF', '/staffs'
+  - if verify_user(['Admin', 'Staff'])
+    = active_link_fullpath 'TEACHERS', '/teachers'
+  - if verify_user(['Admin', 'Staff', 'Teacher'])
+    = active_link_fullpath 'STUDENTS', '/students'
+%br

@@ -3,6 +3,7 @@ class TeachersController < ApplicationController
   respond_to :html
 
   def index 
+    verify_user(['Admin', 'Staff'])
     @teachers = Teacher.all_ordered
   end
 

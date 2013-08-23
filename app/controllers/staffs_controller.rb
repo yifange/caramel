@@ -3,6 +3,7 @@ class StaffsController < ApplicationController
   respond_to :html
 
   def index 
+    verify_user(['Admin'])
     @staffs = Staff.all_ordered
   end
 

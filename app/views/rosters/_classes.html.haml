@@ -3,6 +3,8 @@
     %tr
       %th{:colspan => 2}
         Regular Classes
+        %a.btn.pull-right.add-class{:href => "/courses/new?program_id=#{@program.id}&course_type=regular"}
+          add
   - @courses.where(:course_type => "RegularCourse").each do |course|
     = render "class_details", :course => course
 
@@ -11,5 +13,7 @@
     %tr
       %th{:colspan => 2}
         Group Classes
+        %a.btn.pull-right.add-class{:href => "/courses/new?program_id=#{@program.id}&course_type=group"}
+          add
   - @courses.where(:course_type => "GroupCourse").each do |course|
     = render "class_details", :course => course

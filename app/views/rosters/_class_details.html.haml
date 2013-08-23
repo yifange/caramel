@@ -1,7 +1,6 @@
 - students = course.students
 %tr
   %td{:rowspan => "#{students.count}"}
-    - date = course.date
     .dropdown
       %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
         %span
@@ -15,8 +14,7 @@
           %a.menu-item-update-class{:href => "/courses/#{course.id}/edit?program_id=#{@program_id}", :tabindex => "-1"}
             Update class
         %li
-          %a.menu-item-show-in-calendar{:href => "/courses?program_id=#{@program_id}&year=#{date.year}&month=#{date.month}&day=#{date.day}", :tabindex => "-1"}
-            Show in calendar
+          %a.menu-item-delete-class{:href => "/cources/#{course.id}/destroy", :tabindex => "-1"}
   %td
     - if students.count == 0
       %span.empty-class

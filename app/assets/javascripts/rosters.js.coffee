@@ -41,6 +41,17 @@ addStudentHandler = ->
         keyboard: true
       })
     )
+addClassHandler = ->
+  $(".btn.add-class").on "click", (e) ->
+    e.preventDefault()
+    href = $(this).attr("href")
+    $.get(href, (data, status) ->
+      $("#add-class-modal-body").html($(data).filter("#course-form-body").html())
+      $("#add-class-modal").modal({
+        keyboard: true
+      })
+    )
+
 updateClassHandler = ->
   $(".menu-item-update-class").on "click", (e) ->
     e.preventDefault()
@@ -115,6 +126,27 @@ updateClassModalSubmitHandler = ->
         $("#update-class-modal-body").html($(data.responseText).find("#course-form-body").html())
     })
 
+addClassModalSubmitHandler = ->
+  $("#add-class-modal-confirm").on "click", ->
+    $form = $("form.course")
+    $.ajax({
+      type: $form.attr("method")
+      url: $form.attr("action")
+      data: $form.serialize()
+      success: (data, status) ->
+        $("#add-class-modal").modal("toggle")
+        $.get(document.URL, (data, status) ->
+          $(".rosters.container").html($(data).find(".rosters-container").html())
+          $(".classes-container").html($(data).find(".classes-container").html())
+          addStudentHandler()
+          newRosterHandler()
+          initRosterEditable()
+          updateClassHandler()
+        )
+      error: (data, status) ->
+        $("#add-class-modal-body").html($(data.responseText).find("#course-form-body").html())
+    })
+
 $(document).ready newRosterHandler
 $(document).ready rosterModalSubmitHandler
 $(document).ready initRosterEditable
@@ -122,11 +154,14 @@ $(document).ready addStudentHandler
 $(document).ready addStudentModalSubmitHandler
 $(document).ready updateClassHandler
 $(document).ready updateClassModalSubmitHandler
+$(document).ready addClassHandler
+$(document).ready addClassModalSubmitHandler
 
 $(document).on "page:load", newRosterHandler
 $(document).on "page:load", rosterModalSubmitHandler
 $(document).on "page:load", initRosterEditable
 $(document).on "page:load", addStudentHandler
 $(document).on "page:load", addStudentModalSubmitHandler
-$(document).on "page:load", updateClassHandler
 $(document).on "page:load", updateClassModalSubmitHandler
+$(document).on "page:load", addClassHandler
+$(document).on "page:load", addClassModalSubmitHandler

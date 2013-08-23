@@ -541,7 +541,7 @@ module CalHelper
         if @school_id
           text = link_to day.day, {:controller => :calendars, :action => :index_week, :year => day.year, :month => day.month, :day => day.day, :school => @school_id}, :class => "day-link"
         elsif @program_id
-          text = link_to day.day, {:controller => :courses, :action => :index_week, :year => day.year, :month => day.month, :day => day.day, :program => @program_id}, :class => "day-link"
+          text = link_to day.day, {:controller => :schedules, :action => :index_week, :year => day.year, :month => day.month, :day => day.day, :program => @program_id}, :class => "day-link"
         end
         cal_days.concat(klass.empty? ? (content_tag :td, text, :data => {:year => day.year, :month => day.month, :day => day.day}) : (content_tag :td, text, :class => klass, :data => {:year => day.year, :month => day.month, :day => day.day}))
         cal_days.concat("</tr>".html_safe) if day.saturday?

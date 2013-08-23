@@ -1,36 +1,36 @@
-- content_for :title do
-  schedule 
-- content_for :sidemenu do
-  - render '/layouts/classes_page_sidebar'
-- content_for :subnav do
-  .navbar.navbar-fixed-top.subnav
-    .navbar-inner
-      .container
-        %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#subnav-collapse"}
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-        #subnav-collapse.nav-collapse.collapse
-          %ul.nav.nav-pills.unselectable
-            %li
-              %a#subnav-today{:href => "#"}
-                now
-            %li
-              %a#subnav-prev{:href => "#"}
-                <
-            %li
-              %a#subnav-next{:href => "#"}
-                >
-            %li
-              %span.navbar-text#subnav-text
-          %ul.nav.nav-pills.pull-right.unselectable
-            = nav_filter_for "program", @programs, :base_url => "/courses", :year => params[:year], :month => params[:month], :day => params[:day]
-            %li
-              = link_to "week", courses_week_path(:program_id => @program_id), :id => "subnav-week"
-            %li.active
-              = link_to "year", courses_path(:program_id => @program_id), :id => "subnav-year"
-
-- content_for :main do
-  = annual_calendar_for @courses, :year => @year.to_i, :program => @program do |c|
-    = c.draw_annual_calendar_body
-  = modal_for "course", :delete_button => true
+-# - content_for :title do
+-#   schedule 
+-# - content_for :sidemenu do
+-#   - render '/layouts/classes_page_sidebar'
+-# - content_for :subnav do
+-#   .navbar.navbar-fixed-top.subnav
+-#     .navbar-inner
+-#       .container
+-#         %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#subnav-collapse"}
+-#           %span.icon-bar
+-#           %span.icon-bar
+-#           %span.icon-bar
+-#         #subnav-collapse.nav-collapse.collapse
+-#           %ul.nav.nav-pills.unselectable
+-#             %li
+-#               %a#subnav-today{:href => "#"}
+-#                 now
+-#             %li
+-#               %a#subnav-prev{:href => "#"}
+-#                 <
+-#             %li
+-#               %a#subnav-next{:href => "#"}
+-#                 >
+-#             %li
+-#               %span.navbar-text#subnav-text
+-#           %ul.nav.nav-pills.pull-right.unselectable
+-#             = nav_filter_for "program", @programs, :base_url => "/courses", :year => params[:year], :month => params[:month], :day => params[:day]
+-#             %li
+-#               = link_to "week", courses_week_path(:program_id => @program_id), :id => "subnav-week"
+-#             %li.active
+-#               = link_to "year", courses_path(:program_id => @program_id), :id => "subnav-year"
+-# 
+-# - content_for :main do
+-#   = annual_calendar_for @courses, :year => @year.to_i, :program => @program do |c|
+-#     = c.draw_annual_calendar_body
+-#   = modal_for "course", :delete_button => true

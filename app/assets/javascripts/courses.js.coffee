@@ -2,8 +2,8 @@ attachCourseColumnHandler = ->
   $("div.wc-day-column-inner.course-cal").css("cursor", "pointer").on "click", ->
     date = $(this).data("date")
     # window.location.href = "/events/new?date=" + date
-    $.get("/courses/new?date=" + date + "&program_id=" + $(".wc-container").data("program"), (data, status) ->
-      $("#course-modal-body").html($(data).filter("#course-form-body").html())
+    $.get("/schedules/new?date=" + date + "&program_id=" + $(".wc-container").data("program"), (data, status) ->
+      $("#course-modal-body").html($(data).filter("#schedule-form-body").html())
       $("#course-form-submit").hide()
       $("#course-modal-delete").hide()
       $("#course-modal-title").html("Create Course")
@@ -17,8 +17,8 @@ attachCourseEventHandler = ->
   $("div.wc-cal-event.course-cal").on "click", ->
     eventId = $(this).data("eventid")
     $.data($("#course-modal-delete")[0], "eventid", eventId)
-    $.get("/courses/" + eventId + "/edit", (data, status) ->
-      $("#course-modal-body").html($(data).filter("#course-form-body").html())
+    $.get("/schedules/" + eventId + "/edit", (data, status) ->
+      $("#course-modal-body").html($(data).filter("#schedule-form-body").html())
       $("#course-form-submit").hide()
       $("#course-modal-delete").show()
       $("#course-modal-title").html("Update Event")
@@ -30,7 +30,7 @@ attachCourseEventHandler = ->
 
 attachCourseSubmitHandler = ->
   $("#course-modal-confirm").on "click", ->
-    $form = $("form.course")
+    $form = $("form.schedule")
     $.ajax({
       type: $form.attr("method"),
       url: $form.attr("action"),
@@ -52,7 +52,7 @@ attachCourseDeleteHandler = ->
     eventId = $(this).data("eventid")
     $.ajax({
       type: "POST",
-      url: "/courses/" + eventId,
+      url: "/schedules/" + eventId,
       data: {"_method": "delete"},
       complete: (data, status) ->
         $("#course-modal").modal("toggle")

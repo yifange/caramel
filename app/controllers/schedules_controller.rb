@@ -2,7 +2,7 @@ class SchedulesController < ApplicationController
   def index
 
     if current_user[:type] == "Teacher"
-      @programs = Teacher.find(current_user[:id]).programs.order("school_id ASC")
+      @programs = Teacher.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
     end
     @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
     if @program
@@ -20,7 +20,7 @@ class SchedulesController < ApplicationController
   end
   def index_week
     if current_user[:type] == "Teacher"
-      @programs = Teacher.find(current_user[:id]).programs.order("school_id ASC")
+      @programs = Teacher.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
     end
     @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
     if @program

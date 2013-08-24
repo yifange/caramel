@@ -21,6 +21,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def program_ids
+    programs.map do |program|
+      program.id
+    end
+  end
+
   def regions_ordered_json
     regions_ordered = regions.order("name")
     regions_ordered.map do |region| 

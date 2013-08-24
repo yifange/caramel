@@ -4,7 +4,13 @@ class StudentsController < ApplicationController
 
   def index 
     verify_user(['Admin', 'Staff', 'Teacher'])
-    @students = Student.all_ordered
+    if current_user.type == 'Admin'
+      @students = Student.all_ordered
+    elsif current_user.type == 'Staff'
+      @students = Student.in_one_region_ordered(current_user.region_id)
+    elsif current_user.type == 'Teacher'
+      @students = Student.in_programs_ordered(current_user.program_ids)
+    end
   end
 
   def update 

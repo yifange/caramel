@@ -2,7 +2,14 @@ class ProgramsController < ApplicationController
   respond_to  :html, :json
 
   def index
-    @schools = School.all
+    verify_user(['Admin', 'Staff', 'Teacher'])
+    if current_user.type == 'Admin'
+      @schools = School.all_ordered
+    elsif current_user.type == 'Staff'
+      @schools = School.in_one_region_ordered(current_user.region_id)
+    elsif current_user.type == 'Teacher'
+      @schools = current_user.schools
+    end
   end
 
   def new
@@ -65,7 +72,7 @@ class ProgramsController < ApplicationController
     redirect_to :controller => "programs", :action => "index"
   end
 
-private
+  private
   def program_params
     params.require(:program).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
   end

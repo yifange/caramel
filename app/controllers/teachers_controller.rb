@@ -4,7 +4,11 @@ class TeachersController < ApplicationController
 
   def index 
     verify_user(['Admin', 'Staff'])
-    @teachers = Teacher.all_ordered
+    if current_user.type == 'Admin'
+      @teachers = Teacher.all_ordered
+    elsif current_user.type == 'Staff'
+      @teachers = Teacher.in_one_region_ordered(current_user.region_id)
+    end
   end
 
   def update 
@@ -38,7 +42,7 @@ class TeachersController < ApplicationController
     end
   end
 
-  private
+private
   def teacher_params
     params.require(:teacher).permit(:first_name, :last_name, :email, :password, :password_confirmation)
   end

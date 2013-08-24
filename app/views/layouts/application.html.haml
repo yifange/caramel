@@ -19,8 +19,15 @@
             Music Kids
           #main-nav-collapse.nav-collapse.collapse
             %ul.nav
-              = active_link_partialpath 'PEOPLE', '/staffs', ['/staffs', '/teachers', '/students']
-              = active_link_partialpath 'PROGRAMS', '/regions', ['/regions', '/instruments', '/program_types', '/schools', '/programs']
+              - if verify_user(['Admin'])
+                = active_link_partialpath 'PEOPLE', '/staffs', ['/staffs', '/teachers', '/students']
+                = active_link_partialpath 'PROGRAMS', '/regions', ['/regions', '/instruments', '/program_types', '/schools', '/programs']
+              - elsif verify_user(['Staff'])
+                = active_link_partialpath 'PEOPLE', '/teachers', ['/staffs', '/teachers', '/students']
+                = active_link_partialpath 'PROGRAMS', '/instruments', ['/regions', '/instruments', '/program_types', '/schools', '/programs']
+              - elsif verify_user(['Teacher'])
+                = active_link_partialpath 'PEOPLE', '/students', ['/staffs', '/teachers', '/students']
+                = active_link_partialpath 'PROGRAMS', '/programs', ['/regions', '/instruments', '/program_types', '/schools', '/programs']
               = active_link_partialpath 'CLASSES', '/calendars', []
               = active_link_partialpath 'INSTRUMENTS', '#', []
             %ul.nav.pull-right

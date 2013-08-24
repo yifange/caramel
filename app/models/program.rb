@@ -36,6 +36,15 @@ class Program < ActiveRecord::Base
     end
   end
 
+  def teacher_names
+    result = ''
+    teachers.map do |teacher|
+      result += teacher.name
+      result += ', '
+    end
+    result.chop.chop
+  end
+
   def student_ids
     students.map do |student|
       student.id
@@ -57,4 +66,5 @@ class Program < ActiveRecord::Base
   def remove_student(student_id)
     Enrollment.destroy(Enrollment.where(:student_id => student_id, :program_id => id))
   end 
+
 end

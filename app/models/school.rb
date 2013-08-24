@@ -13,6 +13,31 @@ class School < ActiveRecord::Base
     end
   end
 
+  def self.in_one_region_ordered(region_id)
+    School.where(:region_id => region_id).order("full")
+  end
+
+  def self.in_one_region_ordered_json(region_id)
+    School.in_one_region_ordered.map do |school| 
+      {:id => school.id, :text => school.full}
+    end
+  end
+
+  def self.in_regions_ordered(region_ids)
+    schools = []
+    region_ids.each do |region_id|
+      schools += Region.find(region_id).schools
+    end
+    schools.uniq
+  end
+
+  def self.in_regions_ordered_json(region_ids)
+    schools = in_regions_ordered(region_ids)
+    schools.map do |school| 
+      {:id => school.id, :text => school.full}
+    end
+  end
+
   def teachers
     teachers = []
     programs.includes(:assignments, :teachers).each do |program|
@@ -34,12 +59,6 @@ class School < ActiveRecord::Base
   def students_ordered_json
     students.map do |student|
       {:id => student.id, :text => student.name}
-    end
-  end
-
-  def teachers_ordered_json
-    teachers.map do |teacher|
-      {:id => teacher.id, :text => teacher.name}
     end
   end
 

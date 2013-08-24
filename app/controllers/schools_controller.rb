@@ -27,10 +27,15 @@ class SchoolsController < ApplicationController
   end
 
   def index
-    @schools = School.all_ordered
+    verify_user(['Admin', 'Staff'])
+    if current_user.type == 'Admin'
+      @schools = School.all_ordered
+    elsif current_user.type == 'Staff'
+      @schools = School.in_one_region_ordered(current_user.region_id)
+    end
   end
 
-  private
+private
   def school_params
     params.require(:school).permit(:region_id, :abbrev, :full)
   end

@@ -15,6 +15,22 @@ class Student < ActiveRecord::Base
     users = Student.all.order("first_name")
   end
 
+  def self.in_one_region_ordered(region_id)
+    students = []
+    Region.find(region_id).schools.each do |school|
+      students += school.students
+    end
+    students
+  end
+
+  def self.in_programs_ordered(program_ids)
+    students = []
+    program_ids.each do |program_id|
+      students += Program.find(program_id).students
+    end
+    students.uniq
+  end
+
   def program_ids
     programs.map do |program|
       program.id

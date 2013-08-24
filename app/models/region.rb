@@ -17,4 +17,11 @@ class Region < ActiveRecord::Base
     Region.all.order("name")
   end
 
+  def teachers_ordered_json
+    teachers = users.where(:type => 'Teacher').order("first_name")
+    teachers.map do |teacher|
+      {:id => teacher.id, :text => teacher.name}
+    end
+  end
+
 end

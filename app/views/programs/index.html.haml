@@ -29,16 +29,28 @@
             %th{:width => '200px'} PROGRAM TYPE
             %th{:width => '310px'} REGULAR / GROUP CLASS PER YEAR
             %th 
-          - school.programs.each do |program|
+          - verify_user(['Admin', 'Staff'])
+            - school.programs.each do |program|
+          - verify_user(['Teacher'])
+            - current_user.programs.where(:school_id => school.id).each do |program|
             %tr.accordion-group
               %td
                 %input.checkbox-select-to-delete{:type => 'checkbox', :value  => "#{program.id}"}
-              %td
-                = singular_selection(Instrument.all_ordered_json, program.instrument_id, program.id, "/programs/#{program.id}", 'instrument_id')
-              %td
-                = singular_selection(ProgramType.all_ordered_json, program.program_type_id, program.id, "/programs/#{program.id}", 'program_type_id')
-              %td
-                %a.x-editable-input-number{:href => '#', 'data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}"}
+              %td{:style => 'color: #0088cc;'}
+                - if verify_user(['Admin', 'Staff'])
+                  = singular_selection(Instrument.all_ordered_json, program.instrument_id, program.id, "/programs/#{program.id}", 'instrument_id')
+                - if verify_user(['Teacher'])
+                  = Instrument.find(program.instrument_id).name
+              %td{:style => 'color: #0088cc;'}
+                - if verify_user(['Admin', 'Staff'])
+                  = singular_selection(ProgramType.all_ordered_json, program.program_type_id, program.id, "/programs/#{program.id}", 'program_type_id')
+                - if verify_user(['Teacher'])
+                  = ProgramType.find(program.program_type_id).name
+              %td{:style => 'color: #0088cc;'}
+                - if verify_user(['Admin', 'Staff'])
+                  %a.x-editable-input-number{:href => '#', 'data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}"}
+                    = program.regular_group_course
+                - if verify_user(['Teacher'])
                   = program.regular_group_course
               %td
                 .accordion-heading
@@ -51,10 +63,15 @@
                 .accordion-body.collapse{:id => "collapse#{program.id}"}
                   .accordion-inner{:style => 'border-top-width: 0px'}
                     .well.well-small{:style => 'background-color: #eee;'}
-                      TEACHERS:
-                      = multiple_selection(program.school.teachers_ordered_json, program.teacher_ids, program.id, "/programs/#{program.id}", 'teachers')
+                      %b
+                        TEACHERS:
+                      - if verify_user(['Admin', 'Staff'])
+                        = multiple_selection(Region.find(school.region_id).teachers_ordered_json, program.teacher_ids, program.id, "/programs/#{program.id}", 'teachers')
+                      - if verify_user(['Teacher'])
+                        = program.teacher_names
                     .well.well-small{:style => 'background-color: #eee;'}
-                      STUDENTS:
-                      = multiple_selection(program.school.students_ordered_json, program.student_ids, program.id, "/programs/#{program.id}", 'students')
+                      %b
+                        STUDENTS:
+                      = multiple_selection(school.students_ordered_json, program.student_ids, program.id, "/programs/#{program.id}", 'students')
       - i += 1
   = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"

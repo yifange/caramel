@@ -25,7 +25,12 @@
           %a.x-editable-input-user-name{:href => "#", 'data-url' => "/students/#{student.id}", 'data-pk' => "#{student.id}"}
             = student.name
         %td
-          = singular_selection(School.all_ordered_json, student.school_id, student.id, "/students/#{student.id}", 'school')
+          - if verify_user(['Admin'])
+            = singular_selection(School.all_ordered_json, student.school_id, student.id, "/students/#{student.id}", 'school')
+          - if verify_user(['Staff'])
+            = singular_selection(School.in_one_region_ordered_json(current_user.region_id), student.school_id, student.id, "/students/#{student.id}", 'school')
+          - if verify_user(['Teacher'])
+            = singular_selection(current_user.schools_json, student.school_id, student.id, "/students/#{student.id}", 'school')
         %td
           = multiple_selection(student.school.program_all_ordered_json, student.program_ids, student.id, "/students/#{student.id}", 'programs')
   = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"

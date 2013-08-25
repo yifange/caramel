@@ -3,20 +3,26 @@
 
 - content_for :sidemenu do
   - render '/layouts/people_page_sidebar'
+
+- content_for :action_button do
+  %a.btn.btn-primary
+    %i.icon-trash.icon-white
+  %a.btn.btn-primary
+    %i.icon-plus.icon-white
+  %a.btn.btn-primary
+    RESET PASSWORD
   
 - content_for :main do
   %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
-      %th{:width => '13px'}
-      %th{:width => '310'} Name
-      %th{:width => '280px'} Email
-      %th Region
-      %th
+      %th{:width => '10px'}
+      %th{:width => '310px'} NAME
+      %th{:width => '280px'} EMAIL
+      %th REGION
     - @teachers.each do |teacher|
       %tr
         %td
-          %a
-            %i.icon-remove
+          %input.checkbox-select-to-delete{:type => 'checkbox'}
         %td
           %a.x-editable-input-user-name{:href => "#", 'data-url' => "/teachers/#{teacher.id}", 'data-pk' => "#{teacher.id}"}
             = teacher.name
@@ -25,9 +31,4 @@
             = teacher.email
         %td
           = multiple_selection(Region.all_ordered_json, teacher.region_ids, teacher.id, "/teachers/#{teacher.id}", 'regions')
-        %td
-          %button.btn{'type' => 'button'}
-            Reset Password
-
-  %a.btn.btn-primary.new-entry{:href => "/teachers/new", "data-entry" => "teacher"} New Teacher
   = modal_for "new-entry", :modal_title => "New Entry", :css_class => "new-entry"

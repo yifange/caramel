@@ -3,19 +3,25 @@
 
 - content_for :sidemenu do
   - render '/layouts/programs_page_sidebar'
+
+- content_for :action_button do
+  %a.btn.btn-primary
+    %i.icon-trash.icon-white
+  %a.btn.btn-primary
+    %i.icon-plus.icon-white
   
 - content_for :main do
   %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
-      %th{:width => '13px'}
+      %th{:width => '10px'}
       %th{:width => '280px'} FULL NAME
       %th{:width => '280px'} ABBREVIATION
-      %th REGION
+      %th{:width => '200px'} REGION
+      %th
     - @schools.each do |school|
       %tr
         %td
-          %a
-            %i.icon-remove
+          %input.checkbox-select-to-delete{:type => 'checkbox'}
         %td
           %a.x-editable-input-text{:href => '#', 'data-url' => "/schools/#{school.id}", 'data-pk' => "#{school.id}", 'data-name' => 'full'}
             = school.full
@@ -24,5 +30,5 @@
             = school.abbrev
         %td
           = singular_selection(Region.all_ordered_json, school.region_id, school.id, "/schools/#{school.id}", 'region')
-  %a.btn.btn-primary.new-entry{:href => "/schools/new", "data-entry" => "school"} New School
+        %td
   = modal_for "new-entry", :modal_title => "New School", :css_class => "new-entry"

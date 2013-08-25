@@ -55,8 +55,6 @@
       @method html2value(html) 
      **/        
     html2value: function(html) {
-      // alert(html.split(' ')[0])
-      // alert(html.split(' ')[2])
       return {
         regular_courses_per_year: html.split(" ")[0], 
         group_courses_per_year: html.split(" ")[2] 

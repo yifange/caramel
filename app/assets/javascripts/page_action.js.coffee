@@ -65,7 +65,6 @@ attachSubmitHandler = ->
         $(".new-entry-modal-body").html($(data.responseText).find(".new-entry-form-body").html())
     })
 
-
 attachTagClickHandler = ->
   clickHandlerA = ->
     $(".select2-search-choice").unbind("click")

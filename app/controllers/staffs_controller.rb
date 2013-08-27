@@ -45,8 +45,12 @@ class StaffsController < ApplicationController
 
   end
 
-  def remove
-
+  def destroy_multi
+    params[:deleteList].each do |item|
+      staff = Staff.find(item)
+      staff.destroy
+    end
+    redirect_to :controller => "staffs", :action => "index"
   end
 
 private

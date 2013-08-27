@@ -5,10 +5,11 @@
   = render '/layouts/people_page_sidebar'
 
 - content_for :action_button do
-  %a.btn.btn-primary
+  %a.btn.btn-primary.delete-entry{'data-url' => "/staffs/destroy_multi"}
     %i.icon-trash.icon-white
-  %a.btn.btn-primary
+  %a.btn.btn-primary.new-entry{:href => "/staffs/new", "data-entry" => "staff"}
     %i.icon-plus.icon-white
+  = modal_for "new-entry", :modal_title => "New Staff", :css_class => "new-entry"
   %a.btn.btn-primary
     RESET PASSWORD
   
@@ -22,7 +23,7 @@
     - @staffs.each do |staff|
       %tr
         %td
-          %input.checkbox-select-to-delete{:type => 'checkbox'}
+          %input.checkbox-select-to-delete{:type => 'checkbox', :value => "#{staff.id}"}
         %td
           %a.x-editable-input-user-name{:href => '#', 'data-url' => "/staffs/#{staff.id}", 'data-pk' => "#{staff.id}"}
             = staff.name
@@ -31,4 +32,3 @@
             = staff.email
         %td
           = multiple_selection(Region.all_ordered_json, staff.region_ids, staff.id, "/staffs/#{staff.id}", 'regions')
-  = modal_for "new-entry", :modal_title => "New Staff", :css_class => "new-entry"

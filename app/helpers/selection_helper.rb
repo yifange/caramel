@@ -10,7 +10,7 @@ module SelectionHelper
       end
       options_buf += content_tag("option", option[:text], value: option[:id], selected: ("selected" if selected))
     end
-    buf.concat(content_tag("select", options_buf, class: "select2", 'data-pk' => pk, 'data-value' => url, 'data-name' => name))
+    buf.concat(content_tag("select", options_buf, class: "singular-multiple-selection", 'data-pk' => pk, 'data-value' => url, 'data-name' => name))
   end
 
   def multiple_selection(options, init_selected_option_ids, pk, url, name)
@@ -26,7 +26,7 @@ module SelectionHelper
       end
       options_buf += content_tag("option", option[:text], value: option[:id], selected: ("selected" if selected))
     end
-    buf.concat(content_tag("select", options_buf, multiple: true, class: "select2", 'data-pk' => pk, 'data-value' => url, 'data-name' => name))
+    buf.concat(content_tag("select", options_buf, multiple: true, class: "singular-multiple-selection", 'data-pk' => pk, 'data-value' => url, 'data-name' => name))
   end
 
 end

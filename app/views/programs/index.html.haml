@@ -5,10 +5,13 @@
   = render '/layouts/programs_page_sidebar'
 
 - content_for :action_button do
-  %a.btn.btn-primary.delete-entry
+  %a.btn.btn-primary.delete-entry{'data-url' => "/programs/destroy_multi"}
     %i.icon-trash.icon-white
-  %a.btn.btn-primary.reset-pwd
+
+  -# Program new entry is diff from others.
+  %a.btn.btn-primary.new-program-entry{:href => "/programs/new", "data-entry" => "program"}
     %i.icon-plus.icon-white
+  = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
 
 - content_for :main do
   %ul.nav.nav-tabs
@@ -76,4 +79,3 @@
                       - elsif verify_user(['Teacher'])
                         = multiple_selection(current_user.students_ordered_json, program.student_ids, program.id, "/programs/#{program.id}", 'students')
       - i += 1
-  = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"

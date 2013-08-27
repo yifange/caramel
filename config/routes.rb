@@ -6,7 +6,17 @@ Caramel::Application.routes.draw do
   get 'lunchpads/api' => 'lunchpads#api'
   post 'lunchpads/lunch' => 'lunchpads#lunch'
   get "rosters/add" => "rosters#add_student"
+
+  # destroy multi entries using checkboxes
   post 'programs/destroy_multi' => 'programs#destroy_multi'
+  post 'teachers/destroy_multi' => 'teachers#destroy_multi'
+  post 'staffs/destroy_multi' => 'staffs#destroy_multi'
+  post 'students/destroy_multi' => 'students#destroy_multi'
+  post 'regions/destroy_multi' => 'regions#destroy_multi'
+  post 'instruments/destroy_multi' => 'instruments#destroy_multi'
+  post 'program_types/destroy_multi' => 'program_types#destroy_multi'
+  post 'schools/destroy_multi' => 'schools#destroy_multi'
+
   resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses, :rosters, :password_resets
 	root 'session_page#signin'
   

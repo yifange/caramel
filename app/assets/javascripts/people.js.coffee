@@ -5,7 +5,7 @@ attachHandler = ->
 		type: 'text',
 		placeholder: 'first name'
 	})
-	
+
 	$.fn.editable.defaults.mode = 'inline'
 	$('.last-name-input').editable({
 		url: '',
@@ -23,12 +23,12 @@ attachHandler = ->
 	$.fn.editable.defaults.mode = 'inline'
 	$('.region-input').select2({
 		data:[{id:0,text:'Washington'},{id:1,text:'Baltimore'},{id:2,text:'Chicago'}]
-	});
+	})
 
 	$('a[rel=popover]').popover({
 		html: 'true',
 		placement: 'right'
-	});
+	})
 
 $(document).ready attachHandler
 $(document).on "page:load", attachHandler

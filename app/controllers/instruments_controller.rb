@@ -38,6 +38,14 @@ class InstrumentsController < ApplicationController
     respond_with(Instrument.all_ordered_json)
   end
 
+  def destroy_multi
+    params[:deleteList].each do |item|
+      instrument = Instrument.find(item)
+      instrument.destroy
+    end
+    redirect_to :controller => "instruments", :action => "index"
+  end
+
 private
   def instrument_params
     params.require(:instrument).permit(:name)

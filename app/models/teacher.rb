@@ -48,4 +48,27 @@ class Teacher < User
     end
   end
 
+  def programs_in_one_region(region_id)
+    result = []
+    programs.each do |program|
+      puts program.school.region_id
+      puts region_id
+      if program.school.region_id.to_i ==  region_id.to_i
+        puts 'yyyyy'
+        result.push(program.id)
+      end
+    end
+    puts result
+    result
+  end
+
+  def remove_region(region_id)
+    puts 'ddddddddddddddddddd'
+    puts programs_in_one_region(region_id).length
+    puts 'ddddddddddddddddddd'
+    if programs_in_one_region(region_id).length == 0
+      super(region_id)
+    end
+  end
+
 end

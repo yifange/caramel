@@ -7,7 +7,7 @@ class TeachersController < ApplicationController
     if current_user.type == 'Admin'
       @teachers = Teacher.all_ordered
     elsif current_user.type == 'Staff'
-      @teachers = Teacher.in_one_region_ordered(current_user.region_id)
+      @teachers = current_user.teachers_ordered
     end
   end
 

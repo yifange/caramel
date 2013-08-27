@@ -31,7 +31,7 @@ class SchoolsController < ApplicationController
     if current_user.type == 'Admin'
       @schools = School.all_ordered
     elsif current_user.type == 'Staff'
-      @schools = School.in_one_region_ordered(current_user.region_id)
+      @schools = School.in_regions_ordered(current_user.region_ids)
     end
   end
 

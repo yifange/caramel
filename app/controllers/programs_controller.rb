@@ -6,9 +6,9 @@ class ProgramsController < ApplicationController
     if current_user.type == 'Admin'
       @schools = School.all_ordered
     elsif current_user.type == 'Staff'
-      @schools = School.in_one_region_ordered(current_user.region_id)
+      @schools = current_user.schools_ordered
     elsif current_user.type == 'Teacher'
-      @schools = current_user.schools
+      @schools = current_user.schools_ordered
     end
   end
 

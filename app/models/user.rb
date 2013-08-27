@@ -21,21 +21,14 @@ class User < ActiveRecord::Base
     end
   end
 
-  def program_ids
-    programs.map do |program|
-      program.id
-    end
+  def regions_ordered
+    regions.order("name")
   end
 
   def regions_ordered_json
-    regions_ordered = regions.order("name")
     regions_ordered.map do |region| 
       {:id => region.id, :text => region.name}
     end
-  end
-
-  def self.all_ordered(type)
-    User.where(:type => type).order("first_name")
   end
 
   def add_region(region_id)
@@ -49,6 +42,19 @@ class User < ActiveRecord::Base
   def change_region(region_old_id, region_new_id)
     remove_region(region_old_id)
     add_region(region_new_id)
+  end
+
+  protected
+  def self.in_regions_ordered(type, region_ids)
+    users = []
+    region_ids.each do |region_id|
+      users += Region.find(region_id).users.where(:type => type)
+    end
+    users.uniq.sort_by {|user| user.first_name}
+  end
+
+  def self.all_ordered(type)
+    User.where(:type => type).order("first_name")
   end
 
 end

@@ -83,11 +83,11 @@ attachBlockHandler = ->
   $.fn.editable.defaults.mode = 'inline'
 
   # singular and multiple selection
-  $('.select2').select2({
+  $('.singular-multiple-selection').select2({
     width: '100%'
   })
 
-  $(".select2").on("change", (e) ->
+  $('.singular-multiple-selection').on("change", (e) ->
     data = {pk: $(this).data("pk"), name: $(this).data("name")}
     if e.added && e.removed
       data["option"] = 'change'

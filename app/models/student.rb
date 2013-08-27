@@ -1,5 +1,7 @@
 class Student < ActiveRecord::Base
 
+  include People
+
   belongs_to :school
   has_many :enrollments
   has_many :rosters
@@ -9,21 +11,21 @@ class Student < ActiveRecord::Base
   validates_presence_of :first_name
   validates_presence_of :last_name
 
-  include People
-
   def self.all_ordered
     users = Student.all.order("first_name")
   end
 
-  def self.in_one_region_ordered(region_id)
+  def self.in_regions_ordered(region_ids)
     students = []
-    Region.find(region_id).schools.each do |school|
-      students += school.students
+    region_ids.each do |region_id|
+      Region.find(region_id).schools.each do |school|
+        students += school.students
+      end
     end
-    students
+    students.uniq.sort_by{|student| student.first_name}
   end
 
-  def self.in_programs_ordered(program_ids)
+  def self.in_programs(program_ids)
     students = []
     program_ids.each do |program_id|
       students += Program.find(program_id).students

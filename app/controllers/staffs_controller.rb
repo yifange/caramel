@@ -28,8 +28,12 @@ class StaffsController < ApplicationController
     if params[:name] == 'email'
       params[:staff] = {params[:name] => params[:value]}
       staff.update_attributes(staff_params)
-    elsif params[:name] == 'region'
-      staff.change_region(params[:value_remove], params[:value_add])
+    elsif params[:name] == 'regions'
+      if params[:option] == "add"
+        staff.add_region(params[:value])
+      else
+        staff.remove_region(params[:value])
+      end
     elsif params[:name] == 'user_name'
       params[:staff] = params[:value]
       staff.update_attributes(staff_params)
@@ -45,7 +49,7 @@ class StaffsController < ApplicationController
 
   end
 
-  private
+private
   def staff_params
     params.require(:staff).permit(:first_name, :last_name, :email, :password, :password_confirmation)
     # params.require(:staff).permit(:first_name, :last_name, :email, :password, :password_confirmation, :domains_attributes)

@@ -13,6 +13,7 @@ class Program < ActiveRecord::Base
   validates_presence_of :school
   validates_presence_of :instrument
   validates_presence_of :program_type
+  validates_uniqueness_of :instrument_id, :scope => [:school_id, :program_type_id]
 
   def start_date
     term.start_date

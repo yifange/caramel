@@ -6,19 +6,12 @@ class School < ActiveRecord::Base
   validates_presence_of :abbrev, :full, :region
   validates :abbrev, :uniqueness => {:scope => :full}
 
-  def self.all_ordered_json
+  def self.all_ordered
     schools = School.all.order("full")
-    schools.map do |school| 
-      {:id => school.id, :text => school.full}
-    end
   end
 
-  def self.in_one_region_ordered(region_id)
-    School.where(:region_id => region_id).order("full")
-  end
-
-  def self.in_one_region_ordered_json(region_id)
-    School.in_one_region_ordered.map do |school| 
+  def self.all_ordered_json
+    all_ordered.map do |school| 
       {:id => school.id, :text => school.full}
     end
   end
@@ -28,12 +21,11 @@ class School < ActiveRecord::Base
     region_ids.each do |region_id|
       schools += Region.find(region_id).schools
     end
-    schools.uniq
+    schools.uniq.sort_by{|school| school.full}
   end
 
   def self.in_regions_ordered_json(region_ids)
-    schools = in_regions_ordered(region_ids)
-    schools.map do |school| 
+    in_regions_ordered(region_ids).map do |school| 
       {:id => school.id, :text => school.full}
     end
   end
@@ -46,7 +38,7 @@ class School < ActiveRecord::Base
     teachers.uniq
   end
 
-  def program_all_ordered_json
+  def programs_json
     programs.map do |program|
       {:id => program.id, :text => program.name}
     end
@@ -57,9 +49,20 @@ class School < ActiveRecord::Base
   end
 
   def students_ordered_json
-    students.map do |student|
+    students.order("first_name").map do |student|
       {:id => student.id, :text => student.name}
     end
+  end
+
+  def students_unenrolled
+    result = []
+    students.each do |student|
+      result.push(student)
+    end
+    Student.where(:school_id => id).joins(:programs).uniq.each do |student|
+      result.delete(student)
+    end
+    result
   end
 
 end

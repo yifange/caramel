@@ -7,9 +7,9 @@ class StudentsController < ApplicationController
     if current_user.type == 'Admin'
       @students = Student.all_ordered
     elsif current_user.type == 'Staff'
-      @students = Student.in_one_region_ordered(current_user.region_id)
+      @students = current_user.students_ordered
     elsif current_user.type == 'Teacher'
-      @students = Student.in_programs_ordered(current_user.program_ids)
+      @students = current_user.students_ordered
     end
   end
 

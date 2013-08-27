@@ -6,7 +6,7 @@ class ProgramsController < ApplicationController
   end
 
   def new
-    # @school_id = params[:entry_identity]
+    @school_id = params[:school_id]
     @program = Program.new
   end
 

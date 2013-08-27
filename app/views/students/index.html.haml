@@ -5,10 +5,11 @@
   - render '/layouts/people_page_sidebar'
 
 - content_for :action_button do
-  %a.btn.btn-primary
+  %a.btn.btn-primary.delete-entry{'data-url' => "/students/destroy_milti"}
     %i.icon-trash.icon-white
-  %a.btn.btn-primary
+  %a.btn.btn-primary.new-entry{:href => "/students/new", "data-entry" => "students"}
     %i.icon-plus.icon-white
+  = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"
 
 - content_for :main do
   %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
@@ -20,7 +21,7 @@
     - @students.each do |student|
       %tr
         %td
-          %input.checkbox-select-to-delete{:type => 'checkbox'}
+          %input.checkbox-select-to-delete{:type => 'checkbox', :value => "#{student.id}"}
         %td
           %a.x-editable-input-user-name{:href => "#", 'data-url' => "/students/#{student.id}", 'data-pk' => "#{student.id}"}
             = student.name
@@ -28,4 +29,3 @@
           = singular_selection(School.all_ordered_json, student.school_id, student.id, "/students/#{student.id}", 'school')
         %td
           = multiple_selection(student.school.program_all_ordered_json, student.program_ids, student.id, "/students/#{student.id}", 'programs')
-  = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"

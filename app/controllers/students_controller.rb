@@ -38,7 +38,15 @@ class StudentsController < ApplicationController
     end
   end
 
-  private
+  def destroy_multi
+    params[:deleteList].each do |item|
+      student = Student.find(item)
+      student.destroy
+    end
+    redirect_to :controller => "students", :action => "index"
+  end
+
+private
   def student_params
     params.require(:student).permit(:first_name, :last_name, :school_id)
   end

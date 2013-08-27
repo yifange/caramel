@@ -1,12 +1,9 @@
--#   = f.hint 'Name'
--#   = f.input :name, label: 'Your Name'
--# = 'Name:  '
--# %p
--#   = @me.name
 -# = simple_form_for @me do |f|
 -#   = f.input :name, disabled: true
 -#   = f.input :email
-  -# = f.button :wrapped, :cancel => profiles_path
+-#   = f.password_field :password, :autofill => 'on'
+-#   = f.button :wrapped, :cancel => profiles_path
+
 %form.form-inline
   %br
   %b 
@@ -17,7 +14,11 @@
       Email: 
     %a.x-editable-input-text{'data-pk' => '1', 'data-url' => '/profiles/1', :href => '#'}
       = @me.email
+  %br
+    %b
+      Password: 
+    %a.x-editable-password{:autocomplete => "on", :value => "*********"}
 
   
-  %button.btn.btn-primary{:style => "display:none", :type => "button", :href => edit_profile_path(@me)} Save Change
-  %button.btn.btn-warning{:style => "display:none", :type => "button", :href => "/profiles"} Cancel
+%button.btn.btn-primary{:style => "display:none", :type => "button", :href => edit_profile_path(@me)} Save Change
+%button.btn.btn-warning{:style => "display:none", :type => "button", :href => "/profiles"} Cancel

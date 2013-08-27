@@ -27,7 +27,15 @@ class ProgramTypesController < ApplicationController
     respond_with(ProgramType.all_ordered_json)
   end
 
-  private
+  def destroy_multi
+    params[:deleteList].each do |item|
+      p_type = ProgramType.find(item)
+      p_type.destroy
+    end
+    redirect_to :controller => "program_types", :action => "index"
+  end
+
+private
   def program_type_params
     params.require(:program_type).permit(:name)
   end

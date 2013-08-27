@@ -41,11 +41,15 @@ class StaffsController < ApplicationController
 
   end
 
-  def remove
-
+  def destroy_multi
+    params[:deleteList].each do |item|
+      staff = Staff.find(item)
+      staff.destroy
+    end
+    redirect_to :controller => "staffs", :action => "index"
   end
 
-  private
+private
   def staff_params
     params.require(:staff).permit(:first_name, :last_name, :email, :password, :password_confirmation)
     # params.require(:staff).permit(:first_name, :last_name, :email, :password, :password_confirmation, :domains_attributes)

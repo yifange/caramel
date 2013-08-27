@@ -30,7 +30,15 @@ class SchoolsController < ApplicationController
     @schools = School.all_ordered
   end
 
-  private
+  def destroy_multi
+    params[:deleteList].each do |item|
+      school = School.find(item)
+      school.destroy
+    end
+    redirect_to :controller => "schools", :action => "index"
+  end
+
+private
   def school_params
     params.require(:school).permit(:region_id, :abbrev, :full)
   end

@@ -20,15 +20,19 @@ attachDeleteEntryHandler = ->
       # url: $(this).data("url"),
       # url: "/programs/" + $(this).val(),
       data: {"deleteList": deleteList},
-      url: "/programs/destroy_multi",
+      url: $(this).data("url"),
       success: (data, status) ->
         cur_pane_id = $(".tab-pane.active").attr("id")
-        console.log $(data).html()
-        $(".tab-pane.active").html($(data).find("#" + cur_pane_id).html())
+
+        # Current tab-pane is undefined except on Program page.
+        if cur_pane_id != undefined
+          $(".tab-pane.active").html($(data).find("#" + cur_pane_id).html())
+        else
+          $(".table").html($(data).find(".table").html())
+
         attachBlockHandler()
         attachNewEntryHandler()
         attachTagClickHandler()
-        attachDeleteEntryHandler()
     )
 
 attachNewEntryHandler = ->
@@ -37,6 +41,19 @@ attachNewEntryHandler = ->
     e.preventDefault()
     href = $(this).attr("href")
     $.get(href + "?entry_identity=" + identity, (data, status) ->
+      $(".new-entry-modal-body").html($(data).find(".new-entry-form-body").html())
+      attachBlockHandler()
+      $(".new-entry-modal").modal({
+        keyboard: true
+      })
+    )
+
+  $(".new-program-entry").on "click", (e) ->
+    identity = $(this).data("entry")
+    e.preventDefault()
+    href = $(this).attr("href")
+    cur_pane_id = $(".tab-pane.active").attr("id").replace("tab", "")
+    $.get(href + "?school_id=" + cur_pane_id, (data, status) ->
       $(".new-entry-modal-body").html($(data).find(".new-entry-form-body").html())
       attachBlockHandler()
       $(".new-entry-modal").modal({
@@ -53,13 +70,17 @@ attachSubmitHandler = ->
       data: $form.serialize(),
       success: (data, status) ->
         $(".new-entry-modal").modal("toggle")
-        # $(".table").html($(data).find(".table").html())
         cur_pane_id = $(".tab-pane.active").attr("id")
-        $(".tab-pane.active").html($(data).find("#" + cur_pane_id).html())
+
+        # Current tab-pane is undefined except on Program page.
+        if cur_pane_id != undefined
+          $(".tab-pane.active").html($(data).find("#" + cur_pane_id).html())
+        else
+          $(".table").html($(data).find(".table").html())
+
         attachNewEntryHandler()
         attachBlockHandler()
         attachTagClickHandler()
-        attachDeleteEntryHandler()
 
       error: (data, status) ->
         $(".new-entry-modal-body").html($(data.responseText).find(".new-entry-form-body").html())
@@ -83,30 +104,30 @@ attachBlockHandler = ->
   $.fn.editable.defaults.mode = 'inline'
 
   # singular and multiple selection
-  $('.select2').select2({
-    width: '100%'
-  })
+  # $('.select2').select2({
+  #   width: '100%'
+  # })
 
-  $(".select2").on("change", (e) ->
-    data = {pk: $(this).data("pk"), name: $(this).data("name")}
-    if e.added && e.removed
-      data["option"] = 'change'
-      data["value_remove"] = e.removed.id
-      data["value_add"] = e.added.id
-    else if e.added
-      data["option"] = "add"
-      data["value"] = e.added.id
-    else
-      data["option"] = "remove"
-      data["value"] = e.removed.id
-    $.ajax(
-      type: "PUT"
-      url: $(this).data("value")
-      data: data
-      dataType: "json", results: (data, page) ->
-        return {results: data}
-    )
-  )
+  # $(".select2").on("change", (e) ->
+  #   data = {pk: $(this).data("pk"), name: $(this).data("name")}
+  #   if e.added && e.removed
+  #     data["option"] = 'change'
+  #     data["value_remove"] = e.removed.id
+  #     data["value_add"] = e.added.id
+  #   else if e.added
+  #     data["option"] = "add"
+  #     data["value"] = e.added.id
+  #   else
+  #     data["option"] = "remove"
+  #     data["value"] = e.removed.id
+  #   $.ajax(
+  #     type: "PUT"
+  #     url: $(this).data("value")
+  #     data: data
+  #     dataType: "json", results: (data, page) ->
+  #       return {results: data}
+  #   )
+  # )
 
   # user_name
   $('.x-editable-input-user-name').editable({
@@ -153,6 +174,10 @@ attachBlockHandler = ->
     ajaxOptions: {
       type: "PUT"
     }
+  })
+
+  $('.x-editable-password').editable({
+    type: "password"
   })
 
 $(document).ready attachBlockHandler

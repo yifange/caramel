@@ -5,10 +5,11 @@
   - render '/layouts/programs_page_sidebar'
 
 - content_for :action_button do
-  %a.btn.btn-primary
+  %a.btn.btn-primary.delete-entry{'data-url' => "/schools/destroy_multi"}
     %i.icon-trash.icon-white
-  %a.btn.btn-primary
+  %a.btn.btn-primary.new-entry{:href => "/schools/new", "data-entry" => "school"}
     %i.icon-plus.icon-white
+  = modal_for "new-entry", :modal_title => "New School", :css_class => "new-entry"
   
 - content_for :main do
   %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
@@ -21,7 +22,7 @@
     - @schools.each do |school|
       %tr
         %td
-          %input.checkbox-select-to-delete{:type => 'checkbox'}
+          %input.checkbox-select-to-delete{:type => 'checkbox', :value => "#{school.id}"}
         %td
           %a.x-editable-input-text{:href => '#', 'data-url' => "/schools/#{school.id}", 'data-pk' => "#{school.id}", 'data-name' => 'full'}
             = school.full
@@ -31,4 +32,3 @@
         %td
           = singular_selection(Region.all_ordered_json, school.region_id, school.id, "/schools/#{school.id}", 'region')
         %td
-  = modal_for "new-entry", :modal_title => "New School", :css_class => "new-entry"

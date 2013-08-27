@@ -26,7 +26,15 @@ class RegionsController < ApplicationController
     @regions = Region.all_ordered
   end
 
-  private
+  def destroy_multi
+    params[:deleteList].each do |item|
+      region = Region.find(item)
+      region.destroy
+    end
+    redirect_to :controller => "regions", :action => "index"
+  end
+
+private
   def region_params
     params.require(:region).permit(:name)
   end

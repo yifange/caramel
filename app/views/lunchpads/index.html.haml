@@ -29,17 +29,16 @@
       %td
         %span#secret.collapse.accordion-body.in{:colspan => 3}
           This is secret
-
-    %tr
+    %tr.accordion-toggle{"data-toggle" => "collapse", "date-target" => "#secret2", :href => "#secret2"}
       %td
         Aha
       %td
         oooh
-      %td.accordion-toggle{:style => "width: 30px", "data-toggle" => "collapse", "data-target" => "#secret2", :href => "#secret2"}
-        detail
-    %tr
       %td
-        #secret2.collapse.accordion-body.in{:colspan => 3}
+        detail
+    %tr.collapse.accordion-body.in#secret2
+      %td
+        #secret2{:colspan => 3}
           This is also secret
 
   %a#country{"data-pk" => "1", "data-type" => "select2", "data-source" => "/lunchpads/api.json", "data-url" => "/lunchpads/lunch", :href => "#", "data-title" => "Select country", "data-value" => "1"}

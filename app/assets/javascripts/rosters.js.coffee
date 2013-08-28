@@ -156,6 +156,10 @@ addClassModalSubmitHandler = ->
       error: (data, status) ->
         $("#add-class-modal-body").html($(data.responseText).find("#course-form-body").html())
     })
+accordionHandler = ->
+  $(".accordion-parent").on "click", ".accordion-toggle", ->
+    target = $(this).data("target")
+    $(".accordion-body#" + target).toggle(50)
 
 $(document).ready newRosterHandler
 $(document).ready rosterModalSubmitHandler
@@ -166,6 +170,7 @@ $(document).ready updateClassHandler
 $(document).ready updateClassModalSubmitHandler
 $(document).ready addClassHandler
 $(document).ready addClassModalSubmitHandler
+$(document).ready accordionHandler
 
 $(document).on "page:load", newRosterHandler
 $(document).on "page:load", rosterModalSubmitHandler
@@ -175,3 +180,4 @@ $(document).on "page:load", addStudentModalSubmitHandler
 $(document).on "page:load", updateClassModalSubmitHandler
 $(document).on "page:load", addClassHandler
 $(document).on "page:load", addClassModalSubmitHandler
+$(document).on "page:load", accordionHandler

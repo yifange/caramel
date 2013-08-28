@@ -1,12 +1,12 @@
 - @students.each do |student|
   %table.rosters-table.table.table-bordered.table-condensed
-    %thead
+    %thead.accordion-toggle{"data-target" => "student-#{student.id}"}
       %tr
         %th{:colspan => 4}
           = student.name
           %a.btn.pull-right{:href => "#"}
             actions
-    %tbody
+    %tbody.accordion-body{:id => "student-#{student.id}"}
       %tr
         %td{:colspan => 4}
           Regular Classes

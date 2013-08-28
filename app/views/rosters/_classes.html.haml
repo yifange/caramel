@@ -1,21 +1,23 @@
 %table.classes-table.table.table-bordered.table-condensed
-  %thead
+  %thead.accordion-toggle{"data-target" => "regular-class"}
     %tr
       %th{:colspan => 2}
         Regular Classes
         %a.btn.pull-right.add-class{:href => "/courses/new?program_id=#{@program.id}&course_type=regular"}
-          add
-  - @courses.each do |course|
-    - if course.course_type == "RegularCourse"
-      = render "class_details", :course => course
+          %i.icon-plus
+  %tbody.accordion-body#regular-class
+    - @courses.each do |course|
+      - if course.course_type == "RegularCourse"
+        = render "class_details", :course => course
 
 %table.classes-table.table.table-bordered.table-condensed
-  %thead
+  %thead.accordion-toggle{"data-target" => "group-class"}
     %tr
       %th{:colspan => 2}
         Group Classes
         %a.btn.pull-right.add-class{:href => "/courses/new?program_id=#{@program.id}&course_type=group"}
-          add
-  - @courses.each do |course|
-    - if course.course_type == "GroupCourse"
-      = render "class_details", :course => course
+          %i.icon-plus
+  %tbody.accordion-body#group-class
+    - @courses.each do |course|
+      - if course.course_type == "GroupCourse"
+        = render "class_details", :course => course

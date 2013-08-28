@@ -3,31 +3,10 @@
 - content_for :sidemenu do
   - render '/layouts/classes_page_sidebar'
 - content_for :subnav do
-  .navbar.navbar-fixed-top.subnav
-    .navbar-inner
-      .container
-        %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#subnav-collapse"}
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-        #subnav-collapse.nav-collapse.collapse
-          %ul.nav.nav-pills.unselectable
-            %li
-              %a#subnav-today{:href => "#"}
-                now
-            %li
-              %a#subnav-prev{:href => "#"}
-                <
-            %li
-              %a#subnav-next{:href => "#"}
-                >
-            %li
-              %p.navbar-text#subnav-text
-          %ul.nav.nav-pills.pull-right.unselectable
-            = nav_filter_for "program", @programs, :base_url => "/attendances", :year => params[:year], :month => params[:month], :default_text => "#{@program.school.full}, #{@program.program_type.name}, #{@program.instrument.name}"
-
+  = render "navbar"
 - content_for :main do
   - day_of_week = ["Su", "M", "Tu", "W", "Th", "F", "Sa"]
+  - today = Date.today
   .fmc-container
     %table
       %tr
@@ -46,6 +25,8 @@
         - group_attendance_hash = {}
         - regular_attendance_hash = {}
         - enrollment.rosters.each do |roster|
+          - unless not (roster.start_date.nil? or roster.end_date.nil?) and roster.start_date <= today and today <= roster.end_date
+            - break
           - course = roster.course
           - attendances = roster.attendances
           - attendances.each do |attendance|

@@ -1,13 +1,12 @@
 #course-form-body
   = simple_form_for @course do |f|
-    = f.input :program_id, :input_html => {:value => params[:program_id]}, :as => :hidden
+    -# = f.input :program_id, :input_html => {:value => params[:program_id]}, :as => :hidden
+    = f.hidden_field :program_id, :value => params[:program_id]
     - if params[:course_type] == "regular"
       - course_type = "RegularCourse"
     - else
       - course_type = "GroupCourse"
     = f.input :course_type, :input_html => {:value => course_type, :readonly => true}
     = f.input :name
-    -# = f.collection_radio_buttons :course_type, [["RegularCourse", "regular course"], ["GroupCourse", "group course"]], :first, :last, :input_html => {:value => "RegularCourse"} #TODO default value??
-    -# = f.button :submit
 
 -#XXX Use javascript to hide the submit button, but reappear if error occurs during the submission

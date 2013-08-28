@@ -8,8 +8,4 @@
   - calendar_name = "calendar"
   = render "/layouts/calendars/weekly_calendar", :calendar_name => "calendar"
 
-
-  -# = weekly_calendar_for @calendars, :year => @year.to_i, :month => @month.to_i, :day => @day.to_i, :school => @school do |c|
-  -#   = c.draw_weekly_calendar_nav
-  -#   = c.draw_weekly_calendar_body
   = modal_for "calendar", :delete_button => true

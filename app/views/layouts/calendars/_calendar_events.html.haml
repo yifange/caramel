@@ -1,0 +1,11 @@
+- if @calendars.has_key? day
+  - events = @calendars[day]
+  - events.each do |event|
+    - style = event_style(event[:start_time], event[:end_time], start_hour, slot_height, slots_per_hour)
+    // XXX editable??
+    - klass = "wc-cal-event calendar-cal"
+    - klass << " editable" if in_current_or_future_terms?(day, current_and_future_terms)
+    - klass << if event.available then " available" else " unavailable" end
+    %div{:class => klass, :style => style, :data => {:eventid => event.id}}
+      .wc-time.ui-corner-all
+        = "#{event.start_time.strftime("%R")}-#{event.end_time.strftime("%R")}"

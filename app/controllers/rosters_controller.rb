@@ -11,14 +11,15 @@ class RostersController < ApplicationController
     if @program
       @program_id = @program[:id]
       @courses = @program.courses.includes(:rosters => [:enrollment => [:student]])
-      @students = @program.students.includes(:enrollments => [:rosters => [:course]])
+      @students = @program.students.includes(:enrollments => [:rosters => [:course => [:students]]])
     end
   end
   
   def new
     course_type = params[:type]
     program_id = params[:program_id]
-
+    student_id = params[:student_id]
+    @enrollment_id = Enrollment.find_by(:program_id => program_id, :student_id => student_id).id
     if course_type == "group"
       @courses = Course.where(:program_id => program_id, :course_type => "GroupCourse")
     elsif course_type == "regular"

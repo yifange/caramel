@@ -1,4 +1,5 @@
-- students = course.students
+-# - students = course.students.uniq
+- students = course.rosters.select {|r| not (r.start_date.nil? or r.end_date.nil?) and r.start_date <= Date.today and Date.today <= r.end_date}.map {|r| r.enrollment.student}
 %tr
   %td{:rowspan => "#{students.count}"}
     .dropdown
@@ -22,7 +23,7 @@
         empty
     - else
       %span.student-name
-        = students.first.name
+        = students[0].name
 - unless students.empty?
   - students[1..-1].each do |student|
     %tr

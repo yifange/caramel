@@ -1,0 +1,24 @@
+.navbar.navbar-fixed-top.subnav
+  .navbar-inner
+    .container
+      %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#subnav-collapse"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      #subnav-collapse.nav-collapse.collapse
+        %ul.nav.nav-pills.unselectable
+          %li
+            = link_to "now", schedules_path(:year => @year, :school_id => @school_id, :program_id => @program_id)
+          %li
+            = link_to "<", schedules_path(:year => @year - 1, :school_id => @school_id, :program_id => @program_id)
+          %li
+            = link_to ">", schedules_path(:year => @year + 1, :school_id => @school_id, :program_id => @program_id)
+          %li
+            %span.navbar-text#subnav-text
+              = @year
+        %ul.nav.nav-pills.pull-right.unselectable
+          = nav_filter_for "program", @programs, :base_url => "/schedules", :year => params[:year], :month => params[:month], :day => params[:day], :default_text => "#{@program.school.full}, #{@program.program_type.name}, #{@program.instrument.name}"
+          %li{:class => "#{active == 'week' ? 'active' : ''}"}
+            = link_to "week", schedules_week_path(:program_id => @program_id), :id => "subnav-week"
+          %li{:class => "#{active == 'year' ? 'active' : ''}"}
+            = link_to "year", schedules_path(:program_id => @program_id), :id => "subnav-year"

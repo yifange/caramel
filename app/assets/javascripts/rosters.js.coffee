@@ -6,6 +6,16 @@ initRosterEditable = ->
     ajaxOptions: {
       type: "PUT"
     }
+    success: ->
+      $.get(document.URL, (data, status) ->
+        $(".rosters-container").html($(data).find(".rosters-container").html())
+        $(".classes-container").html($(data).find(".classes-container").html())
+        addStudentHandler()
+        newRosterHandler()
+        initRosterEditable()
+        updateClassHandler()
+      )
+
   })
   $(".x-editable.roster-notes").editable({
     type: "textarea"

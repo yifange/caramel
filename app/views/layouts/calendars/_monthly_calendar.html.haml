@@ -1,0 +1,37 @@
+- day_names = ["Su", "M", "Tu", "W", "Th", "F", "Sa"]
+- month_names = Date::MONTHNAMES
+- date = Date.new(year, month)
+%table.mc-table
+  %tr
+    %th
+    %th.month-title{:colspan => 5} 
+      = month_names[month]
+    %th
+  
+  %tr
+    - day_names.each do |wday|
+      %td.weekday
+        = wday
+  - first_day_of_month = date.beginning_of_month.beginning_of_week(:sunday)
+  - last_day_of_month = date.end_of_month.end_of_week(:sunday)
+  - beginning_of_week = first_day_of_month
+
+  - (0...6).each do |week|
+    - if beginning_of_week > last_day_of_month
+      %tr.empty-week
+        %td{:colspan => 7}
+          weekpadding
+    - else
+      %tr
+        - for day in beginning_of_week..beginning_of_week.end_of_week(:sunday)
+          - klass = "day-text"
+          - klass << " today" if day == @today
+          - klass << " not-current-month" if day.month != month
+          - if @calendars.has_key? day
+            -# - klass << day_marking(@calendars[day])
+            - klass << " class-day" unless @calendars[day].empty?
+          %td{:data => {:year => day.year, :month => day.month, :day => day.day}, :class => klass}
+            = link_to day.day, calendar_week_path(:year => day.year, :month => day.month, :day => day.day, :school => @school_id), :class => "day-link"
+    - beginning_of_week = beginning_of_week.next_week(:sunday)
+
+

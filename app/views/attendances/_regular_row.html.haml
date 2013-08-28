@@ -21,6 +21,6 @@
       - link_class << " class-day"
   %td{:class => class_type, :data => {"roster-id" => roster_id}}
     - if attendance.nil?
-      = link_to grid_text, new_attendance_path(:enrollment_id => enrollment.id, :roster_id => roster_id, :date => day), :class => link_class
+      = link_to grid_text, new_attendance_path(:enrollment_id => enrollment.id, :roster_id => roster_id, :date => day), :class => link_class, :data => {:toggle => "tooltip"}, :title => time_title
     - else
       = link_to grid_text, edit_attendance_path(attendance.id, :enrollment_id => enrollment.id), :class => link_class, :data => {:toggle => "tooltip", "attendance-id" => attendance.id}, :title => time_title

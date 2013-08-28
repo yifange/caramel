@@ -5,8 +5,9 @@
         Regular Classes
         %a.btn.pull-right.add-class{:href => "/courses/new?program_id=#{@program.id}&course_type=regular"}
           add
-  - @courses.where(:course_type => "RegularCourse").each do |course|
-    = render "class_details", :course => course
+  - @courses.each do |course|
+    - if course.course_type == "RegularCourse"
+      = render "class_details", :course => course
 
 %table.classes-table.table.table-bordered
   %thead
@@ -15,5 +16,6 @@
         Group Classes
         %a.btn.pull-right.add-class{:href => "/courses/new?program_id=#{@program.id}&course_type=group"}
           add
-  - @courses.where(:course_type => "GroupCourse").each do |course|
-    = render "class_details", :course => course
+  - @courses.each do |course|
+    - if course.course_type == "GroupCourse"
+      = render "class_details", :course => course

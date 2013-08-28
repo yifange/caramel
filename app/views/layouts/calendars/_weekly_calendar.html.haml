@@ -1,0 +1,44 @@
+- start_hour = 8
+- end_hour = 16
+- slots_per_hour = 3
+- slot_height = 18
+- current_and_future_terms = Term.current_and_future_terms
+- week_range = @date.beginning_of_week(:sunday) .. @date.end_of_week(:sunday)
+.wc-container
+  %table.wc-header
+    %tbody
+      %tr
+        %td.wc-time-column-header
+        - for day in week_range
+          - klass = "wc-day-column-header wc-day-#{day.strftime("%w")} #{calendar_name}-cal"
+          - if day == @today
+            - klass << " wc-today"
+          %td{:class => klass}
+            = link_to day.strftime("%a %-m-%d"), "#", :class => "wc-day-column-header"
+  .wc-scrollable-grid.calendar-cal
+    %table.wc-time-slots.calendar-cal
+      %tbody
+        %tr
+          %td.wc-grid-timeslot-header.calendar-cal
+          %td{:colspan => 7}
+            .wc-time-slot-wrapper.calendar-cal
+              .wc-time-slots.calendar-cal
+                - for hour in start_hour .. end_hour
+                  - for slot in 1 ... slots_per_hour
+                    .wc-time-slot.calendar-cal{:class => "wc-hour-#{hour} wc-hour-slot-#{slot}"}
+                  .wc-time-slot.wc-hour-end.calendar-cal{:class => "wc-hour-#{hour} wc-hour-slot-#{slots_per_hour}"}
+        %tr
+          %td.wc-grid-timeslot-header.calendar-cal
+            - for hour in start_hour .. end_hour
+              .wc-hour-header.calendar-cal
+                .wc-time-header-cell.calendar-cal
+                  = "#{hour}:00"
+          - for day in week_range
+            - klass = "wc-day-column day-#{day.strftime("%w")} calendar-cal"
+            - klass << " wc-today" if day == @today
+            - editable = "editable" if in_current_or_future_terms?(day, current_and_future_terms)
+            // XXX editable
+            %td{:class => klass}
+              .wc-day-column-inner.calendar-cal{:data => {:date => day.strftime}, :class => editable}
+                = render "/layouts/calendars/calendar_events", :day => day, :slot_height => slot_height, :slots_per_hour => slots_per_hour, :start_hour => start_hour, :current_and_future_terms => current_and_future_terms
+

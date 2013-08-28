@@ -530,10 +530,18 @@ module CalHelper
         klass = "day-text "
         klass << "today " if day == @today
         klass << "not-current-month" if day.month != @month
-        if @objects.has_key? day
-          klass << day_marking(@objects[day])
-          klass << " class-day" unless @objects[day].empty?
+
+        if @school_id
+          if @objects.has_key? day
+            klass << day_marking(@objects[day])
+            klass << " class-day" unless @objects[day].empty?
+          end
+        elsif @program_id and @objects.has_key? day
+          klass << " available"
+        elsif @program_id and @objects.has_key? day.wday
+          klass << " available" # XXX filter the regular classes??
         end
+
         if day.sunday?
           cal_days.concat(tag :tr, nil, true)
           week += 1

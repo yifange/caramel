@@ -17,9 +17,7 @@
       %th{:width => '10px'}
       %th{:width => '280px'} FULL NAME
       %th{:width => '280px'} ABBREVIATION
-      - if verify_user(['Admin'])
-        %th{:width => '200px'} 
-          REGION
+      %th{:width => '200px'} REGION
       %th
     - @schools.each do |school|
       %tr
@@ -34,4 +32,7 @@
         - if verify_user(['Admin'])
           %td
             = singular_selection(Region.all_ordered_json, school.region_id, school.id, "/schools/#{school.id}", 'region')
+        - elsif verify_user(['Staff'])
+          %td
+            = singular_selection(current_user.regions_ordered_json, school.region_id, school.id, "/schools/#{school.id}", 'region')
         %td

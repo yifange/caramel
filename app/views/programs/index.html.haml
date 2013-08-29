@@ -77,5 +77,5 @@
                       - if verify_user(['Admin', 'Staff'])
                         = multiple_selection(school.students_ordered_json, program.student_ids, program.id, "/programs/#{program.id}", 'students')
                       - elsif verify_user(['Teacher'])
-                        = multiple_selection(current_user.students_ordered_json, program.student_ids, program.id, "/programs/#{program.id}", 'students')
+                        = multiple_selection(current_user.students_in_one_school_ordered_json(school.id), program.student_ids, program.id, "/programs/#{program.id}", 'students')
       - i += 1

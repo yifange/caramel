@@ -42,6 +42,23 @@ class Teacher < User
     students.sort_by {|student| student.first_name}
   end
 
+  def students_in_one_school_ordered(school_id)
+    program_ids = []
+    programs.each do |program|
+      if program.school_id == school_id
+        program_ids.push(program.id)
+      end
+    end
+    students = Student.in_programs(program_ids)
+    students += School.find(school_id).students_unenrolled
+  end
+
+  def students_in_one_school_ordered_json(school_id)
+    students_in_one_school_ordered(school_id).map do |student|
+      {:id => student.id, :text => student.name}
+    end
+  end
+
   def students_ordered_json
     students_ordered.map do |student|
       {:id => student.id, :text => student.name}
@@ -51,24 +68,15 @@ class Teacher < User
   def programs_in_one_region(region_id)
     result = []
     programs.each do |program|
-      puts program.school.region_id
-      puts region_id
       if program.school.region_id.to_i ==  region_id.to_i
-        puts 'yyyyy'
         result.push(program.id)
       end
     end
-    puts result
     result
   end
 
   def remove_region(region_id)
-    puts 'ddddddddddddddddddd'
-    puts programs_in_one_region(region_id).length
-    puts 'ddddddddddddddddddd'
-    if programs_in_one_region(region_id).length == 0
-      super(region_id)
-    end
+    super(region_id)
   end
 
 end

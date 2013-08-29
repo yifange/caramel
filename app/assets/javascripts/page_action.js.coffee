@@ -120,13 +120,12 @@ attachBlockHandler = ->
     else
       data["option"] = "remove"
       data["value"] = e.removed.id
-    $.ajax(
+    $.ajax({
       type: "PUT"
       url: $(this).data("value")
       data: data
-      dataType: "json", results: (data, page) ->
-        return {results: data}
-    )
+      dataType: "json"
+    })
   )
 
   # user_name

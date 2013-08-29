@@ -24,7 +24,7 @@ module SelectionHelper
           break
         end
       end
-      options_buf += content_tag("option", option[:text], value: option[:id], selected: ("selected" if selected))
+      options_buf += content_tag("option", option[:text], value: option[:id], selected: ("selected" if selected), locked: true)
     end
     buf.concat(content_tag("select", options_buf, multiple: true, class: "singular-multiple-selection", 'data-pk' => pk, 'data-value' => url, 'data-name' => name))
   end

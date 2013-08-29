@@ -45,4 +45,7 @@
         .span2.content
           = yield(:sidemenu)
         .span10.content
+          - flash.each do |key, value|
+            %div{:class => "#{flash_class(key)}"}
+              = value
           = yield(:main)

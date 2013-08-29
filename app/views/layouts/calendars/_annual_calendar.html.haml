@@ -11,4 +11,4 @@
             - month = months[row_ind * columns + column_ind]
             %td.ac-table-grid
               .ac-mc-container
-                = render "/layouts/calendars/monthly_calendar", :year => @year, :month => month
+                = render "/layouts/calendars/monthly_calendar", :year => @year, :month => month, :base_path => base_path, :grid_partial => grid_partial

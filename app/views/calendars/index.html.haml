@@ -5,5 +5,5 @@
 - content_for :subnav do
   = render "navbar", :active => "year"
 - content_for :main do
-  = render "/layouts/calendars/annual_calendar"
+  = render "/layouts/calendars/annual_calendar", {:base_path => :calendars_week_path, :grid_partial => "/calendars/calendar_grid"}
 

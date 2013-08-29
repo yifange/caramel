@@ -6,6 +6,6 @@
   = render "navbar", :active => "week"
 - content_for :main do
   - calendar_name = "calendar"
-  = render "/layouts/calendars/weekly_calendar", :calendar_name => "calendar"
+  = render "/layouts/calendars/weekly_calendar", :calendar_name => "calendar", :event_partial => "/calendars/calendar_events"
 
   = modal_for "calendar", :delete_button => true

@@ -1,0 +1,7 @@
+- klass = "day-text"
+- klass << " today" if day == @today
+- klass << " not-current-month" if day.month != month
+- if @schedules.has_key? day
+  - klass << " class-day" unless @schedules[day].empty?
+%td{:data => {:year => day.year, :momth => day.month, :day => day.day}, :class => klass}
+  = link_to day.day, self.send(base_path, :year => day.year, :month => day.month, :day => day.day, :program => @program_id), :class => "day-link"

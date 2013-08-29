@@ -40,5 +40,5 @@
             // XXX editable
             %td{:class => klass}
               .wc-day-column-inner.calendar-cal{:data => {:date => day.strftime}, :class => editable}
-                = render "/layouts/calendars/calendar_events", :day => day, :slot_height => slot_height, :slots_per_hour => slots_per_hour, :start_hour => start_hour, :current_and_future_terms => current_and_future_terms
+                = render event_partial, :day => day, :slot_height => slot_height, :slots_per_hour => slots_per_hour, :start_hour => start_hour, :current_and_future_terms => current_and_future_terms
 

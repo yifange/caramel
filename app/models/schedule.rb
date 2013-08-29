@@ -17,7 +17,16 @@ class Schedule < ActiveRecord::Base
     end
   end
   def update_recurring(schedule_params)
-    
+    recurring_schedules = Schedule.where(:course_id => schedule_params[:schedule][:course_id])  
+    recurring_schedules.each do |e|
+      e.update_attributes(schedule_params)
+    end
+  end
+  def destroy_recurring
+    recurring_schedules = Schedule.where(:course_id => schedule_params[:schedule][:course_id])
+    recurring_schedules.each do |e|
+      e.destroy
+    end
   end
   private
   def events_must_in_available_time_slots

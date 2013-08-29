@@ -24,14 +24,7 @@
     - else
       %tr
         - for day in beginning_of_week..beginning_of_week.end_of_week(:sunday)
-          - klass = "day-text"
-          - klass << " today" if day == @today
-          - klass << " not-current-month" if day.month != month
-          - if @calendars.has_key? day
-            -# - klass << day_marking(@calendars[day])
-            - klass << " class-day" unless @calendars[day].empty?
-          %td{:data => {:year => day.year, :month => day.month, :day => day.day}, :class => klass}
-            = link_to day.day, calendar_week_path(:year => day.year, :month => day.month, :day => day.day, :school => @school_id), :class => "day-link"
+          = render grid_partial, :day => day, :month => month, :base_path => base_path
     - beginning_of_week = beginning_of_week.next_week(:sunday)
 
 

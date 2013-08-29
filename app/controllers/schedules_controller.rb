@@ -12,6 +12,7 @@ class SchedulesController < ApplicationController
     @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
     
     @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
+    # @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
 
     @month = (params[:month] || Date.today.month).to_i
     @year = (params[:year] || Date.today.year).to_i
@@ -28,7 +29,8 @@ class SchedulesController < ApplicationController
       school_id = @program.school[:id]
     end
     @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
-    @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
+    @calendars = rehash_objs(Calendar.where(:school_id => school_id))
+    # @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
 
     @month = (params[:month] || Date.today.month).to_i
     @year = (params[:year] || Date.today.year).to_i
@@ -62,9 +64,14 @@ class SchedulesController < ApplicationController
   end
   def update
     @schedule = Schedule.find(params[:id])
-    if @schedule.update_attributes(schedule_params)
+    params[:schedule].delete("date")
+    r = if Course.find(params[:schedule][:course_id]).course_type == "RegularCourse"
+      @schedule.update_recurring(schedule_params)
+    else
+      @schedule.update_attributes(schedule_params)
+    end
+    if r
       render :text => "success"
-      # redirect_to schedules_path
     else
       render :edit, :status => :unprocessable_entity
     end
@@ -101,20 +108,27 @@ class SchedulesController < ApplicationController
     end
     r
   end
-
   def rehash_objs(objs)
     r = {}
     for obj in objs
-      if obj.course[:course_type] == "GroupCourse"
-        r[obj[:date]] = [] unless r.has_key? obj[:date]
-        r[obj[:date]] << obj
-      else
-        r[obj[:day_of_week]] = [] unless r.has_key? obj[:day_of_week]
-        r[obj[:day_of_week]] << obj
-      end
+      r[obj[:date]] = [] unless r.has_key? obj[:date]
+      r[obj[:date]] << obj
     end
     r
   end
+  # def rehash_objs(objs)
+  #   r = {}
+  #   for obj in objs
+  #     if obj.course[:course_type] == "GroupCourse"
+  #       r[obj[:date]] = [] unless r.has_key? obj[:date]
+  #       r[obj[:date]] << obj
+  #     else
+  #       r[obj[:day_of_week]] = [] unless r.has_key? obj[:day_of_week]
+  #       r[obj[:day_of_week]] << obj
+  #     end
+  #   end
+  #   r
+  # end
   def schedule_params
     params.require(:schedule).permit(:date, :start_time, :end_time, :day_of_week, :course_type, :course_id, :name)
   end

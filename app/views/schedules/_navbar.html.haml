@@ -8,11 +8,11 @@
       #subnav-collapse.nav-collapse.collapse
         %ul.nav.nav-pills.unselectable
           %li
-            = link_to "now", schedules_path(:year => @year, :school_id => @school_id, :program_id => @program_id)
+            = link_to "now", self.send(base_path, :year => @year, :school_id => @school_id, :program_id => @program_id)
           %li
-            = link_to "<", schedules_path(:year => @year - 1, :school_id => @school_id, :program_id => @program_id)
+            = link_to "<", self.send(base_path, :year => @year - 1, :school_id => @school_id, :program_id => @program_id)
           %li
-            = link_to ">", schedules_path(:year => @year + 1, :school_id => @school_id, :program_id => @program_id)
+            = link_to ">", self.send(base_path, :year => @year + 1, :school_id => @school_id, :program_id => @program_id)
           %li
             %span.navbar-text#subnav-text
               = @year

@@ -12,7 +12,7 @@ class Student < ActiveRecord::Base
   end
 
   def get_students_by_school_id_and_teacher_id(school_id, teacher_id)
-    Student.joins(:programs => [:school, :teachers]).where(:programs => {:school_id => school_id}, :assignments => {:teacher_id => teacher_id}
+    Student.joins(:programs => [:school, :teachers]).where(:programs => {:school_id => school_id}, :assignments => {:teacher_id => teacher_id})
   end
 
 end

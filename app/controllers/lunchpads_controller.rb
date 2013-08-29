@@ -1,6 +1,7 @@
 class LunchpadsController < ApplicationController
   respond_to :html, :json
   def index
+    flash[:success] = "woohoo"
   end
   def create
     render :json => params

@@ -47,5 +47,7 @@
         .span10.content
           - flash.each do |key, value|
             %div{:class => "#{flash_class(key)}"}
+              %button.close{:type => "button", "data-dismiss" => "alert"}
+                &times;
               = value
           = yield(:main)

@@ -5,6 +5,20 @@ class Schedule < ActiveRecord::Base
   def group
     course.course_type == "GroupCourse"
   end
+
+  def save_recurring
+    if course.course_type == "RegularCourse"
+      day_of_week = date.wday
+      days = Term.find(course.program.term_id).recurring_days(day_of_week, :start_date => date)
+      r = true
+      days.each do |day|
+        r = r && Schedule.new(:date => day, :start_time => start_time, :end_time => end_time, course_id => course_id)
+      end
+    end
+  end
+  def update_recurring(schedule_params)
+    
+  end
   private
   def events_must_in_available_time_slots
     available = false

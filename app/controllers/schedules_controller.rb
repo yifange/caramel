@@ -44,7 +44,13 @@ class SchedulesController < ApplicationController
   end
   def create
     @schedule = Schedule.new(schedule_params)
-    if @schedule.save
+    r = if Course.find(params[:schedule][:course_id]).course_type == "RegularCourse"
+      @schedule.save_recurring
+    else
+      @schedule.save
+    end
+
+    if r
       redirect_to schedules_path
     else
       render :new, :status => :unprocessable_entity

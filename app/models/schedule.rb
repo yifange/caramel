@@ -7,23 +7,22 @@ class Schedule < ActiveRecord::Base
   end
 
   def save_recurring
-    if course.course_type == "RegularCourse"
-      day_of_week = date.wday
-      days = Term.find(course.program.term_id).recurring_days(day_of_week, :start_date => date)
-      r = true
-      days.each do |day|
-        r = r && Schedule.new(:date => day, :start_time => start_time, :end_time => end_time, course_id => course_id)
-      end
+    day_of_week = date.wday
+    days = Term.find(course.program.term_id).recurring_days(day_of_week, :start_date => date)
+    puts days
+    r = true
+    days.each do |day|
+      r = r && Schedule.new(:date => day, :start_time => start_time, :end_time => end_time, :course_id => course_id).save
     end
   end
   def update_recurring(schedule_params)
-    recurring_schedules = Schedule.where(:course_id => schedule_params[:schedule][:course_id])  
+    recurring_schedules = Schedule.where(:course_id => course_id)  
     recurring_schedules.each do |e|
       e.update_attributes(schedule_params)
     end
   end
   def destroy_recurring
-    recurring_schedules = Schedule.where(:course_id => schedule_params[:schedule][:course_id])
+    recurring_schedules = Schedule.where(:course_id => course_id)
     recurring_schedules.each do |e|
       e.destroy
     end
@@ -35,11 +34,11 @@ class Schedule < ActiveRecord::Base
     dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
     dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
     
-    if course.course_type == "GroupCourse"
-      calendars = Calendar.where(:date => date, :term_id => term_id, :available => true)
-    else
-      calendars = Calendar.where(:day_of_week => day_of_week, :term_id => term_id, :available => true)
-    end
+    # if course.course_type == "GroupCourse"
+    calendars = Calendar.where(:date => date, :term_id => term_id, :available => true)
+    # else
+    #   calendars = Calendar.where(:day_of_week => day_of_week, :term_id => term_id, :available => true)
+    # end
     calendars.find_each do |cal|
       if cal[:start_time] <= dummy_start_time and dummy_end_time <= cal[:end_time]
         available = true

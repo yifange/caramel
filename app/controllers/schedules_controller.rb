@@ -79,8 +79,12 @@ class SchedulesController < ApplicationController
     end
   end
   def destroy
-    @schedule = Schedule.find(params[:id])
-    @schedule.destroy
+    schedule = Schedule.find(params[:id])
+    if Course.find(schedule.course_id).course_type = "RegularCourse"
+      schedule.destroy_recurring
+    else
+      schedule.destroy
+    end
     render :text => "delete success"
   end
   private

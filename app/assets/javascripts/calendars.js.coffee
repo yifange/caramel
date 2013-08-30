@@ -132,9 +132,9 @@ $(document).ready attachColumnHandler
 $(document).ready attachEventHandler
 $(document).ready attachSubmitHandler
 $(document).ready attachDeleteHandler
-$(document).ready attachSubnavHandler
+# $(document).ready attachSubnavHandler
 $(document).on "page:load", attachColumnHandler
 $(document).on "page:load", attachEventHandler
 $(document).on "page:load", attachSubmitHandler
 $(document).on "page:load", attachDeleteHandler
-$(document).on "page:load", attachSubnavHandler
+# $(document).on "page:load", attachSubnavHandler

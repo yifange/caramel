@@ -10,35 +10,36 @@
       %tr
         %td.wc-time-column-header
         - for day in week_range
-          - klass = "wc-day-column-header wc-day-#{day.strftime("%w")} #{calendar_name}-cal"
+          - klass = "wc-day-column-header wc-day-#{day.strftime("%w")}"
           - if day == @today
             - klass << " wc-today"
           %td{:class => klass}
             = link_to day.strftime("%a %-m-%d"), "#", :class => "wc-day-column-header"
-  .wc-scrollable-grid.calendar-cal
-    %table.wc-time-slots.calendar-cal
+  .wc-scrollable-grid
+    %table.wc-time-slots
       %tbody
         %tr
-          %td.wc-grid-timeslot-header.calendar-cal
+          %td.wc-grid-timeslot-header
           %td{:colspan => 7}
-            .wc-time-slot-wrapper.calendar-cal
-              .wc-time-slots.calendar-cal
+            .wc-time-slot-wrapper
+              .wc-time-slots
                 - for hour in start_hour .. end_hour
                   - for slot in 1 ... slots_per_hour
-                    .wc-time-slot.calendar-cal{:class => "wc-hour-#{hour} wc-hour-slot-#{slot}"}
-                  .wc-time-slot.wc-hour-end.calendar-cal{:class => "wc-hour-#{hour} wc-hour-slot-#{slots_per_hour}"}
+                    .wc-time-slot{:class => "wc-hour-#{hour} wc-hour-slot-#{slot} #{calendar_name}-cal"}
+                  .wc-time-slot.wc-hour-end{:class => "wc-hour-#{hour} wc-hour-slot-#{slots_per_hour}"}
         %tr
-          %td.wc-grid-timeslot-header.calendar-cal
+          %td.wc-grid-timeslot-header
             - for hour in start_hour .. end_hour
-              .wc-hour-header.calendar-cal
-                .wc-time-header-cell.calendar-cal
+              .wc-hour-header
+                .wc-time-header-cell
                   = "#{hour}:00"
           - for day in week_range
-            - klass = "wc-day-column day-#{day.strftime("%w")} calendar-cal"
+            - klass = "wc-day-column day-#{day.strftime("%w")}"
             - klass << " wc-today" if day == @today
-            - editable = "editable" if in_current_or_future_terms?(day, current_and_future_terms)
+            - editable = "#{calendar_name}-cal"
+            - editable << " editable" if in_current_or_future_terms?(day, current_and_future_terms)
             // XXX editable
             %td{:class => klass}
-              .wc-day-column-inner.calendar-cal{:data => {:date => day.strftime}, :class => editable}
+              .wc-day-column-inner{:data => {:date => day.strftime}, :class => editable}
                 = render event_partial, :day => day, :slot_height => slot_height, :slots_per_hour => slots_per_hour, :start_hour => start_hour, :current_and_future_terms => current_and_future_terms
 

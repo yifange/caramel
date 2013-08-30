@@ -1,76 +1,76 @@
-attachCourseColumnHandler = ->
-  $("div.wc-day-column-inner.course-cal").css("cursor", "pointer").on "click", ->
+attachScheduleColumnHandler = ->
+  $("div.wc-day-column-inner.schedule-cal").css("cursor", "pointer").on "click", ->
     date = $(this).data("date")
     # window.location.href = "/events/new?date=" + date
     $.get("/schedules/new?date=" + date + "&program_id=" + $(".wc-container").data("program"), (data, status) ->
-      $("#course-modal-body").html($(data).filter("#schedule-form-body").html())
-      $("#course-form-submit").hide()
-      $("#course-modal-delete").hide()
-      $("#course-modal-title").html("Create Course")
-      $("#course-modal").modal({
+      $("#schedule-modal-body").html($(data).filter("#schedule-form-body").html())
+      $("#schedule-form-submit").hide()
+      $("#schedule-modal-delete").hide()
+      $("#schedule-modal-title").html("Create Schedule")
+      $("#schedule-modal").modal({
         keyboard: true
       })
     )
     return false
 
-attachCourseEventHandler = ->
-  $("div.wc-cal-event.course-cal").on "click", ->
+attachScheduleEventHandler = ->
+  $("div.wc-cal-event.schedule-cal").on "click", ->
     eventId = $(this).data("eventid")
-    $.data($("#course-modal-delete")[0], "eventid", eventId)
+    $.data($("#schedule-modal-delete")[0], "eventid", eventId)
     $.get("/schedules/" + eventId + "/edit", (data, status) ->
-      $("#course-modal-body").html($(data).filter("#schedule-form-body").html())
-      $("#course-form-submit").hide()
-      $("#course-modal-delete").show()
-      $("#course-modal-title").html("Update Event")
-      $("#course-modal").modal({
+      $("#schedule-modal-body").html($(data).filter("#schedule-form-body").html())
+      $("#schedule-form-submit").hide()
+      $("#schedule-modal-delete").show()
+      $("#schedule-modal-title").html("Update Event")
+      $("#schedule-modal").modal({
         keyboard: true
       })
     )
     return false
 
-attachCourseSubmitHandler = ->
-  $("#course-modal-confirm").on "click", ->
+attachScheduleSubmitHandler = ->
+  $("#schedule-modal-confirm").on "click", ->
     $form = $("form.schedule")
     $.ajax({
       type: $form.attr("method"),
       url: $form.attr("action"),
       data: $form.serialize(),
       success: (data, status) ->
-        $("#course-modal").modal("toggle")
+        $("#schedule-modal").modal("toggle")
         $.get(document.URL, (data, status) ->
           $(".wc-container").html($(data).find(".wc-container").html())
-          attachCourseColumnHandler()
-          attachCourseEventHandler()
+          attachScheduleColumnHandler()
+          attachScheduleEventHandler()
         )
       error: (data, status) ->
-        $("#course-modal-body").html($(data.responseText).find("#course-form-body").html())
+        $("#schedule-modal-body").html($(data.responseText).find("#course-form-body").html())
     })
     return false
 
-attachCourseDeleteHandler = ->
-  $("#course-modal-delete").on "click", ->
+attachScheduleDeleteHandler = ->
+  $("#schedule-modal-delete").on "click", ->
     eventId = $(this).data("eventid")
     $.ajax({
       type: "POST",
       url: "/schedules/" + eventId,
       data: {"_method": "delete"},
       complete: (data, status) ->
-        $("#course-modal").modal("toggle")
+        $("#schedule-modal").modal("toggle")
         $.get(document.URL, (data, status) ->
           $(".wc-container").html($(data).find(".wc-container").html())
-          attachCourseColumnHandler()
-          attachCourseEventHandler()
+          attachScheduleColumnHandler()
+          attachScheduleEventHandler()
         )
     })
 
 
-$(document).ready attachCourseColumnHandler
-$(document).ready attachCourseEventHandler
-$(document).ready attachCourseSubmitHandler
-$(document).ready attachCourseDeleteHandler
+$(document).ready attachScheduleColumnHandler
+$(document).ready attachScheduleEventHandler
+$(document).ready attachScheduleSubmitHandler
+$(document).ready attachScheduleDeleteHandler
 
-$(document).on "page:load", attachCourseColumnHandler
-$(document).on "page:load", attachCourseEventHandler
-$(document).on "page:load", attachCourseSubmitHandler
-$(document).on "page:load", attachCourseDeleteHandler
+$(document).on "page:load", attachScheduleColumnHandler
+$(document).on "page:load", attachScheduleEventHandler
+$(document).on "page:load", attachScheduleSubmitHandler
+$(document).on "page:load", attachScheduleDeleteHandler
 

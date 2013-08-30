@@ -3,7 +3,7 @@
 - content_for :sidemenu do
   - render '/layouts/classes_page_sidebar'
 - content_for :subnav do
-  = render "navbar", :active => "week"
+  = render "/layouts/subnav", :nav_pills_partial => "/calendars/week_nav_pills", :nav_filter_partial => "/calendars/calendar_nav_filter", :active => "week", :base_path => :calendars_week_path
 - content_for :main do
   - calendar_name = "calendar"
   = render "/layouts/calendars/weekly_calendar", :calendar_name => "calendar", :event_partial => "/calendars/calendar_events"

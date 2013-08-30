@@ -3,6 +3,6 @@
 - content_for :sidemenu do
   - render '/layouts/classes_page_sidebar'
 - content_for :subnav do
-  = render "navbar", :active => "year", :base_path => :schedules_path
+  = render "/layouts/subnav", :nav_pills_partial => "/schedules/year_nav_pills", :nav_filter_partial => "/schedules/schedule_nav_filter", :active => "year", :base_path => :schedules_path
 - content_for :main do
   = render "/layouts/calendars/annual_calendar", :base_path => :schedules_week_path, :grid_partial => "/schedules/schedule_grid"

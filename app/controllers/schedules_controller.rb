@@ -17,6 +17,8 @@ class SchedulesController < ApplicationController
     @month = (params[:month] || Date.today.month).to_i
     @year = (params[:year] || Date.today.year).to_i
     @day = (params[:day] || Date.today.day).to_i
+    @date = Date.new(@year, @month, @day)
+    @today = Date.today
     # render :json => @calendars
   end
   def index_week

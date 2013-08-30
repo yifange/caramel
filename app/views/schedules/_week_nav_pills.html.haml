@@ -1,0 +1,9 @@
+%li
+  = link_to "now", self.send(base_path, :year => @today.year, :month => @today.month, :day => @today.day, :school_id => @school_id, :program_id => @program_id)
+%li
+  = link_to "<", self.send(base_path, :year => @date.prev_week.year, :month => @date.prev_week.month, :day => @date.prev_week.day, :school_id => @school_id, :program_id => @program_id)
+%li
+  = link_to ">", self.send(base_path, :year => @date.next_week.year, :month => @date.next_week.month, :day => @date.next_week.day, :school_id => @school_id, :program_id => @program_id)
+%li
+  %span.navbar-text#subnav-text
+    = @date.beginning_of_week(:sunday).strftime("%B %-d, %Y") + " - " + @date.end_of_week(:sunday).strftime("%B %-d, %Y")

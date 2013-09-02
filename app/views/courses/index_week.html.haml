@@ -1,0 +1,38 @@
+- content_for :title do
+  schedule 
+- content_for :sidemenu do
+  - render '/layouts/classes_page_sidebar'
+- content_for :subnav do
+  .navbar.navbar-fixed-top.subnav
+    .navbar-inner
+      .container
+        %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#subnav-collapse"}
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        #subnav-collapse.nav-collapse.collapse
+          %ul.nav.nav-pills.unselectable
+            %li
+              %a#subnav-today{:href => "#"}
+                now
+            %li
+              %a#subnav-prev{:href => "#"}
+                <
+            %li
+              %a#subnav-next{:href => "#"}
+                >
+            %li
+              %span.navbar-text#subnav-text
+          %ul.nav.nav-pills.pull-right.unselectable
+            = nav_filter_for "program", @programs, :base_url => "/courses", :year => params[:year], :month => params[:month], :day => params[:day]
+            %li.active
+              = link_to "week", courses_week_path(:program_id => @program_id), :id => "subnav-week"
+            %li
+              = link_to "year", courses_path(:program_id => @program_id), :id => "subnav-year"
+
+- content_for :main do
+  = weekly_calendar_for @courses, :year => @year.to_i, :month => @month.to_i, :day => @day.to_i, :category_method => :group, :calendar_name => "course", :program => @program, :background_calendar => @calendars do |c|
+    = c.draw_weekly_calendar_nav
+    = c.draw_weekly_calendar_body
+
+  = modal_for "course", :delete_button => true

@@ -1,0 +1,10 @@
+.navbar.navbar-fixed-top.subnav
+  .navbar-inner
+    .container
+      %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#subnav-collapse"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      #subnav-collapse.nav-collapse.collapse
+        %ul.nav.nav-pills.pull-right.unselectable
+          = nav_filter_for "program", @programs, :base_url => "/rosters", :year => params[:year], :month => params[:month], :default_text => "#{@program.school.full}, #{@program.program_type.name}, #{@program.instrument.name}"

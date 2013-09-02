@@ -3,6 +3,7 @@ class School < ActiveRecord::Base
   belongs_to :region
   has_many :students
   has_many :programs
+  has_many :teachers, :through => :programs
   validates_presence_of :abbrev, :full, :region
   validates :abbrev, :uniqueness => {:scope => :full}
 

@@ -1,0 +1,14 @@
+- columns = 4
+- rows = 3
+- first_month = 9
+- months = [*(first_month..12)].concat([*(1..first_month)])
+.ac-container
+  %table.ac-table.unselectable
+    %tbody
+      - for row_ind in (0...rows)
+        %tr
+          - for column_ind in (0...columns)
+            - month = months[row_ind * columns + column_ind]
+            %td.ac-table-grid
+              .ac-mc-container
+                = render "/layouts/calendars/monthly_calendar", :year => @year, :month => month, :base_path => base_path, :grid_partial => grid_partial

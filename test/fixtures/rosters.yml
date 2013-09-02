@@ -3,15 +3,13 @@
 one:
   course_id: 
   enrollment_id: 
-  student_id: 
-  start_date: 2013-08-13
-  end_date: 2013-08-13
+  start_date: 2013-08-23
+  end_date: 2013-08-23
   notes: MyText
 
 two:
   course_id: 
   enrollment_id: 
-  student_id: 
-  start_date: 2013-08-13
-  end_date: 2013-08-13
+  start_date: 2013-08-23
+  end_date: 2013-08-23
   notes: MyText

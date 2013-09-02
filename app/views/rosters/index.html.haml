@@ -2,42 +2,16 @@
   - render '/layouts/classes_page_sidebar'
 
 - content_for :subnav do
-  .navbar.navbar-fixed-top.subnav
-    .navbar-inner
-      .container
-        %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#subnav-collapse"}
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-        #subnav-collapse.nav-collapse.collapse
-          -# %ul.nav.nav-pills.unselectable
-          -#   %li
-          -#     %a#subnav-today{:href => "#"}
-          -#       now
-          -#   %li
-          -#     %a#subnav-prev{:href => "#"}
-          -#       <
-          -#   %li
-          -#     %a#subnav-next{:href => "#"}
-          -#       >
-          -#   %li
-          -#     %p.navbar-text#subnav-text
-          %ul.nav.nav-pills.pull-right.unselectable
-            = nav_filter_for "program", @programs, :base_url => "/rosters", :year => params[:year], :month => params[:month]
-
+  = render "navbar"
 
 - content_for :main do
-  .hidden-nav{:style => "display: none"}
-    %span#cal-nav-program-id
-      = @program_id
-    %span#cal-nav-program-name
-      = @program.school.full + ", " + @program.program_type.name + ", " + @program.instrument.name
   
-  .classes-container.span4
+  .classes-container.span4.accordion-parent
     = render "classes"
-  .rosters-container.span7
+  .rosters-container.span7.accordion-parent
     = render "rosters"
 
   = modal_for "roster", :modal_title => "New Roster"
   = modal_for "add-student", :modal_title => "Add a student"
-  = modal_for "update-class", :modal_title => "Update class"
+  = modal_for "update-class", :modal_title => "Update Class"
+  = modal_for "add-class", :modal_title => "Add a Class"

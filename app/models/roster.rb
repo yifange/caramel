@@ -1,9 +1,9 @@
 class Roster < ActiveRecord::Base
-  belongs_to :student
+  # belongs_to :student
   belongs_to :course
   belongs_to :enrollment
   has_many :attendances
-  before_save :set_enrollment
+  # before_save :set_enrollment
   def course_name
     course.name
   end
@@ -22,12 +22,12 @@ class Roster < ActiveRecord::Base
   def day_of_week
     course.day_of_week
   end
-  private
+  # private
 
-  def set_enrollment
-    if course
-      program_id = course.program.id
-      self.enrollment_id = Enrollment.where(:program_id => program_id, :student_id => student_id).first.id
-    end
-  end
+  # def set_enrollment
+  #   if course
+  #     program_id = course.program.id
+  #     self.enrollment_id = Enrollment.where(:program_id => program_id, :student_id => student_id).first.id
+  #   end
+  # end
 end

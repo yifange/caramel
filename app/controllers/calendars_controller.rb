@@ -10,9 +10,11 @@ class CalendarsController < ApplicationController
       @school_id = @school[:id]
       @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
     end
-    @month = params[:month] || Date.today.month
-    @year = params[:year] || Date.today.year
-    @day = params[:day] || Date.today.day
+    @month = (params[:month] || Date.today.month).to_i
+    @year = (params[:year] || Date.today.year).to_i
+    @day = (params[:day] || Date.today.day).to_i
+    @date = Date.new(@year, @month, @day)
+    @today = Date.today
   end
 
   def index_week
@@ -20,14 +22,18 @@ class CalendarsController < ApplicationController
     if current_user[:type] == "Teacher"
       @schools = Teacher.find(current_user[:id]).schools
     end
-    @school = (@schools.find_by :id => params[:school_id]) || @schools.first
-    @schools = @schools.uniq
-    @school_id = @school[:id]
+    if @schools
+      @school = (@schools.find_by :id => params[:school_id]) || @schools.first
+      @schools = @schools.uniq
+      @school_id = @school[:id]
 
-    @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
-    @month = params[:month] || Date.today.month
-    @year = params[:year] || Date.today.year
-    @day = params[:day] || Date.today.day
+      @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
+    end
+    @month = (params[:month] || Date.today.month).to_i
+    @year = (params[:year] || Date.today.year).to_i
+    @day = (params[:day] || Date.today.day).to_i
+    @date = Date.new(@year, @month, @day)
+    @today = Date.today
   end
 
   def new

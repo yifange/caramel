@@ -13,8 +13,6 @@
 #   $subnavNext.attr("href", $nextLink)
 #   $subnavToday.attr("href", $todayLink)
 #   $subnavText.html($title)
-
-
 attachModalXeditableFieldsHandler = ->
   $("#attendance-form-course").editable()
 

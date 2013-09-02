@@ -1,4 +1,10 @@
 $ ->
+  $("#bento").select2({
+    # formatSelection: (item) ->
+    #   # originalOption = item.element
+    #   console.log(item)
+    #   item.text
+  })
   $(".dropdown-menu.strange").on "click", "#show-in-calendar", (e) ->
     e.preventDefault()
     alert('helo')

@@ -1,31 +1,32 @@
 - @students.each do |student|
-  %table.rosters-table.table.table-bordered
-    %thead
+  %table.rosters-table.table.table-bordered.table-condensed
+    %thead.accordion-toggle{"data-target" => "student-#{student.id}"}
       %tr
         %th{:colspan => 4}
           = student.name
           %a.btn.pull-right{:href => "#"}
             actions
-    %tbody
+    %tbody.accordion-body{:id => "student-#{student.id}"}
       %tr
         %td{:colspan => 4}
           Regular Classes
           %a.btn.pull-right.new-roster{:href => "/rosters/new?student_id=" + student.id.to_s + "&program_id=" + @program_id.to_s + "&type=regular"}
             %i.icon-plus
-            
-      - student.rosters.each do |roster|
-        - course = roster.course
-        - break unless course
-        - if course[:course_type] == "RegularCourse"
-          = render "roster_details", :course => course, :roster => roster
+      - student.enrollments.each do |enrollment|
+        - enrollment.rosters.each do |roster|
+          - course = roster.course
+          - break unless course
+          - if course[:course_type] == "RegularCourse"
+            = render "roster_details", :course => course, :roster => roster
       %tr
         %td{:colspan => 4}
           Group Classes
           %a.btn.pull-right.new-roster{:href => "/rosters/new?student_id=" + student.id.to_s + "&program_id=" + @program_id.to_s + "&type=group"}
             %i.icon-plus
-      - student.rosters.each do |roster|
-        - course = roster.course
-        - break unless course
-        - if course.course_type == "GroupCourse"
-          = render "roster_details", :course => course, :roster => roster
+      - student.enrollments.each do |enrollment|
+        - enrollment.rosters.each do |roster|
+          - course = roster.course
+          - break unless course
+          - if course.course_type == "GroupCourse"
+            = render "roster_details", :course => course, :roster => roster
 

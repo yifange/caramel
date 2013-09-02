@@ -5,6 +5,8 @@ class Teacher < User
   has_many :assignments
   has_many :programs, :through => :assignments
   has_many :schools, :through => :programs
+  has_many :enrollments, :through => :programs
+  has_many :students, :through => :enrollments
 
   def program_ids
     programs.map do |program|
@@ -88,8 +90,6 @@ class Teacher < User
         result.push(school)
       end
     end
-    puts 'ddddddddddddddddddd'
-    puts result.length
     result
   end
 

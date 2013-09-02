@@ -2,6 +2,9 @@ class Enrollment < ActiveRecord::Base
   belongs_to :student
   belongs_to :program
   has_many :rosters
+  def student_name
+    student.name
+  end
   def rosters_by_date(date)
     rosters.select { |r| r.date == date }
   end

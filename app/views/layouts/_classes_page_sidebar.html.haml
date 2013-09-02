@@ -1,5 +1,9 @@
 %ul.nav.nav-list{:style => "margin-top: 45px"}
-  = active_link_fullpath 'CALENDAR', '/calendars'
-  = active_link_fullpath 'SCHEDULE', '/courses'
-  = active_link_fullpath 'ATTENDANCE', '/attendances'
-  = active_link_fullpath "ROSTER", "/rosters"
+  %li{:class => "#{active_class("calendars", "index", "index_week")}"}
+    = link_to "CALENDARS", "/calendars"
+  %li{:class => "#{active_class("schedules", "index", "index_week")}"}
+    = link_to "SCHEDULES", "/schedules"
+  %li{:class => "#{active_class("attendances", "index")}"}
+    = link_to "ATTENDANCES", "/attendances"
+  %li{:class => "#{active_class("rosters", "index")}"}
+    = link_to "CLASSES", "/rosters"

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  course_id: 
+  start_time: 2013-08-22 15:45:32
+  end_time: 2013-08-22 15:45:32
+  day_of_week: 1
+  date: 2013-08-22
+
+two:
+  course_id: 
+  start_time: 2013-08-22 15:45:32
+  end_time: 2013-08-22 15:45:32
+  day_of_week: 1
+  date: 2013-08-22

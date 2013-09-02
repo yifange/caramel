@@ -25,7 +25,7 @@ attachEventHandler = ->
     eventId = $(this).data("eventid")
     $.data($("#calendar-modal-delete")[0], "eventid", eventId)
     $.get("/calendars/" + eventId + "/edit", (data, status) ->
-      $("#calendar-modal-body").html($(data).find("#calendar-form-body").html())
+      $("#calendar-modal-body").html($(data).filter("#calendar-form-body").html())
       $("#calendar-form-submit").hide()
       $("#calendar-modal-delete").show()
       $("#calendar-modal-title").html("Update Event")
@@ -77,28 +77,28 @@ attachSubnavHandler = ->
   $subnavNext = $("#subnav-next")
   $subnavText = $("#subnav-text")
   $subnavToday = $("#subnav-today")
-  $subnavSchoolName = $("#subnav-school-name")
-  $subnavSchoolId = $("#subnav-school-id")
-  $subnavProgramName = $("#subnav-program-name")
-  $subnavProgramId = $("#subnav-program-id")
+  # $subnavSchoolName = $("#subnav-school-name")
+  # $subnavSchoolId = $("#subnav-school-id")
+  # $subnavProgramName = $("#subnav-program-name")
+  # $subnavProgramId = $("#subnav-program-id")
 
   $nextLink = $("#cal-nav-next").attr("href")
   $prevLink = $("#cal-nav-prev").attr("href")
   $todayLink = $("#cal-nav-today").attr("href")
-  $school_id = $("#cal-nav-school-id").text()
-  $school_name = $("#cal-nav-school-name").text()
-  $program_id = $("#cal-nav-program-id").text()
-  $program_name = $("#cal-nav-program-name").text()
+  # $school_id = $("#cal-nav-school-id").text()
+  # $school_name = $("#cal-nav-school-name").text()
+  # $program_id = $("#cal-nav-program-id").text()
+  # $program_name = $("#cal-nav-program-name").text()
   $title = $("#cal-nav-title").html()
 
   $subnavPrev.attr("href", $prevLink)
   $subnavNext.attr("href", $nextLink)
   $subnavToday.attr("href", $todayLink)
   $subnavText.html($title)
-  $subnavSchoolName.html($school_name)
-  $subnavSchoolId.html($school_id)
-  $subnavProgramName.html($program_name)
-  $subnavProgramId.html($program_id)
+  # $subnavSchoolName.html($school_name)
+  # $subnavSchoolId.html($school_id)
+  # $subnavProgramName.html($program_name)
+  # $subnavProgramId.html($program_id)
 
 
 
@@ -132,9 +132,9 @@ $(document).ready attachColumnHandler
 $(document).ready attachEventHandler
 $(document).ready attachSubmitHandler
 $(document).ready attachDeleteHandler
-$(document).ready attachSubnavHandler
+# $(document).ready attachSubnavHandler
 $(document).on "page:load", attachColumnHandler
 $(document).on "page:load", attachEventHandler
 $(document).on "page:load", attachSubmitHandler
 $(document).on "page:load", attachDeleteHandler
-$(document).on "page:load", attachSubnavHandler
+# $(document).on "page:load", attachSubnavHandler

@@ -10,15 +10,16 @@ class RostersController < ApplicationController
     @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
     if @program
       @program_id = @program[:id]
-      @courses = @program.courses.includes(:students)
-      @students = @program.students.includes(:rosters, :courses)
+      @courses = @program.courses.includes(:rosters => [:enrollment => [:student]])
+      @students = @program.students.includes(:enrollments => [:rosters => [:course => [:students]]])
     end
   end
   
   def new
     course_type = params[:type]
     program_id = params[:program_id]
-
+    student_id = params[:student_id]
+    @enrollment_id = Enrollment.find_by(:program_id => program_id, :student_id => student_id).id
     if course_type == "group"
       @courses = Course.where(:program_id => program_id, :course_type => "GroupCourse")
     elsif course_type == "regular"
@@ -34,6 +35,7 @@ class RostersController < ApplicationController
     course_id = params[:course_id]
     @students = Program.find(params[:program_id]).students
     @roster = Roster.new
+    @enrollments = Enrollment.where(:program_id => params[:program_id]).includes(:student)
     render :layout => false
   end
   def create
@@ -60,6 +62,6 @@ class RostersController < ApplicationController
   end
   private
   def roster_params
-    params.require(:roster).permit(:course_id, :student_id, :start_date, :end_date)
+    params.require(:roster).permit(:course_id, :enrollment_id, :start_date, :end_date)
   end
 end

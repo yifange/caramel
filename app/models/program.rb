@@ -31,6 +31,10 @@ class Program < ActiveRecord::Base
     "#{instrument.name}" + "-" + "#{program_type.name}"
   end
 
+  def name_with_school
+    "#{school.full}" + "-" + "#{instrument.name}" + "-" + "#{program_type.name}"
+  end
+
   def teacher_ids
     teachers.map do |teacher|
       teacher.id

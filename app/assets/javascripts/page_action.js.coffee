@@ -125,6 +125,9 @@ attachBlockHandler = ->
       url: $(this).data("value")
       data: data
       dataType: "json"
+      complete: ->
+        console.log("AJAX - complete()")
+        console.log(this)
     })
   )
 

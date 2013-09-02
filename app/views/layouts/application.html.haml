@@ -48,5 +48,7 @@
           = yield(:sidemenu)
         .span10.content{:style => "margin-bottom: 15px"}
           = yield(:action_button)
+          - if flash[:notice]
+            = flash[:notice]
         .span10.content
           = yield(:main)

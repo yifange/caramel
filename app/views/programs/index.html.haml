@@ -16,66 +16,83 @@
 - content_for :main do
   %ul.nav.nav-tabs
     - i = 0
-    - @schools.each do |school|
+    - @regions.each do |region|
       %li{:class => (i == 0 ? 'active' : nil)}
-        %a.tab-hover{:href => "#tab#{school.id}", "data-toggle" => "tab", :title => "#{school.full}"}
-          = school.abbrev
+        %a{:href => "#tab-region#{region.id}", "data-toggle" => "tab"}
+          = region.name
       - i += 1
   .tab-content
     - i = 0
-    - @schools.each do |school|
-      .tab-pane{:class => (i == 0 ? 'active' : nil), :id => "tab#{school.id}"}
-        %table.table.table-bordered.table-striped.table-condensed.table-condensed{:style => 'clear: both'}
-          %tr
-            %th{:width => '10px'} 
-            %th{:width => '200px'} INSTRUMENT
-            %th{:width => '200px'} PROGRAM TYPE
-            %th{:width => '310px'} REGULAR / GROUP CLASS PER YEAR
-            %th 
+    - @regions.each do |region|
+      .tab-pane{:class => (i == 0 ? 'active' : nil), :id => "tab-region#{region.id}"}
+        %ul.nav.nav-tabs
+          - schools = []
           - if verify_user(['Admin', 'Staff'])
-            - programs = school.programs
+            - schools = region.schools
           - elsif verify_user(['Teacher'])
-            - programs = current_user.programs.where(:school_id => school.id)
-          - programs.each do |program|
-            %tr.accordion-group
-              %td
-                %input.checkbox-select-to-delete{:type => 'checkbox', :value  => "#{program.id}"}
-              %td{:style => 'color: #0088cc;'}
+            - schools = current_user.schools_in_one_region(region.id)
+          - j = 0
+          - schools.each do |school|
+            %li{:class => (j == 0 ? 'active' : nil)}
+              %a.tab-hover{:href => "#tab-school#{school.id}", "data-toggle" => "tab", :title => "#{school.full}"}
+                = school.abbrev
+            - j += 1
+        .tab-content
+          - j = 0
+          - schools.each do |school|
+            .tab-pane{:class => (j == 0 ? 'active' : nil), :id => "tab-school#{school.id}"}
+              %table.table.table-bordered.table-striped.table-condensed.table-condensed{:style => 'clear: both'}
+                %tr
+                  %th{:width => '10px'} 
+                  %th{:width => '200px'} INSTRUMENT
+                  %th{:width => '200px'} PROGRAM TYPE
+                  %th{:width => '310px'} REGULAR / GROUP CLASS PER YEAR
+                  %th 
                 - if verify_user(['Admin', 'Staff'])
-                  = singular_selection(Instrument.all_ordered_json, program.instrument_id, program.id, "/programs/#{program.id}", 'instrument_id')
+                  - programs = school.programs
                 - elsif verify_user(['Teacher'])
-                  = Instrument.find(program.instrument_id).name
-              %td{:style => 'color: #0088cc;'}
-                - if verify_user(['Admin', 'Staff'])
-                  = singular_selection(ProgramType.all_ordered_json, program.program_type_id, program.id, "/programs/#{program.id}", 'program_type_id')
-                - elsif verify_user(['Teacher'])
-                  = ProgramType.find(program.program_type_id).name
-              %td{:style => 'color: #0088cc;'}
-                - if verify_user(['Admin', 'Staff'])
-                  %a.x-editable-input-number{:href => '#', 'data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}"}
-                    = program.regular_group_course
-                - elsif verify_user(['Teacher'])
-                  = program.regular_group_course
-              %td
-                .accordion-heading
-                  .accordion-toggle{:style => 'padding-top: 0px; padding-bottom: 0px;'}
-                    %button.btn{'data-toggle' => 'collapse', :href => "#collapse#{program.id}"}
-                      DETAIL
-                      %span.caret
-            %tr
-              %td{'colspan' => "5", :style => "height: auto"}
-                .accordion-body.collapse{:id => "collapse#{program.id}"}
-                  .accordion-inner{:style => 'border-top-width: 0px'}
-                    .well.well-small{:style => 'background-color: #eee;'}
-                      %b TEACHERS:
+                  - programs = current_user.programs.where(:school_id => school.id)
+                - programs.each do |program|
+                  %tr.accordion-group
+                    %td
+                      %input.checkbox-select-to-delete{:type => 'checkbox', :value  => "#{program.id}"}
+                    %td{:style => 'color: #0088cc;'}
                       - if verify_user(['Admin', 'Staff'])
-                        = multiple_selection(Region.find(school.region_id).teachers_ordered_json, program.teacher_ids, program.id, "/programs/#{program.id}", 'teachers')
+                        = singular_selection(Instrument.all_ordered_json, program.instrument_id, program.id, "/programs/#{program.id}", 'instrument_id')
                       - elsif verify_user(['Teacher'])
-                        = program.teacher_names
-                    .well.well-small{:style => 'background-color: #eee;'}
-                      %b STUDENTS:
+                        = Instrument.find(program.instrument_id).name
+                    %td{:style => 'color: #0088cc;'}
                       - if verify_user(['Admin', 'Staff'])
-                        = multiple_selection(school.students_ordered_json, program.student_ids, program.id, "/programs/#{program.id}", 'students')
+                        = singular_selection(ProgramType.all_ordered_json, program.program_type_id, program.id, "/programs/#{program.id}", 'program_type_id')
                       - elsif verify_user(['Teacher'])
-                        = multiple_selection(current_user.students_in_one_school_ordered_json(school.id), program.student_ids, program.id, "/programs/#{program.id}", 'students')
+                        = ProgramType.find(program.program_type_id).name
+                    %td{:style => 'color: #0088cc;'}
+                      - if verify_user(['Admin', 'Staff'])
+                        %a.x-editable-input-number{:href => '#', 'data-url' => "/programs/#{program.id}", 'data-pk' => "#{program.id}"}
+                          = program.regular_group_course
+                      - elsif verify_user(['Teacher'])
+                        = program.regular_group_course
+                    %td
+                      .accordion-heading
+                        .accordion-toggle{:style => 'padding-top: 0px; padding-bottom: 0px;'}
+                          %button.btn{'data-toggle' => 'collapse', :href => "#collapse#{program.id}"}
+                            TEACHERS AND STUDENTS
+                            %span.caret
+                  %tr
+                    %td{'colspan' => "5", :style => "height: auto"}
+                      .accordion-body.collapse{:id => "collapse#{program.id}"}
+                        .accordion-inner{:style => 'border-top-width: 0px'}
+                          .well.well-small{:style => 'background-color: #eee;'}
+                            %b TEACHERS:
+                            - if verify_user(['Admin', 'Staff'])
+                              = multiple_selection(Region.find(school.region_id).teachers_ordered_json, program.teacher_ids, program.id, "/programs/#{program.id}", 'teachers')
+                            - elsif verify_user(['Teacher'])
+                              = program.teacher_names
+                          .well.well-small{:style => 'background-color: #eee;'}
+                            %b STUDENTS:
+                            - if verify_user(['Admin', 'Staff'])
+                              = multiple_selection(school.students_ordered_json, program.student_ids, program.id, "/programs/#{program.id}", 'students')
+                            - elsif verify_user(['Teacher'])
+                              = multiple_selection(current_user.students_in_one_school_ordered_json(school.id), program.student_ids, program.id, "/programs/#{program.id}", 'students')
+            - j += 1
       - i += 1

@@ -68,10 +68,28 @@ class Teacher < User
   def programs_in_one_region(region_id)
     result = []
     programs.each do |program|
-      if program.school.region_id.to_i ==  region_id.to_i
-        result.push(program.id)
+      if program.school.region_id.to_i == region_id.to_i
+        result.push(program)
       end
     end
+    result
+  end
+
+  def program_ids_in_one_region(region_id)
+    programs_in_one_region(region_id).map do |program|
+      program.id
+    end
+  end
+
+  def schools_in_one_region(region_id)
+    result = []
+    schools_ordered.each do |school|
+      if school.region_id.to_i == region_id.to_i
+        result.push(school)
+      end
+    end
+    puts 'ddddddddddddddddddd'
+    puts result.length
     result
   end
 

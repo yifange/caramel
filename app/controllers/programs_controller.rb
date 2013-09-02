@@ -4,11 +4,11 @@ class ProgramsController < ApplicationController
   def index
     verify_user(['Admin', 'Staff', 'Teacher'])
     if current_user.type == 'Admin'
-      @schools = School.all_ordered
+      @regions = Region.all_ordered
     elsif current_user.type == 'Staff'
-      @schools = current_user.schools_ordered
+      @regions = current_user.regions_ordered
     elsif current_user.type == 'Teacher'
-      @schools = current_user.schools_ordered
+      @regions = current_user.regions_ordered
     end
   end
 

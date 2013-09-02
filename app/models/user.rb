@@ -44,6 +44,16 @@ class User < ActiveRecord::Base
     add_region(region_new_id)
   end
 
+  def common_regions(user_id)
+    # result = []
+    # User.find(user_id).regions.each do |region|
+    #   regions.each do |region2|
+    puts regions
+    puts User.find(user_id)
+    puts User.find(user_id).regions & regions
+    User.find(user_id).regions & regions
+  end
+
   protected
   def self.in_regions_ordered(type, region_ids)
     users = []

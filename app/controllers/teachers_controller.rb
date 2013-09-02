@@ -20,8 +20,7 @@ class TeachersController < ApplicationController
       if params[:option] == "add"
         teacher.add_region(params[:value])
       else
-        if teacher.programs_in_one_region(params[:value]) == 0
-          flash[:alert] = "You are not yet assigned to an experiment."
+        if teacher.programs_in_one_region(params[:value]).length != 0
         else
           teacher.remove_region(params[:value])
         end

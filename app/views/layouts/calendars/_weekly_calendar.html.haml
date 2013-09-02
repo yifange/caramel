@@ -4,7 +4,7 @@
 - slot_height = 18
 - current_and_future_terms = Term.current_and_future_terms
 - week_range = @date.beginning_of_week(:sunday) .. @date.end_of_week(:sunday)
-.wc-container
+.wc-container{:data => {:school => @school_id}}
   %table.wc-header
     %tbody
       %tr

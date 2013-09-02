@@ -41,6 +41,7 @@ newRosterHandler = ->
         keyboard: true
       })
     )
+    return false
 addStudentHandler = ->
   $(".menu-item-add-student").on "click", (e) ->
     e.preventDefault()
@@ -51,6 +52,8 @@ addStudentHandler = ->
         keyboard: true
       })
     )
+    return false
+
 addClassHandler = ->
   $(".btn.add-class").on "click", (e) ->
     e.preventDefault()
@@ -61,6 +64,7 @@ addClassHandler = ->
         keyboard: true
       })
     )
+    return false
 
 updateClassHandler = ->
   $(".menu-item-update-class").on "click", (e) ->
@@ -87,6 +91,7 @@ addStudentModalSubmitHandler = ->
           $(".classes-container").html($(data).find(".classes-container").html())
           addStudentHandler()
           newRosterHandler()
+          addClassHandler()
           initRosterEditable()
           updateClassHandler()
         )
@@ -107,6 +112,7 @@ rosterModalSubmitHandler = ->
           $(".classes-container").html($(data).find(".classes-container").html())
           addStudentHandler()
           newRosterHandler()
+          addClassHandler()
           initRosterEditable()
           updateClassHandler()
         )
@@ -129,6 +135,7 @@ updateClassModalSubmitHandler = ->
           $(".classes-container").html($(data).find(".classes-container").html())
           addStudentHandler()
           newRosterHandler()
+          addClassHandler()
           initRosterEditable()
           updateClassHandler()
         )
@@ -150,6 +157,7 @@ addClassModalSubmitHandler = ->
           $(".classes-container").html($(data).find(".classes-container").html())
           addStudentHandler()
           newRosterHandler()
+          addClassHandler()
           initRosterEditable()
           updateClassHandler()
         )

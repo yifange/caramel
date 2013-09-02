@@ -3,7 +3,7 @@ class Roster < ActiveRecord::Base
   belongs_to :course
   belongs_to :enrollment
   has_many :attendances
-  # before_save :set_enrollment
+  validate :start_date_must_in_term, :end_date_must_in_term, :start_date_must_before_end_date
   def course_name
     course.name
   end
@@ -22,12 +22,22 @@ class Roster < ActiveRecord::Base
   def day_of_week
     course.day_of_week
   end
-  # private
-
-  # def set_enrollment
-  #   if course
-  #     program_id = course.program.id
-  #     self.enrollment_id = Enrollment.where(:program_id => program_id, :student_id => student_id).first.id
-  #   end
-  # end
+  private
+  def start_date_must_in_term
+    term = course.program.term 
+    unless start_date.nil? or (term.start_date <= start_date and start_date <= term.end_date)
+      errors.add(:base, "not in term") 
+    end
+  end
+  def end_date_must_in_term
+    term = course.program.term
+    unless end_date.nil? or (term.start_date <= end_date and end_date <= term.end_date)
+      errors.add(:base, "not in term")
+    end
+  end
+  def start_date_must_before_end_date
+    unless start_date.nil? or end_date.nil? or start_date <= end_date
+      errors.add(:base, "start date must before end date")
+    end
+  end
 end

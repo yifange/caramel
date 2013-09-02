@@ -1,26 +1,47 @@
 - for day in month_range
   - schedule = course = roster = nil
-  - schedule, course, roster = schedule_hash[day.wday] if schedule_hash.has_key? day.wday
+  - schedule, course, roster = schedule_hash[day] if schedule_hash.has_key? day
   - attendance = attendance_hash[day]
-  - grid_text = attendance.nil? ? "" : attendance.attendance_marking.abbrev
-  - link_class = "fmc-grid-link"
+  - roster_id = roster.id if roster
+  - grid_text = attendance.nil? ? "" : attendance.attendance_marking.abbrev 
   - class_type = "fmc-grid"
-  - if schedule
-    - available = false
-    - if @calendar_hash[day]
-      - @calendar_hash[day].each do |calendar|
-        - if calendar.available == true and calendar.start_time <= schedule.start_time and schedule.end_time <= calendar.end_time
-          - available = true
-          - break
-    - if available
-      - roster_id = roster.id if roster
-      - start_time = schedule.start_time.strftime("%H:%M")
-      - end_time = schedule.end_time.strftime("%H:%M")
-      - time_title = "#{course.name}, #{start_time}-#{end_time}"
-      - class_type << " regular-class-day classday"
-      - link_class << " class-day"
+  - link_class = "fmc-grid-link"
+  - unless schedule.nil?
+    - start_time = schedule.start_time.strftime("%H:%M")
+    - end_time = schedule.end_time.strftime("%H:%M")
+    - time_title = "#{course.name}, #{start_time}-#{end_time}"
+    - class_type << " regular-class-day class-day"
+    - link_class << " class-day"
   %td{:class => class_type, :data => {"roster-id" => roster_id}}
     - if attendance.nil?
-      = link_to grid_text, new_attendance_path(:enrollment_id => enrollment.id, :roster_id => roster_id, :date => day), :class => link_class, :data => {:toggle => "tooltip"}, :title => time_title
+      = link_to grid_text, new_attendance_path(:enrollment_id => enrollment.id, :roster_id => roster_id, :date => day), :data => {:toggle => "tooltip"}, :class => link_class, :title => time_title
     - else
       = link_to grid_text, edit_attendance_path(attendance.id, :enrollment_id => enrollment.id), :class => link_class, :data => {:toggle => "tooltip", "attendance-id" => attendance.id}, :title => time_title
+
+
+-# - for day in month_range
+-#   - schedule = course = roster = nil
+-#   - schedule, course, roster = schedule_hash[day.wday] if schedule_hash.has_key? day.wday
+-#   - attendance = attendance_hash[day]
+-#   - grid_text = attendance.nil? ? "" : attendance.attendance_marking.abbrev
+-#   - link_class = "fmc-grid-link"
+-#   - class_type = "fmc-grid"
+-#   - if schedule
+-#     - available = false
+-#     - if @calendar_hash[day]
+-#       - @calendar_hash[day].each do |calendar|
+-#         - if calendar.available == true and calendar.start_time <= schedule.start_time and schedule.end_time <= calendar.end_time
+-#           - available = true
+-#           - break
+-#     - if available
+-#       - roster_id = roster.id if roster
+-#       - start_time = schedule.start_time.strftime("%H:%M")
+-#       - end_time = schedule.end_time.strftime("%H:%M")
+-#       - time_title = "#{course.name}, #{start_time}-#{end_time}"
+-#       - class_type << " regular-class-day classday"
+-#       - link_class << " class-day"
+-#   %td{:class => class_type, :data => {"roster-id" => roster_id}}
+-#     - if attendance.nil?
+-#       = link_to grid_text, new_attendance_path(:enrollment_id => enrollment.id, :roster_id => roster_id, :date => day), :class => link_class, :data => {:toggle => "tooltip"}, :title => time_title
+-#     - else
+-#       = link_to grid_text, edit_attendance_path(attendance.id, :enrollment_id => enrollment.id), :class => link_class, :data => {:toggle => "tooltip", "attendance-id" => attendance.id}, :title => time_title

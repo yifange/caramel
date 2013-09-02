@@ -36,11 +36,11 @@
               - else
                 - regular_attendance_hash[attendance.date] = attendance
           - course.schedules.each do |schedule|
-            - if course.course_type == "GroupCourse"
-              - if month_range.include? schedule.date
+            - if month_range.include? schedule.date
+              - if course.course_type == "GroupCourse"
                 - group_schedule_hash[schedule.date] = [schedule, course, roster]
-            - else
-              - regular_schedule_hash[schedule.day_of_week] = [schedule, course, roster]
+              - else
+                - regular_schedule_hash[schedule.date] = [schedule, course, roster]
         %tr
           %td.fmc-cal-enrollment-text{:rowspan => 2}
             = student.first_name + " " + student.last_name

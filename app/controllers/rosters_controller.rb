@@ -54,10 +54,10 @@ class RostersController < ApplicationController
     name = params[:name]
     value = params[:value]
     roster = Roster.find(params[:pk])
-    if roster.update_attribute(name, value)
+    if roster.update_attributes({name => value})
       render :text => "success"
     else
-      render :text => "error", :status => :unprocessable_entity
+      render :text => roster.errors.messages[:base].first, :status => :unprocessable_entity
     end
   end
   private

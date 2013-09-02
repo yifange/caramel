@@ -3,7 +3,7 @@
 - content_for :sidemenu do
   - render '/layouts/classes_page_sidebar'
 - content_for :subnav do
-  = render "navbar"
+  = render "/layouts/subnav", :nav_pills_partial => "/attendances/nav_pills", :nav_filter_partial => "/attendances/nav_filter", :base_path => :attendances_path, :active => nil
 - content_for :main do
   - day_of_week = ["Su", "M", "Tu", "W", "Th", "F", "Sa"]
   - today = Date.today

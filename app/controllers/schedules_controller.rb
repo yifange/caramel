@@ -67,8 +67,9 @@ class SchedulesController < ApplicationController
   def update
     @schedule = Schedule.find(params[:id])
     params[:schedule].delete("date")
-    r = if Course.find(params[:schedule][:course_id]).course_type == "RegularCourse"
-      @schedule.update_recurring(schedule_params)
+    
+    r = if Course.find(params[:schedule][:course_id]).course_type == "RegularCourse" and (params[:schedule][:recurring] == "all" or params[:schedule][:recurring] == "future")
+      @schedule.update_recurring(schedule_params, params[:schedule][:recurring])
     else
       @schedule.update_attributes(schedule_params)
     end
@@ -80,8 +81,8 @@ class SchedulesController < ApplicationController
   end
   def destroy
     schedule = Schedule.find(params[:id])
-    if Course.find(schedule.course_id).course_type = "RegularCourse"
-      schedule.destroy_recurring
+    if Course.find(schedule.course_id).course_type = "RegularCourse" and (params[:recurring] == "all" or params[:recurring] == "future")
+      schedule.destroy_recurring(params[:recurring])
     else
       schedule.destroy
     end

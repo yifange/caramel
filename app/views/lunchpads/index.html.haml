@@ -1,4 +1,11 @@
 = content_for :main do
+  %select#bento{:multiple => true}
+    %option{:value => "1", :selected => true, :data => {:locked => "true"}}
+      Katsudon
+    %option{:value => "2", :selected => true}
+      Tamogo
+    %option{:value => "3"}
+      Unagidon
 
   %ul.nav.nav-tabs
     %li

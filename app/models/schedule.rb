@@ -1,7 +1,7 @@
 class Schedule < ActiveRecord::Base
   belongs_to :course
   validate :events_cannot_overlap, :courses_must_in_term, :events_must_in_available_time_slots
-
+  attr_accessor :recurring
   def group
     course.course_type == "GroupCourse"
   end
@@ -15,14 +15,22 @@ class Schedule < ActiveRecord::Base
       r = r && Schedule.new(:date => day, :start_time => start_time, :end_time => end_time, :course_id => course_id).save
     end
   end
-  def update_recurring(schedule_params)
-    recurring_schedules = Schedule.where(:course_id => course_id)  
+  def update_recurring(schedule_params, recurring_type)
+    if recurring_type == "all"
+      recurring_schedules = Schedule.where(:course_id => course_id)  
+    elsif recurring_type == "future"
+      recurring_schedules = Schedule.where("course_id = ? AND date >= ? AND start_time >= ?", course_id, date, start_time)
+    end
     recurring_schedules.each do |e|
       e.update_attributes(schedule_params)
     end
   end
-  def destroy_recurring
-    recurring_schedules = Schedule.where(:course_id => course_id)
+  def destroy_recurring(recurring_type)
+    if recurring_type == "all"
+      recurring_schedules = Schedule.where(:course_id => course_id)
+    elsif recurring_type == "future"
+      recurring_schedules = Schedule.where("course_id = ? AND date >= ? AND start_time >= ?", course_id, date, start_time)
+    end
     recurring_schedules.each do |e|
       e.destroy
     end

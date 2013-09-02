@@ -16,9 +16,10 @@ class AttendancesController < ApplicationController
       @enrollments = @program.enrollments.includes(:student, :program, :rosters => [:course => :schedules, :attendances => [:attendance_marking]])
       @calendar_hash = rehash_objs(Calendar.where(:school_id => school_id))
     end
-    @month = params[:month] || Date.today.month
-    @year = params[:year] || Date.today.year
+    @month = (params[:month] || Date.today.month).to_i
+    @year = (params[:year] || Date.today.year).to_i
     @date = Date.new(@year, @month)
+    @today = Date.today
 
   end
   def new

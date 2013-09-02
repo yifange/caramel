@@ -1,0 +1,21 @@
+.x-editable-user-name {
+    display: block;
+}
+
+.x-editable-user-name span {
+    width: 90px;  
+    display: inline-block;
+}
+
+.name-input {
+  margin-right: 5px;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input {
+  padding-top: 3px;
+  padding-bottom: 2px;
+}
+
+input[type="checkbox"].checkbox-select-to-delete {
+  margin: 0px;
+}

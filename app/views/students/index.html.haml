@@ -3,17 +3,34 @@
 
 - content_for :sidemenu do
   - render '/layouts/people_page_sidebar'
-  
+
+- content_for :action_button do
+  %a.btn.btn-primary.delete-entry{'data-url' => "/students/destroy_milti"}
+    %i.icon-trash.icon-white
+  %a.btn.btn-primary.new-entry{:href => "/students/new", "data-entry" => "students"}
+    %i.icon-plus.icon-white
+  = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"
+
 - content_for :main do
-  %table.table.table-bordered.table-striped{:style => 'clear: both'}
+  %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
-      %th{:width => '13px'}
-      %th Name
+      %th{:width => '10px'}
+      %th{:width => '310px'} NAME
+      %th{:width => '280px'} SCHOOL
+      %th PROGRAM
     - @students.each do |student|
       %tr
         %td
-          %a
-            %i.icon-remove
+          %input.checkbox-select-to-delete{:type => 'checkbox', :value => "#{student.id}"}
         %td
           %a.x-editable-input-user-name{:href => "#", 'data-url' => "/students/#{student.id}", 'data-pk' => "#{student.id}"}
             = student.name
+        %td{:style => 'color: #0088cc;'}
+          - if verify_user(['Admin'])
+            = singular_selection(School.all_ordered_json, student.school_id, student.id, "/students/#{student.id}", 'school')
+          - if verify_user(['Staff'])
+            = singular_selection(current_user.schools_ordered_json, student.school_id, student.id, "/students/#{student.id}", 'school')
+          - if verify_user(['Teacher'])
+            = School.find(student.school_id).full
+        %td
+          = multiple_selection(student.school.programs_json, student.program_ids, student.id, "/students/#{student.id}", 'programs')

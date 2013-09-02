@@ -5,13 +5,19 @@
     %title Sign in
     = stylesheet_link_tag :session_page, :media => "all"
   %body
-    .navbar.navbar-inverse
+    .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
-        %a.brand{:href => '#'} Musikids Class Attendance
+        .container{:style => 'margin-left: 10px; width: 100%;'}
+          %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#main-nav-collapse"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand{:href => "#"}
+            Music Kids
     .content#login-content
       = form_tag '/session_page/verify', method: 'get' do
         %fieldset
-          %legend
+          %legend{:style => 'border-bottom-width: 1px; border-color: #aaa;'}
             %strong
               Sign in
           %label
@@ -28,3 +34,9 @@
               remember me
             #login-sign-in
               = submit_tag "Sign in", :class => 'btn'
+        %fieldset
+          %legend
+            %strong
+              Forgot Password?
+      = render 'forgot_password_form'
+

@@ -4,7 +4,7 @@
 // make the brand white
 .navbar-inverse .brand {
 	color: #ffffff;
-	// cursor: default;
+	cursor: default;
 	font-weight: bold;
 }
 
@@ -20,30 +20,11 @@
 
 // the height of table
 .table th, .table td {
-	height: 30px;
+  height: 30px;
 	vertical-align: middle;
 }
 
-.table {
-  table-layout: fixed;
-}
-
-// the min width of select2
-.select2-container {
-	min-width: 200px;
-}
-
-#nav-right {
-	font-size: 100%;
-	font-weight: normal;
-}
-.subnav {
-  top: 40px;
-}
-
+// the top margin of the container
 .container-fluid {
-  padding-top: 50px;
-}
-a:hover {
-  text-decoration: none;
+  padding-top: 60px;
 }

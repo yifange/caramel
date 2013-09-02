@@ -3,20 +3,26 @@
 
 - content_for :sidemenu do
   - render '/layouts/people_page_sidebar'
+
+- content_for :action_button do
+  %a.btn.btn-primary.delete-entry{'data-url' => "/teachers/destroy_multi"}
+    %i.icon-trash.icon-white
+  %a.btn.btn-primary.new-entry{:href => "/teachers/new", "data-entry" => "teachers"}
+    %i.icon-plus.icon-white
+  = modal_for "new-entry", :modal_title => "New Entry", :css_class => "new-entry"
   
 - content_for :main do
-  %table.table.table-bordered.table-striped{:style => 'clear: both'}
+  %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
-      %th{:width => '13px'}
-      %th{:width => '310'} Name
-      %th{:width => '280px'} Email
-      %th Region
+      %th{:width => '10px'}
+      %th{:width => '310px'} NAME
+      %th{:width => '280px'} EMAIL
+      %th{:width => '240px'} REGION
       %th
     - @teachers.each do |teacher|
-      %tr
+      %tr.accordion-group
         %td
-          %a
-            %i.icon-remove
+          %input.checkbox-select-to-delete{:type => 'checkbox', :value => "#{teacher.id}"}
         %td
           %a.x-editable-input-user-name{:href => "#", 'data-url' => "/teachers/#{teacher.id}", 'data-pk' => "#{teacher.id}"}
             = teacher.name
@@ -24,7 +30,25 @@
           %a.x-editable-input-text{:href => '#', 'data-url' => "/teachers/#{teacher.id}", 'data-pk' => "#{teacher.id}", 'data-name' => 'email', 'data-placeholder' => 'input email'}
             = teacher.email
         %td
-          %a.x-editable-select2-multiple{:href => '#', 'data-value' => 'ru'}
+          - if verify_user(['Admin'])
+            = multiple_selection(Region.all_ordered_json, teacher.region_ids, teacher.id, "/teachers/#{teacher.id}", 'regions')
+          - elsif verify_user(['Staff'])
+            = multiple_selection(current_user.regions_ordered_json, teacher.region_ids, teacher.id, "/teachers/#{teacher.id}", 'regions')
         %td
-          %button.btn{'type' => 'button'}
-            Reset Password
+          .accordion-heading
+            .accordion-toggle{:style => 'padding-top: 0px; padding-bottom: 0px;'}
+              %button.btn{'data-toggle' => 'collapse', :href => "#collapse#{teacher.id}"}
+                PROGRAMS
+                %span.caret
+      %tr
+        %td{'colspan' => '5', :style => 'height: auto'}
+          .accordion-body.collapse{:id => "collapse#{teacher.id}"}
+            .accordion-inner{:style => 'border-top-width: 0px'}
+              - if verify_user(['Admin'])
+                - regions = teacher.regions_ordered
+              - elsif verify_user(['Staff'])
+                - regions = current_user.common_regions(teacher.id)
+              - regions.each do |region|
+                .well.well-small{:style => 'background-color: #eee;'}
+                  = region.name
+                  = multiple_selection(region.programs_json, teacher.program_ids_in_one_region(region.id), teacher.id, "/teachers/#{teacher.id}", 'programs')

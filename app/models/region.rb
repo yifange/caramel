@@ -1,7 +1,11 @@
 class Region < ActiveRecord::Base
+
   has_many :schools
   has_many :domains
   has_many :users, through: :domains
+  has_many :programs, through: :schools
+  validates_presence_of :name
+  validates_uniqueness_of :name
 
   def self.all_ordered_json
     regions = Region.all.order("name")
@@ -13,4 +17,18 @@ class Region < ActiveRecord::Base
   def self.all_ordered
     Region.all.order("name")
   end
+
+  def teachers_ordered_json
+    teachers = users.where(:type => 'Teacher').order("first_name")
+    teachers.map do |teacher|
+      {:id => teacher.id, :text => teacher.name}
+    end
+  end
+
+  def programs_json
+    programs.map do |program|
+      {:id => program.id, :text => program.name_with_school}
+    end
+  end
+
 end

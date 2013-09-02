@@ -4,12 +4,23 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def get_term
+
   end
-	private
+
+protected
   # Using current_user to verify weather the user has sign in and can view this page  
-	def verify_user
-		if !current_user
-			redirect_to root_url
-		end
+	def verify_user(roles)
+    flag = false
+		if current_user
+      roles.each do |role|
+        if current_user.type == role
+          flag = true
+          break
+        end
+      end
+    end
+    if flag == false
+      redirect_to root_url
+    end
 	end
 end

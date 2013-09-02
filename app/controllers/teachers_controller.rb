@@ -1,22 +1,60 @@
-class TeachersController < UsersController
+class TeachersController < ApplicationController
 
   respond_to :html
 
   def index 
-    @teachers = Teacher.all_ordered
+    verify_user(['Admin', 'Staff'])
+    if current_user.type == 'Admin'
+      @teachers = Teacher.all_ordered
+    elsif current_user.type == 'Staff'
+      @teachers = current_user.teachers_ordered
+    end
   end
 
   def update 
-    @teacher = Teacher.find(params[:pk])
+    teacher = Teacher.find(params[:pk])
     if params[:name] == 'email'
-      params[:value] = {params[:name] => params[:value]}
-      @teacher.update_attributes(user_params)
-    elsif params[:name] == 'region'
-      @teacher.update_region(params[:value])
+      params[:teacher] = {params[:name] => params[:value]}
+      teacher.update_attributes(teacher_params)
+    elsif params[:name] == 'regions'
+      if params[:option] == "add"
+        teacher.add_region(params[:value])
+      else
+        if teacher.programs_in_one_region(params[:value]).length != 0
+        else
+          teacher.remove_region(params[:value])
+        end
+      end
     elsif params[:name] == 'user_name'
-      @teacher.update_attributes(user_params)
+      params[:teacher] = params[:value]
+      teacher.update_attributes(teacher_params)
     end
     render nothing: true
   end
 
+  def new
+    @teacher = Teacher.new
+  end
+
+  def create 
+    @teacher = Teacher.new(teacher_params)
+    if @teacher.save
+      redirect_to :controller => "teachers", :actoin => "index"
+    else
+      render :new, :status => :unprocessable_entity
+    end
+  end
+
+  def destroy_multi
+    params[:deleteList].each do |item|
+      teacher = Teacher.find(item)
+      teacher.destroy
+    end
+    redirect_to :controller => "teachers", :action => "index"
+  end
+
+private
+  def teacher_params
+    params.require(:teacher).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+  end
 end

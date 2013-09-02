@@ -1,12 +1,20 @@
 class InstrumentsController < ApplicationController
 
   respond_to :html, :json
-
-  def show 
-
+  def new
+    @instrument = Instrument.new
   end
 
-  def create 
+  def create
+    @instrument = Instrument.new(instrument_params)
+    if @instrument.save
+      redirect_to :controller => "instruments", :action => "index"
+    else
+      render :new, :status => :unprocessable_entity
+    end
+  end
+
+  def show 
 
   end
 
@@ -20,7 +28,7 @@ class InstrumentsController < ApplicationController
 
   def update
     @instrument = Instrument.find(params[:pk])
-    params[:value] = {params[:name] => params[:value]}
+    params[:instrument] = {params[:name] => params[:value]}
     @instrument.update_attributes(instrument_params)
     render nothing: true
   end
@@ -30,9 +38,17 @@ class InstrumentsController < ApplicationController
     respond_with(Instrument.all_ordered_json)
   end
 
-  private
+  def destroy_multi
+    params[:deleteList].each do |item|
+      instrument = Instrument.find(item)
+      instrument.destroy
+    end
+    redirect_to :controller => "instruments", :action => "index"
+  end
+
+private
   def instrument_params
-    params.require(:value).permit(:name)
+    params.require(:instrument).permit(:name)
   end
 
 end

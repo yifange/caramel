@@ -12,7 +12,7 @@
   = modal_for "new-entry", :modal_title => "New Staff", :css_class => "new-entry"
   %a.btn.btn-primary
     RESET PASSWORD
-  
+    
 - content_for :main do
   %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
@@ -31,4 +31,4 @@
           %a.x-editable-input-text{:href => '#', 'data-url' => "/staffs/#{staff.id}", 'data-pk' => "#{staff.id}", 'data-name' => 'email', 'data-placeholder' => 'input email'}
             = staff.email
         %td
-          = multiple_selection(Region.all_ordered_json, staff.region_ids, staff.id, "/staffs/#{staff.id}", 'regions')
+          = multiple_selection(Region.all_ordered_json, staff.region_ids, staff.region_ids, staff.id, "/staffs/#{staff.id}", 'regions')

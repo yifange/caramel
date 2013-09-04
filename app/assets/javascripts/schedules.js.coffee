@@ -1,12 +1,33 @@
+newClassNameInput = ->
+  $("label[for='schedule_name']").append(" (<a id='schedule-name-select' href='#'>select</a>)")
+  $("label[for='schedule_course_id']").append(" (<a id='schedule-name-new' href='#'>new</a>)")
+  $("a#schedule-name-select").on "click", (e) ->
+    e.preventDefault()
+    $("#schedule-course-name").hide()
+    $("#schedule-course-type").hide()
+    $("#schedule-course-select").show()
+    $("#schedule_name").val("")
+
+  $("a#schedule-name-new").on "click", (e) ->
+    e.preventDefault()
+    $("#schedule-course-select").hide()
+    $("#schedule-course-name").show()
+    $("#schedule-course-type").show()
+
+  $("#schedule-course-name").hide()
+
 attachScheduleColumnHandler = ->
   $("div.wc-day-column-inner.schedule-cal").css("cursor", "pointer").on "click", ->
     date = $(this).data("date")
     # window.location.href = "/events/new?date=" + date
     $.get("/schedules/new?date=" + date + "&program_id=" + $(".wc-container").data("program"), (data, status) ->
       $("#schedule-modal-body").html($(data).filter("#schedule-form-body").html())
+      newClassNameInput()
       $("#schedule-form-submit").hide()
       $("#schedule-modal-delete").hide()
       $("#schedule-recurring-selection").hide()
+      $("#schedule-course-type").hide()
+      $("#schedule-course-name").hide()
       $("#schedule-modal-title").html("Create Schedule")
       $("#schedule-modal").modal({
         keyboard: true
@@ -21,6 +42,8 @@ attachScheduleEventHandler = ->
     $.get("/schedules/" + eventId + "/edit", (data, status) ->
       $("#schedule-modal-body").html($(data).filter("#schedule-form-body").html())
       $("#schedule-form-submit").hide()
+      $("#schedule-course-name").hide()
+      $("#schedule-course-type").hide()
       $("#schedule-modal-delete").show()
       $("#schedule-modal-title").html("Update Event")
       $("#schedule-modal").modal({
@@ -70,9 +93,10 @@ $(document).ready attachScheduleColumnHandler
 $(document).ready attachScheduleEventHandler
 $(document).ready attachScheduleSubmitHandler
 $(document).ready attachScheduleDeleteHandler
-
+$(document).ready newClassNameInput
 $(document).on "page:load", attachScheduleColumnHandler
 $(document).on "page:load", attachScheduleEventHandler
 $(document).on "page:load", attachScheduleSubmitHandler
 $(document).on "page:load", attachScheduleDeleteHandler
+$(document).on "page:load", newClassNameInput
 

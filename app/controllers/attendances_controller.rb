@@ -24,7 +24,17 @@ class AttendancesController < ApplicationController
   end
   def new
     @attendance = Attendance.new
-    @rosters = Enrollment.find(params[:enrollment_id]).rosters.includes(:course)
+    
+    rosters = Enrollment.find(params[:enrollment_id]).rosters.includes(:course)
+    @rosters = {:group => [], :regular => []}
+
+    rosters.each do |roster|
+      if roster.course.course_type == "GroupCourse"
+        @rosters[:group] << roster
+      else
+        @rosters[:regular] << roster
+      end
+    end
     render :layout => false
   end
   def edit

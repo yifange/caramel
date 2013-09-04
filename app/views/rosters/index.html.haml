@@ -2,7 +2,7 @@
   - render '/layouts/classes_page_sidebar'
 
 - content_for :subnav do
-  = render "navbar"
+  = render "/layouts/subnav", :nav_pills_partial => nil, :nav_filter_partial => "/rosters/nav_filter", :active => nil, :base_path => :rosters_path
 
 - content_for :main do
   

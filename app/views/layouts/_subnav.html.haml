@@ -1,4 +1,4 @@
-.navbar.navbar-fixed-top.subnav
+#subnav.navbar.navbar-fixed-top
   .navbar-inner
     .container
       %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#subnav-collapse"}
@@ -6,7 +6,9 @@
         %span.icon-bar
         %span.icon-bar
       #subnav-collapse.nav-collapse.collapse
-        %ul.nav.nav-pills.unselectable
-          = render nav_pills_partial, :base_path => base_path
-        %ul.nav.nav-pills.pull-right.unselectable
-          = render nav_filter_partial, :active => active
+        - if nav_pills_partial
+          %ul.nav.nav-pills.unselectable
+            = render nav_pills_partial, :base_path => base_path
+        - if nav_filter_partial
+          %ul.nav.nav-pills.pull-right.unselectable
+            = render nav_filter_partial, :active => active

@@ -1,11 +1,13 @@
 class Schedule < ActiveRecord::Base
   belongs_to :course
+  validates :start_time, :end_time, :date, :presence => true
   validate :events_cannot_overlap, :courses_must_in_term, :events_must_in_available_time_slots
-  attr_accessor :recurring
+  validate :no_more_one_schedule_on_one_day
+  attr_accessor :recurring, :name, :course_type
   def group
     course.course_type == "GroupCourse"
   end
-
+  
   def save_recurring
     day_of_week = date.wday
     days = Term.find(course.program.term_id).recurring_days(day_of_week, :start_date => date)
@@ -36,7 +38,13 @@ class Schedule < ActiveRecord::Base
     end
   end
   private
+  def no_more_one_schedule_on_one_day
+    if Schedule.where(:course_id => course_id, :date => date).count > 0
+      errors.add(:base, "class can only be scheduled once on one day")
+    end
+  end
   def events_must_in_available_time_slots
+    return unless start_time and end_time
     available = false
     term_id = course.program.id
     dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
@@ -64,6 +72,7 @@ class Schedule < ActiveRecord::Base
     end
   end
   def events_cannot_overlap
+    return unless start_time and end_time
     @dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
     @dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
     Schedule.where(:date => date).find_each do |event|

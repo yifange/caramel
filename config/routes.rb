@@ -2,7 +2,7 @@ Caramel::Application.routes.draw do
   get "password_resets/create"
   get "password_resets/edit"
   get "password_resets/update"
-  get 'calendars/week' => 'calendars#index_week', :as => :calendar_week
+  get 'calendars/week' => 'calendars#index_week', :as => :calendars_week
   get "schedules/week" => "schedules#index_week", :as => :schedules_week
   get "rosters/add" => "rosters#add_student"
 

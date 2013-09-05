@@ -12,6 +12,10 @@
   = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"
 
 - content_for :main do
+  -# %select.singular-multiple-selection{:multiple => 'true'}
+  %select.singular-multiple-selection{'disabled' => 'true'}
+    %option{:value => 'bb'} bb
+    %option{:value => 'aa', :selected => 'true', 'data-locked' => 'true'} aa
   %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
       %th{:width => '10px'}
@@ -27,10 +31,10 @@
             = student.name
         %td{:style => 'color: #0088cc;'}
           - if verify_user(['Admin'])
-            = singular_selection(School.all_ordered_json, student.school_id, student.id, "/students/#{student.id}", 'school')
+            = singular_selection(School.all_ordered_json, student.school_id, student.school_locked, student.id, "/students/#{student.id}", 'school')
           - if verify_user(['Staff'])
             = singular_selection(current_user.schools_ordered_json, student.school_id, student.id, "/students/#{student.id}", 'school')
           - if verify_user(['Teacher'])
             = School.find(student.school_id).full
         %td
-          = multiple_selection(student.school.programs_json, student.program_ids, student.id, "/students/#{student.id}", 'programs')
+          = multiple_selection(student.school.programs_json, student.program_ids, [], student.id, "/students/#{student.id}", 'programs')

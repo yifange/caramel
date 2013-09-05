@@ -1,4 +1,6 @@
 = content_for :main do
+  = modal_for "brunch"
+  = modal_for "omellet"
   %select#bento{:multiple => true}
     %option{:value => "1", :selected => true, :data => {:locked => "true"}}
       Katsudon

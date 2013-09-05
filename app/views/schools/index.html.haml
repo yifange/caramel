@@ -31,8 +31,8 @@
             = school.abbrev
         - if verify_user(['Admin'])
           %td
-            = singular_selection(Region.all_ordered_json, school.region_id, school.id, "/schools/#{school.id}", 'region')
+            = singular_selection(Region.all_ordered_json, school.region_id, school.region_locked, school.id, "/schools/#{school.id}", 'region')
         - elsif verify_user(['Staff'])
           %td
-            = singular_selection(current_user.regions_ordered_json, school.region_id, school.id, "/schools/#{school.id}", 'region')
+            = singular_selection(current_user.regions_ordered_json, school.region_id, school.region_locked, school.id, "/schools/#{school.id}", 'region')
         %td

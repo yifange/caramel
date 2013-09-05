@@ -43,21 +43,45 @@ class SchedulesController < ApplicationController
   def new
     @schedule = Schedule.new
     @date = params[:date]
+    @program_id = params[:program_id]
     @courses = Course.where(:program_id => params[:program_id])
     render :layout => false
   end
   def create
-    @schedule = Schedule.new(schedule_params)
-    r = if Course.find(params[:schedule][:course_id]).course_type == "RegularCourse"
-      @schedule.save_recurring
+    unless params[:schedule][:name].empty?
+      course = Course.new(:program_id => params[:schedule][:program_id], :name => params[:schedule][:name], :course_type => params[:schedule][:course_type])
+      course_saved = course.save
+      if course_saved
+        course_id = course.id
+        @schedule = Schedule.new(schedule_params)
+        @schedule.course_id = course_id
+        # @schedule = Schedule.new({:course_id => course_id, :start_time => params[:schedule][:start_time], :end_time => params[:schedule][:end_time], :date => params[:schedule][:date]})
+        r = if params[:schedule][:course_type] == "RegularCourse"
+          @schedule.save_recurring
+        else
+          @schedule.save
+        end
+        if r
+          redirect_to schedules_path
+        else
+          render :text => @schedule.errors.messages, :status => :unprocessable_entity
+        end
+      else
+        render :new, :status => :unprocessable_entity
+      end
     else
-      @schedule.save
-    end
-
-    if r
-      redirect_to schedules_path
-    else
-      render :new, :status => :unprocessable_entity
+      course_id = params[:schedule][:course_id]
+      @schedule = Schedule.new(schedule_params)
+      r = if Course.find(course_id).course_type == "RegularCourse"
+        @schedule.save_recurring
+      else
+        @schedule.save
+      end
+      if r
+        redirect_to schedules_path
+      else
+        render :new, :status => :unprocessable_entity
+      end
     end
   end
   def edit

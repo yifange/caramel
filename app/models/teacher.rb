@@ -83,6 +83,16 @@ class Teacher < User
     end
   end
 
+  def locked_region_ids
+    result = []
+    regions.each do |region|
+      if programs_in_one_region(region.id).any?
+        result.push(region.id)
+      end
+    end
+    result
+  end
+
   def schools_in_one_region(region_id)
     result = []
     schools_ordered.each do |school|
@@ -93,8 +103,12 @@ class Teacher < User
     result
   end
 
-  def remove_region(region_id)
-    super(region_id)
+  def remove_program(program_id)
+    Assignment.destroy(Assignment.where(:teacher_id => id, :program_id => program_id))
+  end
+
+  def add_program(program_id)
+    Assignment.create(program_id: program_id, teacher_id: id)
   end
 
 end

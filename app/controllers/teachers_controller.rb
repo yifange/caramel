@@ -19,11 +19,14 @@ class TeachersController < ApplicationController
     elsif params[:name] == 'regions'
       if params[:option] == "add"
         teacher.add_region(params[:value])
+      elsif teacher.programs_in_one_region(params[:value]).length == 0
+        teacher.remove_region(params[:value])
+      end
+    elsif params[:name] == 'programs'
+      if params[:option] == "add"
+        teacher.add_program(params[:value])
       else
-        if teacher.programs_in_one_region(params[:value]).length != 0
-        else
-          teacher.remove_region(params[:value])
-        end
+        teacher.remove_program(params[:value])
       end
     elsif params[:name] == 'user_name'
       params[:teacher] = params[:value]

@@ -31,9 +31,9 @@
             = teacher.email
         %td
           - if verify_user(['Admin'])
-            = multiple_selection(Region.all_ordered_json, teacher.region_ids, teacher.id, "/teachers/#{teacher.id}", 'regions')
+            = multiple_selection(Region.all_ordered_json, teacher.region_ids, teacher.locked_region_ids, teacher.id, "/teachers/#{teacher.id}", 'regions')
           - elsif verify_user(['Staff'])
-            = multiple_selection(current_user.regions_ordered_json, teacher.region_ids, teacher.id, "/teachers/#{teacher.id}", 'regions')
+            = multiple_selection(current_user.regions_ordered_json, teacher.region_ids, teacher.locked_region_ids, teacher.id, "/teachers/#{teacher.id}", 'regions')
         %td
           .accordion-heading
             .accordion-toggle{:style => 'padding-top: 0px; padding-bottom: 0px;'}
@@ -51,4 +51,4 @@
               - regions.each do |region|
                 .well.well-small{:style => 'background-color: #eee;'}
                   = region.name
-                  = multiple_selection(region.programs_json, teacher.program_ids_in_one_region(region.id), teacher.id, "/teachers/#{teacher.id}", 'programs')
+                  = multiple_selection(region.programs_json, teacher.program_ids_in_one_region(region.id), [], teacher.id, "/teachers/#{teacher.id}", 'programs')

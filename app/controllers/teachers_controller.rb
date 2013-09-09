@@ -32,7 +32,7 @@ class TeachersController < ApplicationController
       params[:teacher] = params[:value]
       teacher.update_attributes(teacher_params)
     end
-    render nothing: true
+    render json: {:id => params[:pk]}
   end
 
   def new

@@ -108,7 +108,7 @@ attachBlockHandler = ->
     width: '100%'
   })
 
-  $('.singular-multiple-selection').on("change", (e) ->
+  $('.teacher-region').on("change", (e) ->
     data = {pk: $(this).data("pk"), name: $(this).data("name")}
     if e.added && e.removed
       data["option"] = 'change'
@@ -125,11 +125,39 @@ attachBlockHandler = ->
       url: $(this).data("value")
       data: data
       dataType: "json"
-      complete: ->
-        console.log("AJAX - complete()")
-        console.log(this)
+      success: (data, status) ->
+        id = data.id
+        $.get(document.URL, (data, status) ->
+          $("#collapse" + id).html($(data).find("#collapse" + id).html())
+          $('#collapse' + id + ' .singular-multiple-selection').select2({
+            width: '100%'
+          })
+        )
     })
   )
+
+  # $('.singular-multiple-selection').on("change", (e) ->
+  #   data = {pk: $(this).data("pk"), name: $(this).data("name")}
+  #   if e.added && e.removed
+  #     data["option"] = 'change'
+  #     data["value_remove"] = e.removed.id
+  #     data["value_add"] = e.added.id
+  #   else if e.added
+  #     data["option"] = "add"
+  #     data["value"] = e.added.id
+  #   else
+  #     data["option"] = "remove"
+  #     data["value"] = e.removed.id
+  #   $.ajax({
+  #     type: "PUT"
+  #     url: $(this).data("value")
+  #     data: data
+  #     dataType: "json"
+  #     complete: ->
+  #       console.log("AJAX - complete()")
+  #       console.log(this)
+  #   })
+  # )
 
   # user_name
   $('.x-editable-input-user-name').editable({

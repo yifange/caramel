@@ -100,15 +100,17 @@ attachTooltipHandler = ->
     placement: "bottom"
   })
 
-attachBlockHandler = ->
+teacherRegionRefresh = (id, data) ->
+  $("#collapse" + id).html($(data).find("#collapse" + id).html())
+
+initSelection = (refresh, selector) ->
   $.fn.editable.defaults.mode = 'inline'
 
-  # singular and multiple selection
-  $('.singular-multiple-selection').select2({
+  $(selector).select2({
     width: '100%'
   })
 
-  $('.teacher-region').on("change", (e) ->
+  $(selector).on("change", (e) ->
     data = {pk: $(this).data("pk"), name: $(this).data("name")}
     if e.added && e.removed
       data["option"] = 'change'
@@ -128,37 +130,12 @@ attachBlockHandler = ->
       success: (data, status) ->
         id = data.id
         $.get(document.URL, (data, status) ->
-          $("#collapse" + id).html($(data).find("#collapse" + id).html())
-          $('#collapse' + id + ' .singular-multiple-selection').select2({
-            width: '100%'
-          })
+          refresh(id, data)
         )
     })
   )
 
-  # $('.singular-multiple-selection').on("change", (e) ->
-  #   data = {pk: $(this).data("pk"), name: $(this).data("name")}
-  #   if e.added && e.removed
-  #     data["option"] = 'change'
-  #     data["value_remove"] = e.removed.id
-  #     data["value_add"] = e.added.id
-  #   else if e.added
-  #     data["option"] = "add"
-  #     data["value"] = e.added.id
-  #   else
-  #     data["option"] = "remove"
-  #     data["value"] = e.removed.id
-  #   $.ajax({
-  #     type: "PUT"
-  #     url: $(this).data("value")
-  #     data: data
-  #     dataType: "json"
-  #     complete: ->
-  #       console.log("AJAX - complete()")
-  #       console.log(this)
-  #   })
-  # )
-
+initXEditable = ->
   # user_name
   $('.x-editable-input-user-name').editable({
     ajaxOptions: {
@@ -210,17 +187,25 @@ attachBlockHandler = ->
     type: "password"
   })
 
-$(document).ready attachBlockHandler
+$(document).ready( -> initSelection(teacherRegionRefresh, '.teacher-region'))
+$(document).on("page:load", -> initSelection(teacherRegionRefresh, '.teacher-region'))
+
+$(document).ready( -> initSelection('', '.staff-region'))
+$(document).on("page:load", ->initSelection("", ".staff-region"))
+
+$(document).ready initXEditable
+$(document).on("page:load", initXEditable)
+
 # $(document).ready attachResetPwdHandler
 $(document).ready attachDeleteEntryHandler
 $(document).ready attachNewEntryHandler
 $(document).ready attachSubmitHandler
 $(document).ready attachTagClickHandler
 $(document).ready attachTooltipHandler
-$(document).on "page:load", attachBlockHandler
-# $(document).on "page:load", attachResetPwdHandler
-$(document).on "page:load", attachDeleteEntryHandler
-$(document).on "page:load", attachNewEntryHandler
-$(document).on "page:load", attachSubmitHandler
-$(document).on "page:load", attachTagClickHandler
-$(document).on "page:load", attachTooltipHandler
+# $(document).on "page:load", attachBlockHandler
+# $(document).on "page:load", initXEditable
+# $(document).on "page:load", attachDeleteEntryHandler
+# $(document).on "page:load", attachNewEntryHandler
+# $(document).on "page:load", attachSubmitHandler
+# $(document).on "page:load", attachTagClickHandler
+# $(document).on "page:load", attachTooltipHandler

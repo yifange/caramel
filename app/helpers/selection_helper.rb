@@ -13,7 +13,7 @@ module SelectionHelper
     buf.concat(content_tag("select", options_buf, class: "singular-multiple-selection", 'data-pk' => pk, 'data-value' => url, 'data-name' => name, 'disabled' => ("true" if locked)))
   end
 
-  def multiple_selection(tag_class, options, init_selected_option_ids, init_locked_option_ids, pk, url, name)
+  def multiple_selection(class_name, options, init_selected_option_ids, init_locked_option_ids, pk, url, name)
     buf = "".html_safe
     options_buf = "".html_safe
     options.each do |option|
@@ -33,7 +33,7 @@ module SelectionHelper
       end
       options_buf += content_tag("option", option[:text], value: option[:id], selected: ("selected" if selected), 'data-locked' => ("true" if locked))
     end
-    buf.concat(content_tag("select", options_buf, multiple: true, class: "singular-multiple-selection " + tag_class, 'data-pk' => pk, 'data-value' => url, 'data-name' => name))
+    buf.concat(content_tag("select", options_buf, multiple: true, class: class_name, 'data-pk' => pk, 'data-value' => url, 'data-name' => name))
   end
 
 end

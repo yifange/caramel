@@ -28,8 +28,9 @@
               - elsif verify_user(['Teacher'])
                 = active_link_partialpath 'PEOPLE', '/students', ['/staffs', '/teachers', '/students']
                 = active_link_partialpath 'PROGRAMS', '/programs', ['/regions', '/instruments', '/program_types', '/schools', '/programs']
-              = active_link_partialpath 'CLASSES', '/calendars', []
-              = active_link_partialpath 'INSTRUMENTS', '#', []
+              = active_link_partialpath 'CLASSES', '/calendars', ['/calendars', '/schedules', '/attendances', '/rosters']
+              = active_link_partialpath 'REPORTS', "/reports", ['/reports']
+              -# = active_link_partialpath 'INSTRUMENTS', '#', []
             %ul.nav.pull-right
               %li.dropdown{:style => 'margin-right: 10px;'}
                 %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}

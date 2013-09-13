@@ -87,7 +87,7 @@ attachDeleteEntryHandler = ->
         attachTagClickHandler()
     )
 
-attachNewEntryHandler = ->
+initNewEntry = ->
   $(".new-entry").on "click", (e) ->
     identity = $(this).data("entry")
     e.preventDefault()
@@ -232,6 +232,9 @@ $(document).on("page:load", -> initSelection('', '', 'program-students'))
 
 $(document).ready initXEditable
 $(document).on("page:load", initXEditable)
+
+$(document).ready initNewEntry
+$(document).on("page:load", initNewEntry)
 
 # $(document).ready attachResetPwdHandler
 $(document).ready attachDeleteEntryHandler

@@ -8,7 +8,6 @@ class StaffsController < ApplicationController
   end
 
   def new
-    # @staff = Staff.new
     @staff = Staff.new
     # @staff.domains.new
   end

@@ -2,5 +2,4 @@
   = simple_form_for @student, :html => {:class => 'new_entry'} do |f|
     = f.input :first_name, :label => "First Name"
     = f.input :last_name, :label => "Last name"
-
-
+    = f.association :school, :label => 'School', :label_method => :full, :include_blank => false

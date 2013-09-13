@@ -83,7 +83,7 @@ initDeleteEntry = (refresh) ->
           $(".table").html($(data).find(".table").html())
 
         initXEditable()
-        initSelection('', '', 'staff-regions')
+        initAllSelection()
     )
 
 initNewEntry = ->
@@ -111,7 +111,7 @@ initNewEntry = ->
   #     })
   #   )
 
-attachSubmitHandler = (refresh) ->
+initSubmit = (refresh) ->
   $(".new-entry-modal-confirm").on "click", ->
     $form = $("form.new_entry")
     $.ajax({
@@ -129,7 +129,7 @@ attachSubmitHandler = (refresh) ->
           $(".table").html($(data).find(".table").html())
 
         initXEditable()
-        initSelection('', '', 'staff-regions')
+        initAllSelection()
 
       error: (data, status) ->
         $(".new-entry-modal-body").html($(data.responseText).find(".new-entry-form-body").html())
@@ -197,7 +197,7 @@ initSelection = (refresh, parent, selector) ->
     })
   )
 
-$(document).ready( ->
+initAllSelection = ->
   initSelection(teacherRegionsRefresh, '', 'teacher-regions')
   initSelection(teacherProgramsRefresh, '', 'teacher-programs')
   initSelection(studentSchoolRefresh, '', 'student-school')
@@ -208,27 +208,23 @@ $(document).ready( ->
   initSelection('', '', 'program-type')
   initSelection('', '', 'program-teachers')
   initSelection('', '', 'program-students')
-  initXEditable()
+
+initNewAndDelete = ->
   initNewEntry()
+  initSubmit()
   initDeleteEntry()
+
+$(document).ready( ->
+  initAllSelection()
+  initXEditable()
+  initNewAndDelete()
 )
 
 $(document).on("page:load", ->
-  initSelection(teacherRegionsRefresh, '', 'teacher-regions')
-  initSelection(teacherProgramsRefresh, '', 'teacher-programs')
-  initSelection(studentSchoolRefresh, '', 'student-school')
-  initSelection(studentProgramsRefresh, '', 'student-programs')
-  initSelection('', '', 'staff-regions')
-  initSelection('', '', 'school-region')
-  initSelection('', '', 'program-instrument')
-  initSelection('', '', 'program-type')
-  initSelection('', '', 'program-teachers')
-  initSelection('', '', 'program-students')
+  initAllSelection()
   initXEditable()
-  initNewEntry()
-  initDeleteEntry()
+  initNewAndDelete()
 )
 
-$(document).ready attachSubmitHandler
 $(document).ready attachTagClickHandler
 $(document).ready attachTooltipHandler

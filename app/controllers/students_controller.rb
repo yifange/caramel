@@ -52,7 +52,7 @@ class StudentsController < ApplicationController
     redirect_to :controller => "students", :action => "index"
   end
 
-private
+  private
   def student_params
     params.require(:student).permit(:first_name, :last_name, :school_id)
   end

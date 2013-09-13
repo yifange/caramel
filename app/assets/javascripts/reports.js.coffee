@@ -39,14 +39,14 @@ multiselectInit = ->
 
 hideAllButtonHandler = ->
   $(".hide-all").on "click", ->
-    $(".accordion-body").toggle(50)
     $icon = $(this).children()
     $icon.toggleClass("icon-eye-close").toggleClass("icon-eye-open")
     if $icon.hasClass("icon-eye-close")
       $(this).attr("title", "Hide all details")
+      $(".accordion-body").show(50)
     else
       $(this).attr("title", "Show all details")
-
+      $(".accordion-body").hide(50)
 
 $(document).ready multiselectInit
 $(document).on "page:load", multiselectInit

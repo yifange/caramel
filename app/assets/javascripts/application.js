@@ -16,4 +16,5 @@
 //= require turbolinks
 //= require select2
 //= require bootstrap-editable
+//= require bootstrap-multiselect
 //= require_tree .

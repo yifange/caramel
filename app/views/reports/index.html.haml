@@ -1,0 +1,127 @@
+- content_for :sidemenu do
+  = render '/layouts/reports_page_sidebar'
+
+- content_for :subnav do
+  = render "/layouts/subnav", :nav_pills_partial => nil, :nav_filter_partial => "/reports/filters", :active => nil, :base_path => nil
+
+- content_for :main do
+  .toolbar{:style => "padding-bottom: 15px"}
+    %button.btn.btn-primary.hide-all{:title => "Hide all details"}
+      %i.icon-eye-close.icon-white
+  .panel.panel-default.accordion-parent
+    .panel-heading.accordion-toggle{"data-target" => "student-1"}
+      John Doe
+      .div.pull-right
+        %span{:style => "color: green; padding-right: 10px;"}
+          Scheduled: 8   
+        %span{:style => "color: red; padding-right: 10px"}
+          Remaining: 8   
+        %span{:style => "color: red; padding-right: 10px"}
+          Over/Under: 4   
+    %table.table.table-condensed.table-striped.table-hover.accordion-body{:id => "student-1"}
+      %thead
+        %tr
+          %th
+            School
+          %th
+            Program
+          %th
+            Class
+          %th
+            Classes Completed 
+          %th
+            Classes Remaining 
+      %tbody
+        %tr
+          %td
+            SMS
+          %td
+            Violin - POD
+          %td
+            Class A
+          %td
+            8
+          %td
+            0
+
+
+
+  .panel.panel-default.accordion-parent
+    .panel-heading.accordion-toggle{"data-target" => "student-2"}
+      Jane Arye
+      .div.pull-right
+        %span.label.label-success
+          Classes Completed 8/16
+        %span.label.label-important
+          Classes Remaining 8/10
+    %table.table.table-condensed.table-striped.table-hover.accordion-body{:id => "student-2"}
+      %thead
+        %tr
+          %th
+            School
+          %th
+            Program
+          %th
+            Class
+          %th
+            Classes Completed 
+          %th
+            Classes Remaining 
+      %tbody
+        %tr
+          %td
+            SMS
+          %td
+            Violin - POD
+          %td
+            Class A
+          %td
+            8
+          %td
+            0
+
+        %tr
+          %td
+            SMS
+          %td
+            Violin - POD
+          %td
+            Class A
+          %td
+            8
+          %td
+            0
+        %tr
+          %td
+            SMS
+          %td
+            Violin - POD
+          %td
+            Class A
+          %td
+            8
+          %td
+            0
+        %tr
+          %td
+            SMS
+          %td
+            Violin - POD
+          %td
+            Class A
+          %td
+            8
+          %td
+            0
+        %tr
+          %td
+            SMS
+          %td
+            Violin - POD
+          %td
+            Class A
+          %td
+            8
+          %td
+            0
+

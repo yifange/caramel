@@ -14,7 +14,6 @@ class StaffsController < ApplicationController
 
   def create 
     @staff = Staff.new(staff_params)
-    # dmn = Domain.new(:region_id => params[:staff][:domains_attributes]["0"][:region_id], :user => @staff)
     if @staff.save
       redirect_to :controller => "staffs", :actoin => "index"
     else
@@ -55,7 +54,6 @@ class StaffsController < ApplicationController
 private
   def staff_params
     params.require(:staff).permit(:first_name, :last_name, :email, :password, :password_confirmation)
-    # params.require(:staff).permit(:first_name, :last_name, :email, :password, :password_confirmation, :domains_attributes)
   end
 
 end

@@ -1,12 +1,7 @@
 .new-entry-form-body
   = simple_form_for @staff, :html => {:class => 'new_entry'} do |f|
-    -# = f.hidden_field :school_id, :value => @school_id
     = f.input :first_name, :label => "First Name"
     = f.input :last_name, :label => "Last name"
     = f.input :email, :label => "Email"
     = f.input :password, :label => "Password"
     = f.input :password_confirmation, :label => "Confirm Password"
-    -# XXX select domain in modal
-    -# = f.simple_fields_for :domains do |domain|
-    -#   = domain.association :region, :include_blank => false
-

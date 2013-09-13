@@ -59,7 +59,7 @@ initXEditable = ->
     type: "password"
   })
 
-attachDeleteEntryHandler = ->
+initDeleteEntry = (refresh) ->
   $('.delete-entry').on "click", (e)->
     deleteList = []
     toBeDelete = "input[type=checkbox]:checked"
@@ -82,9 +82,8 @@ attachDeleteEntryHandler = ->
         else
           $(".table").html($(data).find(".table").html())
 
-        attachBlockHandler()
-        attachNewEntryHandler()
-        attachTagClickHandler()
+        initXEditable()
+        initSelection('', '', 'staff-regions')
     )
 
 initNewEntry = ->
@@ -94,26 +93,25 @@ initNewEntry = ->
     href = $(this).attr("href")
     $.get(href + "?entry_identity=" + identity, (data, status) ->
       $(".new-entry-modal-body").html($(data).find(".new-entry-form-body").html())
-      # attachBlockHandler()
       $(".new-entry-modal").modal({
         keyboard: true
       })
     )
 
-  $(".new-program-entry").on "click", (e) ->
-    identity = $(this).data("entry")
-    e.preventDefault()
-    href = $(this).attr("href")
-    cur_pane_id = $(".tab-pane.active").attr("id").replace("tab", "")
-    $.get(href + "?school_id=" + cur_pane_id, (data, status) ->
-      $(".new-entry-modal-body").html($(data).find(".new-entry-form-body").html())
-      # attachBlockHandler()
-      $(".new-entry-modal").modal({
-        keyboard: true
-      })
-    )
+  # $(".new-program-entry").on "click", (e) ->
+  #   identity = $(this).data("entry")
+  #   e.preventDefault()
+  #   href = $(this).attr("href")
+  #   cur_pane_id = $(".tab-pane.active").attr("id").replace("tab", "")
+  #   $.get(href + "?school_id=" + cur_pane_id, (data, status) ->
+  #     $(".new-entry-modal-body").html($(data).find(".new-entry-form-body").html())
+  #     # attachBlockHandler()
+  #     $(".new-entry-modal").modal({
+  #       keyboard: true
+  #     })
+  #   )
 
-attachSubmitHandler = ->
+attachSubmitHandler = (refresh) ->
   $(".new-entry-modal-confirm").on "click", ->
     $form = $("form.new_entry")
     $.ajax({
@@ -130,9 +128,8 @@ attachSubmitHandler = ->
         else
           $(".table").html($(data).find(".table").html())
 
-        attachNewEntryHandler()
-        attachBlockHandler()
-        attachTagClickHandler()
+        initXEditable()
+        initSelection('', '', 'staff-regions')
 
       error: (data, status) ->
         $(".new-entry-modal-body").html($(data.responseText).find(".new-entry-form-body").html())
@@ -200,52 +197,38 @@ initSelection = (refresh, parent, selector) ->
     })
   )
 
-$(document).ready( -> initSelection(teacherRegionsRefresh, '', 'teacher-regions'))
-$(document).on("page:load", -> initSelection(teacherRegionsRefresh, '', 'teacher-regions'))
+$(document).ready( ->
+  initSelection(teacherRegionsRefresh, '', 'teacher-regions')
+  initSelection(teacherProgramsRefresh, '', 'teacher-programs')
+  initSelection(studentSchoolRefresh, '', 'student-school')
+  initSelection(studentProgramsRefresh, '', 'student-programs')
+  initSelection('', '', 'staff-regions')
+  initSelection('', '', 'school-region')
+  initSelection('', '', 'program-instrument')
+  initSelection('', '', 'program-type')
+  initSelection('', '', 'program-teachers')
+  initSelection('', '', 'program-students')
+  initXEditable()
+  initNewEntry()
+  initDeleteEntry()
+)
 
-$(document).ready( -> initSelection(teacherProgramsRefresh, '', 'teacher-programs'))
-$(document).on("page:load", -> initSelection(teacherProgramsRefresh, '', 'teacher-programs'))
+$(document).on("page:load", ->
+  initSelection(teacherRegionsRefresh, '', 'teacher-regions')
+  initSelection(teacherProgramsRefresh, '', 'teacher-programs')
+  initSelection(studentSchoolRefresh, '', 'student-school')
+  initSelection(studentProgramsRefresh, '', 'student-programs')
+  initSelection('', '', 'staff-regions')
+  initSelection('', '', 'school-region')
+  initSelection('', '', 'program-instrument')
+  initSelection('', '', 'program-type')
+  initSelection('', '', 'program-teachers')
+  initSelection('', '', 'program-students')
+  initXEditable()
+  initNewEntry()
+  initDeleteEntry()
+)
 
-$(document).ready( -> initSelection('', '', 'staff-regions'))
-$(document).on("page:load", -> initSelection('', '', 'staff-regions'))
-
-$(document).ready( -> initSelection(studentSchoolRefresh, '', 'student-school'))
-$(document).on("page:load", -> initSelection(studentSchoolRefresh, '', 'student-school'))
-
-$(document).ready( -> initSelection(studentProgramsRefresh, '', 'student-programs'))
-$(document).on("page:load", -> initSelection(studentProgramsRefresh, '', 'student-programs'))
-
-$(document).ready( -> initSelection('', '', 'school-region'))
-$(document).on("page:load", -> initSelection('', '', 'school-region'))
-
-$(document).ready( -> initSelection('', '', 'program-instrument'))
-$(document).on("page:load", -> initSelection('', '', 'program-instrument'))
-
-$(document).ready( -> initSelection('', '', 'program-type'))
-$(document).on("page:load", -> initSelection('', '', 'program-type'))
-
-$(document).ready( -> initSelection('', '', 'program-teachers'))
-$(document).on("page:load", -> initSelection('', '', 'program-teachers'))
-
-$(document).ready( -> initSelection('', '', 'program-students'))
-$(document).on("page:load", -> initSelection('', '', 'program-students'))
-
-$(document).ready initXEditable
-$(document).on("page:load", initXEditable)
-
-$(document).ready initNewEntry
-$(document).on("page:load", initNewEntry)
-
-# $(document).ready attachResetPwdHandler
-$(document).ready attachDeleteEntryHandler
-$(document).ready attachNewEntryHandler
 $(document).ready attachSubmitHandler
 $(document).ready attachTagClickHandler
 $(document).ready attachTooltipHandler
-# $(document).on "page:load", attachBlockHandler
-# $(document).on "page:load", initXEditable
-# $(document).on "page:load", attachDeleteEntryHandler
-# $(document).on "page:load", attachNewEntryHandler
-# $(document).on "page:load", attachSubmitHandler
-# $(document).on "page:load", attachTagClickHandler
-# $(document).on "page:load", attachTooltipHandler

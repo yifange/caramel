@@ -7,6 +7,58 @@
 #       url:
 #     )
 
+initXEditable = ->
+  # user_name
+  $('.x-editable-input-user-name').editable({
+    ajaxOptions: {
+      type: 'PUT'
+    }
+    name: 'user_name'
+    type: 'user_name'
+  })
+
+  # number
+  $('.x-editable-input-number').editable({
+    ajaxOptions: {
+      type: 'PUT'
+    }
+    name: 'number'
+    type: 'number'
+  })
+
+  # text
+  $('.x-editable-input-text').editable({
+    ajaxOptions: {
+      type: 'PUT'
+    }
+    type: 'text'
+  })
+
+  $(".x-editable.roster-date").editable({
+    type: "date"
+    onblur: "submit"
+    showbuttons: false
+    ajaxOptions: {
+      type: "PUT"
+    }
+  })
+
+  $(".x-editable.roster-notes").editable({
+    type: "textarea"
+    onblur: "submit"
+    placeholder: "notes, ctrl-enter to submit"
+    showbuttons: false
+    inputclass: "input-small"
+    rows: 2
+    ajaxOptions: {
+      type: "PUT"
+    }
+  })
+
+  $('.x-editable-password').editable({
+    type: "password"
+  })
+
 attachDeleteEntryHandler = ->
   $('.delete-entry').on "click", (e)->
     deleteList = []
@@ -100,17 +152,30 @@ attachTooltipHandler = ->
     placement: "bottom"
   })
 
-teacherRegionRefresh = (id, data) ->
+teacherRegionsRefresh = (id, data) ->
   $("#collapse" + id).html($(data).find("#collapse" + id).html())
+  initSelection(teacherProgramsRefresh, '#collapse' + id, 'teacher-programs')
 
-initSelection = (refresh, selector) ->
+teacherProgramsRefresh = (id, data) ->
+  $(".teacher-regions-" + id + '-').parent().html($(data).find(".teacher-regions-" + id + '-').parent().html())
+  initSelection(teacherRegionsRefresh, '', 'teacher-regions-' + id + '-')
+
+studentProgramsRefresh = (id, data) ->
+  $(".student-school-" + id + '-').parent().html($(data).find(".student-school-" + id + '-').parent().html())
+  initSelection(studentSchoolRefresh , '', 'student-school-' + id + '-')
+
+studentSchoolRefresh = (id, data) ->
+  $(".student-programs-" + id + '-').parent().html($(data).find(".student-programs-" + id + '-').parent().html())
+  initSelection(studentProgramsRefresh , '', 'student-programs-' + id + '-')
+
+initSelection = (refresh, parent, selector) ->
   $.fn.editable.defaults.mode = 'inline'
 
-  $(selector).select2({
+  $(parent + " [class*="+selector+"]").select2({
     width: '100%'
   })
 
-  $(selector).on("change", (e) ->
+  $(parent + " [class*="+selector+"]").on("change", (e) ->
     data = {pk: $(this).data("pk"), name: $(this).data("name")}
     if e.added && e.removed
       data["option"] = 'change'
@@ -135,63 +200,23 @@ initSelection = (refresh, selector) ->
     })
   )
 
-initXEditable = ->
-  # user_name
-  $('.x-editable-input-user-name').editable({
-    ajaxOptions: {
-      type: 'PUT'
-    }
-    name: 'user_name'
-    type: 'user_name'
-  })
+$(document).ready( -> initSelection(teacherRegionsRefresh, '', 'teacher-regions'))
+$(document).on("page:load", -> initSelection(teacherRegionsRefresh, '', 'teacher-regions'))
 
-  # number
-  $('.x-editable-input-number').editable({
-    ajaxOptions: {
-      type: 'PUT'
-    }
-    name: 'number'
-    type: 'number'
-  })
+$(document).ready( -> initSelection(teacherProgramsRefresh, '', 'teacher-programs'))
+$(document).on("page:load", -> initSelection(teacherProgramsRefresh, '', 'teacher-programs'))
 
-  # text
-  $('.x-editable-input-text').editable({
-    ajaxOptions: {
-      type: 'PUT'
-    }
-    type: 'text'
-  })
+$(document).ready( -> initSelection('', '', 'staff-regions'))
+$(document).on("page:load", -> initSelection('', '', 'staff-regions'))
 
-  $(".x-editable.roster-date").editable({
-    type: "date"
-    onblur: "submit"
-    showbuttons: false
-    ajaxOptions: {
-      type: "PUT"
-    }
-  })
+$(document).ready( -> initSelection(studentSchoolRefresh, '', 'student-school'))
+$(document).on("page:load", -> initSelection(studentSchoolRefresh, '', 'student-school'))
 
-  $(".x-editable.roster-notes").editable({
-    type: "textarea"
-    onblur: "submit"
-    placeholder: "notes, ctrl-enter to submit"
-    showbuttons: false
-    inputclass: "input-small"
-    rows: 2
-    ajaxOptions: {
-      type: "PUT"
-    }
-  })
+$(document).ready( -> initSelection(studentProgramsRefresh, '', 'student-programs'))
+$(document).on("page:load", -> initSelection(studentProgramsRefresh, '', 'student-programs'))
 
-  $('.x-editable-password').editable({
-    type: "password"
-  })
-
-$(document).ready( -> initSelection(teacherRegionRefresh, '.teacher-region'))
-$(document).on("page:load", -> initSelection(teacherRegionRefresh, '.teacher-region'))
-
-$(document).ready( -> initSelection('', '.staff-region'))
-$(document).on("page:load", ->initSelection("", ".staff-region"))
+$(document).ready( -> initSelection('', '', 'school-region'))
+$(document).on("page:load", -> initSelection('', '', 'school-region'))
 
 $(document).ready initXEditable
 $(document).on("page:load", initXEditable)

@@ -28,7 +28,7 @@ class StudentsController < ApplicationController
       params[:student] = {:school_id => params[:value_add]}
       student.update_attributes(student_params)
     end
-    render nothing: true
+    render json: {:id => params[:pk]}
   end
 
   def new

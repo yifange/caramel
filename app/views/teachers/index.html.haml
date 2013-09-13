@@ -17,7 +17,7 @@
       %th{:width => '10px'}
       %th{:width => '310px'} NAME
       %th{:width => '280px'} EMAIL
-      %th{:width => '240px'} REGION
+      %th{:width => '340px'} REGION
       %th
     - @teachers.each do |teacher|
       %tr.accordion-group
@@ -31,9 +31,9 @@
             = teacher.email
         %td
           - if verify_user(['Admin'])
-            = multiple_selection("teacher-region", Region.all_ordered_json, teacher.region_ids, teacher.locked_region_ids, teacher.id, "/teachers/#{teacher.id}", 'regions')
+            = multiple_selection("teacher-regions-#{teacher.id}-", Region.all_ordered_json, teacher.region_ids, teacher.locked_region_ids, teacher.id, "/teachers/#{teacher.id}", 'regions')
           - elsif verify_user(['Staff'])
-            = multiple_selection("teacher-region", current_user.regions_ordered_json, teacher.region_ids, teacher.locked_region_ids, teacher.id, "/teachers/#{teacher.id}", 'regions')
+            = multiple_selection("teacher-regions-#{teacher.id}-", current_user.regions_ordered_json, teacher.region_ids, teacher.locked_region_ids, teacher.id, "/teachers/#{teacher.id}", 'regions')
         %td
           .accordion-heading
             .accordion-toggle{:style => 'padding-top: 0px; padding-bottom: 0px;'}

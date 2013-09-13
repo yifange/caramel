@@ -46,7 +46,7 @@
                   %th{:width => '10px'} 
                   %th{:width => '200px'} INSTRUMENT
                   %th{:width => '200px'} PROGRAM TYPE
-                  %th{:width => '310px'} REGULAR / GROUP CLASS PER YEAR
+                  %th{:width => '420px'} REGULAR / GROUP CLASS PER YEAR
                   %th 
                 - if verify_user(['Admin', 'Staff'])
                   - programs = school.programs
@@ -58,12 +58,12 @@
                       %input.checkbox-select-to-delete{:type => 'checkbox', :value  => "#{program.id}"}
                     %td{:style => 'color: #0088cc;'}
                       - if verify_user(['Admin', 'Staff'])
-                        = singular_selection(Instrument.all_ordered_json, program.instrument_id, false, program.id, "/programs/#{program.id}", 'instrument_id')
+                        = singular_selection('program-instrument', Instrument.all_ordered_json, program.instrument_id, false, program.id, "/programs/#{program.id}", 'instrument_id')
                       - elsif verify_user(['Teacher'])
                         = Instrument.find(program.instrument_id).name
                     %td{:style => 'color: #0088cc;'}
                       - if verify_user(['Admin', 'Staff'])
-                        = singular_selection(ProgramType.all_ordered_json, program.program_type_id, false, program.id, "/programs/#{program.id}", 'program_type_id')
+                        = singular_selection('program-type', ProgramType.all_ordered_json, program.program_type_id, false, program.id, "/programs/#{program.id}", 'program_type_id')
                       - elsif verify_user(['Teacher'])
                         = ProgramType.find(program.program_type_id).name
                     %td{:style => 'color: #0088cc;'}
@@ -85,14 +85,14 @@
                           .well.well-small{:style => 'background-color: #eee;'}
                             %b TEACHERS:
                             - if verify_user(['Admin', 'Staff'])
-                              = multiple_selection(Region.find(school.region_id).teachers_ordered_json, program.teacher_ids, [], program.id, "/programs/#{program.id}", 'teachers')
+                              = multiple_selection('program-teachers', Region.find(school.region_id).teachers_ordered_json, program.teacher_ids, [], program.id, "/programs/#{program.id}", 'teachers')
                             - elsif verify_user(['Teacher'])
                               = program.teacher_names
                           .well.well-small{:style => 'background-color: #eee;'}
                             %b STUDENTS:
                             - if verify_user(['Admin', 'Staff'])
-                              = multiple_selection(school.students_ordered_json, program.student_ids, [], program.id, "/programs/#{program.id}", 'students')
+                              = multiple_selection('program-students', school.students_ordered_json, program.student_ids, [], program.id, "/programs/#{program.id}", 'students')
                             - elsif verify_user(['Teacher'])
-                              = multiple_selection(current_user.students_in_one_school_ordered_json(school.id), program.student_ids, [], program.id, "/programs/#{program.id}", 'students')
+                              = multiple_selection('program-students', current_user.students_in_one_school_ordered_json(school.id), program.student_ids, [], program.id, "/programs/#{program.id}", 'students')
             - j += 1
       - i += 1

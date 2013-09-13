@@ -218,6 +218,18 @@ $(document).on("page:load", -> initSelection(studentProgramsRefresh, '', 'studen
 $(document).ready( -> initSelection('', '', 'school-region'))
 $(document).on("page:load", -> initSelection('', '', 'school-region'))
 
+$(document).ready( -> initSelection('', '', 'program-instrument'))
+$(document).on("page:load", -> initSelection('', '', 'program-instrument'))
+
+$(document).ready( -> initSelection('', '', 'program-type'))
+$(document).on("page:load", -> initSelection('', '', 'program-type'))
+
+$(document).ready( -> initSelection('', '', 'program-teachers'))
+$(document).on("page:load", -> initSelection('', '', 'program-teachers'))
+
+$(document).ready( -> initSelection('', '', 'program-students'))
+$(document).on("page:load", -> initSelection('', '', 'program-students'))
+
 $(document).ready initXEditable
 $(document).on("page:load", initXEditable)
 

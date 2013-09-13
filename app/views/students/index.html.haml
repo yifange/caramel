@@ -29,7 +29,7 @@
           - if verify_user(['Admin'])
             = singular_selection("student-school-#{student.id}-", School.all_ordered_json, student.school_id, student.school_locked, student.id, "/students/#{student.id}", 'school')
           - if verify_user(['Staff'])
-            = singular_selection(current_user.schools_ordered_json, student.school_id, student.id, "/students/#{student.id}", 'school')
+            = singular_selection("student-school-#{student.id}-", current_user.schools_ordered_json, student.school_id, student.school_locked, student.id, "/students/#{student.id}", 'school')
           - if verify_user(['Teacher'])
             = School.find(student.school_id).full
         %td

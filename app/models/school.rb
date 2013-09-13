@@ -67,10 +67,6 @@ class School < ActiveRecord::Base
   end
 
   def region_locked
-    puts 'dddddddddddddddd'
-    puts students
-    puts teachers
-    puts 'dddddddddddddddd'
     students.any? || teachers.any?
   end
 

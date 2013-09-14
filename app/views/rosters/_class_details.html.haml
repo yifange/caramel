@@ -20,13 +20,14 @@
             Delete class
 %tr
   %td{:data => {:courseid => course.id}}
-    %select.roster-class-students{:multiple => true, :id => "students-course-#{course.id}"}
-      - @students.each do |student|
+    %select.roster-class-students{:id => "students-course-#{course.id}"}
+      - @enrollments.each do |enrollment|
+        - student = enrollment.student
         - if students.include? student
-          %option{:selected => "selected", :value => student.id}
+          %option.hahaha{:selected => "selected", :value => enrollment.id}
             = student.name
         - else
-          %option{:value => student.id}
+          %option.hahaha{:value => enrollment.id}
             = student.name
 -#   %td
 -#     - if students.count == 0

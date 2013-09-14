@@ -178,7 +178,7 @@ studentsSelect = ->
       enrollmentId = e.added.id
       $.post("/rosters", {roster: {course_id: courseId, enrollment_id: enrollmentId}})
     else if (e.removed)
-      studentId = e.removed.id
+      enrollmentId = e.removed.id
       # $.post("/rosters/" + , {_method: "DELETE", })
 
 

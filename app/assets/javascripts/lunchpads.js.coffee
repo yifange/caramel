@@ -1,5 +1,6 @@
 $ ->
   $("#bento").select2({
+    formatResultCssClass: ->
     # formatSelection: (item) ->
     #   # originalOption = item.element
     #   console.log(item)

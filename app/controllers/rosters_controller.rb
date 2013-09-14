@@ -12,6 +12,7 @@ class RostersController < ApplicationController
       @program_id = @program[:id]
       @courses = @program.courses.includes(:rosters => [:enrollment => [:student]])
       @students = @program.students.includes(:enrollments => [:rosters => [:course => [:students]]])
+      @enrollments = @program.enrollments.includes(:student)
     end
   end
   

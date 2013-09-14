@@ -37,12 +37,12 @@
         %td
           .accordion-heading
             .accordion-toggle{:style => 'padding-top: 0px; padding-bottom: 0px;'}
-              %button.btn{'data-toggle' => 'collapse', :href => "#collapse#{teacher.id}"}
+              %button.btn{'data-toggle' => 'collapse', :href => "#collapse#{teacher.id}-"}
                 PROGRAMS
                 %span.caret
       %tr
         %td{'colspan' => '5', :style => 'height: auto'}
-          .accordion-body.collapse{:id => "collapse#{teacher.id}"}
+          .accordion-body.collapse{:id => "collapse#{teacher.id}-"}
             .accordion-inner{:style => 'border-top-width: 0px'}
               - if verify_user(['Admin'])
                 - regions = teacher.regions_ordered

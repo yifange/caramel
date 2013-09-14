@@ -169,6 +169,19 @@ accordionHandler = ->
     target = $(this).data("target")
     $(".accordion-body#" + target).toggle(50)
 
+studentsSelect = ->
+  $(".roster-class-students").select2({
+    width: "100%"
+  }).on "change", (e) ->
+    courseId = $(this).parent().data("courseid")
+    if (e.added)
+      enrollmentId = e.added.id
+      $.post("/rosters", {roster: {course_id: courseId, enrollment_id: enrollmentId}})
+    else if (e.removed)
+      studentId = e.removed.id
+      # $.post("/rosters/" + , {_method: "DELETE", })
+
+
 $(document).ready newRosterHandler
 $(document).ready rosterModalSubmitHandler
 $(document).ready initRosterEditable
@@ -179,6 +192,7 @@ $(document).ready updateClassModalSubmitHandler
 $(document).ready addClassHandler
 $(document).ready addClassModalSubmitHandler
 $(document).ready accordionHandler
+$(document).ready studentsSelect
 
 $(document).on "page:load", newRosterHandler
 $(document).on "page:load", rosterModalSubmitHandler
@@ -189,3 +203,4 @@ $(document).on "page:load", updateClassModalSubmitHandler
 $(document).on "page:load", addClassHandler
 $(document).on "page:load", addClassModalSubmitHandler
 $(document).on "page:load", accordionHandler
+$(document).on "page:load", studentsSelect

@@ -74,17 +74,41 @@ initDeleteEntry = (refresh) ->
       data: {"deleteList": deleteList},
       url: $(this).data("url"),
       success: (data, status) ->
-        cur_pane_id = $(".tab-pane.active").attr("id")
+        cur_pane_id = $(".active .school-pane.tab-pane.active").attr("id")
 
         # Current tab-pane is undefined except on Program page.
         if cur_pane_id != undefined
-          $(".tab-pane.active").html($(data).find("#" + cur_pane_id).html())
+          $(".active .school-pane.tab-pane.active").html($(data).find("#" + cur_pane_id).html())
         else
           $(".table").html($(data).find(".table").html())
 
         initXEditable()
-        initAllSelection()
+        initAllSelection(".active .school-pane.tab-pane.active")
     )
+
+initSubmit = (refresh) ->
+  $(".new-entry-modal-confirm").on "click", ->
+    $form = $("form.new_entry")
+    $.ajax({
+      type: $form.attr("method"),
+      url: $form.attr("action"),
+      data: $form.serialize(),
+      success: (data, status) ->
+        $(".new-entry-modal").modal("toggle")
+        cur_pane_id = $(".active .school-pane.tab-pane.active").attr("id")
+
+        # Current tab-pane is undefined except on Program page.
+        if cur_pane_id != undefined
+          $(".active .school-pane.tab-pane.active").html($(data).find("#" + cur_pane_id).html())
+        else
+          $(".table").html($(data).find(".table").html())
+
+        initXEditable()
+        initAllSelection(".active .school-pane.tab-pane.active")
+
+      error: (data, status) ->
+        $(".new-entry-modal-body").html($(data.responseText).find(".new-entry-form-body").html())
+    })
 
 initNewEntry = ->
   $(".new-entry").on "click", (e) ->
@@ -98,42 +122,17 @@ initNewEntry = ->
       })
     )
 
-  # $(".new-program-entry").on "click", (e) ->
-  #   identity = $(this).data("entry")
-  #   e.preventDefault()
-  #   href = $(this).attr("href")
-  #   cur_pane_id = $(".tab-pane.active").attr("id").replace("tab", "")
-  #   $.get(href + "?school_id=" + cur_pane_id, (data, status) ->
-  #     $(".new-entry-modal-body").html($(data).find(".new-entry-form-body").html())
-  #     # attachBlockHandler()
-  #     $(".new-entry-modal").modal({
-  #       keyboard: true
-  #     })
-  #   )
-
-initSubmit = (refresh) ->
-  $(".new-entry-modal-confirm").on "click", ->
-    $form = $("form.new_entry")
-    $.ajax({
-      type: $form.attr("method"),
-      url: $form.attr("action"),
-      data: $form.serialize(),
-      success: (data, status) ->
-        $(".new-entry-modal").modal("toggle")
-        cur_pane_id = $(".tab-pane.active").attr("id")
-
-        # Current tab-pane is undefined except on Program page.
-        if cur_pane_id != undefined
-          $(".tab-pane.active").html($(data).find("#" + cur_pane_id).html())
-        else
-          $(".table").html($(data).find(".table").html())
-
-        initXEditable()
-        initAllSelection()
-
-      error: (data, status) ->
-        $(".new-entry-modal-body").html($(data.responseText).find(".new-entry-form-body").html())
-    })
+  $(".new-program-entry").on "click", (e) ->
+    identity = $(this).data("entry")
+    e.preventDefault()
+    href = $(this).attr("href")
+    cur_pane_id = $(".school-pane.tab-pane.active").attr("id").replace("tab-school", "")
+    $.get(href + "?school_id=" + cur_pane_id, (data, status) ->
+      $(".new-entry-modal-body").html($(data).find(".new-entry-form-body").html())
+      $(".new-entry-modal").modal({
+        keyboard: true
+      })
+    )
 
 attachTagClickHandler = ->
   clickHandlerA = ->
@@ -197,17 +196,17 @@ initSelection = (refresh, parent, selector) ->
     })
   )
 
-initAllSelection = ->
-  initSelection(teacherRegionsRefresh, '', 'teacher-regions')
-  initSelection(teacherProgramsRefresh, '', 'teacher-programs')
-  initSelection(studentSchoolRefresh, '', 'student-school')
-  initSelection(studentProgramsRefresh, '', 'student-programs')
-  initSelection('', '', 'staff-regions')
-  initSelection('', '', 'school-region')
-  initSelection('', '', 'program-instrument')
-  initSelection('', '', 'program-type')
-  initSelection('', '', 'program-teachers')
-  initSelection('', '', 'program-students')
+initAllSelection = (parent)->
+  initSelection(teacherRegionsRefresh, parent, 'teacher-regions')
+  initSelection(teacherProgramsRefresh, parent, 'teacher-programs')
+  initSelection(studentSchoolRefresh, parent, 'student-school')
+  initSelection(studentProgramsRefresh, parent, 'student-programs')
+  initSelection('', parent, 'staff-regions')
+  initSelection('', parent, 'school-region')
+  initSelection('', parent, 'program-teachers')
+  initSelection('', parent, 'program-students')
+  initSelection('', parent, 'program-instrument')
+  initSelection('', parent, 'program-type')
 
 initNewAndDelete = ->
   initNewEntry()
@@ -215,16 +214,17 @@ initNewAndDelete = ->
   initDeleteEntry()
 
 $(document).ready( ->
-  initAllSelection()
+  initAllSelection('')
   initXEditable()
   initNewAndDelete()
+  attachTagClickHandler()
+  attachTooltipHandler()
 )
 
 $(document).on("page:load", ->
-  initAllSelection()
+  initAllSelection('')
   initXEditable()
   initNewAndDelete()
+  attachTagClickHandler()
+  attachTooltipHandler()
 )
-
-$(document).ready attachTagClickHandler
-$(document).ready attachTooltipHandler

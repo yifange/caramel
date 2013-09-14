@@ -9,7 +9,7 @@
     %i.icon-trash.icon-white
 
   -# Program new entry is diff from others.
-  %a.btn.btn-primary.new-program-entry{:href => "/programs/new", "data-entry" => "program"}
+  %a.btn.btn-primary.new-program-entry{:href => "/programs/new", "data-entry" => "programs"}
     %i.icon-plus.icon-white
   = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
 
@@ -24,7 +24,7 @@
   .tab-content
     - i = 0
     - @regions.each do |region|
-      .tab-pane{:class => (i == 0 ? 'active' : nil), :id => "tab-region#{region.id}"}
+      .region-pane.tab-pane{:class => (i == 0 ? 'active' : nil), :id => "tab-region#{region.id}"}
         %ul.nav.nav-tabs
           - schools = []
           - if verify_user(['Admin', 'Staff'])
@@ -40,7 +40,7 @@
         .tab-content
           - j = 0
           - schools.each do |school|
-            .tab-pane{:class => (j == 0 ? 'active' : nil), :id => "tab-school#{school.id}"}
+            .school-pane.tab-pane{:class => (j == 0 ? 'active' : nil), :id => "tab-school#{school.id}"}
               %table.table.table-bordered.table-striped.table-condensed.table-condensed{:style => 'clear: both'}
                 %tr
                   %th{:width => '10px'} 

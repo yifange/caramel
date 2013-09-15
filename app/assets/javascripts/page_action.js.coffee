@@ -149,8 +149,8 @@ attachTooltipHandler = ->
   })
 
 teacherRegionsRefresh = (id, data) ->
-  $("#collapse" + id).html($(data).find("#collapse" + id).html())
-  initSelection(teacherProgramsRefresh, '#collapse' + id, 'teacher-programs')
+  $("#collapse" + id + '-').html($(data).find("#collapse" + id + '-').html())
+  initSelection(teacherProgramsRefresh, '#collapse' + id + '-', 'teacher-programs')
 
 teacherProgramsRefresh = (id, data) ->
   $(".teacher-regions-" + id + '-').parent().html($(data).find(".teacher-regions-" + id + '-').parent().html())

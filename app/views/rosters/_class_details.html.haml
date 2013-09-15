@@ -1,5 +1,6 @@
 -# - students = course.students.uniq
 - students = course.rosters.select {|r| not (r.start_date.nil? or r.end_date.nil?) and r.start_date <= Date.today and Date.today <= r.end_date}.map {|r| r.enrollment.student}
+- pending_students = course.rosters.select {|r| (r.start_date.nil? or r.end_date.nil?)}.map {|r| r.enrollment.student}
 
 %tr
   %td
@@ -20,14 +21,17 @@
             Delete class
 %tr
   %td{:data => {:courseid => course.id}}
-    %select.roster-class-students{:id => "students-course-#{course.id}"}
+    %select.roster-class-students{:id => "students-course-#{course.id}", :multiple => "multiple"}
       - @enrollments.each do |enrollment|
         - student = enrollment.student
         - if students.include? student
-          %option.hahaha{:selected => "selected", :value => enrollment.id}
+          %option{:selected => "selected", :value => enrollment.id}
+            = student.name
+        - elsif pending_students.include? student
+          %option.pending{:selected => "selected", :value => enrollment.id}
             = student.name
         - else
-          %option.hahaha{:value => enrollment.id}
+          %option.pending{:value => enrollment.id}
             = student.name
 -#   %td
 -#     - if students.count == 0

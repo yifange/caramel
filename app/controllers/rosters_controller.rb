@@ -48,6 +48,12 @@ class RostersController < ApplicationController
     end
 
   end
+  def remove_student
+    course_id = params[:course_id]
+    enrollment_id = params[:enrollment_id]
+    Roster.where(:course_id => course_id, :enrollment_id => enrollment_id).delete_all
+    render :text => "student removed"
+  end
   def edit
   end
 

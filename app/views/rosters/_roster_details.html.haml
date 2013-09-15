@@ -1,5 +1,7 @@
-- unless not (roster.start_date.nil? or roster.end_date.nil?) and roster.start_date <= Date.today and Date.today <= roster.end_date
+- if (roster.start_date.nil? or roster.end_date.nil?)
   - row_class = "warning"
+- elsif not (roster.start_date <= Date.today and Date.today <= roster.end_date)
+  - row_class = "error"
 %tr{:class => row_class}
   %td
     %a{:href => "#"}

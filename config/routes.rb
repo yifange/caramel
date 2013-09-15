@@ -5,6 +5,7 @@ Caramel::Application.routes.draw do
   get 'calendars/week' => 'calendars#index_week', :as => :calendars_week
   get "schedules/week" => "schedules#index_week", :as => :schedules_week
   get "rosters/add" => "rosters#add_student"
+  delete "rosters/remove" => "rosters#remove_student"
 
   get 'lunchpads/api' => 'lunchpads#api'
   post 'lunchpads/lunch' => 'lunchpads#lunch'

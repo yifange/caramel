@@ -1,5 +1,6 @@
 .new-entry-form-body
   = simple_form_for @instrument, :html => {:class => 'new_entry'} do |f|
-    = f.input :name, :label => "Instrument Name"
+    .error-message
+      = f.input :name, :label => "Instrument Name"
 
 

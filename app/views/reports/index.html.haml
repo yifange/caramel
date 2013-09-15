@@ -10,57 +10,91 @@
       %i.icon-eye-close.icon-white
   .panel.panel-default.accordion-parent
     .panel-heading.accordion-toggle{"data-target" => "student-1"}
-      John Doe
+      %span.report-header-student
+        John Doe
+      %span.report-header-school.label.label-info
+        SMS
+      %span.report-header-program.label.label-info
+        Violin - POD
       .div.pull-right
-        %span{:style => "color: green; padding-right: 10px;"}
-          Scheduled: 8   
-        %span{:style => "color: red; padding-right: 10px"}
-          Remaining: 8   
-        %span{:style => "color: red; padding-right: 10px"}
-          Over/Under: 4   
+        %span.badge.badge-success.report-header-completed
+          -# always be green
+          8/16
+        %span.badge.report-header-remaining
+          -# always be grey
+          8/10
+        %span.badge.badge-warning.report-header-overunder
+          -# red if negative; grey if zero; yellow if positive
+          5
     %table.table.table-condensed.table-striped.table-hover.accordion-body{:id => "student-1"}
       %thead
         %tr
           %th
-            School
-          %th
-            Program
-          %th
             Class
           %th
-            Classes Completed 
+            %span.report-stats{:title => "Student Absences", :data => {:toggle => "tooltip"}}
+              SA
           %th
-            Classes Remaining 
+            %span.report-stats{:title => "Teacher Absences", :data => {:toggle => "tooltip"}}
+              TA
+          %th
+            %span.report-stats{:title => "School Closing", :data => {:toggle => "tooltip"}}
+              SC
+          %th
+            %span.report-stats{:title => "Student Absence Makeups", :data => {:toggle => "tooltip"}}
+              SM
+          %th
+            %span.report-stats{:title => "Teacher Absence Makeups", :data => {:toggle => "tooltip"}}
+              TM
+          %th
+            %span.report-stats{:title => "School Closing Makeups", :data => {:toggle => "tooltip"}}
+              CM
+          %th
+            %span.report-stats{:title => "Total Classes Scheduled", :data => {:toggle => "tooltip"}}
+              TS
+
       %tbody
         %tr
-          %td
-            SMS
-          %td
-            Violin - POD
           %td
             Class A
           %td
             8
           %td
             0
-
+          %td
+            0
+          %td
+            0
+          %td
+            0
+          %td
+            0
+          %td
+            0
 
 
   .panel.panel-default.accordion-parent
     .panel-heading.accordion-toggle{"data-target" => "student-2"}
-      Jane Arye
+      %span.report-header-student
+        Jane Arye
+      %span.report-header-school.label.label-info
+        SMS
+      %span.report-header-program.label.label-info
+        Violin - POD
+
       .div.pull-right
-        %span.label.label-success
-          Classes Completed 8/16
-        %span.label.label-important
-          Classes Remaining 8/10
+        %span.badge.badge-success.report-header-completed
+          -# always be green
+          8/16
+        %span.badge.report-header-remaining
+          -# always be grey
+          8/10
+        %span.badge.badge-warning.report-header-overunder
+          -# red if negative; grey if zero; yellow if positive
+          5
     %table.table.table-condensed.table-striped.table-hover.accordion-body{:id => "student-2"}
       %thead
         %tr
-          %th
-            School
-          %th
-            Program
           %th
             Class
           %th
@@ -70,10 +104,6 @@
       %tbody
         %tr
           %td
-            SMS
-          %td
-            Violin - POD
-          %td
             Class A
           %td
             8
@@ -82,44 +112,21 @@
 
         %tr
           %td
-            SMS
-          %td
-            Violin - POD
-          %td
-            Class A
+            Class B
           %td
             8
           %td
             0
         %tr
           %td
-            SMS
-          %td
-            Violin - POD
-          %td
-            Class A
+            Class C
           %td
             8
           %td
             0
         %tr
           %td
-            SMS
-          %td
-            Violin - POD
-          %td
-            Class A
-          %td
-            8
-          %td
-            0
-        %tr
-          %td
-            SMS
-          %td
-            Violin - POD
-          %td
-            Class A
+            Class D
           %td
             8
           %td

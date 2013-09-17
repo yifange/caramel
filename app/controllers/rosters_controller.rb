@@ -12,6 +12,7 @@ class RostersController < ApplicationController
       @program_id = @program[:id]
       @courses = @program.courses.includes(:rosters => [:enrollment => [:student]])
       @students = @program.students.includes(:enrollments => [:rosters => [:course => [:students]]])
+      @enrollments = @program.enrollments.includes(:student)
     end
   end
   
@@ -46,6 +47,12 @@ class RostersController < ApplicationController
       render :new
     end
 
+  end
+  def remove_student
+    course_id = params[:course_id]
+    enrollment_id = params[:enrollment_id]
+    Roster.where(:course_id => course_id, :enrollment_id => enrollment_id).delete_all
+    render :text => "student removed"
   end
   def edit
   end

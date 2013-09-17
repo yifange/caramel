@@ -1,127 +1,175 @@
 - content_for :sidemenu do
   = render '/layouts/reports_page_sidebar'
 
-- content_for :subnav do
-  = render "/layouts/subnav", :nav_pills_partial => nil, :nav_filter_partial => "/reports/filters", :active => nil, :base_path => nil
+-# - content_for :subnav do
+-#   = render "/layouts/subnav", :nav_pills_partial => nil, :nav_filter_partial => "/reports/filters", :active => nil, :base_path => nil
 
 - content_for :main do
+  -# [student, school, program] -> [class_completed, classes_remaining, over/under, class -> [student absence, teacher absence, school closing, student makeup, teacher makeup, school closing makeup, total classes scheduled]]
   .toolbar{:style => "padding-bottom: 15px"}
     %button.btn.btn-primary.hide-all{:title => "Hide all details"}
       %i.icon-eye-close.icon-white
-  .panel.panel-default.accordion-parent
-    .panel-heading.accordion-toggle{"data-target" => "student-1"}
-      John Doe
+
+    %select#school-filter.span2.multiselect{:multiple => "multiple"}
+      %option
+        Saint Mary School
+      %option
+        The Harbor School
+      %option
+        Center for Young Children
+    %select#student-filter.span2.multiselect{:multiple => "multiple"}
+      %option
+        John Doe
+      %option
+        Jane Ayre
+      %option
+        David Watson
+
+  .panel.panel-default
+    .panel-heading
+      Grand Total
+
       .div.pull-right
-        %span{:style => "color: green; padding-right: 10px;"}
-          Scheduled: 8   
-        %span{:style => "color: red; padding-right: 10px"}
-          Remaining: 8   
-        %span{:style => "color: red; padding-right: 10px"}
-          Over/Under: 4   
-    %table.table.table-condensed.table-striped.table-hover.accordion-body{:id => "student-1"}
+        %span.badge.badge-success.report-header.report-header-completed{:data => {:toggle => "tooltip"}, :title => "Classes completed"}
+          -# always be green
+          = 1
+        %span.badge.report-header.report-header-remaining{:data => {:toggle => "tooltip"}, :title => "Classes remaining"}
+          -# always be grey
+          = 2
+        %span.badge.badge-important.report-header.report-header-overunder{:data => {:toggle => "tooltip"}, :title => "Over/under"}
+          -# red if negative; grey if zero; yellow if positive
+          = 3
+    %table.table.report-table.table-condensed.table-striped.table-hover
       %thead
         %tr
-          %th
-            School
-          %th
-            Program
-          %th
-            Class
-          %th
-            Classes Completed 
-          %th
-            Classes Remaining 
+          %th.stats-column
+            %span.report-stats{:title => "Student Absences", :data => {:toggle => "tooltip"}}
+              SA
+          %th.stats-column
+            %span.report-stats{:title => "Teacher Absences", :data => {:toggle => "tooltip"}}
+              TA
+          %th.stats-column
+            %span.report-stats{:title => "School Closing", :data => {:toggle => "tooltip"}}
+              SC
+          %th.stats-column
+            %span.report-stats{:title => "Student Absence Makeups", :data => {:toggle => "tooltip"}}
+              SM
+          %th.stats-column
+            %span.report-stats{:title => "Teacher Absence Makeups", :data => {:toggle => "tooltip"}}
+              TM
+          %th.stats-column
+            %span.report-stats{:title => "School Closing Makeups", :data => {:toggle => "tooltip"}}
+              CM
+          %th.stats-column
+            %span.report-stats{:title => "Total Classes Scheduled", :data => {:toggle => "tooltip"}}
+              TS
       %tbody
         %tr
-          %td
-            SMS
-          %td
-            Violin - POD
-          %td
-            Class A
-          %td
-            8
-          %td
-            0
+          %td.report-stats
+            = 1
+          %td.report-stats
+            = 2
+          %td.report-stats
+            = 3
+          %td.report-stats
+            = 4
+          %td.report-stats
+            = 5
+          %td.report-stats
+            = 6
+          %td.report-stats
+            = 7
 
-
-
-  .panel.panel-default.accordion-parent
-    .panel-heading.accordion-toggle{"data-target" => "student-2"}
-      Jane Arye
-      .div.pull-right
-        %span.label.label-success
-          Classes Completed 8/16
-        %span.label.label-important
-          Classes Remaining 8/10
-    %table.table.table-condensed.table-striped.table-hover.accordion-body{:id => "student-2"}
-      %thead
-        %tr
-          %th
-            School
-          %th
-            Program
-          %th
-            Class
-          %th
-            Classes Completed 
-          %th
-            Classes Remaining 
-      %tbody
-        %tr
-          %td
-            SMS
-          %td
-            Violin - POD
-          %td
-            Class A
-          %td
-            8
-          %td
-            0
-
-        %tr
-          %td
-            SMS
-          %td
-            Violin - POD
-          %td
-            Class A
-          %td
-            8
-          %td
-            0
-        %tr
-          %td
-            SMS
-          %td
-            Violin - POD
-          %td
-            Class A
-          %td
-            8
-          %td
-            0
-        %tr
-          %td
-            SMS
-          %td
-            Violin - POD
-          %td
-            Class A
-          %td
-            8
-          %td
-            0
-        %tr
-          %td
-            SMS
-          %td
-            Violin - POD
-          %td
-            Class A
-          %td
-            8
-          %td
-            0
+  - @reports.each do |header, details|
+    .panel.panel-default.accordion-parent
+      .panel-heading.accordion-toggle{"data-target" => "student-#{header[:student].id}"}
+        %span.report-header.report-header-student
+          = header[:student].name 
+          
+        %span.report-header.report-header-school.label.label-info{:data => {:toggle => "tooltip"}, :title => header[:school].full}
+          = header[:school].abbrev
+        %span.report-header.report-header-program.label.label-info
+          = header[:program].name
+        .div.pull-right
+          %span.badge.badge-success.report-header.report-header-completed{:data => {:toggle => "tooltip"}, :title => "Classes completed"}
+            -# always be green
+            = details[:classes_completed] 
+          %span.badge.report-header.report-header-remaining{:data => {:toggle => "tooltip"}, :title => "Classes remaining"}
+            -# always be grey
+            = details[:classes_remaining] 
+          - if details[:over_under] < 0
+            - span_class = "badge-important"
+            - number = -details[:over_under]
+          - elsif details[:over_under] == 0
+            - span_class = ""
+            - number = details[:over_under]
+          - elsif details[:over_under] > 0
+            - span_class = "badge-warning"
+            - number = details[:over_under]
+          %span.badge.report-header.report-header-overunder{:data => {:toggle => "tooltip"}, :title => "Over/under", :class => span_class}
+            -# red if negative; grey if zero; yellow if positive
+            = number
+      %table.report-table.table.table-condensed.table-striped.table-hover.accordion-body{:id => "student-#{header[:student].id}"}
+        %thead
+          %tr
+            %th.class-column
+              Class
+            %th.stats-column
+              %span.report-stats{:title => "Student Absences", :data => {:toggle => "tooltip"}}
+                SA
+            %th.stats-column
+              %span.report-stats{:title => "Teacher Absences", :data => {:toggle => "tooltip"}}
+                TA
+            %th.stats-column
+              %span.report-stats{:title => "School Closing", :data => {:toggle => "tooltip"}}
+                SC
+            %th.stats-column
+              %span.report-stats{:title => "Student Absence Makeups", :data => {:toggle => "tooltip"}}
+                SM
+            %th.stats-column
+              %span.report-stats{:title => "Teacher Absence Makeups", :data => {:toggle => "tooltip"}}
+                TM
+            %th.stats-column
+              %span.report-stats{:title => "School Closing Makeups", :data => {:toggle => "tooltip"}}
+                CM
+            %th.stats-column
+              %span.report-stats{:title => "Total Classes Scheduled", :data => {:toggle => "tooltip"}}
+                TS
+        %tbody
+          - details[:rows].each do |class_name, row|
+            %tr
+              %td.class-name
+                = class_name
+              %td.report-stats
+                = row[:student_absence]
+              %td.report-stats
+                = row[:teacher_absence] 
+              %td.report-stats
+                = row[:school_closing] 
+              %td.report-stats
+                = row[:student_makeup]
+              %td.report-stats
+                = row[:teacher_makeup]
+              %td.report-stats
+                = row[:school_closing_makeup] 
+              %td.report-stats
+                = row[:classes_scheduled] 
+          - row = details[:total] 
+          %tr
+            %td.total.report-stats
+              Totals:
+            %td.total.report-stats
+              = row[:student_absence]
+            %td.total.report-stats
+              = row[:teacher_absence] 
+            %td.total.report-stats
+              = row[:school_closing] 
+            %td.total.report-stats
+              = row[:student_makeup]
+            %td.total.report-stats
+              = row[:teacher_makeup]
+            %td.total.report-stats
+              = row[:school_closing_makeup] 
+            %td.total.report-stats
+              = row[:classes_scheduled] 
 

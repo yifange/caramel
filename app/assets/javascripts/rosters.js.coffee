@@ -14,6 +14,7 @@ initRosterEditable = ->
         newRosterHandler()
         initRosterEditable()
         updateClassHandler()
+        studentsSelect()
       )
 
   })
@@ -110,7 +111,6 @@ rosterModalSubmitHandler = ->
         $.get(document.URL, (data, status) ->
           $(".rosters-container").html($(data).find(".rosters-container").html())
           $(".classes-container").html($(data).find(".classes-container").html())
-          addStudentHandler()
           newRosterHandler()
           addClassHandler()
           initRosterEditable()
@@ -172,15 +172,30 @@ accordionHandler = ->
 studentsSelect = ->
   $(".roster-class-students").select2({
     width: "100%"
+    formatSelection: (item, container) ->
+      container.attr("class", $(item.element).attr("class"))
+      container.append(item.text)
+      return
   }).on "change", (e) ->
     courseId = $(this).parent().data("courseid")
     if (e.added)
       enrollmentId = e.added.id
-      $.post("/rosters", {roster: {course_id: courseId, enrollment_id: enrollmentId}})
+      $.post("/rosters", {roster: {course_id: courseId, enrollment_id: enrollmentId}}, ->
+        $.get(document.URL, (data, status) ->
+          $(".rosters-container").html($(data).find(".rosters-container").html())
+          newRosterHandler()
+          initRosterEditable()
+        )
+      )
     else if (e.removed)
-      studentId = e.removed.id
-      # $.post("/rosters/" + , {_method: "DELETE", })
-
+      enrollmentId = e.removed.id
+      $.post("/rosters/remove", {_method: "DELETE", course_id: courseId, enrollment_id: enrollmentId}, ->
+        $.get(document.URL, (data, status) ->
+          $(".rosters-container").html($(data).find(".rosters-container").html())
+          newRosterHandler()
+          initRosterEditable()
+        )
+      )
 
 $(document).ready newRosterHandler
 $(document).ready rosterModalSubmitHandler

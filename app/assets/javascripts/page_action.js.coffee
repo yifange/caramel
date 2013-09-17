@@ -34,26 +34,26 @@ initXEditable = ->
     type: 'text'
   })
 
-  $(".x-editable.roster-date").editable({
-    type: "date"
-    onblur: "submit"
-    showbuttons: false
-    ajaxOptions: {
-      type: "PUT"
-    }
-  })
+  # $(".x-editable.roster-date").editable({
+  #   type: "date"
+  #   onblur: "submit"
+  #   showbuttons: false
+  #   ajaxOptions: {
+  #     type: "PUT"
+  #   }
+  # })
 
-  $(".x-editable.roster-notes").editable({
-    type: "textarea"
-    onblur: "submit"
-    placeholder: "notes, ctrl-enter to submit"
-    showbuttons: false
-    inputclass: "input-small"
-    rows: 2
-    ajaxOptions: {
-      type: "PUT"
-    }
-  })
+  # $(".x-editable.roster-notes").editable({
+  #   type: "textarea"
+  #   onblur: "submit"
+  #   placeholder: "notes, ctrl-enter to submit"
+  #   showbuttons: false
+  #   inputclass: "input-small"
+  #   rows: 2
+  #   ajaxOptions: {
+  #     type: "PUT"
+  #   }
+  # })
 
   $('.x-editable-password').editable({
     type: "password"

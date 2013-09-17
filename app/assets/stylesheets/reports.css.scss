@@ -1,0 +1,12 @@
+.total {
+  font-weight: bold;
+}
+.class-column {
+  width: 10%;
+}
+.panel {
+  width: 70%;
+}
+td.report-stats, th.stats-column, td.class-name, th.class-column {
+  text-align: center !important;
+}

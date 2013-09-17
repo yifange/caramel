@@ -26,16 +26,10 @@ multiselectConfigs = (singular, plural, dropRight) ->
     enableCaseInsensitiveFiltering: true
   }
 multiselectInit = ->
-  # $(".multiselect").tooltip({
-  #   placement: "bottom"
-  # })
-  $(".multiselect#student-filter").multiselect(multiselectConfigs("student", "students", false))
 
   $(".multiselect#school-filter").multiselect( multiselectConfigs("school", "schools", false))
 
-  $(".multiselect#teacher-filter").multiselect(multiselectConfigs("teacher", "teachers", false))
-
-  $(".multiselect#category-filter").multiselect(multiselectConfigs("category", "categories", true))
+  $(".multiselect#student-filter").multiselect(multiselectConfigs("student", "categories", false))
 
 hideAllButtonHandler = ->
   $(".hide-all").on "click", ->
@@ -47,8 +41,13 @@ hideAllButtonHandler = ->
     else
       $(this).attr("title", "Show all details")
       $(".accordion-body").hide(50)
-
+initTooltip = ->
+  $("span.report-stats[data-toggle=tooltip],span.report-header[data-toggle=tooltip]").tooltip({
+    container: "body"
+  })
 $(document).ready multiselectInit
 $(document).on "page:load", multiselectInit
 $(document).ready hideAllButtonHandler
 $(document).on "page:load", hideAllButtonHandler
+$(document).ready initTooltip
+$(document).on "page:load", initTooltip

@@ -47,10 +47,10 @@
       .row-fluid
         .span2.content
           = yield(:sidemenu)
-        -# .span10.content{:style => "margin-bottom: 15px"}
-        -#   = yield(:action_button)
-        -#   - if flash[:notice]
-        -#     = flash[:notice]
+        .span10.content{:style => "margin-bottom: 15px"}
+          = yield(:action_button)
+          - if flash[:notice]
+            = flash[:notice]
         .span10.content
           .flash-message
             - flash.each do |key, value|

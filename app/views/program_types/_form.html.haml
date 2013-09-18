@@ -1,5 +1,6 @@
 .new-entry-form-body
   = simple_form_for @program_type, :html => {:class => 'new_entry'} do |f|
-    = f.input :name, :label => "Program Type Name"
+    .error-message
+      = f.input :name, :label => "Program Type Name"
 
 

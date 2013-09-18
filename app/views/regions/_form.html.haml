@@ -1,5 +1,6 @@
 .new-entry-form-body
   = simple_form_for @region, :html => {:class => 'new_entry'} do |f|
-    = f.input :name, :label => "Region Name"
+    .error-message
+      = f.input :name, :label => "Region Name"
 
 

@@ -79,11 +79,12 @@ initDeleteEntry = (refresh) ->
         # Current tab-pane is undefined except on Program page.
         if cur_pane_id != undefined
           $(".active .school-pane.tab-pane.active").html($(data).find("#" + cur_pane_id).html())
+          initAllSelection(".active .school-pane.tab-pane.active")
         else
           $(".table").html($(data).find(".table").html())
+          initAllSelection('')
 
         initXEditable()
-        initAllSelection(".active .school-pane.tab-pane.active")
     )
 
 initSubmit = (refresh) ->
@@ -100,14 +101,15 @@ initSubmit = (refresh) ->
         # Current tab-pane is undefined except on Program page.
         if cur_pane_id != undefined
           $(".active .school-pane.tab-pane.active").html($(data).find("#" + cur_pane_id).html())
+          initAllSelection(".active .school-pane.tab-pane.active")
         else
           $(".table").html($(data).find(".table").html())
+          initAllSelection('')
 
         initXEditable()
-        initAllSelection(".active .school-pane.tab-pane.active")
 
       error: (data, status) ->
-        $(".new-entry-modal-body").html($(data.responseText).find(".new-entry-form-body").html())
+        $(".error-message").html($(data.responseText).find(".error-message").html())
     })
 
 initNewEntry = ->
@@ -126,7 +128,7 @@ initNewEntry = ->
     identity = $(this).data("entry")
     e.preventDefault()
     href = $(this).attr("href")
-    cur_pane_id = $(".school-pane.tab-pane.active").attr("id").replace("tab-school", "")
+    cur_pane_id = $(".active .school-pane.tab-pane.active").attr("id").replace("tab-school", "")
     $.get(href + "?school_id=" + cur_pane_id, (data, status) ->
       $(".new-entry-modal-body").html($(data).find(".new-entry-form-body").html())
       $(".new-entry-modal").modal({

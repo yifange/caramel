@@ -1,7 +1,8 @@
 .new-entry-form-body
   = simple_form_for @teacher, :html => {:class => 'new_entry'} do |f|
-    = f.input :first_name, :label => "First Name"
-    = f.input :last_name, :label => "Last name"
-    = f.input :email, :label => "Email"
-    = f.input :password, :label => "Password"
-    = f.input :password_confirmation, :label => "Confirm Password"
+    .error-message
+      = f.input :first_name, :label => "First Name"
+      = f.input :last_name, :label => "Last name"
+      = f.input :email, :label => "Email"
+      = f.input :password, :label => "Password"
+      = f.input :password_confirmation, :label => "Confirm Password"

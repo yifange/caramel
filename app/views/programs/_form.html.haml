@@ -1,7 +1,8 @@
 .new-entry-form-body
   = simple_form_for @program, :html => {:class => 'new_entry'} do |f|
     = f.hidden_field :school_id, :value => @school_id
-    = f.association :instrument, :label_method => :name, :value_method => :id, :include_blank => false
-    = f.association :program_type, :label_method => :name, :value_method => :id, :include_blank => false, :label => "Class Type"
-    = f.input :regular_courses_per_year, :label => "Regular Classes Per Year"
-    = f.input :group_courses_per_year, :label => "Group Classes Per Year"
+    .error-message
+      = f.association :instrument, :label_method => :name, :value_method => :id, :include_blank => false
+      = f.association :program_type, :label_method => :name, :value_method => :id, :include_blank => false, :label => "Class Type"
+      = f.input :regular_courses_per_year, :label => "Regular Classes Per Year"
+      = f.input :group_courses_per_year, :label => "Group Classes Per Year"

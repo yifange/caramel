@@ -8,10 +8,9 @@ class SchedulesController < ApplicationController
     if @program
       @program_id = @program[:id]
       school_id = @program.school[:id]
+      @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
+      @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
     end
-    @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
-    
-    @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
     # @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
 
     @month = (params[:month] || Date.today.month).to_i
@@ -29,9 +28,9 @@ class SchedulesController < ApplicationController
     if @program
       @program_id = @program[:id]
       school_id = @program.school[:id]
+      @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
+      @calendars = rehash_objs(Calendar.where(:school_id => school_id))
     end
-    @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
-    @calendars = rehash_objs(Calendar.where(:school_id => school_id))
     # @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
 
     @month = (params[:month] || Date.today.month).to_i

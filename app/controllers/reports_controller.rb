@@ -3,14 +3,14 @@ class ReportsController < ApplicationController
     # [student, school, program] -> [class_completed, classes_remaining, over/under, class -> [student absence, teacher absence, school closing, student makeup, teacher makeup, school closing makeup, total classes scheduled]]
     if current_user[:type] == "Teacher"
       @teacher = Teacher.find(current_user[:id])
-    end
-    if params[:selected_schools]
-      @schools = @teacher.schools.includes(:students).where(:id => params[:selected_schools]).uniq
-    else
-      @schools = @teacher.schools.includes(:students).uniq
-    end
-    if params[:selected_students]
-      
+      if params[:selected_schools]
+        @schools = @teacher.schools.includes(:students).where(:id => params[:selected_schools]).uniq
+      else
+        @schools = @teacher.schools.includes(:students).uniq
+      end
+      if params[:selected_students]
+        
+      end
     end
     
     @reports = {}

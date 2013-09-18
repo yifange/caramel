@@ -24,7 +24,7 @@ Caramel::Application.routes.draw do
 	root 'session_page#signin'
 
   get 'session_page/signin' => 'session_page#signin'
-  get 'session_page/verify' => 'session_page#verify'
+  post 'session_page/verify' => 'session_page#verify'
   get 'session_page/signout' => 'session_page#signout'
 
   # teachers of a program

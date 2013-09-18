@@ -1,7 +1,8 @@
 class ReportsController < ApplicationController
   def index
     # [student, school, program] -> [class_completed, classes_remaining, over/under, class -> [student absence, teacher absence, school closing, student makeup, teacher makeup, school closing makeup, total classes scheduled]]
-    if current_user[:type] == "Teacher"
+    current_user = {:type => "Teacher", :name => "Yifan Ge"}
+    if current_user and current_user[:type] == "Teacher"
       @teacher = Teacher.find(current_user[:id])
       if params[:selected_schools]
         @schools = @teacher.schools.includes(:students).where(:id => params[:selected_schools]).uniq

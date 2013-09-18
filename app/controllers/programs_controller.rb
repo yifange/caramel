@@ -20,6 +20,7 @@ class ProgramsController < ApplicationController
   def create
     @program = Program.new(program_params)
     if @program.save
+      flash_message :success, "#{@program.name_with_school}: Successfully created."
       redirect_to :controller => "programs", :action => "index"
     else
       render :new, :status => :unprocessable_entity
@@ -69,9 +70,9 @@ class ProgramsController < ApplicationController
       begin
         program = Program.find(item)
         program.destroy
-        flash_message :success, "#{program.name}: Successfully removed."
+        flash_message :success, "#{program.name_with_school}: Successfully removed."
       rescue ActiveRecord::DeleteRestrictionError => e
-        flash_message :error, "#{program.name}: Can not be removed, since there are students or teachers enrolled."
+        flash_message :error, "#{program.name_with_school}: Can not be removed, since there are students or teachers enrolled."
       end
     end
     redirect_to :controller => "programs", :action => "index"

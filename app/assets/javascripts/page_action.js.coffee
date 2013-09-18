@@ -68,12 +68,11 @@ initDeleteEntry = (refresh) ->
     )
     $.ajax(
       type: "POST",
-      # data: {"_method": "delete"},
-      # url: $(this).data("url"),
-      # url: "/programs/" + $(this).val(),
       data: {"deleteList": deleteList},
       url: $(this).data("url"),
       success: (data, status) ->
+        flash_message = $(data).find(".flash-message").html()
+        $(".flash-message").html(flash_message)
         cur_pane_id = $(".active .school-pane.tab-pane.active").attr("id")
 
         # Current tab-pane is undefined except on Program page.

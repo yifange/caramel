@@ -1,9 +1,9 @@
 class School < ActiveRecord::Base
 
   belongs_to :region
-  has_many :students
-  has_many :programs
-  has_many :teachers, :through => :programs
+  has_many :students, :dependent => :restrict_with_exception
+  has_many :programs, :dependent => :restrict_with_exception
+  has_many :teachers, :through => :programs, :uniq => true
   validates_presence_of :abbrev, :full, :region
   validates :abbrev, :uniqueness => {:scope => :full}
 

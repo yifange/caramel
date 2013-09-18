@@ -30,7 +30,6 @@
                 = active_link_partialpath 'PROGRAMS', '/programs', ['/regions', '/instruments', '/program_types', '/schools', '/programs']
               = active_link_partialpath 'CLASSES', '/calendars', ['/calendars', '/schedules', '/attendances', '/rosters']
               = active_link_partialpath 'REPORTS', "/reports", ['/reports']
-              -# = active_link_partialpath 'INSTRUMENTS', '#', []
             %ul.nav.pull-right
               %li.dropdown{:style => 'margin-right: 10px;'}
                 %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
@@ -47,15 +46,8 @@
       .row-fluid
         .span2.content
           = yield(:sidemenu)
+          = render_flash
         .span10.content{:style => "margin-bottom: 15px"}
           = yield(:action_button)
-          - if flash[:notice]
-            = flash[:notice]
         .span10.content
-          .flash-message
-            - flash.each do |key, value|
-              %div{:class => "#{flash_class(key)}"}
-                %button.close{:type => "button", "data-dismiss" => "alert"}
-                  &times;
-                = value
           = yield(:main)

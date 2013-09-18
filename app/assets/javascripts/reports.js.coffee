@@ -27,9 +27,10 @@ multiselectConfigs = (singular, plural, dropRight) ->
   }
 multiselectInit = ->
 
-  $(".multiselect#school-filter").multiselect( multiselectConfigs("school", "schools", false))
+  # $(".multiselect#school-filter").multiselect(multiselectConfigs("school", "schools", false))
+  $(".multiselect#program-filter").multiselect(multiselectConfigs("program", "programs", false))
 
-  $(".multiselect#student-filter").multiselect(multiselectConfigs("student", "categories", false))
+  $(".multiselect#student-filter").multiselect(multiselectConfigs("student", "students", false))
 
 hideAllButtonHandler = ->
   $(".hide-all").on "click", ->

@@ -7,7 +7,7 @@ class CalendarsController < ApplicationController
     if @schools
       @school = (@schools.find_by :id => params[:school_id]) || @schools.first
       @schools = @schools.uniq
-      @school_id = @school[:id]
+      @school_id = @school[:id] if @school
       @calendars = rehash_objs(Calendar.where(:school_id => @school_id))
     end
     @month = (params[:month] || Date.today.month).to_i

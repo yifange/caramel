@@ -2,8 +2,12 @@
   calendar 
 - content_for :sidemenu do
   - render '/layouts/classes_page_sidebar'
-- content_for :subnav do
-  = render "/layouts/subnav", :nav_pills_partial => "/calendars/year_nav_pills", :nav_filter_partial => "/calendars/calendar_nav_filter", :active => "year", :base_path => :calendars_path
-- content_for :main do
-  = render "/layouts/calendars/annual_calendar", {:base_path => :calendars_week_path, :grid_partial => "/calendars/calendar_grid"}
+- if @calendars
+  - content_for :subnav do
+    = render "/layouts/subnav", :nav_pills_partial => "/calendars/year_nav_pills", :nav_filter_partial => "/calendars/calendar_nav_filter", :active => "year", :base_path => :calendars_path
+  - content_for :main do
+    = render "/layouts/calendars/annual_calendar", {:base_path => :calendars_week_path, :grid_partial => "/calendars/calendar_grid"}
+- else
+  - content_for :main do
+    = render "/layouts/empty_page"
 

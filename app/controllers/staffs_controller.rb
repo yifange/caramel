@@ -40,10 +40,6 @@ class StaffsController < ApplicationController
     render nothing: true
   end
 
-  def destroy 
-
-  end
-
   def destroy_multi
     params[:deleteList].each do |item|
       staff = Staff.find(item)

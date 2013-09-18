@@ -1,9 +1,9 @@
 module FlashHelper
 
-  def flash_message(type, text)
-    flash[type] ||= []
-    flash[type] << text
-  end
+  # def flash_message(type, text)
+  #   flash[type] ||= []
+  #   flash[type] << text
+  # end
 
   def render_flash
     buf = "".html_safe

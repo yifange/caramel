@@ -3,7 +3,7 @@ class School < ActiveRecord::Base
   belongs_to :region
   has_many :students, :dependent => :restrict_with_exception
   has_many :programs, :dependent => :restrict_with_exception
-  has_many :teachers, :through => :programs, :uniq => true
+  has_many :teachers, -> {uniq}, :through => :programs
   validates_presence_of :abbrev, :full, :region
   validates :abbrev, :uniqueness => {:scope => :full}
 
@@ -29,14 +29,6 @@ class School < ActiveRecord::Base
     in_regions_ordered(region_ids).map do |school| 
       {:id => school.id, :text => school.full}
     end
-  end
-
-  def teachers
-    teachers = []
-    programs.includes(:assignments, :teachers).each do |program|
-      teachers += program.teachers
-    end
-    teachers.uniq
   end
 
   def programs_json

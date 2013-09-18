@@ -9,6 +9,7 @@ class SchoolsController < ApplicationController
   def create
     @school = School.new(school_params)
     if @school.save
+      flash_message :success, "#{@school.full}: Successfully added."
       redirect_to :controller => "schools", :action => "index"
     else
       render :new, :status => :unprocessable_entity
@@ -40,9 +41,9 @@ class SchoolsController < ApplicationController
       begin
         school = School.find(item)
         school.destroy
-        flash_message :notice, "#{school.name}: Successfully removed."
+        flash_message :success, "#{school.full}: Successfully removed."
       rescue ActiveRecord::DeleteRestrictionError => e
-        flash_message :error, "#{school.name}: Can not be removed, since there are students enrolled or programs assigned."
+        flash_message :error, "#{school.full}: Can not be removed, since there are students enrolled or programs assigned."
       end
     end
     redirect_to :controller => "schools", :action => "index"

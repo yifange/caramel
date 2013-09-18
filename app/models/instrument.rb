@@ -1,5 +1,5 @@
 class Instrument < ActiveRecord::Base
-  has_many :programs
+  has_many :programs, :dependent => :restrict_with_exception
   validates_presence_of :name
   validates_uniqueness_of :name
 
@@ -8,8 +8,7 @@ class Instrument < ActiveRecord::Base
   end
 
   def self.all_ordered_json 
-    instruments = Instrument.all.order("name")
-    instruments.map do |instrument| 
+    Instrument.all_ordered.map do |instrument| 
       {:id => instrument.id, :text => instrument.name}
     end
   end

@@ -15,6 +15,7 @@ class StaffsController < ApplicationController
   def create 
     @staff = Staff.new(staff_params)
     if @staff.save
+      flash_message :success, "#{@staff.name}: Successfully added."
       redirect_to :controller => "staffs", :actoin => "index"
     else
       render :new, :status => :unprocessable_entity
@@ -47,11 +48,12 @@ class StaffsController < ApplicationController
     params[:deleteList].each do |item|
       staff = Staff.find(item)
       staff.destroy
+      flash_message :success, "#{staff.name}: Successfully removed."
     end
     redirect_to :controller => "staffs", :action => "index"
   end
 
-private
+  private
   def staff_params
     params.require(:staff).permit(:first_name, :last_name, :email, :password, :password_confirmation)
   end

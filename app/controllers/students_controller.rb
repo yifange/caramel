@@ -38,6 +38,7 @@ class StudentsController < ApplicationController
   def create 
     @student = Student.new(student_params)
     if @student.save
+      flash_message :success, "#{@student.name}: Successfully added."
       redirect_to :controller => "students", :actoin => "index"
     else
       render :new, :status => :unprocessable_entity
@@ -46,8 +47,13 @@ class StudentsController < ApplicationController
 
   def destroy_multi
     params[:deleteList].each do |item|
-      student = Student.find(item)
-      student.destroy
+      begin
+        student = Student.find(item)
+        student.destroy
+        flash_message :success, "#{student.name}: Successfully removed."
+      rescue ActiveRecord::DeleteRestrictionError => e
+        flash_message :error, "#{student.name}: Can not be removed, since there are programs assigned."
+      end
     end
     redirect_to :controller => "students", :action => "index"
   end

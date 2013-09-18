@@ -17,4 +17,3 @@
 
 # Ignore the schema file
 /db/schema.rb
-/Gemfile.lock

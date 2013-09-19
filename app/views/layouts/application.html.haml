@@ -38,9 +38,10 @@
                   %span.caret
                 %ul.dropdown-menu
                   %li
-                    %a{:href => '/profiles'} Profile
+                    %a.profile{:href => '/profiles'} Profile
                   %li
                     %a{:href => '/session_page/signout'} Sign out
+    = modal_for "profile", :modal_title => "Profile", :css_class => "profile"
     = yield(:subnav)
     .container-fluid
       .row-fluid

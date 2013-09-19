@@ -34,7 +34,7 @@ class Program < ActiveRecord::Base
   end
 
   def name_with_school
-    "#{school.full}" + " - " + "#{instrument.name}" + " - " + "#{program_type.name}"
+    "#{school.name}" + " - " + "#{instrument.name}" + " - " + "#{program_type.name}"
   end
 
   def teacher_ids

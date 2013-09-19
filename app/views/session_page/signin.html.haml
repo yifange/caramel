@@ -4,18 +4,16 @@
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1"}
     %title Sign in
     = stylesheet_link_tag :session_page, :media => "all"
+    = favicon_link_tag
+    = csrf_meta_tags
   %body
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
         .container{:style => 'margin-left: 10px; width: 100%;'}
-          %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => "#main-nav-collapse"}
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
           %a.brand{:href => "#"}
             Music Kids
     .content#login-content
-      = form_tag '/session_page/verify', method: 'get' do
+      = form_tag '/session_page/verify', method: 'post' do
         %fieldset
           %legend{:style => 'border-bottom-width: 1px; border-color: #aaa;'}
             %strong

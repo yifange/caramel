@@ -10,13 +10,13 @@
     %button.btn.btn-primary.hide-all{:title => "Hide all details"}
       %i.icon-eye-close.icon-white
 
-    %select#school-filter.span2.multiselect{:multiple => "multiple"}
+    %select#program-filter.span2.multiselect{:multiple => "multiple"}
       %option
-        Saint Mary School
+        Saint Mary School - POD
       %option
-        The Harbor School
+        The Harbor School - POD
       %option
-        Center for Young Children
+        Center for Young Children - POD
     %select#student-filter.span2.multiselect{:multiple => "multiple"}
       %option
         John Doe
@@ -62,7 +62,7 @@
               CM
           %th.stats-column
             %span.report-stats{:title => "Total Classes Scheduled", :data => {:toggle => "tooltip"}}
-              TS
+              CS
       %tbody
         %tr
           %td.report-stats
@@ -134,7 +134,7 @@
                 CM
             %th.stats-column
               %span.report-stats{:title => "Total Classes Scheduled", :data => {:toggle => "tooltip"}}
-                TS
+                CS
         %tbody
           - details[:rows].each do |class_name, row|
             %tr

@@ -17,3 +17,4 @@
 
 # Ignore the schema file
 /db/schema.rb
+/public/assets

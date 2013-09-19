@@ -8,22 +8,11 @@ class InstrumentsController < ApplicationController
   def create
     @instrument = Instrument.new(instrument_params)
     if @instrument.save
+      flash_message :success, "#{@instrument.name}: Successfully added."
       redirect_to :controller => "instruments", :action => "index"
     else
       render :new, :status => :unprocessable_entity
     end
-  end
-
-  def show 
-
-  end
-
-  def destroy 
-
-  end
-
-  def remove
-
   end
 
   def update
@@ -40,13 +29,18 @@ class InstrumentsController < ApplicationController
 
   def destroy_multi
     params[:deleteList].each do |item|
-      instrument = Instrument.find(item)
-      instrument.destroy
+      begin
+        instrument = Instrument.find(item)
+        instrument.destroy
+        flash_message :success, "#{instrument.name}: Successfully removed."
+      rescue ActiveRecord::DeleteRestrictionError => e
+        flash_message :error, "#{instrument.name}: Can not be removed, since there are programs using it."
+      end
     end
     redirect_to :controller => "instruments", :action => "index"
   end
 
-private
+  private
   def instrument_params
     params.require(:instrument).permit(:name)
   end

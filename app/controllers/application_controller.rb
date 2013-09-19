@@ -3,11 +3,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  def get_term
-
+  def flash_message(type, text)
+    flash[type] ||= []
+    flash[type] << text
   end
 
-protected
+  protected
   # Using current_user to verify weather the user has sign in and can view this page  
 	def verify_user(roles)
     flag = false

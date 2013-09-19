@@ -9,6 +9,7 @@ class ProgramTypesController < ApplicationController
   def create
     @program_type = ProgramType.new(program_type_params)
     if @program_type.save
+      flash_message :success, "#{@program_type.name}: Successfully added."
       redirect_to :controller => "program_types", :action => "index"
     else
       render :new, :status => :unprocessable_entity
@@ -29,8 +30,13 @@ class ProgramTypesController < ApplicationController
 
   def destroy_multi
     params[:deleteList].each do |item|
-      p_type = ProgramType.find(item)
-      p_type.destroy
+      begin
+        program_type = ProgramType.find(item)
+        program_type.destroy
+        flash_message :success, "#{program_type.name}: Successfully removed."
+      rescue ActiveRecord::DeleteRestrictionError => e
+        flash_message :error, "#{program_type.name}: Can not be removed, since there are programs using it."
+      end
     end
     redirect_to :controller => "program_types", :action => "index"
   end

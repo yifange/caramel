@@ -1,5 +1,5 @@
 class ProgramsController < ApplicationController
-  respond_to  :html, :json
+  respond_to :html, :json
 
   def index
     verify_user(['Admin', 'Staff', 'Teacher'])
@@ -20,6 +20,7 @@ class ProgramsController < ApplicationController
   def create
     @program = Program.new(program_params)
     if @program.save
+      flash_message :success, "#{@program.name_with_school}: Successfully created."
       redirect_to :controller => "programs", :action => "index"
     else
       render :new, :status => :unprocessable_entity
@@ -66,8 +67,13 @@ class ProgramsController < ApplicationController
 
   def destroy_multi
     params[:deleteList].each do |item|
-      program = Program.find(item)
-      program.destroy
+      begin
+        program = Program.find(item)
+        program.destroy
+        flash_message :success, "#{program.name_with_school}: Successfully removed."
+      rescue ActiveRecord::DeleteRestrictionError => e
+        flash_message :error, "#{program.name_with_school}: Can not be removed, since there are students or teachers enrolled."
+      end
     end
     redirect_to :controller => "programs", :action => "index"
   end
@@ -76,4 +82,5 @@ class ProgramsController < ApplicationController
   def program_params
     params.require(:program).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
   end
+
 end

@@ -125,26 +125,14 @@ initProfile = ->
 
 initProfileSubmit = ->
   $(".profile-modal-confirm").on "click", ->
-    $form = $("form")
+    $form = $("form.profile")
     $.ajax({
       type: $form.attr("method"),
       url: $form.attr("action"),
       data: $form.serialize(),
       success: (data, status) ->
-        # $(".flash-message").html($(data).find(".flash-message").html())
-
-        # $(".new-entry-modal").modal("toggle")
-        # cur_pane_id = $(".active .school-pane.tab-pane.active").attr("id")
-
-        # # Current tab-pane is undefined except on Program page.
-        # if cur_pane_id != undefined
-        #   $(".active .school-pane.tab-pane.active").html($(data).find("#" + cur_pane_id).html())
-        #   initAllSelection(".active .school-pane.tab-pane.active")
-        # else
-        #   $(".table").html($(data).find(".table").html())
-        #   initAllSelection('')
-
-        # initXEditable()
+        $(".flash-message").html($(data).find(".flash-message").html())
+        $(".profile-modal").modal("toggle")
 
       error: (data, status) ->
         $(".error-message").html($(data.responseText).find(".error-message").html())

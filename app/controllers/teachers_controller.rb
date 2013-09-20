@@ -43,7 +43,7 @@ class TeachersController < ApplicationController
     @teacher = Teacher.new(teacher_params)
     if @teacher.save
       flash_message :success, "#{@teacher.name}: Successfully added."
-      redirect_to :controller => "teachers", :actoin => "index"
+      redirect_to :controller => "teachers", :action => "index"
     else
       render :new, :status => :unprocessable_entity
     end

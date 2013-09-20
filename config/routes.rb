@@ -20,7 +20,7 @@ Caramel::Application.routes.draw do
   post 'program_types/destroy_multi' => 'program_types#destroy_multi'
   post 'schools/destroy_multi' => 'schools#destroy_multi'
 
-  resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses, :rosters, :password_resets, :schedules, :staffs, :teachers, :regions, :programs, :instruments, :students, :profiles, :admins, :program_types, :schools, :reports
+  resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses, :rosters, :password_resets, :schedules, :users, :staffs, :teachers, :regions, :programs, :instruments, :students, :profiles, :admins, :program_types, :schools, :reports
 	root 'session_page#signin'
 
   get 'session_page/signin' => 'session_page#signin'

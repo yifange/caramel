@@ -1,34 +1,13 @@
 .profile-form-body
-  = simple_form_for @me, :url => 'users':html => {:class => 'profile'} do |f|
+  = form_for @me, :url => "/users/#{current_user.id}?pk=#{current_user.id}", :html => {:class => 'profile'} do |f|
     .error-message
-      = f.input :first_name, :label => "First Name"
-      = f.input :last_name, :label => "Last name"
-      = f.input :email, :label => "Email"
-      = f.input :password, :label => "Password"
-      = f.input :password_confirmation, :label => "Confirm Password"
-
-
--# = simple_form_for @me do |f|
--#   = f.input :name, disabled: true
--#   = f.input :email
--#   = f.password_field :password, :autofill => 'on'
--#   = f.button :wrapped, :cancel => profiles_path
--# 
--# %form.form-inline
--#   %br
--#   %b 
--#     = "Name: " +  @me.name
--#     -# = link_to('edit', edit_profile_path(current_user))
--#   %br
--#     %b
--#       Email: 
--#     %a.x-editable-input-text{'data-pk' => '1', 'data-url' => '/profiles/1', :href => '#'}
--#       = @me.email
--#   %br
--#     %b
--#       Password: 
--#     %a.x-editable-password{:autocomplete => "on", :value => "*********"}
--# 
--#   
--# %button.btn.btn-primary{:style => "display:none", :type => "button", :href => edit_profile_path(@me)} Save Change
--# %button.btn.btn-warning{:style => "display:none", :type => "button", :href => "/profiles"} Cancel
+      = label_tag :first_name, "* First Name"
+      = text_field_tag :first_name, current_user.first_name
+      = label_tag :last_name, "* Last Name"
+      = text_field_tag :last_name, current_user.last_name
+      = label_tag :email, "* Email"
+      = text_field_tag :email, current_user.email
+      = label_tag :password, "* Password"
+      = password_field_tag :password
+      = label_tag :password_confirmation, "* Password Confirmation"
+      = password_field_tag :password_confirmation

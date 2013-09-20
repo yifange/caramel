@@ -16,7 +16,7 @@ class StaffsController < ApplicationController
     @staff = Staff.new(staff_params)
     if @staff.save
       flash_message :success, "#{@staff.name}: Successfully added."
-      redirect_to :controller => "staffs", :actoin => "index"
+      redirect_to :controller => "staffs", :action => "index"
     else
       render :new, :status => :unprocessable_entity
     end

@@ -1,5 +1,5 @@
 .profile-form-body
-  = form_for @me, :url => "/users/#{current_user.id}?pk=#{current_user.id}", :html => {:class => 'profile'} do |f|
+  = form_tag({:action => "update", :id => "#{current_user.id}"}, method: "put", class: "profile") do
     .error-message
       = label_tag :first_name, "* First Name"
       = text_field_tag :first_name, current_user.first_name

@@ -125,17 +125,18 @@ initProfile = ->
 
 initProfileSubmit = ->
   $(".profile-modal-confirm").on "click", ->
-    $form = $("form.profile")
+    form = $("form.profile")
     $.ajax({
-      type: $form.attr("method"),
-      url: $form.attr("action"),
-      data: $form.serialize(),
+      type: form.attr("method"),
+      url: form.attr("action"),
+      data: form.serialize(),
       success: (data, status) ->
-        $(".flash-message").html($(data).find(".flash-message").html())
+        r = form.serializeArray()
         $(".profile-modal").modal("toggle")
-
+        $("#current_user_name").html(r[3].value + " " + r[4].value)
+        $(".flash-message").html($(data).find(".flash-message").html())
       error: (data, status) ->
-        $(".error-message").html($(data.responseText).find(".error-message").html())
+        $(".error-message").html('not same with password.')
       })
 
 initNewEntry = ->

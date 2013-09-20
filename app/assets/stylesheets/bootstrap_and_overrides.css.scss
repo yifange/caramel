@@ -18,7 +18,7 @@
 // the height of table
 .table th, .table td {
   height: 30px;
-	vertical-align: middle;
+	vertical-align: middle !important;
 }
 
 // the top margin of the container

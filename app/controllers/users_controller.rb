@@ -5,8 +5,13 @@ class UsersController < ApplicationController
 
   def update 
     user = User.find(params[:id])
-    user.update_attributes(user_params)
-    render nothing: true
+    if params[:password] != params[:password_confirmation]
+      render :edit, :status => :unprocessable_entity
+    elsif user.update_attributes(user_params)
+      render nothing: true
+    else
+      render :edit, :status => :unprocessable_entity
+    end
   end
 
   private

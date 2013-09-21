@@ -34,7 +34,7 @@
           - j = 0
           - schools.each do |school|
             %li{:class => (j == 0 ? 'active' : nil)}
-              %a.tab-hover{:href => "#tab-school#{school.id}", "data-toggle" => "tab", :title => "#{school.name}"}
+              %a.tab-hover{:href => "#tab-school#{school.id}", "data-toggle" => "tab", :title => "#{school.full}"}
                 = school.abbrev
             - j += 1
         .tab-content

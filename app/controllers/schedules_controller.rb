@@ -12,6 +12,7 @@ class SchedulesController < ApplicationController
         @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
       end
     elsif current_user[:type] == "Staff"
+    end
     # @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
 
     @month = (params[:month] || Date.today.month).to_i

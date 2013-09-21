@@ -1,0 +1,47 @@
+- day_of_week = ["Su", "M", "Tu", "W", "Th", "F", "Sa"]
+- today = Date.today
+.fmc-container
+  %table
+    %tr
+      %td.fmc-cal-header-blank
+      %td.fmc-cal-header-blank
+      - month_range = @date.beginning_of_month .. @date.end_of_month
+      - for day in month_range
+        %td.fmc-cal-header-wday
+          - unless day.saturday? or day.sunday?
+            = day_of_week[day.wday]
+    - @enrollments.each do |enrollment|
+      - student = enrollment.student
+      - program = enrollment.program
+      - group_schedule_hash = {}
+      - regular_schedule_hash = {}
+      - group_attendance_hash = {}
+      - regular_attendance_hash = {}
+      - enrollment.rosters.each do |roster|
+        - unless not (roster.start_date.nil? or roster.end_date.nil?) and roster.start_date <= today and today <= roster.end_date
+          - break
+        - course = roster.course
+        - attendances = roster.attendances
+        - attendances.each do |attendance|
+          - if month_range.include? attendance.date
+            - if course.course_type == "GroupCourse"
+              - group_attendance_hash[attendance.date] = attendance
+            - else
+              - regular_attendance_hash[attendance.date] = attendance
+        - course.schedules.each do |schedule|
+          - if month_range.include? schedule.date
+            - if course.course_type == "GroupCourse"
+              - group_schedule_hash[schedule.date] = [schedule, course, roster]
+            - else
+              - regular_schedule_hash[schedule.date] = [schedule, course, roster]
+      %tr
+        %td.fmc-cal-enrollment-text{:rowspan => 2}
+          = student.first_name + " " + student.last_name
+        %td.fmc-cal-class-type-title
+          regular
+        = render 'regular_row', :schedule_hash => regular_schedule_hash, :attendance_hash => regular_attendance_hash, :month_range => month_range, :enrollment => enrollment
+      %tr
+        %td.fmc-cal-class-type-title
+          group
+        = render "group_row", :schedule_hash => group_schedule_hash, :attendance_hash => group_attendance_hash, :month_range => month_range, :enrollment => enrollment
+= modal_for "attendance", :modal_title => "attendance", :delete_button => true

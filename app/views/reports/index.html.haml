@@ -30,13 +30,13 @@
       Grand Total
 
       .div.pull-right
-        %span.badge.badge-success.report-header.report-header-completed{:data => {:toggle => "tooltip"}, :title => "Classes completed"}
+        %span.badge.badge-success.report-heading.report-heading-completed{:data => {:toggle => "tooltip"}, :title => "Classes completed"}
           -# always be green
           = 1
-        %span.badge.report-header.report-header-remaining{:data => {:toggle => "tooltip"}, :title => "Classes remaining"}
+        %span.badge.report-heading.report-heading-remaining{:data => {:toggle => "tooltip"}, :title => "Classes remaining"}
           -# always be grey
           = 2
-        %span.badge.badge-important.report-header.report-header-overunder{:data => {:toggle => "tooltip"}, :title => "Over/under"}
+        %span.badge.badge-important.report-heading.report-heading-overunder{:data => {:toggle => "tooltip"}, :title => "Over/under"}
           -# red if negative; grey if zero; yellow if positive
           = 3
     %table.table.report-table.table-condensed.table-striped.table-hover
@@ -80,23 +80,23 @@
           %td.report-stats
             = 7
 
-  - @reports.each do |header, details|
+  - @reports.each do |heading, details|
     .panel.panel-default.accordion-parent
-      .panel-heading.accordion-toggle{"data-target" => "student-#{header[:student].id}"}
-        %span.report-header.report-header-student
-          = header[:student].name 
+      .panel-heading.accordion-toggle{"data-target" => "student-#{heading[:student].try(:id)}"}
+        %span.report-heading.report-heading-student
+          = heading[:student].try(:name) 
           
-        %span.report-header.report-header-school.label.label-info{:data => {:toggle => "tooltip"}, :title => header[:school].full}
-          = header[:school].abbrev
-        %span.report-header.report-header-program.label.label-info
-          = header[:program].name
+        %span.report-heading.report-heading-school.label.label-info{:data => {:toggle => "tooltip"}, :title => heading[:school].try(:full)}
+          = heading[:school].try(:abbrev) or "school name"
+        %span.report-heading.report-heading-program.label.label-info
+          = heading[:program].try(:name) or "program_name"
         .div.pull-right
-          %span.badge.badge-success.report-header.report-header-completed{:data => {:toggle => "tooltip"}, :title => "Classes completed"}
+          %span.badge.badge-success.report-heading.report-heading-completed{:data => {:toggle => "tooltip"}, :title => "Classes completed"}
             -# always be green
-            = details[:classes_completed] 
-          %span.badge.report-header.report-header-remaining{:data => {:toggle => "tooltip"}, :title => "Classes remaining"}
+            = details[:classes_completed] or 0
+          %span.badge.report-heading.report-heading-remaining{:data => {:toggle => "tooltip"}, :title => "Classes remaining"}
             -# always be grey
-            = details[:classes_remaining] 
+            = details[:classes_remaining] or 0
           - if details[:over_under] < 0
             - span_class = "badge-important"
             - number = -details[:over_under]
@@ -106,10 +106,10 @@
           - elsif details[:over_under] > 0
             - span_class = "badge-warning"
             - number = details[:over_under]
-          %span.badge.report-header.report-header-overunder{:data => {:toggle => "tooltip"}, :title => "Over/under", :class => span_class}
+          %span.badge.report-heading.report-heading-overunder{:data => {:toggle => "tooltip"}, :title => "Over/under", :class => span_class}
             -# red if negative; grey if zero; yellow if positive
             = number
-      %table.report-table.table.table-condensed.table-striped.table-hover.accordion-body{:id => "student-#{header[:student].id}"}
+      %table.report-table.table.table-condensed.table-striped.table-hover.accordion-body{:id => "student-#{heading[:student].try(:id)}"}
         %thead
           %tr
             %th.class-column

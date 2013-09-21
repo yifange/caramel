@@ -42,7 +42,11 @@ class Program < ActiveRecord::Base
       teacher.id
     end
   end
-
+  def teacher_names
+    teachers.map do |teacher|
+      teacher.name
+    end
+  end
   def student_ids
     students.map do |student|
       student.id

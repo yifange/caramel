@@ -37,7 +37,7 @@ gem 'jquery-ui-rails'
 # gem 'bootstrap-select-rails'
 gem 'select2-rails'
 gem 'bootstrap-x-editable-rails'
-# gem 'rails-footnotes'
+gem 'rails-footnotes'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

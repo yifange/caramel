@@ -1,17 +1,21 @@
 - content_for :sidemenu do
   = render '/layouts/classes_page_sidebar'
 
-- content_for :subnav do
-  = render "/layouts/subnav", :nav_pills_partial => nil, :nav_filter_partial => "/rosters/nav_filter", :active => nil, :base_path => :rosters_path
-
-- content_for :main do
-  
-  .classes-container.span4.accordion-parent
-    = render "classes"
-  .rosters-container.span7.accordion-parent
-    = render "rosters"
-
-  = modal_for "roster", :modal_title => "New Roster"
-  = modal_for "add-student", :modal_title => "Add a student"
-  = modal_for "update-class", :modal_title => "Update Class"
-  = modal_for "add-class", :modal_title => "Add a Class"
+- if @program
+  - content_for :subnav do
+    = render "/layouts/subnav", :nav_pills_partial => nil, :nav_filter_partial => "/rosters/nav_filter", :active => nil, :base_path => :rosters_path
+  - content_for :main do
+    .classes-container.span4.accordion-parent
+      = render "classes"
+    .rosters-container.span7.accordion-parent
+      - if @students and @students.count > 0
+        = render "rosters"
+      - else
+        = render "/layouts/empty_student_page"
+    = modal_for "roster", :modal_title => "New Roster"
+    = modal_for "add-student", :modal_title => "Add a student"
+    = modal_for "update-class", :modal_title => "Update Class"
+    = modal_for "add-class", :modal_title => "Add a Class"
+- else 
+  - content_for :main do
+    = render "/layouts/empty_program_page"

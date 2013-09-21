@@ -8,7 +8,7 @@ class AttendancesController < ApplicationController
     @program = if params[:program_id]
                  (@programs.find_by :id => params[:program_id])
                else 
-                 @program = @programs.first
+                 @program = @programs.try(:first)
                end
     if @program
       @program_id = @program[:id]

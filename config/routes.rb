@@ -23,7 +23,7 @@ Caramel::Application.routes.draw do
   resources :events, :month_events, :calendars, :attendances, :navs, :lunchpads, :courses, :rosters, :password_resets, :schedules, :staffs, :teachers, :regions, :programs, :instruments, :students, :profiles, :admins, :program_types, :schools, :reports
 	root 'session_page#signin'
 
-  get 'session_page/signin' => 'session_page#signin'
+  get 'session_page/signin' => 'session_page#signin', :as => :signin
   post 'session_page/verify' => 'session_page#verify'
   get 'session_page/signout' => 'session_page#signout'
 

@@ -3,7 +3,7 @@ class CreateSchools < ActiveRecord::Migration
     create_table :schools do |t|
       t.references :region, index: true
       t.string :abbrev
-      t.string :full
+      t.string :name
 
       t.timestamps
     end

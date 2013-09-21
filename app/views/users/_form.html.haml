@@ -1,0 +1,13 @@
+.profile-form-body
+  = form_tag({:action => "update", :id => "#{current_user.id}"}, method: "put", class: "profile") do
+    = label_tag :first_name, "* First Name"
+    = text_field_tag :first_name, current_user.first_name
+    = label_tag :last_name, "* Last Name"
+    = text_field_tag :last_name, current_user.last_name
+    = label_tag :email, "* Email"
+    = text_field_tag :email, current_user.email
+    = label_tag :password, "* Password"
+    = password_field_tag :password
+    = label_tag :password_confirmation, "* Password Confirmation"
+    = password_field_tag :password_confirmation
+    %span.error-message

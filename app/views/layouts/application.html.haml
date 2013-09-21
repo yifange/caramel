@@ -34,11 +34,12 @@
               %li.dropdown{:style => 'margin-right: 10px;'}
                 %a.dropdown-toggle{'data-toggle' => 'dropdown', :href => '#'}
                   %i.icon-user.icon-white
-                  = current_user.name
+                  %span#current_user_name
+                    = current_user.name
                   %span.caret
                 %ul.dropdown-menu
                   %li
-                    %a.profile{:href => '/profiles'} Profile
+                    %a.profile{:href => "/users/#{current_user.id}/edit"} Profile
                   %li
                     %a{:href => '/session_page/signout'} Sign out
     = modal_for "profile", :modal_title => "Profile", :css_class => "profile"

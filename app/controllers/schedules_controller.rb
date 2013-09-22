@@ -1,23 +1,20 @@
 class SchedulesController < ApplicationController
   before_filter :require_login
   def index
+    @programs = case current_user[:type]
+                when "Teacher"
+                  Teacher.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
+                when "Staff"
+                  Staff.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
+                when "Admin"
+                  Program.all.includes(:school).order("school_id ASC")
+                end
 
-    if current_user[:type] == "Teacher"
-      @programs = Teacher.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
-      @program = @programs.try(:find_by, :id => params[:program_id]) || @programs.try(:first)
-      @program_id = @program.try(:id)
-      school_id = @program.try(:school).try(:id)
-      @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
-      @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
-    elsif current_user[:type] == "Staff"
-      @programs = Staff.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
-      @program = @programs.try(:find_by, :id => params[:program_id]) || @programs.try(:first)
-      @program_id = @program.try(:id)
-      school_id = @program.try(:school).try(:id)
-      @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
-      @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
-    end
-    # @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
+    @program = @programs.try(:find_by, :id => params[:program_id]) || @programs.try(:first)
+    @program_id = @program.try(:id)
+    school_id = @program.try(:school).try(:id)
+    @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
+    @calendars = rehash_objs(Calendar.where(:school_id => school_id))
 
     @month = (params[:month] || Date.today.month).to_i
     @year = (params[:year] || Date.today.year).to_i
@@ -27,23 +24,20 @@ class SchedulesController < ApplicationController
     # render :json => @calendars
   end
   def index_week
-    if current_user[:type] == "Teacher"
-      @programs = Teacher.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
-      @program = @programs.try(:find_by, :id => params[:program_id]) || @programs.try(:first)
-      @program_id = @program.try(:id)
-      school_id = @program.try(:school).try(:id)
-      @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
-      @calendars = rehash_objs(Calendar.where(:school_id => school_id))
-    elsif current_user[:type] == "Staff"
-      @programs = Staff.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
-      @program = @programs.try(:find_by, :id => params[:program_id]) || @programs.try(:first)
-      @program_id = @program.try(:id)
-      school_id = @program.try(:school).try(:id)
-      @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
-      @calendars = rehash_objs(Calendar.where(:school_id => school_id))
+    @programs = case current_user[:type]
+                when "Teacher"
+                  Teacher.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
+                when "Staff"
+                  Staff.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
+                when "Admin"
+                  Program.all.includes(:school).order("school_id ASC")
+                end
 
-    end
-    # @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
+    @program = @programs.try(:find_by, :id => params[:program_id]) || @programs.try(:first)
+    @program_id = @program.try(:id)
+    school_id = @program.try(:school).try(:id)
+    @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
+    @calendars = rehash_objs(Calendar.where(:school_id => school_id))
 
     @month = (params[:month] || Date.today.month).to_i
     @year = (params[:year] || Date.today.year).to_i

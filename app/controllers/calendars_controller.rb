@@ -1,19 +1,20 @@
 class CalendarsController < ApplicationController
   before_filter :require_login
   def index
-    if current_user[:type] == "Teacher"
-      @schools = Teacher.find(current_user[:id]).schools
-      @school = (@schools.try(:find_by, :id => params[:school_id])) || @schools.try(:first)
-      @schools = @schools.try(:uniq)
-      @school_id = @school.try(:id)
-      @calendars = rehash_objs(Calendar.where(:school_id => @school_id)) if @school_id
-    elsif current_user[:type] == "Staff"
-      @schools = Staff.find(current_user[:id]).schools
-      @school = (@schools.try(:find_by, :id => params[:school_id])) || @schools.try(:first)
-      @schools = @schools.try(:uniq)
-      @school_id = @school.try(:id)
-      @calendars = rehash_objs(Calendar.where(:school_id => @school_id)) if @school_id
-    end
+    @schools = case current_user[:type]
+               when "Teacher" 
+                 Teacher.find(current_user[:id]).schools
+               when "Staff" 
+                 Staff.find(current_user[:id]).schools
+               when "Admin"
+                 School.all
+               end
+
+    @school = (@schools.try(:find_by, :id => params[:school_id])) || @schools.try(:first)
+    @schools = @schools.try(:uniq)
+    @school_id = @school.try(:id)
+    @calendars = rehash_objs(Calendar.where(:school_id => @school_id)) if @school_id
+
     @month = (params[:month] || Date.today.month).to_i
     @year = (params[:year] || Date.today.year).to_i
     @day = (params[:day] || Date.today.day).to_i
@@ -22,20 +23,20 @@ class CalendarsController < ApplicationController
   end
 
   def index_week
-    # params[:school_id] = 1 # FIXME THIS IS FAKED
-    if current_user[:type] == "Teacher"
-      @schools = Teacher.find(current_user[:id]).schools
-      @school = (@schools.try(:find_by, :id => params[:school_id])) || @schools.try(:first)
-      @schools = @schools.try(:uniq)
-      @school_id = @school.try(:id)
-      @calendars = rehash_objs(Calendar.where(:school_id => @school_id)) if @school_id
-    elsif current_user[:type] == "Staff"
-      @schools = Staff.find(current_user[:id]).schools
-      @school = (@schools.try(:find_by, :id => params[:school_id])) || @schools.try(:first)
-      @schools = @schools.try(:uniq)
-      @school_id = @school.try(:id)
-      @calendars = rehash_objs(Calendar.where(:school_id => @school_id)) if @school_id
-    end
+    @schools = case current_user[:type]
+               when "Teacher" 
+                 Teacher.find(current_user[:id]).schools
+               when "Staff" 
+                 Staff.find(current_user[:id]).schools
+               when "Admin"
+                 School.all
+               end
+
+    @school = (@schools.try(:find_by, :id => params[:school_id])) || @schools.try(:first)
+    @schools = @schools.try(:uniq)
+    @school_id = @school.try(:id)
+    @calendars = rehash_objs(Calendar.where(:school_id => @school_id)) if @school_id
+
     @month = (params[:month] || Date.today.month).to_i
     @year = (params[:year] || Date.today.year).to_i
     @day = (params[:day] || Date.today.day).to_i
@@ -98,9 +99,7 @@ class CalendarsController < ApplicationController
   def rehash_objs(objs)
     r = {}
     for obj in objs
-      unless r.has_key? obj[:date]
-        r[obj[:date]] = []
-      end
+      r[obj[:date]] = [] unless r.has_key? obj[:date]
       r[obj[:date]] << obj
     end
     r

@@ -1,30 +1,25 @@
 class RostersController < ApplicationController
   before_filter :require_login
   def index
-    # XXX faked
-    @term_id = params[:term_id] = 1
+    @term_id = params[:term_id] || Term.order("start_date DESC").first.id
+    
+    @programs = case current_user[:type]
+                when "Teacher"
+                  Teacher.find(current_user[:id]).programs.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
+                when "Staff"
+                  Staff.find(current_user[:id]).programs.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
+                when "Admin"
+                  Program.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
+                end
 
-    if current_user[:type] == "Teacher"
-      @teacher = Teacher.find(current_user[:id])
-      @programs = @teacher.programs.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
-      @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
-      if @program
-        @program_id = @program[:id]
-        @courses = @program.courses.includes(:rosters => [:enrollment => [:student]])
-        @students = @program.students.includes(:enrollments => [:rosters => [:course => [:students]]])
-        @enrollments = @program.enrollments.includes(:student)
-      end
-    elsif current_user[:type] == "Staff"
-      @staff = Staff.find(current_user[:id])
-      @programs = @staff.programs.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
-      @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
-      if @program
-        @program_id = @program[:id]
-        @courses = @program.courses.includes(:rosters => [:enrollment => [:student]])
-        @students = @program.students.includes(:enrollments => [:rosters => [:course => [:students]]])
-        @enrollments = @program.enrollments.includes(:student)
-      end
+    @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
+    if @program
+      @program_id = @program[:id]
+      @courses = @program.courses.includes(:rosters => [:enrollment => [:student]])
+      @students = @program.students.includes(:enrollments => [:rosters => [:course => [:students]]])
+      @enrollments = @program.enrollments.includes(:student)
     end
+
   end
   
   def new

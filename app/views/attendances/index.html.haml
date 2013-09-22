@@ -6,7 +6,10 @@
   - content_for :subnav do
     = render "/layouts/subnav", :nav_pills_partial => "/attendances/nav_pills", :nav_filter_partial => "/attendances/nav_filter", :base_path => :attendances_path, :active => nil
   - content_for :main do
-    = render "attendance_grids"
+    - if @enrollments.count > 0
+      = render "attendance_grids"
+    - else
+      = render "/layouts/empty_student_page"
 - else
   - content_for :main do
     = render "/layouts/empty_program_page"

@@ -5,7 +5,7 @@ class AttendancesController < ApplicationController
                 when "Teacher"
                   Teacher.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
                 when "Staff"
-                  Teacher.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
+                  Staff.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
                 when "Admin"
                   Program.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
                 end

@@ -1,10 +1,12 @@
 class AttendancesController < ApplicationController
   def index
     term_id = params[:term_id] || Term.order("start_date ASC").last.id
-
     if current_user[:type] == "Teacher"
       @programs = Teacher.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
+    elsif current_user[:type] == "Staff"
+      @programs = Staff.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
     end
+
     @program = if params[:program_id]
                  (@programs.find_by :id => params[:program_id])
                else 

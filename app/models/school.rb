@@ -4,16 +4,16 @@ class School < ActiveRecord::Base
   has_many :students, :dependent => :restrict_with_exception
   has_many :programs, :dependent => :restrict_with_exception
   has_many :teachers, -> {uniq}, :through => :programs
-  validates_presence_of :abbrev, :full, :region
-  validates :abbrev, :uniqueness => {:scope => :full}
+  validates_presence_of :abbrev, :name, :region
+  validates :abbrev, :uniqueness => {:scope => :name}
 
   def self.all_ordered
-    all.order("full")
+    all.order("name")
   end
 
   def self.all_ordered_json
     all_ordered.map do |school| 
-      {:id => school.id, :text => school.full}
+      {:id => school.id, :text => school.name}
     end
   end
 
@@ -22,12 +22,12 @@ class School < ActiveRecord::Base
     region_ids.each do |region_id|
       schools += Region.find(region_id).schools
     end
-    schools.uniq.sort_by{|school| school.full}
+    schools.uniq.sort_by{|school| school.name}
   end
 
   def self.in_regions_ordered_json(region_ids)
     in_regions_ordered(region_ids).map do |school| 
-      {:id => school.id, :text => school.full}
+      {:id => school.id, :text => school.name}
     end
   end
 

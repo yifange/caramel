@@ -81,7 +81,7 @@ module CalHelper
       next_link = link_to nil, {:year => @date.next_month.year, :month => @date.next_month.month}, :id => "cal-nav-next"
       current_text = content_tag :span, @date.strftime("%Y %B"), :id => "cal-nav-title"
       program_id = content_tag :span, @program.id, :id => "cal-nav-program-id" if @program
-      program_name = content_tag :span, @program.school.full + ", " + @program.program_type.name + ", " + @program.instrument.name, :id => "cal-nav-program-name" if @program
+      program_name = content_tag :span, @program.school.name + ", " + @program.program_type.name + ", " + @program.instrument.name, :id => "cal-nav-program-name" if @program
       nav = prev_link.concat(today_link).concat(next_link).concat(current_text).concat(program_id).concat(program_name)
       content_tag :div, nav, :id => "cal-nav", :style => "display: none"
     end
@@ -341,10 +341,10 @@ module CalHelper
       today_link = link_to nil, {:year => @today.year, :month => @today.month, :day => @today.day, :school_id => @school_id, :program_id => @program_id}, :id => "cal-nav-today"
       next_link = link_to nil, {:year => @date.next_week.year, :month => @date.next_week.month, :day => @date.next_week.day, :school_id => @school_id, :program_id => @program_id}, :id => "cal-nav-next"
       current_week = content_tag :span, @date.beginning_of_week(:sunday).strftime("%-d %b %Y") + " - " + @date.end_of_week(:sunday).strftime("%-d %b %Y"), :id => "cal-nav-title"
-      school_name = content_tag :span, @school.full, :id => "cal-nav-school-name" if @school
+      school_name = content_tag :span, @school.name, :id => "cal-nav-school-name" if @school
       school_id = content_tag :span, @school.id, :id => "cal-nav-school-id" if @school
       program_id = content_tag :span, @program.id, :id => "cal-nav-program-id" if @program
-      program_name = content_tag :span, @program.school.full + ", " + @program.program_type.name + ", " + @program.instrument.name, :id => "cal-nav-program-name" if @program
+      program_name = content_tag :span, @program.school.name + ", " + @program.program_type.name + ", " + @program.instrument.name, :id => "cal-nav-program-name" if @program
       nav = prev_link.concat(today_link).concat(next_link).concat(current_week).concat(school_name).concat(school_id).concat(program_id).concat(program_name)
       
       content_tag :div, nav, :id => "cal-nav", :style => "display: none"
@@ -455,10 +455,10 @@ module CalHelper
       next_link = link_to nil, {:year => @year + 1, :school_id => @school_id}, :id => "cal-nav-next"
       today_link = link_to nil, {:year => Date.today.year, :school_id => @school_id}, :id => "cal-nav-today"
       title = content_tag :span, @year, :id => "cal-nav-title" 
-      school_name = content_tag :span, @school.full, :id => "cal-nav-school-name" if @school
+      school_name = content_tag :span, @school.name, :id => "cal-nav-school-name" if @school
       school_id = content_tag :span, @school.id, :id => "cal-nav-school-id" if @school
       program_id = content_tag :span, @program.id, :id => "cal-nav-program-id" if @program
-      program_name = content_tag :span, @program.school.full + ", " + @program.program_type.name + ", " + @program.instrument.name, :id => "cal-nav-program-name" if @program
+      program_name = content_tag :span, @program.school.name + ", " + @program.program_type.name + ", " + @program.instrument.name, :id => "cal-nav-program-name" if @program
 
       content = prev_link.concat(today_link).concat(next_link).concat(title).concat(school_name).concat(school_id).concat(program_id).concat(program_name)
       content_tag :div, content, :id => "cal-nav", :style => "display: none"

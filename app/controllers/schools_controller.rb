@@ -9,7 +9,7 @@ class SchoolsController < ApplicationController
   def create
     @school = School.new(school_params)
     if @school.save
-      flash_message :success, "#{@school.full}: Successfully added."
+      flash_message :success, "#{@school.name}: Successfully added."
       redirect_to :controller => "schools", :action => "index"
     else
       render :new, :status => :unprocessable_entity
@@ -18,9 +18,9 @@ class SchoolsController < ApplicationController
 
   def update
     school = School.find(params[:pk])
-    if params[:full] == 'full' || params[:full] == 'abbrev'
-      params[:school] = {params[:full] => params[:value]}
-    elsif params[:full] == 'region'
+    if params[:name] == 'name' || params[:name] == 'abbrev'
+      params[:school] = {params[:name] => params[:value]}
+    elsif params[:name] == 'region'
       params[:school] = {:region_id => params[:value_add]}
     end
     school.update_attributes(school_params)
@@ -41,9 +41,9 @@ class SchoolsController < ApplicationController
       begin
         school = School.find(item)
         school.destroy
-        flash_message :success, "#{school.full}: Successfully removed."
+        flash_message :success, "#{school.name}: Successfully removed."
       rescue ActiveRecord::DeleteRestrictionError => e
-        flash_message :error, "#{school.full}: Can not be removed, since there are students enrolled or programs assigned."
+        flash_message :error, "#{school.name}: Can not be removed, since there are students enrolled or programs assigned."
       end
     end
     redirect_to :controller => "schools", :action => "index"
@@ -51,7 +51,7 @@ class SchoolsController < ApplicationController
 
 private
   def school_params
-    params.require(:school).permit(:region_id, :abbrev, :full)
+    params.require(:school).permit(:region_id, :abbrev, :name)
   end
 
 end

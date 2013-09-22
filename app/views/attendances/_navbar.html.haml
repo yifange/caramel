@@ -19,4 +19,4 @@
           %li
             %p.navbar-text#subnav-text
         %ul.nav.nav-pills.pull-right.unselectable
-          = nav_filter_for "program", @programs, :base_url => "/attendances", :year => params[:year], :month => params[:month], :default_text => "#{@program.school.full}, #{@program.program_type.name}, #{@program.instrument.name}"
+          = nav_filter_for "program", @programs, :base_url => "/attendances", :year => params[:year], :month => params[:month], :default_text => "#{@program.school.name}, #{@program.program_type.name}, #{@program.instrument.name}"

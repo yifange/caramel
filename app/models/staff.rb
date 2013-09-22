@@ -18,7 +18,7 @@ class Staff < User
 
   def schools_ordered_json
     schools_ordered.map do |school|
-      {:id => school.id, :text => school.full}
+      {:id => school.id, :text => school.name}
     end
   end
 

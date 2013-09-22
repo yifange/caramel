@@ -28,7 +28,7 @@ module NavFilterHelper
       url += "&day=#{day}" if day
       item = content_tag :li do
         link_to url, "tabindex" => "-1", :data => {:school => obj.id} do
-          obj.full
+          obj.name
         end
       end
       buf.concat(item)
@@ -49,7 +49,7 @@ module NavFilterHelper
     
     program_hash.each do |school, programs|
       menu = content_tag :li, :class => "dropdown-submenu" do
-        item = link_to school.full, '#', :tabindex => '-1'
+        item = link_to school.name, '#', :tabindex => '-1'
         submenu = content_tag :ul, :class => 'dropdown-menu' do
           subitems = ''.html_safe
           programs.each do |program|

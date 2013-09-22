@@ -27,12 +27,12 @@ class Teacher < User
     programs.each do |program|
       schools.push(School.find(program.school_id))
     end
-    schools.uniq.sort_by{|school| school.full}
+    schools.uniq.sort_by{|school| school.name}
   end
 
   def schools_ordered_json
     schools_ordered.map do |school|
-      {:id => school.id, :text => school.full}
+      {:id => school.id, :text => school.name}
     end
   end
 

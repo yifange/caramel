@@ -62,12 +62,12 @@ Domain.create(user_id: @t_R2_1.id, region_id: @r_2.id)
 Domain.create(user_id: @t_R2R3_1.id, region_id: @r_2.id)
 Domain.create(user_id: @t_R2R3_1.id, region_id: @r_3.id)
 
-@s_R1_1 = School.create(abbrev: 'R1_1', full: 'R1_1', region_id: @r_1.id)
-@s_R1_2 = School.create(abbrev: 'R1_2', full: 'R1_2', region_id: @r_1.id)
-@s_R2_1 = School.create(abbrev: 'R2_1', full: 'R2_1', region_id: @r_2.id)
-@s_R2_2 = School.create(abbrev: 'R2_2', full: 'R2_2', region_id: @r_2.id)
-@s_R3_1 = School.create(abbrev: 'R3_1', full: 'R3_1', region_id: @r_3.id)
-@s_R3_2 = School.create(abbrev: 'R3_2', full: 'R3_2', region_id: @r_3.id)
+@s_R1_1 = School.create(abbrev: 'R1_1', name: 'R1_1', region_id: @r_1.id)
+@s_R1_2 = School.create(abbrev: 'R1_2', name: 'R1_2', region_id: @r_1.id)
+@s_R2_1 = School.create(abbrev: 'R2_1', name: 'R2_1', region_id: @r_2.id)
+@s_R2_2 = School.create(abbrev: 'R2_2', name: 'R2_2', region_id: @r_2.id)
+@s_R3_1 = School.create(abbrev: 'R3_1', name: 'R3_1', region_id: @r_3.id)
+@s_R3_2 = School.create(abbrev: 'R3_2', name: 'R3_2', region_id: @r_3.id)
 
 @stu_R1_1_1 = Student.create(first_name: 'student', last_name: 'R1_1_1', school_id: @s_R1_1.id)
 @stu_R1_1_2 = Student.create(first_name: 'student', last_name: 'R1_1_2', school_id: @s_R1_1.id)
@@ -186,13 +186,13 @@ ProgramType.create(name: "POD")
                group_courses_per_year: 50,
                term_id: 1)
 
-@t_1 = Term.create(name: "CURRENT TERM", start_date: "2013-07-01", end_date: "2013-09-01")
+@t_1 = Term.create(name: "CURRENT TERM", start_date: "2013-09-01", end_date: "2014-08-31")
 
 # Calendar.create(date: "2013-08-01", term_id: @t_1.id, start_time: "2000-01-01 08:00:00", end_time: "2000-01-01 16:00:00", day_of_week: 4, available: true, school_id: @s_jhu)
 # Calendar.create(date: "2013-08-02", term_id: @t_1.id, start_time: "2000-01-01 08:00:00", end_time: "2000-01-01 16:00:00", day_of_week: 5, available: true, school_id: @s_jhu)
 
-# @a_1 = AttendanceMarking.create(:abbrev => "CP", :full => "complete")
-# @a_2 = AttendanceMarking.create(:abbrev => "SA", :full => "student absence")
+# @a_1 = AttendanceMarking.create(:abbrev => "CP", :name => "complete")
+# @a_2 = AttendanceMarking.create(:abbrev => "SA", :name => "student absence")
 
 # @c_1 = Course.create(program_id: @p_1.id, start_time: "2000-01-01 08:50:00", end_time: "2000-01-01 09:50:00", day_of_week: 5, course_type: "RegularCourse")
 # @c_2 = Course.create(program_id: @p_2.id, start_time: "2000-01-01 08:50:00", end_time: "2000-01-01 09:50:00", date: "2013-08-01", course_type: "GroupCourse")

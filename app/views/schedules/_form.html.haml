@@ -7,8 +7,9 @@
     = f.input :end_time, :start_hour => 8, :end_hour => 16, :ampm => true
     = f.input :date, :input_html => {:value => @date ? Date.strptime(@date) : Date.today}, :as => :hidden
     = f.input :program_id, :input_html => {:value => @program_id}, :as => :hidden
-    -# = f.collection_radio_buttons :recurring, [[1, "None"], [2, "Apply to future events"], [3, "Apply to all events"]], :first, :last, :input_html => {:value => 1}
     = f.input :recurring, :collection => [["None","none"], ["Future", "future"], ["All", "all"]], :include_blank => false, :wrapper_html => {:id => "schedule-recurring-selection"}
+    = f.input :term_id, :input_html => {:value => params[:term_id]}, :as => :hidden
+    -# = f.collection_radio_buttons :recurring, [[1, "None"], [2, "Apply to future events"], [3, "Apply to all events"]], :first, :last, :input_html => {:value => 1}
     -# = f.button :submit
 
 -#XXX Use javascript to hide the submit button, but reappear if error occurs during the submission

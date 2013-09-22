@@ -1,7 +1,8 @@
 class Staff < User
 
   authenticates_with_sorcery!
-
+  has_many :regions, :through => :domains
+  has_many :schools, :through => :regions
   def self.in_regions_ordered(region_ids)
     User.in_regions_ordered('Staff', region_ids)
   end

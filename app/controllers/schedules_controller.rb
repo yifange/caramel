@@ -1,16 +1,14 @@
 class SchedulesController < ApplicationController
+  before_filter :require_login
   def index
-    redirect_to signin_path unless current_user
 
     if current_user[:type] == "Teacher"
       @programs = Teacher.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
-      @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
-      if @program
-        @program_id = @program[:id]
-        school_id = @program.school[:id]
-        @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
-        @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
-      end
+      @program = @programs.try(:find_by, :id => params[:program_id]) || @programs.try(:first)
+      @program_id = @program.try(:id)
+      school_id = @program.try(:school).try(:id)
+      @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
+      @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
     elsif current_user[:type] == "Staff"
     end
     # @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))

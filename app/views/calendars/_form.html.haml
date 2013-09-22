@@ -6,6 +6,7 @@
     = f.input :school_id, :input_html => {:value => params[:school_id]}, :as => :hidden
     = f.input :date, :input_html => {:value => @date ? Date.strptime(@date) : Date.today}, :as => :hidden
     = f.input :recurring, :as => :boolean, :input_html => { :checked => (@similar_events and @similar_events.length > 1)}
+    = f.input :term_id, :input_html => {:value => params[:term_id]}, :as => :hidden
     = f.collection_radio_buttons :available, [[true, "available"], [false, "holiday"]], :first, :last
 
     -# = f.button :submit, :id => "calendar-form-submit"

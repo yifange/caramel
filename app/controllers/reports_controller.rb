@@ -1,4 +1,5 @@
 class ReportsController < ApplicationController
+  before_filter :require_login
   def index
     # [student, school, program] -> [class_completed, classes_remaining, over/under, class -> [student absence, teacher absence, school closing, student makeup, teacher makeup, school closing makeup, total classes scheduled]]
     # current_user = {:type => "Teacher", :name => "Yifan Ge"}

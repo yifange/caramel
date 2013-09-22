@@ -52,7 +52,7 @@ class Calendar < ActiveRecord::Base
   def events_cannot_overlap
     @dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
     @dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
-    Calendar.where(:date => date, :school_id => :school_id).find_each do |event|
+    Calendar.where(:date => date, :school_id => school_id).find_each do |event|
       if event.id != id and overlap?(event)
         errors.add(:base, "events overlap")
         return

@@ -1,4 +1,5 @@
 class RostersController < ApplicationController
+  before_filter :require_login
   def index
     # XXX faked
     @term_id = params[:term_id] = 1

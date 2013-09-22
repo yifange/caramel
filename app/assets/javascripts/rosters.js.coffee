@@ -95,6 +95,7 @@ addStudentModalSubmitHandler = ->
           addClassHandler()
           initRosterEditable()
           updateClassHandler()
+          studentsSelect()
         )
       error: (data, status) ->
         $("#add-student-modal-body").html($(data.responseText).find("#roster-add-student-form-body").html())
@@ -160,6 +161,7 @@ addClassModalSubmitHandler = ->
           addClassHandler()
           initRosterEditable()
           updateClassHandler()
+          studentsSelect()
         )
       error: (data, status) ->
         $("#add-class-modal-body").html($(data.responseText).find("#course-form-body").html())

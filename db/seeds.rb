@@ -19,8 +19,8 @@ ProgramType.delete_all
 Term.delete_all
 Calendar.delete_all
 
-@adm_deng = User.create(email: 'deng.jinqiu@gmail.com', password: '123456', password_confirmation: '123456', 
-                       first_name: 'Jinqiu', last_name: 'Deng', type: 'Admin', 
+@adm_deng = User.create(email: 'admin@gmail.com', password: '123456', password_confirmation: '123456', 
+                       first_name: 'Super', last_name: 'Cow', type: 'Admin', 
                        remember_me_token: nil, remember_me_token_expires_at: nil)
 @stf_R1_1 = User.create(email: 'staff.R1.1@gmail.com', password: '123456', password_confirmation: '123456', 
                        first_name: 'staff', last_name: 'R1_1', type: 'Staff', 

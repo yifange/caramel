@@ -3,8 +3,8 @@
     = f.association :course, :collection => @course, :label_method => :name, :value_method => :id, :include_blank => false, :wrapper_html => {:id => "schedule-course-select"}
     = f.input :name, :wrapper_html => {:id => "schedule-course-name"}
     = f.input :course_type, :collection => [["Regular", "RegularCourse"], ["Group", "GroupCourse"]], :include_blank => false, :wrapper_html => {:id => "schedule-course-type"}
-    = f.input :start_time, :start_hour => 8, :end_hour => 16, :ampm => true
-    = f.input :end_time, :start_hour => 8, :end_hour => 16, :ampm => true
+    = f.input :start_time, :start_hour => 6, :end_hour => 18, :ampm => true
+    = f.input :end_time, :start_hour => 6, :end_hour => 18, :ampm => true
     = f.input :date, :input_html => {:value => @date ? Date.strptime(@date) : Date.today}, :as => :hidden
     = f.input :program_id, :input_html => {:value => @program_id}, :as => :hidden
     = f.input :recurring, :collection => [["None","none"], ["Future", "future"], ["All", "all"]], :include_blank => false, :wrapper_html => {:id => "schedule-recurring-selection"}

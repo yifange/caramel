@@ -1,8 +1,8 @@
 #calendar-form-body
   = simple_form_for @calendar do |f|
     = f.error_notification
-    = f.input :start_time, :start_hour => 8, :end_hour => 16
-    = f.input :end_time, :start_hour => 8, :end_hour => 16
+    = f.input :start_time, :start_hour => 6, :end_hour => 18, :ampm => true
+    = f.input :end_time, :start_hour => 6, :end_hour => 18, :ampm => true
     = f.input :school_id, :input_html => {:value => params[:school_id]}, :as => :hidden
     = f.input :date, :input_html => {:value => @date ? Date.strptime(@date) : Date.today}, :as => :hidden
     = f.input :recurring, :as => :boolean, :input_html => { :checked => (@similar_events and @similar_events.length > 1)}

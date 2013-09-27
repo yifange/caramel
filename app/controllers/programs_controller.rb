@@ -80,7 +80,7 @@ class ProgramsController < ApplicationController
 
   private
   def program_params
-    params.require(:program).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :group_courses_per_year)
+    params.require(:program).permit(:school_id, :instrument_id, :program_type_id, :regular_courses_per_year, :term_id, :group_courses_per_year)
   end
 
 end

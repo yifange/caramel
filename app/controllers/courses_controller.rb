@@ -7,7 +7,7 @@ class CoursesController < ApplicationController
   def create
     @course = Course.new(course_params)
     if @course.save
-      render :text => "course created"
+      render :text => "class created"
       # redirect_to courses_path
     else
       render :new, :status => :unprocessable_entity
@@ -21,10 +21,15 @@ class CoursesController < ApplicationController
   def update
     course = Course.find(params[:id])
     if course.update_attributes(course_params) 
-      render :text => "course updated"
+      render :text => "class updated"
     else
       render :edit, :status => :unprocessable_entity
     end
+  end
+  def destroy
+    course = Course.find(params[:id])
+    course.destroy
+    render :text => "class delete"
   end
   private
   def course_params

@@ -6,7 +6,7 @@
       - course_type = "RegularCourse"
     - else
       - course_type = "GroupCourse"
-    = f.input :course_type, :input_html => {:value => course_type, :readonly => true}
+    = f.input :course_type, :input_html => {:value => course_type, :readonly => true}, :label => "Class type"
     = f.input :name
 
 -#XXX Use javascript to hide the submit button, but reappear if error occurs during the submission

@@ -74,7 +74,9 @@ class Schedule < ActiveRecord::Base
     return unless start_time and end_time
     @dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
     @dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
-    Schedule.where(:date => date).find_each do |event|
+    program_id = course.program_id
+
+    Schedule.where(:date => date).joins(:course => :program).where({:courses => {:program_id => program_id}}).find_each do |event|
       if event.id != id and overlap?(event)
         errors.add(:base, "time conflicts with schedule #{event.id}")
         return

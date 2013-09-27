@@ -4,12 +4,13 @@
 - content_for :sidemenu do
   - render '/layouts/people_page_sidebar'
 
-- content_for :action_button do
-  %a.btn.btn-primary.delete-entry{'data-url' => "/students/destroy_multi"}
-    %i.icon-trash.icon-white
-  %a.btn.btn-primary.new-entry{:href => "/students/new", "data-entry" => "students"}
-    %i.icon-plus.icon-white
-  = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"
+- if verify_user(['Admin', 'Staff'])
+  - content_for :action_button do
+    %a.btn.btn-primary.delete-entry{'data-url' => "/students/destroy_multi"}
+      %i.icon-trash.icon-white
+    %a.btn.btn-primary.new-entry{:href => "/students/new", "data-entry" => "students"}
+      %i.icon-plus.icon-white
+    = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"
 
 - content_for :main do
   %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
@@ -17,7 +18,8 @@
       %th{:width => '10px'}
       %th{:width => '310px'} NAME
       %th{:width => '280px'} SCHOOL
-      %th PROGRAM
+      %th{:width => '420px'} PROGRAM
+      %th
     - @students.each do |student|
       %tr
         %td
@@ -34,3 +36,4 @@
             = School.find(student.school_id).name
         %td
           = multiple_selection("student-programs-#{student.id}-", student.school.programs_json, student.program_ids, [], student.id, "/students/#{student.id}", 'programs')
+        %td

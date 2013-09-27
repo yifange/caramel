@@ -4,14 +4,13 @@
 - content_for :sidemenu do
   = render '/layouts/programs_page_sidebar'
 
-- content_for :action_button do
-  %a.btn.btn-primary.delete-entry{'data-url' => "/programs/destroy_multi"}
-    %i.icon-trash.icon-white
-
-  -# Program new entry is diff from others.
-  %a.btn.btn-primary.new-program-entry{:href => "/programs/new", "data-entry" => "programs"}
-    %i.icon-plus.icon-white
-  = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
+- if verify_user(['Admin', 'Staff'])
+  - content_for :action_button do
+    %a.btn.btn-primary.delete-entry{'data-url' => "/programs/destroy_multi"}
+      %i.icon-trash.icon-white
+    %a.btn.btn-primary.new-program-entry{:href => "/programs/new", "data-entry" => "programs"}
+      %i.icon-plus.icon-white
+    = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
 
 - content_for :main do
   %ul.nav.nav-tabs
@@ -89,7 +88,7 @@
                             - if verify_user(['Admin', 'Staff'])
                               = multiple_selection('program-teachers', Region.find(school.region_id).teachers_ordered_json, program.teacher_ids, [], program.id, "/programs/#{program.id}", 'teachers')
                             - elsif verify_user(['Teacher'])
-                              = program.teacher_names
+                              = program.teacher_names_str
                           .well.well-small{:style => 'background-color: #eee;'}
                             %b STUDENTS:
                             - if verify_user(['Admin', 'Staff'])

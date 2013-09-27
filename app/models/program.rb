@@ -42,11 +42,16 @@ class Program < ActiveRecord::Base
       teacher.id
     end
   end
-  def teacher_names
-    teachers.map do |teacher|
-      teacher.name
+
+  def teacher_names_str
+    str = ""
+    teachers.each do |teacher|
+      str += teacher.name
+      str += ', '
     end
+    str.chop.chop
   end
+
   def student_ids
     students.map do |student|
       student.id

@@ -14,10 +14,11 @@
 - content_for :main do
   %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
-      %th{:width => '3%'}
-      %th FULL NAME
-      %th{:width => '25%'} ABBREVIATION
-      %th{:width => '25%'} REGION
+      %th{:width => '10px'}
+      %th{:width => '280px'} FULL NAME
+      %th{:width => '280px'} ABBREVIATION
+      %th{:width => '280px'} REGION
+      %th
     - @schools.each do |school|
       %tr
         %td
@@ -34,3 +35,4 @@
         - elsif verify_user(['Staff'])
           %td
             = singular_selection('school-region', current_user.regions_ordered_json, school.region_id, school.region_locked, school.id, "/schools/#{school.id}", 'region')
+        %td

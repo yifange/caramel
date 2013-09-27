@@ -2,7 +2,7 @@ class Schedule < ActiveRecord::Base
   belongs_to :course
   validates :start_time, :end_time, :date, :presence => true
   validate :events_cannot_overlap, :courses_must_in_term, :events_must_in_available_time_slots
-  validate :no_more_one_schedule_on_one_day
+  # validate :no_more_one_schedule_on_one_day
   attr_accessor :recurring, :name, :course_type
   def group
     course.course_type == "GroupCourse"
@@ -46,16 +46,15 @@ class Schedule < ActiveRecord::Base
   def events_must_in_available_time_slots
     return unless start_time and end_time
     available = false
-    term_id = course.program.id
+    term_id = course.program.term_id
     dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
     dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
     
-    # if course.course_type == "GroupCourse"
+    
     calendars = Calendar.where(:date => date, :term_id => term_id, :available => true)
-    # else
-    #   calendars = Calendar.where(:day_of_week => day_of_week, :term_id => term_id, :available => true)
-    # end
     calendars.find_each do |cal|
+      puts dummy_start_time
+      puts dummy_end_time
       if cal[:start_time] <= dummy_start_time and dummy_end_time <= cal[:end_time]
         available = true
         break

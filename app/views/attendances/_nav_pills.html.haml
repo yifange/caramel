@@ -1,5 +1,5 @@
 %li
-  = link_to "now", self.send(base_path, :year => @today.year, :month => @today.month, :program_id => @program_id)
+  = link_to "Today", self.send(base_path, :year => @today.year, :month => @today.month, :program_id => @program_id)
 %li
   = link_to "<", self.send(base_path, :year => @date.prev_month.year, :month => @date.prev_month.month, :program_id => @program_id)
 %li

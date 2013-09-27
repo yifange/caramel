@@ -52,7 +52,7 @@ attachSubmitHandler = ->
           attachEventHandler()
         )
       error: (data, status) ->
-        $("#calendar-modal-body").html($(data.responseText).find("#calendar-form-body").html())
+        $("#calendar-modal-body").html($(data.responseText).filter("#calendar-form-body").html())
     })
 # XXX Choose the right event to delete? What if the user chooses a different event in the form??
 attachDeleteHandler = ->
@@ -116,17 +116,6 @@ attachRadioHandler = ->
         button.addClass('active')
 
 
-
-
-# initTimepicker = ->
-#   $("#calendar_start_time").timepicker({
-#   })
-#   $("#calendar_end_time").timepicker({
-#   })
-# initDatepicker = ->
-#   $("#calendar_date").datepicker()
-# initSelectpicker = ->
-#   $(".selectpicker").selectpicker()
 
 $(document).ready attachColumnHandler
 $(document).ready attachEventHandler

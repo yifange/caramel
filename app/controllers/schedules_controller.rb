@@ -1,17 +1,20 @@
 class SchedulesController < ApplicationController
+  before_filter :require_login
   def index
+    @programs = case current_user[:type]
+                when "Teacher"
+                  Teacher.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
+                when "Staff"
+                  Staff.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
+                when "Admin"
+                  Program.all.includes(:school).order("school_id ASC")
+                end
 
-    if current_user[:type] == "Teacher"
-      @programs = Teacher.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
-    end
-    @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
-    if @program
-      @program_id = @program[:id]
-      school_id = @program.school[:id]
-      @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
-      @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
-    end
-    # @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
+    @program = @programs.try(:find_by, :id => params[:program_id]) || @programs.try(:first)
+    @program_id = @program.try(:id)
+    school_id = @program.try(:school).try(:id)
+    @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
+    @calendars = rehash_objs(Calendar.where(:school_id => school_id))
 
     @month = (params[:month] || Date.today.month).to_i
     @year = (params[:year] || Date.today.year).to_i
@@ -21,17 +24,20 @@ class SchedulesController < ApplicationController
     # render :json => @calendars
   end
   def index_week
-    if current_user[:type] == "Teacher"
-      @programs = Teacher.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
-    end
-    @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
-    if @program
-      @program_id = @program[:id]
-      school_id = @program.school[:id]
-      @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
-      @calendars = rehash_objs(Calendar.where(:school_id => school_id))
-    end
-    # @calendars = rehash_cal_objs(Calendar.where(:school_id => school_id))
+    @programs = case current_user[:type]
+                when "Teacher"
+                  Teacher.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
+                when "Staff"
+                  Staff.find(current_user[:id]).programs.includes(:school).order("school_id ASC")
+                when "Admin"
+                  Program.all.includes(:school).order("school_id ASC")
+                end
+
+    @program = @programs.try(:find_by, :id => params[:program_id]) || @programs.try(:first)
+    @program_id = @program.try(:id)
+    school_id = @program.try(:school).try(:id)
+    @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
+    @calendars = rehash_objs(Calendar.where(:school_id => school_id))
 
     @month = (params[:month] || Date.today.month).to_i
     @year = (params[:year] || Date.today.year).to_i
@@ -43,7 +49,9 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.new
     @date = params[:date]
     @program_id = params[:program_id]
+    puts @program_id
     @courses = Course.where(:program_id => params[:program_id])
+    puts @courses
     render :layout => false
   end
   def create
@@ -63,10 +71,10 @@ class SchedulesController < ApplicationController
         if r
           redirect_to schedules_path
         else
-          render :text => @schedule.errors.messages, :status => :unprocessable_entity
+          render :new, :status => :unprocessable_entity, :layout => false
         end
       else
-        render :new, :status => :unprocessable_entity
+        render :new, :status => :unprocessable_entity, :layout => false
       end
     else
       course_id = params[:schedule][:course_id]
@@ -79,7 +87,7 @@ class SchedulesController < ApplicationController
       if r
         redirect_to schedules_path
       else
-        render :new, :status => :unprocessable_entity
+        render :new, :status => :unprocessable_entity, :layout => false
       end
     end
   end
@@ -99,7 +107,7 @@ class SchedulesController < ApplicationController
     if r
       render :text => "success"
     else
-      render :edit, :status => :unprocessable_entity
+      render :edit, :status => :unprocessable_entity, :layout => false
     end
   end
   def destroy

@@ -5,7 +5,7 @@
     - klass << if event.available then " available" else " unavailable" end
     %div{:class => klass, :style => style, :data => {:eventid => event.id}}
       .wc-time.ui-corner-all
-        = "#{event.start_time.strftime("%R")}-#{event.end_time.strftime("%R")}"
+        = "#{event.start_time.strftime("%I:%M %P")}-#{event.end_time.strftime("%I:%M %P")}"
 - if @schedules.has_key? day
   - for event in @schedules[day]
     - style = event_style(event[:start_time], event[:end_time], start_hour, slot_height, slots_per_hour)
@@ -13,7 +13,7 @@
     - klass << if event.course.course_type == "RegularCourse" then " regular-class" else " group-class" end
     %div{:class => klass, :style => style, :data => {:eventid => event.id}}
       .wc-time.ui-corner-all
-        = "#{event.start_time.strftime("%R")}-#{event.end_time.strftime("%R")}"
+        = "#{event.start_time.strftime("%I:%M %P")}-#{event.end_time.strftime("%I:%M %P")}"
       .wc-title
         = event.course.name
 

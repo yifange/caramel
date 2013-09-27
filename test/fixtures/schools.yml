@@ -2,8 +2,8 @@
 
 one:
   abbrev: MyString
-  full: MyString
+  name: MyString
 
 two:
   abbrev: MyString
-  full: MyString
+  name: MyString

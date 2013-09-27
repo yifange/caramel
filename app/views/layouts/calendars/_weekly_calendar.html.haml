@@ -1,7 +1,7 @@
-- start_hour = 8
-- end_hour = 16
+- start_hour = 6
+- end_hour = 17
 - slots_per_hour = 3
-- slot_height = 18
+- slot_height = 16 
 - current_and_future_terms = Term.current_and_future_terms
 - week_range = @date.beginning_of_week(:sunday) .. @date.end_of_week(:sunday)
 .wc-container{:data => {:school => @school_id, :program => @program_id}}
@@ -32,7 +32,10 @@
             - for hour in start_hour .. end_hour
               .wc-hour-header
                 .wc-time-header-cell
-                  = "#{hour}:00"
+                  - if hour < 12
+                    = "#{hour}am"
+                  - else
+                    = "#{hour - 12}pm"
           - for day in week_range
             - klass = "wc-day-column day-#{day.strftime("%w")}"
             - klass << " wc-today" if day == @today

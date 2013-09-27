@@ -28,7 +28,7 @@ module NavFilterHelper
       url += "&day=#{day}" if day
       item = content_tag :li do
         link_to url, "tabindex" => "-1", :data => {:school => obj.id} do
-          obj.full
+          obj.name
         end
       end
       buf.concat(item)
@@ -40,22 +40,26 @@ module NavFilterHelper
     year = options[:year]
     month = options[:month]
     day = options[:day]
-    buf = "".html_safe
-    objs.group("school_id").each do |obj|
-      school = obj.school
-      programs = objs.where(:school_id => obj[:school_id])
+    buf = "".html_safe 
+    program_hash = {}
+    objs.order("instrument_id").each do |obj|
+      program_hash[obj.school] = [] unless program_hash.has_key? obj.school
+      program_hash[obj.school] << obj
+    end
+    
+    program_hash.each do |school, programs|
       menu = content_tag :li, :class => "dropdown-submenu" do
-        item = concat(link_to school.full, "#", :tabindex => "-1")
-        submenu = content_tag :ul, :class => "dropdown-menu" do
-          subitems = "".html_safe
+        item = link_to school.name, '#', :tabindex => '-1'
+        submenu = content_tag :ul, :class => 'dropdown-menu' do
+          subitems = ''.html_safe
           programs.each do |program|
-            url = base_url + "?program_id=#{program.id}"
+            url = "#{base_url}?program_id=#{program.id}"
             url += "&year=#{year}" if year
             url += "&month=#{month}" if month
             url += "&day=#{day}" if day
             subitem = content_tag :li do
-              link_to url, "tabindex" => "-1", :data => {:program => program.id} do
-                program.program_type.name + ", " + program.instrument.name
+              link_to url, 'tabindex' => '-1', :data => {:program => program.id} do
+                program.program_type.name + " - " + program.instrument.name
               end
             end
             subitems.concat(subitem)

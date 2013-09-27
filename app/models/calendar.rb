@@ -11,7 +11,9 @@ class Calendar < ActiveRecord::Base
     days = Term.find(term_id).recurring_days(day_of_week, :start_date => date)
     r = true
     days.each do |day|
-      r = r && Calendar.new(:date => day, :term_id => term_id, :start_time => start_time, :end_time => end_time, :school_id => school_id, :available => available, :day_of_week => day_of_week).save
+      r = r && Calendar.new(:date => day, :start_time => start_time, :end_time => end_time, :school_id => school_id, :available => available, :day_of_week => day_of_week).save
+      # FIXME keep this for future term support 
+      # r = r && Calendar.new(:date => day, :term_id => term_id, :start_time => start_time, :end_time => end_time, :school_id => school_id, :available => available, :day_of_week => day_of_week).save
     end
     # XXX report error. Use flash???
     # unless r end
@@ -39,8 +41,8 @@ class Calendar < ActiveRecord::Base
     end
   end
   def start_time_and_end_time_must_in_school_hour
-    start_hour = Time.gm(start_time.year, start_time.month, start_time.day, 8)
-    end_hour = Time.gm(end_time.year, end_time.month, end_time.day, 16)
+    start_hour = Time.gm(start_time.year, start_time.month, start_time.day, 6)
+    end_hour = Time.gm(end_time.year, end_time.month, end_time.day, 18)
     if start_time < start_hour or start_time > end_hour
       errors.add(:start_time, "must be in school hour")
     end
@@ -52,7 +54,7 @@ class Calendar < ActiveRecord::Base
   def events_cannot_overlap
     @dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
     @dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
-    Calendar.where(:date => date, :school_id => :school_id).find_each do |event|
+    Calendar.where(:date => date, :school_id => school_id).find_each do |event|
       if event.id != id and overlap?(event)
         errors.add(:base, "events overlap")
         return

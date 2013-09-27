@@ -1,7 +1,8 @@
 class ReportsController < ApplicationController
+  before_filter :require_login
   def index
     # [student, school, program] -> [class_completed, classes_remaining, over/under, class -> [student absence, teacher absence, school closing, student makeup, teacher makeup, school closing makeup, total classes scheduled]]
-    current_user = {:type => "Teacher", :name => "Yifan Ge"}
+    # current_user = {:type => "Teacher", :name => "Yifan Ge"}
     if current_user and current_user[:type] == "Teacher"
       @teacher = Teacher.find(current_user[:id])
       if params[:selected_schools]
@@ -15,7 +16,7 @@ class ReportsController < ApplicationController
     end
     
     @reports = {}
-    @reports[{:student => Enrollment.first.student, :school => Enrollment.first.program.school, :program => Enrollment.first.program}] = 
+    @reports[{:student => Enrollment.try(:first).try(:student), :school => Enrollment.try(:first).try(:program).try(:school), :program => Enrollment.try(:first).try(:program)}] = 
       {:classes_completed => 1, :classes_remaining => 2, :over_under => 3, :rows => {"Class A" => 
         {:student_absence => 1,
          :teacher_absence => 2,

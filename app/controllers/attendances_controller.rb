@@ -1,19 +1,30 @@
 class AttendancesController < ApplicationController
   def index
     term_id = params[:term_id] || Term.order("start_date ASC").last.id
+    @programs = case current_user[:type]
+                when "Teacher"
+                  # FIXME leave this in case we add the support for terms
+                  Teacher.find(current_user[:id]).programs.includes(:school, :program_type, :instrument).order("school_id ASC")
+                  # Teacher.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
+                when "Staff"
+                  # FIXME leave this in case we add the support for terms
+                  Staff.find(current_user[:id]).programs.includes(:school, :program_type, :instrument).order("school_id ASC")
+                  # Staff.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
+                when "Admin"
+                  # FIXME leave this in case we add the support for terms
+                  Program.includes(:school, :program_type, :instrument).order("school_id ASC")
+                  # Program.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
+                end
 
-    if current_user[:type] == "Teacher"
-      @programs = Teacher.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
-    end
     @program = if params[:program_id]
-                 (@programs.find_by :id => params[:program_id])
+                 @programs.try(:find_by, :id => params[:program_id])
                else 
-                 @program = @programs.first
+                 @program = @programs.try(:first)
                end
     if @program
-      @program_id = @program[:id]
-      school_id = @program.school[:id]
-      @enrollments = @program.enrollments.includes(:student, :program, :rosters => [:course => :schedules, :attendances => [:attendance_marking]])
+      @program_id = @program.try(:id)
+      school_id = @program.try(:school).try(:id)
+      @enrollments = @program.try(:enrollments).try(:includes, :student, :program, :rosters => [:course => :schedules, :attendances => [:attendance_marking]])
       @calendar_hash = rehash_objs(Calendar.where(:school_id => school_id))
     end
     @month = (params[:month] || Date.today.month).to_i
@@ -46,7 +57,7 @@ class AttendancesController < ApplicationController
     if attendance.update_attributes(attendance_params)
       redirect_to attendances_path
     else
-      render :edit
+      render :edit, :status => :unprocessable_entity, :layout => false
     end
   end
   def create
@@ -54,7 +65,7 @@ class AttendancesController < ApplicationController
     if attendance.save
       redirect_to attendances_path
     else
-      render :new
+      render :new, :status => :unprocessable_entity, :layout => false
     end
   end
   def destroy

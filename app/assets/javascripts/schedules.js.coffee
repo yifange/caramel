@@ -69,6 +69,7 @@ attachScheduleSubmitHandler = ->
       error: (data, status) ->
 
         $("#schedule-modal-body").html($(data.responseText).filter("#schedule-form-body").html())
+        newClassNameInput()
     })
     return false
 

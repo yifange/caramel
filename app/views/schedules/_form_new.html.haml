@@ -1,0 +1,16 @@
+#schedule-form-body
+  = simple_form_for @schedule do |f|
+    = f.error_notification
+    = display_base_errors @schedule
+    = f.association :course, :collection => @courses, :label_method => :name, :value_method => :id, :include_blank => false, :wrapper_html => {:id => "schedule-course-select"}
+    = f.input :name, :wrapper_html => {:id => "schedule-course-name"}
+    = f.input :course_type, :collection => [["Regular", "RegularCourse"], ["Group", "GroupCourse"]], :include_blank => false, :wrapper_html => {:id => "schedule-course-type"}
+    = f.input :start_time, :start_hour => 6, :end_hour => 18, :ampm => true
+    = f.input :end_time, :start_hour => 6, :end_hour => 18, :ampm => true
+    = f.input :date, :input_html => {:value => @date ? Date.strptime(@date) : Date.today}, :as => :hidden
+    = f.input :program_id, :input_html => {:value => @program_id}, :as => :hidden
+    = f.input :term_id, :input_html => {:value => params[:term_id]}, :as => :hidden
+    -# = f.collection_radio_buttons :recurring, [[1, "None"], [2, "Apply to future events"], [3, "Apply to all events"]], :first, :last, :input_html => {:value => 1}
+    -# = f.button :submit
+
+-#XXX Use javascript to hide the submit button, but reappear if error occurs during the submission

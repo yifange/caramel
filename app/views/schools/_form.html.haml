@@ -3,4 +3,4 @@
     .error-message
       = f.input :abbrev, :label => "School Name Abbreviation"
       = f.input :name, :label => "School Full Name"
-      = f.association :region, :label => "Region", :label_method => :name, :include_blank => false
+      = f.association :region, collection: current_user.regions, :label => "Region", :label_method => :name, :include_blank => false

@@ -1,3 +1,4 @@
+= debug @programs
 = nav_filter_for "program", @programs, :base_url => "/schedules", :year => params[:year], :month => params[:month], :day => params[:day], :default_text => "#{@program.school.name}, #{@program.program_type.name}, #{@program.instrument.name}"
 %li{:class => "#{active == 'week' ? 'active' : ''}"}
   = link_to "week", schedules_week_path(:program_id => @program_id), :id => "subnav-week"

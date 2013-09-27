@@ -52,7 +52,8 @@ class Schedule < ActiveRecord::Base
     
     
     calendars = Calendar.where(:date => date, :available => true)
-    calendars = Calendar.where(:date => date, :term_id => term_id, :available => true)
+    # FIXME keep this for future term support 
+    # calendars = Calendar.where(:date => date, :term_id => term_id, :available => true)
     calendars.find_each do |cal|
       puts dummy_start_time
       puts dummy_end_time

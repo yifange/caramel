@@ -11,7 +11,9 @@ class Calendar < ActiveRecord::Base
     days = Term.find(term_id).recurring_days(day_of_week, :start_date => date)
     r = true
     days.each do |day|
-      r = r && Calendar.new(:date => day, :term_id => term_id, :start_time => start_time, :end_time => end_time, :school_id => school_id, :available => available, :day_of_week => day_of_week).save
+      r = r && Calendar.new(:date => day, :start_time => start_time, :end_time => end_time, :school_id => school_id, :available => available, :day_of_week => day_of_week).save
+      # FIXME keep this for future term support 
+      # r = r && Calendar.new(:date => day, :term_id => term_id, :start_time => start_time, :end_time => end_time, :school_id => school_id, :available => available, :day_of_week => day_of_week).save
     end
     # XXX report error. Use flash???
     # unless r end

@@ -32,7 +32,7 @@
             - for hour in start_hour .. end_hour
               .wc-hour-header
                 .wc-time-header-cell
-                  - if hour < 12
+                  - if hour <= 12
                     = "#{hour}am"
                   - else
                     = "#{hour - 12}pm"

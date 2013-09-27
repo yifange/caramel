@@ -21,7 +21,7 @@ class RostersController < ApplicationController
     @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs
     if @program
       @program_id = @program[:id]
-      @courses = @program.courses.includes(:rosters => [:enrollment => [:student]])
+      @courses = @program.courses.includes(:rosters => [:enrollment => [:student]]).order("name ASC")
       @students = @program.students.includes(:enrollments => [:rosters => [:course => [:students]]])
       @enrollments = @program.enrollments.includes(:student)
     end

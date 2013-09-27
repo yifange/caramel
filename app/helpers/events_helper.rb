@@ -2,8 +2,8 @@ module EventsHelper
   def event_height(start_time, end_time, slot_height, slots_per_hour)
     length = end_time - start_time
     height = length / 3600 * slots_per_hour * slot_height
-    if height < slot_height * 0.7
-      slot_height
+    if height < slot_height * 2
+      slot_height * 2
     else
       height
     end

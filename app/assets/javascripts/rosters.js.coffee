@@ -14,6 +14,7 @@ initRosterEditable = ->
         newRosterHandler()
         initRosterEditable()
         updateClassHandler()
+        deleteClassHandler()
         studentsSelect()
       )
 
@@ -77,7 +78,27 @@ updateClassHandler = ->
         keyboard: true
       })
     )
-
+deleteClassHandler = ->
+  $(".menu-item-delete-class").on "click", (e) ->
+    e.preventDefault()
+    href = $(this).attr("href")
+    $.ajax({
+      type: "POST"
+      url: href
+      data: {"_method": "delete"}
+      success: (data, status) ->
+        $.get(document.URL, (data, status) ->
+          $(".rosters-container").html($(data).find(".rosters-container").html())
+          $(".classes-container").html($(data).find(".classes-container").html())
+          addStudentHandler()
+          newRosterHandler()
+          addClassHandler()
+          initRosterEditable()
+          updateClassHandler()
+          deleteClassHandler()
+          studentsSelect()
+        )
+    })
 addStudentModalSubmitHandler = ->
   $("#add-student-modal-confirm").on "click", ->
     $form = $("form.roster")
@@ -95,6 +116,7 @@ addStudentModalSubmitHandler = ->
           addClassHandler()
           initRosterEditable()
           updateClassHandler()
+          deleteClassHandler()
           studentsSelect()
         )
       error: (data, status) ->
@@ -116,6 +138,7 @@ rosterModalSubmitHandler = ->
           addClassHandler()
           initRosterEditable()
           updateClassHandler()
+          deleteClassHandler()
         )
       error: (data, status) ->
         $("#roster-modal-body").html($(data.responseText).find("#roster-form-body").html())
@@ -139,6 +162,7 @@ updateClassModalSubmitHandler = ->
           addClassHandler()
           initRosterEditable()
           updateClassHandler()
+          deleteClassHandler()
         )
       error: (data, status) ->
         $("#update-class-modal-body").html($(data.responseText).find("#course-form-body").html())
@@ -161,6 +185,7 @@ addClassModalSubmitHandler = ->
           addClassHandler()
           initRosterEditable()
           updateClassHandler()
+          deleteClassHandler()
           studentsSelect()
         )
       error: (data, status) ->
@@ -205,6 +230,7 @@ $(document).ready initRosterEditable
 $(document).ready addStudentHandler
 $(document).ready addStudentModalSubmitHandler
 $(document).ready updateClassHandler
+$(document).ready deleteClassHandler
 $(document).ready updateClassModalSubmitHandler
 $(document).ready addClassHandler
 $(document).ready addClassModalSubmitHandler
@@ -216,6 +242,8 @@ $(document).on "page:load", rosterModalSubmitHandler
 $(document).on "page:load", initRosterEditable
 $(document).on "page:load", addStudentHandler
 $(document).on "page:load", addStudentModalSubmitHandler
+$(document).on "page:load", updateClassHandler
+$(document).on "page:load", deleteClassHandler
 $(document).on "page:load", updateClassModalSubmitHandler
 $(document).on "page:load", addClassHandler
 $(document).on "page:load", addClassModalSubmitHandler

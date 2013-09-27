@@ -4,7 +4,7 @@ class Course < ActiveRecord::Base
   has_many :enrollments, :through => :rosters
   has_many :students, :through => :enrollments
   has_many :schedules
-  validates :name, :presence => true, :uniqueness => true
+  validates :name, :presence => true, :uniqueness => {:scope => :program_id}
   validates :program_id, :presence => true
   def start_date
     program.start_date

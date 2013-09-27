@@ -49,7 +49,9 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.new
     @date = params[:date]
     @program_id = params[:program_id]
+    puts @program_id
     @courses = Course.where(:program_id => params[:program_id])
+    puts @courses
     render :layout => false
   end
   def create

@@ -1,6 +1,6 @@
 #schedule-form-body
   = simple_form_for @schedule do |f|
-    = f.association :course, :collection => @course, :label_method => :name, :value_method => :id, :include_blank => false, :wrapper_html => {:id => "schedule-course-select"}
+    = f.association :course, :collection => @courses, :label_method => :name, :value_method => :id, :include_blank => false, :wrapper_html => {:id => "schedule-course-select"}
     = f.input :name, :wrapper_html => {:id => "schedule-course-name"}
     = f.input :course_type, :collection => [["Regular", "RegularCourse"], ["Group", "GroupCourse"]], :include_blank => false, :wrapper_html => {:id => "schedule-course-type"}
     = f.input :start_time, :start_hour => 6, :end_hour => 18, :ampm => true

@@ -18,6 +18,7 @@
       %th{:width => '310px'} NAME
       %th{:width => '280px'} EMAIL
       %th{:width => '280px'} REGION
+      %th{:width => '150px'}
       %th
     - @teachers.each do |teacher|
       %tr.accordion-group
@@ -40,8 +41,9 @@
               %button.btn{'data-toggle' => 'collapse', :href => "#collapse#{teacher.id}-"}
                 PROGRAMS
                 %span.caret
+        %td
       %tr
-        %td{'colspan' => '5', :style => 'height: auto'}
+        %td{'colspan' => '6', :style => 'height: auto'}
           .accordion-body.collapse{:id => "collapse#{teacher.id}-"}
             .accordion-inner{:style => 'border-top-width: 0px'}
               - if verify_user(['Admin'])

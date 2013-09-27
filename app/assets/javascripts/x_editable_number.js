@@ -140,7 +140,7 @@
   });
 
   number.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
-    tpl: '<div class="x-editable-user-name"><input type="text" name="regular_courses_per_year" class="input-small name-input" placeholder="regular class"><input type="text" name="group_courses_per_year" class="input-small" placeholder="group class"></div>',
+    tpl: '<div class="x-editable-number"><input type="text" name="regular_courses_per_year" class="input-small name-input" placeholder="regular class"><input type="text" name="group_courses_per_year" class="input-small" placeholder="group class"></div>',
     inputclass: ''
   });
 

@@ -1,7 +1,7 @@
 class Schedule < ActiveRecord::Base
   belongs_to :course
   validates :start_time, :end_time, :date, :presence => true
-  validate :events_cannot_overlap, :courses_must_in_term, :events_must_in_available_time_slots
+  validate :events_cannot_overlap, :courses_must_in_term, :events_must_in_available_time_slots, :start_time_cannot_after_end_time
   # validate :no_more_one_schedule_on_one_day
   attr_accessor :recurring, :name, :course_type
   def group
@@ -83,7 +83,7 @@ class Schedule < ActiveRecord::Base
   end
   def start_time_cannot_after_end_time
     if start_time >= end_time
-      errors.add(:end_time, "must after start time")
+      errors.add(:base, "end time must after start time")
     end
   end
   def overlap?(event)

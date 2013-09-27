@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
 
   has_many :domains
   has_many :regions, through: :domains
+  has_many :schools, through: :regions
   accepts_nested_attributes_for :domains
 
   def region_ids

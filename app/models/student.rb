@@ -56,4 +56,14 @@ class Student < ActiveRecord::Base
     Student.joins(:programs => [:school, :teachers]).where(:programs => {:school_id => school_id}, :assignments => {:teacher_id => teacher_id})
   end
 
+  def programs_with_teacher(teacher_id)
+    programs.joins(:assignments).where(:assignments => {:teacher_id => teacher_id})
+  end
+
+  def programs_with_teacher_ids(teacher_id)
+    programs_with_teacher(teacher_id).map do |program|
+      program.id
+    end
+  end
+
 end 

@@ -49,7 +49,8 @@
         .span2.content
           = yield(:sidemenu)
           = render_flash
-        .span10.content{:style => "margin-bottom: 15px"}
-          = yield(:action_button)
+        - if verify_user(['Admin', 'Staff'])
+          .span10.content{:style => "margin-bottom: 15px"}
+            = yield(:action_button)
         .span10.content
           = yield(:main)

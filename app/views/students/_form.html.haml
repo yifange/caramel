@@ -3,4 +3,4 @@
     .error-message
       = f.input :first_name, :label => "First Name"
       = f.input :last_name, :label => "Last name"
-      = f.association :school, :label => 'School', :label_method => :name, :include_blank => false
+      = f.association :school, collection: current_user.schools, :label => 'School', :label_method => :name, :include_blank => false

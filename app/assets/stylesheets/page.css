@@ -1,10 +1,14 @@
 .x-editable-user-name {
-    display: block;
+  display: block;
 }
 
 .x-editable-user-name span {
-    width: 90px;  
-    display: inline-block;
+  width: 90px;  
+  display: inline-block;
+}
+
+.x-editable-number .input-small {
+  width: 30px;
 }
 
 .name-input {

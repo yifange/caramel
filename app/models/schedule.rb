@@ -52,7 +52,8 @@ class Schedule < ActiveRecord::Base
     dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
     
     
-    calendars = Calendar.where(:date => date, :term_id => term_id, :school_id => school_id, :available => true)
+    calendars = Calendar.where(:date => date, :school_id => school_id, :available => true)
+    # calendars = Calendar.where(:date => date, :term_id => term_id, :school_id => school_id, :available => true)
     calendars.find_each do |cal|
       puts dummy_start_time
       puts dummy_end_time

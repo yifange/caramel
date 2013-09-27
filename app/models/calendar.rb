@@ -39,8 +39,8 @@ class Calendar < ActiveRecord::Base
     end
   end
   def start_time_and_end_time_must_in_school_hour
-    start_hour = Time.gm(start_time.year, start_time.month, start_time.day, 8)
-    end_hour = Time.gm(end_time.year, end_time.month, end_time.day, 16)
+    start_hour = Time.gm(start_time.year, start_time.month, start_time.day, 6)
+    end_hour = Time.gm(end_time.year, end_time.month, end_time.day, 18)
     if start_time < start_hour or start_time > end_hour
       errors.add(:start_time, "must be in school hour")
     end

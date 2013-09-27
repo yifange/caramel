@@ -28,7 +28,7 @@ attachScheduleColumnHandler = ->
       $("#schedule-recurring-selection").hide()
       $("#schedule-course-type").hide()
       $("#schedule-course-name").hide()
-      $("#schedule-modal-title").html("Create Schedule")
+      $("#schedule-modal-title").html("Create Class")
       $("#schedule-modal").modal({
         keyboard: true
       })
@@ -45,7 +45,7 @@ attachScheduleEventHandler = ->
       $("#schedule-course-name").hide()
       $("#schedule-course-type").hide()
       $("#schedule-modal-delete").show()
-      $("#schedule-modal-title").html("Update Event")
+      $("#schedule-modal-title").html("Update Class")
       $("#schedule-modal").modal({
         keyboard: true
       })

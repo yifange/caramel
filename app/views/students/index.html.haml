@@ -35,5 +35,8 @@
           - if verify_user(['Teacher'])
             = School.find(student.school_id).name
         %td
-          = multiple_selection("student-programs-#{student.id}-", student.school.programs_json, student.program_ids, [], student.id, "/students/#{student.id}", 'programs')
+          - if verify_user(['Admin', 'Staff'])
+            = multiple_selection("student-programs-#{student.id}-", student.school.programs_json, student.program_ids, [], student.id, "/students/#{student.id}", 'programs')
+          - elsif verify_user(['Teacher'])
+            = multiple_selection("student-programs-#{student.id}-", current_user.programs_json, student.program_ids, [], student.id, "/students/#{student.id}", 'programs')
         %td

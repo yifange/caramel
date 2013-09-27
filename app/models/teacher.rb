@@ -14,6 +14,12 @@ class Teacher < User
     end
   end
 
+  def programs_json
+    programs.map do |program|
+      {:id => program.id, :text => program.name}
+    end
+  end
+
   def self.in_regions_ordered(region_ids)
     User.in_regions_ordered('Teacher', region_ids)
   end

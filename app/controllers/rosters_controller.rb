@@ -5,11 +5,17 @@ class RostersController < ApplicationController
     
     @programs = case current_user[:type]
                 when "Teacher"
-                  Teacher.find(current_user[:id]).programs.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
+                  # FIXME leave this in case we add the support for terms
+                  Teacher.find(current_user[:id]).programs.order("school_id ASC").includes(:school, :instrument, :program_type)
+                  # Teacher.find(current_user[:id]).programs.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
                 when "Staff"
-                  Staff.find(current_user[:id]).programs.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
+                  # FIXME leave this in case we add the support for terms
+                  Staff.find(current_user[:id]).programs.order("school_id ASC").includes(:school, :instrument, :program_type)
+                  # Staff.find(current_user[:id]).programs.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
                 when "Admin"
-                  Program.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
+                  # FIXME leave this in case we add the support for terms
+                  Program.order("school_id ASC").includes(:school, :instrument, :program_type)
+                  # Program.where(:term_id => @term_id).order("school_id ASC").includes(:school, :instrument, :program_type)
                 end
 
     @program = (@programs.find_by :id => params[:program_id]) || @programs.first if @programs

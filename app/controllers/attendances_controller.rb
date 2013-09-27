@@ -3,11 +3,17 @@ class AttendancesController < ApplicationController
     term_id = params[:term_id] || Term.order("start_date ASC").last.id
     @programs = case current_user[:type]
                 when "Teacher"
-                  Teacher.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
+                  # FIXME leave this in case we add the support for terms
+                  Teacher.find(current_user[:id]).programs.includes(:school, :program_type, :instrument).order("school_id ASC")
+                  # Teacher.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
                 when "Staff"
-                  Staff.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
+                  # FIXME leave this in case we add the support for terms
+                  Staff.find(current_user[:id]).programs.includes(:school, :program_type, :instrument).order("school_id ASC")
+                  # Staff.find(current_user[:id]).programs.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
                 when "Admin"
-                  Program.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
+                  # FIXME leave this in case we add the support for terms
+                  Program.includes(:school, :program_type, :instrument).order("school_id ASC")
+                  # Program.where(:term_id => term_id).includes(:school, :program_type, :instrument).order("school_id ASC")
                 end
 
     @program = if params[:program_id]

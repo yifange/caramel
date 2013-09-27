@@ -50,12 +50,9 @@ class Schedule < ActiveRecord::Base
     dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
     dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
     
-    # if course.course_type == "GroupCourse"
     
+    calendars = Calendar.where(:date => date, :available => true)
     calendars = Calendar.where(:date => date, :term_id => term_id, :available => true)
-    # else
-    #   calendars = Calendar.where(:day_of_week => day_of_week, :term_id => term_id, :available => true)
-    # end
     calendars.find_each do |cal|
       puts dummy_start_time
       puts dummy_end_time

@@ -1,5 +1,7 @@
 #schedule-form-body
   = simple_form_for @schedule do |f|
+    = f.error_notification
+    = display_base_errors @schedule
     = f.association :course, :collection => @courses, :label_method => :name, :value_method => :id, :include_blank => false, :wrapper_html => {:id => "schedule-course-select"}
     = f.input :name, :wrapper_html => {:id => "schedule-course-name"}
     = f.input :course_type, :collection => [["Regular", "RegularCourse"], ["Group", "GroupCourse"]], :include_blank => false, :wrapper_html => {:id => "schedule-course-type"}

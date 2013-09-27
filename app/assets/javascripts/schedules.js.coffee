@@ -67,7 +67,7 @@ attachScheduleSubmitHandler = ->
           attachScheduleEventHandler()
         )
       error: (data, status) ->
-        $("#schedule-modal-body").html($(data.responseText).find("#course-form-body").html())
+        $("#schedule-modal-body").html($(data.responseText).filter("#course-form-body").html())
     })
     return false
 

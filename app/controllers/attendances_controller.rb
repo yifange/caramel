@@ -57,7 +57,7 @@ class AttendancesController < ApplicationController
     if attendance.update_attributes(attendance_params)
       redirect_to attendances_path
     else
-      render :edit
+      render :edit, :status => :unprocessable_entity, :layout => false
     end
   end
   def create
@@ -65,7 +65,7 @@ class AttendancesController < ApplicationController
     if attendance.save
       redirect_to attendances_path
     else
-      render :new
+      render :new, :status => :unprocessable_entity, :layout => false
     end
   end
   def destroy

@@ -53,7 +53,7 @@ attachSubmitHandler = ->
           attachAttendanceGridHandler()
         )
       error: (data, status) ->
-        $("#attendance-modal-body").html($(data.responseText).find("#attendance-form-body").html())
+        $("#attendance-modal-body").html($(data.responseText).filter("#attendance-form-body").html())
     })
 attachDeleteHandler = ->
   $("#attendance-modal-delete").on "click", ->

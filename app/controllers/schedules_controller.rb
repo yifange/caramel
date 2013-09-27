@@ -71,10 +71,10 @@ class SchedulesController < ApplicationController
         if r
           redirect_to schedules_path
         else
-          render :text => @schedule.errors.messages, :status => :unprocessable_entity
+          render :new, :status => :unprocessable_entity, :layout => false
         end
       else
-        render :new, :status => :unprocessable_entity
+        render :new, :status => :unprocessable_entity, :layout => false
       end
     else
       course_id = params[:schedule][:course_id]
@@ -87,7 +87,7 @@ class SchedulesController < ApplicationController
       if r
         redirect_to schedules_path
       else
-        render :new, :status => :unprocessable_entity
+        render :new, :status => :unprocessable_entity, :layout => false
       end
     end
   end
@@ -107,7 +107,7 @@ class SchedulesController < ApplicationController
     if r
       render :text => "success"
     else
-      render :edit, :status => :unprocessable_entity
+      render :edit, :status => :unprocessable_entity, :layout => false
     end
   end
   def destroy

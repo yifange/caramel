@@ -1,6 +1,6 @@
 #calendar-form-body
   = simple_form_for @calendar do |f|
-    = f.error_notification
+    = display_base_errors @calendar
     = f.input :start_time, :start_hour => 6, :end_hour => 18, :ampm => true
     = f.input :end_time, :start_hour => 6, :end_hour => 18, :ampm => true
     = f.input :school_id, :input_html => {:value => params[:school_id]}, :as => :hidden

@@ -58,7 +58,7 @@ class CalendarsController < ApplicationController
     if r
       redirect_to :controller => "calendars", :action => :index_week
     else
-      render :new, :status => :unprocessable_entity
+      render :new, :status => :unprocessable_entity, :layout => false
     end
   end
   def edit
@@ -79,7 +79,7 @@ class CalendarsController < ApplicationController
     if r
       redirect_to calendars_path
     else
-      render :edit
+      render :edit, :status => :unprocessable_entity, :layout => false
     end
   end
   def destroy

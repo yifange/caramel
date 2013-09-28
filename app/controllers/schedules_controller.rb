@@ -18,6 +18,13 @@ class SchedulesController < ApplicationController
 
     @month = (params[:month] || Date.today.month).to_i
     @year = (params[:year] || Date.today.year).to_i
+    @first_month = 9
+    @start_year = case @month < @first_month
+                  when true
+                    @year - 1
+                  when false
+                    @year
+                  end
     @day = (params[:day] || Date.today.day).to_i
     @date = Date.new(@year, @month, @day)
     @today = Date.today

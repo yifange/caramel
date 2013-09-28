@@ -6,4 +6,4 @@
   = link_to ">", self.send(base_path, :year => @year + 1, :school_id => @school_id, :program_id => @program_id)
 %li
   %span.navbar-text#subnav-text
-    = @year
+    = "#{@start_year} - #{@start_year + 1}"

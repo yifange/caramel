@@ -47,11 +47,13 @@ class Schedule < ActiveRecord::Base
     return unless start_time and end_time
     available = false
     term_id = course.program.term_id
+    school_id = course.program.school_id
     dummy_start_time = Time.gm(2000, 1, 1, start_time.hour, start_time.min, start_time.sec)
     dummy_end_time = Time.gm(2000, 1, 1, end_time.hour, end_time.min, end_time.sec)
     
     
-    calendars = Calendar.where(:date => date, :term_id => term_id, :available => true)
+    calendars = Calendar.where(:date => date, :school_id => school_id, :available => true)
+    # calendars = Calendar.where(:date => date, :term_id => term_id, :school_id => school_id, :available => true)
     calendars.find_each do |cal|
       puts dummy_start_time
       puts dummy_end_time
@@ -60,7 +62,7 @@ class Schedule < ActiveRecord::Base
         break
       end
     end
-    errors.add(:start_time, "must in available time slots") unless available
+    errors.add(:base, "must in available time slots") unless available
   end
   def courses_must_in_term
     term = course.program.term

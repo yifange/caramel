@@ -15,8 +15,7 @@
   %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
       %th{:width => '10px'}
-      %th{:width => '280px'} PROGRAM NAME
-      %th
+      %th PROGRAM NAME
       - @program_types.each do |program_type|
         %tr
           %td
@@ -24,4 +23,3 @@
           %td
             %a.x-editable-input-text{:href => '#', 'data-url' => "/program_types/#{program_type.id}", 'data-pk' => "#{program_type.id}", 'data-name' => 'name', 'data-placeholder' => 'input full name'}
               = program_type.name
-          %td

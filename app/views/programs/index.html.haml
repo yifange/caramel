@@ -45,9 +45,8 @@
                   %th{:width => '10px'} 
                   %th{:width => '200px'} INSTRUMENT
                   %th{:width => '200px'} PROGRAM TYPE
-                  %th{:width => '200px'} Annual Class/Groups
-                  %th{:width => '200px'}
-                  %th
+                  %th{:width => '200px'} ANNUAL CLASS / GROUPS
+                  %th TEACHERS / STUDENTS
                 - if verify_user(['Admin', 'Staff'])
                   - programs = school.programs
                 - elsif verify_user(['Teacher'])
@@ -76,9 +75,8 @@
                       .accordion-heading
                         .accordion-toggle{:style => 'padding-top: 0px; padding-bottom: 0px;'}
                           %button.btn{'data-toggle' => 'collapse', :href => "#collapse#{program.id}"}
-                            Teachers / Students
+                            Show
                             %span.caret
-                    %td
                   %tr
                     %td{'colspan' => "6", :style => "height: auto"}
                       .accordion-body.collapse{:id => "collapse#{program.id}"}

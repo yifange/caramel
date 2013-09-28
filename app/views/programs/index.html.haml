@@ -4,13 +4,12 @@
 - content_for :sidemenu do
   = render '/layouts/programs_page_sidebar'
 
-- if verify_user(['Admin', 'Staff'])
-  - content_for :action_button do
-    %a.btn.btn-primary.delete-entry{'data-url' => "/programs/destroy_multi"}
-      %i.icon-trash.icon-white
-    %a.btn.btn-primary.new-program-entry{:href => "/programs/new", "data-entry" => "programs"}
-      %i.icon-plus.icon-white
-    = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
+- content_for :action_button do
+  %a.btn.btn-primary.delete-entry{'data-url' => "/programs/destroy_multi"}
+    %i.icon-trash.icon-white
+  %a.btn.btn-primary.new-program-entry{:href => "/programs/new", "data-entry" => "programs"}
+    %i.icon-plus.icon-white
+  = modal_for "new-entry", :modal_title => "New Program", :css_class => "new-entry"
 
 - content_for :main do
   %ul.nav.nav-tabs

@@ -24,7 +24,7 @@ class RegionsController < ApplicationController
   end
 
   def index
-    @regions = Region.all_ordered
+    @regions = current_user.regions
   end
 
   def destroy_multi

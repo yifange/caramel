@@ -23,9 +23,11 @@ module UrlHelper
   def controller?(*controller)
     controller.include?(params[:controller])
   end
+
   def action?(*action)
     action.include?(params[:action])
   end
+
   def active_class(controller, *action)
     if controller?(controller) and action?(*action)
       "active"

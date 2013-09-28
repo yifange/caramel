@@ -13,12 +13,13 @@
     = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"
 
 - content_for :main do
-  %div{:style => "margin-bottom: 15px"}
-    %a.btn.btn-primary.delete-entry{'data-url' => "/students/destroy_multi"}
-      %i.icon-trash.icon-white
-    %a.btn.btn-primary.new-entry{:href => "/students/new", "data-entry" => "students"}
-      %i.icon-plus.icon-white
-    = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"
+  - if verify_user(['Teacher'])
+    %div{:style => "margin-bottom: 15px"}
+      %a.btn.btn-primary.delete-entry{'data-url' => "/students/destroy_multi"}
+        %i.icon-trash.icon-white
+      %a.btn.btn-primary.new-entry{:href => "/students/new", "data-entry" => "students"}
+        %i.icon-plus.icon-white
+      = modal_for "new-entry", :modal_title => "New Student", :css_class => "new-entry"
   %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
       %th{:width => '10px'}

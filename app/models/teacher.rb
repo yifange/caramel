@@ -4,7 +4,7 @@ class Teacher < User
 
   has_many :assignments
   has_many :programs, :through => :assignments, :dependent => :restrict_with_exception
-  has_many :schools, :through => :programs
+  has_many :schools, :through => :programs, :uniq => true
   has_many :enrollments, :through => :programs
   has_many :students, :through => :enrollments
 

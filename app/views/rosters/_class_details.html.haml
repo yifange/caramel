@@ -1,5 +1,5 @@
 -# - students = course.students.uniq
-- students = course.rosters.select {|r| not (r.start_date.nil? or r.end_date.nil?) and r.start_date <= Date.today and Date.today <= r.end_date}.map {|r| r.enrollment.student}
+- students = course.rosters.select {|r| not (r.start_date.nil? or r.end_date.nil?) and Date.today <= r.end_date}.map {|r| r.enrollment.student}
 - pending_students = course.rosters.select {|r| (r.start_date.nil? or r.end_date.nil?)}.map {|r| r.enrollment.student}
 
 %tr

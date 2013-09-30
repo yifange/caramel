@@ -139,6 +139,7 @@ rosterModalSubmitHandler = ->
           initRosterEditable()
           updateClassHandler()
           deleteClassHandler()
+          studentsSelect()
         )
       error: (data, status) ->
         $("#roster-modal-body").html($(data.responseText).find("#roster-form-body").html())

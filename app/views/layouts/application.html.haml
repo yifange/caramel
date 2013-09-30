@@ -15,7 +15,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{:href => "#"}
+          %a.brand{:href => "http://www.musickidsprogram.com/"}
             Music Kids
           #main-nav-collapse.nav-collapse.collapse
             %ul.nav
@@ -49,7 +49,7 @@
         .span2.content
           = yield(:sidemenu)
           = render_flash
-        - if verify_user(['Admin', 'Staff'])
+        - if !(verify_user(['Teacher']) & (current_page?(url_for(:controller => 'programs', :action => 'index')) || current_page?(url_for(:controller => 'regions', :action => 'index')))) & !(verify_user(['Staff']) & current_page?(url_for(:controller => 'regions', :action => 'index')))
           .span10.content{:style => "margin-bottom: 15px"}
             = yield(:action_button)
         .span10.content

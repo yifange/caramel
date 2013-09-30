@@ -1,5 +1,5 @@
 %ul.nav.nav-list
-  - if verify_user(['Admin'])
+  - if verify_user(['Admin', 'Staff', 'Teacher'])
     = active_link_fullpath 'REGIONS', '/regions'
   - if verify_user(['Admin', 'Staff'])
     = active_link_fullpath 'INSTRUMENTS', '/instruments'

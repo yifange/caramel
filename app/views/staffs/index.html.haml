@@ -17,8 +17,7 @@
       %th{:width => '10px'}
       %th{:width => '310px'} NAME
       %th{:width => '280px'} EMAIL
-      %th{:width => '420px'} REGION
-      %th
+      %th REGION
     - @staffs.each do |staff|
       %tr
         %td
@@ -31,4 +30,3 @@
             = staff.email
         %td
           = multiple_selection('staff-regions', Region.all_ordered_json, staff.region_ids, [], staff.id, "/staffs/#{staff.id}", 'regions')
-        %td

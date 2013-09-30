@@ -5,23 +5,27 @@
   - render '/layouts/programs_page_sidebar'
 
 - content_for :action_button do
-  %a.btn.btn-primary.delete-entry{'data-url' => "/regions/destroy_multi"}
-    %i.icon-trash.icon-white
-  %a.btn.btn-primary.new-entry{:href => "/regions/new", "data-entry" => "region"}
-    %i.icon-plus.icon-white
-  = modal_for "new-entry", :modal_title => "New Region", :css_class => "new-entry"
+  - if verify_user(["Admin"])
+    %a.btn.btn-primary.delete-entry{'data-url' => "/regions/destroy_multi"}
+      %i.icon-trash.icon-white
+    %a.btn.btn-primary.new-entry{:href => "/regions/new", "data-entry" => "region"}
+      %i.icon-plus.icon-white
+    = modal_for "new-entry", :modal_title => "New Region", :css_class => "new-entry"
 
 - content_for :main do
   %table.table.table-bordered.table-striped.table-condensed{:style => 'clear: both'}
     %tr
-      %th{:width => '10px'}
-      %th{:width => '280px'} REGION NAME
-      %th
+      - if verify_user(["Admin"])
+        %th{:width => '10px'}
+      %th REGION NAME
       - @regions.each do |region|
         %tr
+          - if verify_user(["Admin"])
+            %td
+              %input.checkbox-select-to-delete{:type => 'checkbox', :value => "#{region.id}"}
           %td
-            %input.checkbox-select-to-delete{:type => 'checkbox', :value => "#{region.id}"}
-          %td
-            %a.x-editable-input-text{:href => '#', 'data-url' => "/regions/#{region.id}", 'data-pk' => "#{region.id}", 'data-name' => 'name', 'data-placeholder' => 'input region name'}
+            - if verify_user(["Admin"])
+              %a.x-editable-input-text{:href => '#', 'data-url' => "/regions/#{region.id}", 'data-pk' => "#{region.id}", 'data-name' => 'name', 'data-placeholder' => 'input region name'}
+                = region.name
+            - if verify_user(["Staff", "Teacher"])
               = region.name
-          %td

@@ -1,0 +1,5 @@
+= nav_filter_for "school", @schools, :base_url => "/calendars_week", :year => params[:year], :default_text => @school.name
+%li{:class => "#{active == 'week' ? 'active' : ''}"}
+  = link_to_if @school, "week", calendars_week_path(:school_id => @school.try(:id), :id => "subnav-week")
+%li{:class => "#{active == 'year' ? 'active' : ''}"}
+  = link_to "year", calendars_path(:school_id => @school.try(:id), :id => "subnav-year")

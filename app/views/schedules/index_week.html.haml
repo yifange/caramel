@@ -4,7 +4,7 @@
   - render '/layouts/classes_page_sidebar'
 - if @schedules
   - content_for :subnav do
-    = render "/layouts/subnav", :active => "week", :nav_pills_partial => "/schedules/week_nav_pills", :nav_filter_partial => "/schedules/schedule_nav_filter", :base_path => :schedules_week_path
+    = render "/layouts/subnav", :active => "week", :nav_pills_partial => "/schedules/week_nav_pills", :nav_filter_partial => "/schedules/schedule_week_nav_filter", :base_path => :schedules_week_path
   - content_for :main do
     = render "/layouts/calendars/weekly_calendar", :calendar_name => "schedule", :event_partial => "/schedules/schedule_events"
     -# = weekly_calendar_for @schedules, :year => @year.to_i, :month => @month.to_i, :day => @day.to_i, :category_method => :group, :calendar_name => "course", :program => @program, :background_calendar => @calendars do |c|

@@ -1,6 +1,7 @@
 initRosterEditable = ->
   $(".x-editable.roster-date").editable({
     type: "date"
+    viewformat: "mm-dd-yyyy"
     onblur: "submit"
     showbuttons: false
     ajaxOptions: {

@@ -18,19 +18,19 @@
 # Ignore the schema file
 /db/schema.rb
 
-*.rbc
-*.sassc
-.sass-cache
-capybara-*.html
-.rspec
-.rvmrc
-/vendor/bundle
-/log/*
-/public/system/*
-/coverage/
-/spec/tmp/*
-**.orig
-rerun.txt
-pickle-email-*.html
-.project
-config/initializers/secret_token.rb
+# *.rbc
+# *.sassc
+# .sass-cache
+# capybara-*.html
+# .rspec
+# .rvmrc
+# /vendor/bundle
+# /log/*
+# /public/system/*
+# /coverage/
+# /spec/tmp/*
+# **.orig
+# rerun.txt
+# pickle-email-*.html
+# .project
+# config/initializers/secret_token.rb

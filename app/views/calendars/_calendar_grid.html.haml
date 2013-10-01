@@ -3,7 +3,7 @@
 - if day.month != month
   - klass << " not-current-month"
 - elsif @calendars.has_key? day
-    - klass << " " << day_marking(@calendars[day])
-    - klass << " class-day" unless @calendars[day].empty?
+  - klass << " " << day_marking(@calendars[day])
+  - klass << " class-day" unless @calendars[day].empty?
 %td{:data => {:year => day.year, :month => day.month, :day => day.day}, :class => klass}
   = link_to day.day, self.send(base_path, :year => day.year, :month => day.month, :day => day.day, :program => @program_id), :class => "day-link"

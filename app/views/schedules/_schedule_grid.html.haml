@@ -3,7 +3,9 @@
   - klass << " not-current-month"
 - else
   - klass << " today" if day == @today
+  - if @calendars.has_key? day
+    - klass << " schedule-holiday" if day_marking(@calendars[day]) == "unavailable"
   - if @schedules.has_key? day
     - klass << " schedule-day" unless @schedules[day].empty?
-%td{:data => {:year => day.year, :momth => day.month, :day => day.day}, :class => klass}
+%td{:data => {:year => day.year, :month => day.month, :day => day.day}, :class => klass}
   = link_to day.day, self.send(base_path, :year => day.year, :month => day.month, :day => day.day, :program => @program_id), :class => "day-link"

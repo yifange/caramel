@@ -2,11 +2,12 @@
   = simple_form_for @course do |f|
     -# = f.input :program_id, :input_html => {:value => params[:program_id]}, :as => :hidden
     = f.hidden_field :program_id, :value => params[:program_id]
-    - if params[:course_type] == "regular"
-      - course_type = "RegularCourse"
-    - else
-      - course_type = "GroupCourse"
-    = f.input :course_type, :input_html => {:value => course_type, :readonly => true}, :label => "Class type"
+    - unless @course_type
+      - if params[:course_type] == "regular"
+        - @course_type = "RegularCourse"
+      - else
+        - @course_type = "GroupCourse"
+    = f.input :course_type, :input_html => {:value => @course_type, :readonly => true}, :label => "Class type"
     = f.input :name
 
 -#XXX Use javascript to hide the submit button, but reappear if error occurs during the submission

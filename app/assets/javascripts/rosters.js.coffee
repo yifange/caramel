@@ -164,6 +164,7 @@ updateClassModalSubmitHandler = ->
           initRosterEditable()
           updateClassHandler()
           deleteClassHandler()
+          studentsSelect()
         )
       error: (data, status) ->
         $("#update-class-modal-body").html($(data.responseText).find("#course-form-body").html())

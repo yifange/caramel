@@ -7,4 +7,4 @@
     - klass << " " << day_marking(@calendars[day])
     - klass << " calendar-day" unless @calendars[day].empty?
 %td{:data => {:year => day.year, :month => day.month, :day => day.day}, :class => klass}
-  = link_to day.day, self.send(base_path, :year => day.year, :month => day.month, :day => day.day, :program => @program_id), :class => "day-link"
+  = link_to day.day, self.send(base_path, :year => day.year, :month => day.month, :day => day.day, :program_id => @program_id), :class => "day-link"

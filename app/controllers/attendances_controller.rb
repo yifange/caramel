@@ -40,7 +40,7 @@ class AttendancesController < ApplicationController
     @rosters = {:group => [], :regular => []}
 
     rosters.each do |roster|
-      if not (roster.start_date.nil? or roster.end_date.nil?) and (Data.today < roster.end_date)
+      if not (roster.start_date.nil? or roster.end_date.nil?) and (Date.today < roster.end_date)
         if roster.course.course_type == "GroupCourse"
           @rosters[:group] << roster
         else

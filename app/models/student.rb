@@ -66,4 +66,8 @@ class Student < ActiveRecord::Base
     end
   end
 
+  def current_classes
+
+  end
+
 end 

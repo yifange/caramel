@@ -3,6 +3,7 @@ class Course < ActiveRecord::Base
   has_many :rosters
   has_many :enrollments, :through => :rosters
   has_many :students, :through => :enrollments
+  has_many :teachers, :through => :program
   has_many :schedules
   validates :name, :presence => true, :uniqueness => {:scope => :program_id}
   validates :program_id, :presence => true

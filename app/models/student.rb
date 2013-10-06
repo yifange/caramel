@@ -15,7 +15,31 @@ class Student < ActiveRecord::Base
   def self.all_ordered
     users = Student.all.order("first_name")
   end
-
+  def current_rosters
+    rosters.where("start_date <= :current_date AND end_date >= :current_date", current_date: Time.now)
+  end
+  def current_courses
+    courses.joins(:rosters).uniq.where("rosters.start_date <= :current_date AND rosters.end_date >= :current_date", current_date: Time.now)
+  end
+  def all_current_course_names
+    res = ""
+    current_courses.each do |course|
+      res += course.name
+      res += ", "
+    end
+    res.chop.chop
+  end
+  def current_courses_with_teacher(teacher_id)
+    current_courses.joins(:teachers).where(:users => {:id => teacher_id})
+  end
+  def all_current_course_with_teacher_names(teacher_id)
+    res = ""
+    current_courses_with_teacher(teacher_id).each do |course|
+      res += course.name
+      res += ", "
+    end
+    res.chop.chop
+  end
   def self.in_regions_ordered(region_ids)
     students = []
     region_ids.each do |region_id|
@@ -64,10 +88,6 @@ class Student < ActiveRecord::Base
     programs_with_teacher(teacher_id).map do |program|
       program.id
     end
-  end
-
-  def current_classes
-
   end
 
 end 

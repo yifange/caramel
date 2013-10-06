@@ -39,19 +39,19 @@ td.day-text {
   border: 4px;
 }
 
-td.available {
+td.calendar-day.available {
   // background-color: #00EE22;
   // border-radius: 4px;
   border: 1px inset green;
   // border-bottom: 4px solid green;
 }
-td.unavailable {
+td.calendar-day.unavailable {
   // background-color: #EE0000;
   // border-radius: 4px;
   border: 1px inset red;
   // border-bottom: 4px solid red;
 }
-td.mix {
+td.calendar-day.mix {
   // background-color: #DDDD00;
   // border-radius: 4px;
   border: 1px inset yellow;

@@ -40,19 +40,34 @@ class AttendancesController < ApplicationController
     @rosters = {:group => [], :regular => []}
 
     rosters.each do |roster|
-      if roster.course.course_type == "GroupCourse"
-        @rosters[:group] << roster
-      else
-        @rosters[:regular] << roster
+      if not (roster.start_date.nil? or roster.end_date.nil?) and (Date.today < roster.end_date)
+        if roster.course.course_type == "GroupCourse"
+          @rosters[:group] << roster
+        else
+          @rosters[:regular] << roster
+        end
       end
     end
     render :layout => false
   end
   def edit
     @attendance = Attendance.find(params[:id])
+    rosters = Enrollment.find(params[:enrollment_id]).rosters.includes(:course)
+    @rosters = {:group => [], :regular => []}
+
+    rosters.each do |roster|
+      if not (roster.start_date.nil? or roster.end_date.nil?) and (Date.today < roster.end_date)
+        if roster.course.course_type == "GroupCourse"
+          @rosters[:group] << roster
+        else
+          @rosters[:regular] << roster
+        end
+      end
+    end
     render :layout => false
   end
   def update
+    params[:attendance].delete :date
     attendance = Attendance.find(params[:id])
     if attendance.update_attributes(attendance_params)
       redirect_to attendances_path

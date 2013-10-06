@@ -16,6 +16,7 @@ class CoursesController < ApplicationController
   
   def edit
     @course = Course.find(params[:id])
+    @course_type = @course.course_type
     render :layout => false
   end
   def update

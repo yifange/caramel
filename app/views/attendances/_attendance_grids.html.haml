@@ -2,6 +2,14 @@
 - today = Date.today
 .fmc-container
   %table
+
+    %tr
+      %td.fmc-cal-header-blank
+      %td.fmc-cal-header-blank
+      - month_range = @date.beginning_of_month .. @date.end_of_month
+      - for day in month_range
+        %td.fmc-cal-header-wday
+          = day.day
     %tr
       %td.fmc-cal-header-blank
       %td.fmc-cal-header-blank

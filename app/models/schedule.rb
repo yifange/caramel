@@ -14,8 +14,9 @@ class Schedule < ActiveRecord::Base
     puts days
     r = true
     days.each do |day|
-      r = r && Schedule.new(:date => day, :start_time => start_time, :end_time => end_time, :course_id => course_id).save
+      r = Schedule.new(:date => day, :start_time => start_time, :end_time => end_time, :course_id => course_id).save && r
     end
+    # r
   end
   def update_recurring(schedule_params, recurring_type)
     if recurring_type == "all"

@@ -1,6 +1,7 @@
 initRosterEditable = ->
   $(".x-editable.roster-date").editable({
     type: "date"
+    viewformat: "mm-dd-yyyy"
     onblur: "submit"
     showbuttons: false
     ajaxOptions: {
@@ -58,9 +59,15 @@ addStudentHandler = ->
 
 addClassHandler = ->
   $(".btn.add-class").on "click", (e) ->
+    class_type = $(this).parent().parent().parent().data("target")
+    if class_type == "regular-class"
+      title = "Add Regular Class"
+    else
+      title = "Add Group Class"
     e.preventDefault()
     href = $(this).attr("href")
     $.get(href, (data, status) ->
+      $("#add-class-modal-title").html(title)
       $("#add-class-modal-body").html($(data).filter("#course-form-body").html())
       $("#add-class-modal").modal({
         keyboard: true
@@ -70,9 +77,15 @@ addClassHandler = ->
 
 updateClassHandler = ->
   $(".menu-item-update-class").on "click", (e) ->
+    class_type = $(this).parent().parent().parent().parent().parent().parent().attr("id")
+    if class_type == "regular-class"
+      title = "Update Regular Class"
+    else
+      title = "Update Group Class"
     e.preventDefault()
     href = $(this).attr("href")
     $.get(href, (data, status) ->
+      $("#update-class-modal-title").html(title)
       $("#update-class-modal-body").html($(data).filter("#course-form-body").html())
       $("#update-class-modal").modal({
         keyboard: true
@@ -164,6 +177,7 @@ updateClassModalSubmitHandler = ->
           initRosterEditable()
           updateClassHandler()
           deleteClassHandler()
+          studentsSelect()
         )
       error: (data, status) ->
         $("#update-class-modal-body").html($(data.responseText).find("#course-form-body").html())

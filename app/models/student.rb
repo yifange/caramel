@@ -4,7 +4,7 @@ class Student < ActiveRecord::Base
 
   belongs_to :school
   has_many :enrollments
-  has_many :rosters
+  has_many :rosters, :through => :enrollments
   has_many :programs, :through => :enrollments, :dependent => :restrict_with_exception
   has_many :courses, :through => :rosters
 

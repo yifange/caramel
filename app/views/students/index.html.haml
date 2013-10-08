@@ -16,8 +16,9 @@
     %tr
       %th{:width => '10px'}
       %th{:width => '310px'} NAME
-      %th{:width => '280px'} SCHOOL
-      %th PROGRAM
+      %th{:width => '200px'} SCHOOL
+      %th{:width => '300px'} PROGRAM
+      %th CURRENT CLASSES
     - @students.each do |student|
       %tr
         %td
@@ -37,3 +38,8 @@
             = multiple_selection("student-programs-#{student.id}-", student.school.programs_json, student.program_ids, [], student.id, "/students/#{student.id}", 'programs')
           - elsif verify_user(['Teacher'])
             = multiple_selection("student-programs-#{student.id}-", current_user.programs_in_school_json(student.school_id), student.program_ids, [], student.id, "/students/#{student.id}", 'programs')
+        %td
+          - if verify_user(['Admin', 'Staff'])
+            = student.all_current_course_names
+          - elsif verify_user(['Teacher'])
+            = student.all_current_course_with_teacher_names(current_user.id)

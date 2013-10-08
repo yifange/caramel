@@ -6,7 +6,7 @@ class Teacher < User
   has_many :programs, :through => :assignments, :dependent => :restrict_with_exception
   has_many :schools, -> {uniq}, :through => :programs
   has_many :enrollments, :through => :programs
-  has_many :students, :through => :enrollments
+  has_many :students, -> {uniq}, :through => :enrollments
 
   def program_ids
     programs.map do |program|

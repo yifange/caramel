@@ -10,11 +10,9 @@ class Roster < ActiveRecord::Base
   def course_type
     course.course_type
   end
-  def start_time
-    course.start_time
-  end
-  def end_time
-    course.end_time
+  def is_current?
+    current_time = Time.now
+    state_date <= current_time && end_date >= current_time
   end
   def date
     course.date

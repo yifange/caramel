@@ -9,11 +9,13 @@ class SchedulesController < ApplicationController
                 when "Admin"
                   Program.all.includes(:school).order("school_id ASC")
                 end
-
+    @schools = @programs.map {|program| program.school}.uniq if @programs
+    @school = @schools.try(:first)
     @program = @programs.try(:find_by, :id => params[:program_id]) || @programs.try(:first)
     @program_id = @program.try(:id)
-    school_id = @program.try(:school).try(:id)
-    @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
+    school_id = @school.try(:id)
+    program_ids = @programs.map {|program| program.id}
+    @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => program_ids}}))
     @calendars = rehash_objs(Calendar.where(:school_id => school_id))
 
     @month = (params[:month] || Date.today.month).to_i
@@ -42,8 +44,11 @@ class SchedulesController < ApplicationController
 
     @program = @programs.try(:find_by, :id => params[:program_id]) || @programs.try(:first)
     @program_id = @program.try(:id)
-    school_id = @program.try(:school).try(:id)
-    @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => @program_id}}))
+    program_ids = @programs.map {|program| program.id}
+    @schools = @programs.map {|program| program.school}.uniq if @programs
+    @school = @schools.try(:first)
+    school_id = @school.try(:id)
+    @schedules = rehash_objs(Schedule.joins(:course).where({:courses => {:program_id => program_ids}}))
     @calendars = rehash_objs(Calendar.where(:school_id => school_id))
 
     @month = (params[:month] || Date.today.month).to_i
